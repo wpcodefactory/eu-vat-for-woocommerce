@@ -44,7 +44,37 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 	 */
 	function get_settings() {
 		global $current_section;
-		return array_merge( apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ), array(
+		$initialarray = array(
+			array(
+				'title'    => __( '', 'eu-vat-for-woocommerce' ),
+				'type'     => 'title',
+				'desc'	   => apply_filters( 'alg_wc_eu_vat_advertise' , '<div class="alg_wc_eu_vat_right_ad">
+				<div class="alg_wc_eu_vat-sidebar__section">
+				<div class="alg_wc_eu_vat_name_heading">
+				<img class="alg_wc_eu_vat_resize" src="https://wpfactory.com/wp-content/uploads/EU-VAT-for-WooCommerce-300x300.png">
+				<p class="alg_wc_eu_vat_text">Enjoying the plugin? Unleash its full potential with the premium version, it allows you to:</p>
+				</div>
+				<ul>
+					<li>
+						<strong>Show the VAT field for specific countries of your choice.</strong>
+					</li>
+					<li>
+						<strong>Keep VAT in your store country EVEN if number is validated.</strong>
+					</li>
+					<li>
+						<strong>Match company name along with VAT number.</strong>
+					</li>
+				</ul>
+				<p style="text-align:center">
+				<a id="alg_wc_eu_vat-premium-button" class="alg_wc_pq-button-upsell" href="https://wpfactory.com/item/eu-vat-for-woocommerce/" target="_blank">Get EU VAT for WooCommerce Pro</a>
+				</p>
+				<br>
+			</div>
+			</div>'),
+				'id'       => $this->id . '_' . $current_section . '_options_ad_section',
+			)
+		);
+		$return = array_merge( apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ), array(
 			array(
 				'title'     => __( 'Reset Settings', 'eu-vat-for-woocommerce' ),
 				'type'      => 'title',
@@ -62,6 +92,10 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 				'id'        => $this->id . '_' . $current_section . '_reset_options',
 			),
 		) );
+		
+		$return = array_merge($initialarray, $return);
+		
+		return $return;
 	}
 
 	/**

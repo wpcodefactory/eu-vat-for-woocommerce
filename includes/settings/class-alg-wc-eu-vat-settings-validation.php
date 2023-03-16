@@ -13,6 +13,8 @@ if ( ! class_exists( 'Alg_WC_EU_VAT_Settings_Validation' ) ) :
 
 class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 
+	public $id = '';
+	public $desc = '';
 	/**
 	 * Constructor.
 	 *
@@ -59,9 +61,10 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'id'       => 'alg_wc_eu_vat_not_valid_message',
 				'default'  => __( '<strong>EU VAT Number</strong> is not valid.', 'eu-vat-for-woocommerce' ),
 				'type'     => 'textarea',
-				'css'      => 'width:100%;',
+				// 'css'      => 'width:100%;',
 				'alg_wc_eu_vat_raw' => true,
 			),
+			
 			array(
 				'title'    => __( 'First validation method', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Change this if you are having issues when validating VAT. This only selects first method to try - if not succeeded, remaining methods will be used for validation.', 'eu-vat-for-woocommerce' ),
@@ -75,6 +78,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 					'file_get_contents' => __( 'Simple', 'eu-vat-for-woocommerce' ),
 				),
 			),
+			
 			array(
 				'title'    => __( 'Exempt VAT for valid numbers', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Enables/disabled VAT exemption.', 'eu-vat-for-woocommerce' ),
@@ -83,13 +87,22 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
+			
+			array(
+				'title'    => __( 'Preserve VAT if shipping country is different from billing country', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enables for preserve VAT if shipping country is different from billing country.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_preserv_vat_for_different_shipping',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			
 			array(
 				'title'    => __( 'Preserve VAT in selected countries', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'This will validate the VAT, but won\'t exempt VAT for selected countries.', 'eu-vat-for-woocommerce' ) . ' ' .
 					sprintf( __( 'Country for "Base (i.e. store) country" option is set in "%s".', 'eu-vat-for-woocommerce' ),
 						__( 'WooCommerce > Settings > General > Store Address', 'eu-vat-for-woocommerce' ) ),
-				'desc'     => apply_filters( 'alg_wc_eu_vat_settings', '<br>' . sprintf( __( 'You will need %s plugin to enable this option.', 'eu-vat-for-woocommerce' ),
-					'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' . __( 'EU VAT for WooCommerce Pro', 'eu-vat-for-woocommerce' ) . '</a>' ) ),
+				'desc'     => '',
 				'id'       => 'alg_wc_eu_vat_preserve_in_base_country',
 				'default'  => 'no',
 				'type'     => 'select',
@@ -98,17 +111,20 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 					'list' => __( 'Comma separated list', 'eu-vat-for-woocommerce' ),
 					'no'   => __( 'Disable', 'eu-vat-for-woocommerce' ),
 				),
-				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
+				'custom_attributes' => '',
 			),
+			
 			array(
 				'desc_tip' => __( 'Ignored unless "Comma separated list" option is selected above.', 'eu-vat-for-woocommerce' ),
 				'desc'     => sprintf( __( 'Enter country codes as comma separated list, e.g. %s.', 'eu-vat-for-woocommerce' ), '<code>IT,NL</code>' ),
 				'id'       => 'alg_wc_eu_vat_preserve_in_base_country_locations',
 				'default'  => '',
 				'type'     => 'text',
-				'css'      => 'width:100%;',
-				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
+				// 'css'      => 'width:100%;',
+				'custom_attributes' => '',
 			),
+			
+					
 			array(
 				'title'    => __( 'Check country by IP', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'This will check if customer\'s country (located by customer\'s IP) matches the country in entered VAT number.', 'eu-vat-for-woocommerce' ) .
@@ -196,7 +212,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Validating', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Message when validation is in progress.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Message when validation is in progress. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-validating</code>', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_progress_text_validating',
 				'default'  => __( 'Validating VAT. Please wait...', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
@@ -204,7 +220,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Valid', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Message on valid VAT.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Message on valid VAT. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-valid</code>', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_progress_text_valid',
 				'default'  => __( 'VAT is valid.', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
@@ -212,7 +228,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Not valid', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Message on invalid VAT.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Message on invalid VAT. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-not-valid</code>', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_progress_text_not_valid',
 				'default'  => __( 'VAT is not valid.', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
@@ -220,11 +236,35 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Validation failed', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Message on VAT validation server timeout etc.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Message on VAT validation server timeout etc. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-validation-failed</code>', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_progress_text_validation_failed',
 				'default'  => __( 'Validation failed. Please try again.', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
 				'css'      => 'width:100%;',
+			),
+			array(
+				'title'    => __( 'Different shipping & billing countries', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Message on Different shipping & billing countries. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-not-valid-billing-country</code>', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_shipping_billing_countries',
+				'default'  => __( 'Different shipping & billing countries.', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
+				'css'      => 'width:100%;',
+			),
+			array(
+				'title'    => __( 'Company name mismatch', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Message on Company name mismatch. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-not-valid-company-mismatch</code>', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_company_name_mismatch',
+				'default'  => __( 'VAT is valid, but registered to %company_name%.', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
+				'css'      => 'width:100%;',
+			),
+			array(
+				'title'    => __( 'Hide messages on preserved countries list', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( '', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_hide_message_on_preserved_countries',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'     => 'sectionend',

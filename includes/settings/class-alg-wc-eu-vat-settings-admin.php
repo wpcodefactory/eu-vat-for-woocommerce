@@ -13,6 +13,8 @@ if ( ! class_exists( 'Alg_WC_EU_VAT_Settings_Admin' ) ) :
 
 class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 
+	public $id = '';
+	public $desc = '';
 	/**
 	 * Constructor.
 	 *
@@ -60,6 +62,19 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_eu_vat_admin_options',
 			),
+			array(
+				'title'    => __( 'Language Guide', 'product-quantity-for-woocommerce' ),
+				'desc'    => '<table class="form-table" style="width:67%;"><tbody><tr valign="top" class=""><th scope="row" class="titledesc">' . __( 'WPML OR Polylang', 'product-quantity-for-woocommerce' ) . '</th><td class="forminp forminp-checkbox">' . __( 'If you are using multi-language store with WPML or Polylang, you can use shortcodes to show different languages
+Example: You can [alg_wc_eu_vat_translate lang="EN"] Desired message
+Shortcode [/alg_wc_eu_vat_translate] can be used to show English messages, similar to other languages you have.
+Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages', 'product-quantity-for-woocommerce' ) . '</td></tr></tbody></table>',
+				'type'     => 'title',
+				'id'       => 'alg_wc_pq_qty_language_guide',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_pq_qty_language_guide',
+			),
 		);
 
 		$advanced_settings = array(
@@ -80,7 +95,8 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'Session type', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_session_type',
-				'default'  => 'standard',
+				/*'default'  => 'standard',*/
+				'default'  => 'wc',
 				'type'     => 'select',
 				'class'    => 'wc-enhanced-select',
 				'options'  => array(
@@ -96,6 +112,13 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
+				'title'    => __( 'Enable if sitepress optimizer dynamic caching plugin not works', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_sitepress_optimizer_dynamic_caching',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_eu_vat_advanced_options',
 			),
@@ -106,7 +129,7 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'title'    => '&#8505;' . ' ' . __( 'Additional Info', 'eu-vat-for-woocommerce' ),
 				'type'     => 'title',
 				'id'       => 'alg_wc_eu_vat_additional_info',
-				'desc'     => '<ul style="background-color:white;padding:10px 30px;color:black;list-style-type:square;">' .
+				'desc'     => '<ul style="background-color:white;padding:10px 30px;color:black;list-style-type:square;margin-top:50px;">' .
 					'<li>' . sprintf( __( 'Field ID used for EU VAT: %s.', 'eu-vat-for-woocommerce' ) , '<code>' . '_' . alg_wc_eu_vat_get_field_id() . '</code>' ) . '</li>' .
 					'<li>' . sprintf( __( 'Tool for adding EU country standard VAT rates: %s.', 'eu-vat-for-woocommerce' ),
 						'<a href="' . admin_url( 'tools.php?page=alg-wc-eu-vat-country-rates' ) . '">' . __( 'Tools > EU country VAT Rates', 'eu-vat-for-woocommerce' ) . '</a>' ) . '</li>' .

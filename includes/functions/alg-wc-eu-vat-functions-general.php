@@ -53,7 +53,8 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_start' ) ) {
 	 */
 	function alg_wc_eu_vat_session_start() {
 		if ( ! defined( 'ALG_WC_EU_VAT_SESSION_TYPE' ) ) {
-			define( 'ALG_WC_EU_VAT_SESSION_TYPE', get_option( 'alg_wc_eu_vat_session_type', 'standard' ) );
+			/*define( 'ALG_WC_EU_VAT_SESSION_TYPE', get_option( 'alg_wc_eu_vat_session_type', 'standard' ) );*/
+			define( 'ALG_WC_EU_VAT_SESSION_TYPE', get_option( 'alg_wc_eu_vat_session_type', 'wc' ) );
 		}
 		switch ( ALG_WC_EU_VAT_SESSION_TYPE ) {
 			case 'wc':
@@ -64,7 +65,9 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_start' ) ) {
 			default: // 'standard'
 				if ( ! session_id() ) {
 					if ( ! headers_sent() ) {
-						session_start();
+						session_start([
+							'read_and_close' => true,
+						]);
 					} else {
 						$message = __( 'Can\'t create session (headers already sent).', 'eu-vat-for-woocommerce' ) . ' ' .
 							__( 'Try selecting "WC session (recommended)" for "Session type" in "WooCommerce > Settings > EU VAT > Admin & Advanced > Advanced Options".', 'eu-vat-for-woocommerce' );
@@ -84,10 +87,18 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_get( $key, $default = null ) {
+		if ( ! defined( 'ALG_WC_EU_VAT_SESSION_TYPE' ) ) {
+			define( 'ALG_WC_EU_VAT_SESSION_TYPE', get_option( 'alg_wc_eu_vat_session_type', 'wc' ) );
+		}
 		switch ( ALG_WC_EU_VAT_SESSION_TYPE ) {
 			case 'wc':
 				return ( function_exists( 'WC' ) && WC()->session ? WC()->session->get( $key, $default ) : $default );
 			default: // 'standard'
+			if ( ! session_id() ) {
+				if ( ! headers_sent() ) {
+					session_start();
+				}
+			}
 				return ( isset( $_SESSION[ $key ] ) ? $_SESSION[ $key ] : $default );
 		}
 	}
@@ -101,6 +112,9 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_set' ) ) {
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_set( $key, $value ) {
+		if ( ! defined( 'ALG_WC_EU_VAT_SESSION_TYPE' ) ) {
+			define( 'ALG_WC_EU_VAT_SESSION_TYPE', get_option( 'alg_wc_eu_vat_session_type', 'wc' ) );
+		}
 		switch ( ALG_WC_EU_VAT_SESSION_TYPE ) {
 			case 'wc':
 				if ( function_exists( 'WC' ) && WC()->session ) {
@@ -108,7 +122,9 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_set' ) ) {
 				}
 				break;
 			default: // 'standard'
+				session_start();
 				$_SESSION[ $key ] = $value;
+				session_write_close();
 				break;
 		}
 	}

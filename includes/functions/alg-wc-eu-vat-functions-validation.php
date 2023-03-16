@@ -18,7 +18,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	 * @todo    [dev] (maybe) `alg_wc_eu_vat_maybe_log`: extract ID from `$full_vat_number`
 	 */
 	function alg_wc_eu_vat_parse_vat( $full_vat_number, $billing_country ) {
-		$full_vat_number = strtoupper( $full_vat_number );
+		$full_vat_number = str_replace('-','',strtoupper( $full_vat_number ));
 		$billing_country = strtoupper( $billing_country );
 		if ( strlen( $full_vat_number ) > 2 && ( $country = substr( $full_vat_number, 0, 2 ) ) && ctype_alpha( $country ) ) {
 			if ( 'no' === get_option( 'alg_wc_eu_vat_check_billing_country_code', 'no' ) || ( 'EL' === $country ? 'GR' : $country ) == $billing_country ) {
@@ -51,7 +51,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	 */
 	function alg_wc_eu_vat_validate_vat_no_soap( $country_code, $vat_number, $billing_company, $method ) {
 		$country_code = strtoupper( $country_code );
-		$api_url = "http://ec.europa.eu/taxation_customs/vies/viesquer.do?ms=" . $country_code . "&vat=" . $vat_number;
+		$api_url = "https://ec.europa.eu/taxation_customs/vies/viesquer.do?ms=" . $country_code . "&vat=" . $vat_number;
 		switch ( $method ) {
 			case 'file_get_contents':
 				if ( ini_get( 'allow_url_fopen' ) ) {
@@ -130,9 +130,28 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	function alg_wc_eu_vat_validate_vat_soap( $country_code, $vat_number, $billing_company ) {
 		try {
 			if ( class_exists( 'SoapClient' ) ) {
+				/* old soap validation */
+				/*
 				$client = new SoapClient(
 					'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl',
 					array( 'exceptions' => true )
+				);
+				*/
+			
+				/* new soap validation */
+				/*libxml_disable_entity_loader(false);*/
+				$contextOptions = array( 'ssl' => array(
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+				'allow_self_signed' => true));
+				$sslContext = stream_context_create($contextOptions);
+
+				$client = new SoapClient(
+						'https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl',
+						array( 
+						'exceptions' => true,
+						'stream_context' => $sslContext
+						)
 				);
 				$result = $client->checkVat( array(
 					'countryCode' => $country_code,
@@ -148,6 +167,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 						if ( $result->valid ) {
 							alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, 'soap',
 								sprintf( __( 'Error: Company name does not match (%s)', 'eu-vat-for-woocommerce' ), strtoupper( $result->name ) ) );
+								
+								alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company_name', strtoupper( $result->name ) );
+								alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company', true );
+								
 						} else {
 							alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, 'soap',
 								__( 'Error: VAT ID not valid', 'eu-vat-for-woocommerce' ) );
@@ -183,6 +206,14 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_with_method' ) ) {
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
 	function alg_wc_eu_vat_validate_vat_with_method( $country_code, $vat_number, $billing_company, $method ) {
+		
+		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company_name', null );
+		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company', null );
+		
+		if($country_code == 'GB'){
+			return alg_wc_eu_vat_validate_vat_uk( $country_code, $vat_number, $billing_company, $method );
+		}
+		
 		switch ( $method ) {
 			case 'soap':
 				return alg_wc_eu_vat_validate_vat_soap( $country_code, $vat_number, $billing_company );
@@ -203,11 +234,16 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	 */
 	function alg_wc_eu_vat_validate_vat( $country_code, $vat_number, $billing_company = '' ) {
 		if ( '' != ( $skip_countries = get_option( 'alg_wc_eu_vat_advanced_skip_countries', array() ) ) ) {
-			$skip_countries = array_map( 'strtoupper', array_map( 'trim', explode( ',', $skip_countries ) ) );
-			if ( in_array( strtoupper( $country_code ), $skip_countries ) ) {
-				return true;
+			if(!empty($skip_countries)){
+				$skip_countries = array_map( 'strtoupper', array_map( 'trim', explode( ',', $skip_countries ) ) );
+				if ( in_array( strtoupper( $country_code ), $skip_countries ) ) {
+					return true;
+				}
 			}
 		}
+		
+		$vat_number = preg_replace('/\s+/', '', $vat_number);
+		
 		$methods = array();
 		switch ( get_option( 'alg_wc_eu_vat_first_method', 'soap' ) ) {
 			case 'curl':
@@ -227,5 +263,106 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 			}
 		}
 		return null;
+	}
+}
+
+
+if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
+	/**
+	 * alg_wc_eu_vat_validate_vat_uk.
+	 *
+	 * @version 1.6.1
+	 * @since   1.0.0
+	 * @return  mixed: bool on successful checking, null otherwise
+	 * @todo    [dev] (maybe) check for minimal length
+	 */
+	function alg_wc_eu_vat_validate_vat_uk( $country_code, $vat_number, $billing_company = '', $method = '' ) {
+		$country_code = strtoupper( $country_code );
+		$api_url = "https://api.service.hmrc.gov.uk/organisations/vat/check-vat-number/lookup/" . $vat_number;
+		switch ( $method ) {
+			case 'file_get_contents':
+				if ( ini_get( 'allow_url_fopen' ) ) {
+					$response = file_get_contents( $api_url );
+				} else {
+					alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
+						sprintf( __( 'Error: %s is disabled', 'eu-vat-for-woocommerce' ), 'allow_url_fopen' ) );
+					return null;
+				}
+				break;
+			default: // 'curl'
+				if ( function_exists( 'curl_version' ) ) {
+					$curl = curl_init( $api_url );
+					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+					$response = curl_exec( $curl );
+					curl_close( $curl );
+				} else {
+					alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
+						sprintf( __( 'Error: %s is disabled', 'eu-vat-for-woocommerce' ), 'cURL' ) );
+					return null;
+				}
+				break;
+		}
+		
+		
+		if ( false === $response ) {
+			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
+				__( 'Error: No response', 'eu-vat-for-woocommerce' ) );
+			return null;
+		}
+		
+		$responsedecode = json_decode($response, true);
+		if(isset($responsedecode['target'])){
+			$responsetarget = $responsedecode['target'];
+		}else{
+			$responsetarget = '';
+		}
+		
+		// API error
+		if ( isset($responsedecode['code']) ) {
+			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
+					__( $responsedecode['message'], 'eu-vat-for-woocommerce' ) );
+					
+			switch($responsedecode['code']) {
+				case "NOT_FOUND": 
+					return false;
+				case "INVALID_REQUEST": 
+					return false;
+				default: 
+					return null;
+			}
+			
+			// return null;
+		}
+		
+		// Company name
+		if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) && isset($responsedecode['target'])) {
+			if(isset($responsetarget['name'])){
+				$company_name = $responsetarget['name'];
+			}else{
+				$company_name = '';
+			}
+		} else {
+			$company_name = '';
+		}
+		// Final result
+		$return = ( isset($responsedecode['target']) &&
+			( 'no' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) || $company_name === $billing_company ) );
+		if ( ! $return ) {
+			if ( $responsedecode['target'] ) {
+				alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
+					sprintf( __( 'Error: Company name does not match (%s)', 'eu-vat-for-woocommerce' ), $company_name ) );
+					
+					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company_name', $company_name );
+					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company', true );
+					
+			} else {
+				alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
+					__( 'Error: VAT ID not valid', 'eu-vat-for-woocommerce' ) );
+			}
+		} else {
+			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
+				__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' ) );
+		}
+		return $return;
 	}
 }
