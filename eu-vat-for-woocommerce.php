@@ -3,13 +3,13 @@
 Plugin Name: EU/UK VAT for WooCommerce
 Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
 Description: Manage EU VAT in WooCommerce. Beautifully.
-Version: 2.9.4
+Version: 2.9.5.1
 Author: WPWhale
 Author URI: https://wpfactory.com/author/wpwhale/
 Text Domain: eu-vat-for-woocommerce
 Domain Path: /langs
 Copyright: © 2023 WPWhale
-WC tested up to: 7.4
+WC tested up to: 7.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */

@@ -124,6 +124,23 @@ class Alg_WC_EU_VAT_Core {
 			add_filter( 'alg_wc_eu_vat_maybe_exclude_vat',           array( $this, 'maybe_exclude_vat_free' ) );
 			add_filter( 'alg_wc_eu_vat_set_eu_vat_country_locale',   array( $this, 'set_eu_vat_country_locale_core' ), PHP_INT_MAX, 3 );
 			
+			add_filter( 'wpo_wcpdf_after_billing_address',   		 array( $this, 'alg_extend_wcpdf_after_billing_address' ), 10, 2  );
+			
+		}
+	}
+	
+	/**
+	 * alg_extend_wcpdf_after_billing_address.
+	 *
+	 * @version 1.7.0
+	 * @since   1.7.0
+	 */
+	function alg_extend_wcpdf_after_billing_address($type, $pdf_order){
+		if( function_exists( 'alg_wc_eu_vat_get_field_id' ) ){
+			$vat_id = get_post_meta( $pdf_order->ID, '_' . alg_wc_eu_vat_get_field_id(), true );
+			if( $vat_id && !empty( $vat_id ) ){
+			?><div class="eu-vat"><?php echo $vat_id; ?></div><?php
+			}
 		}
 	}
 	

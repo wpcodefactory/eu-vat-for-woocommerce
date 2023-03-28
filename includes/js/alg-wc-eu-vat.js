@@ -157,7 +157,13 @@ jQuery( function( $ ) {
 		
 		vat_paragraph.removeClass( 'woocommerce-invalid' );
 		vat_paragraph.removeClass( 'woocommerce-validated' );
+		vat_paragraph.removeClass( 'woocommerce-invalid-mismatch' );
+		
 		var vat_number_to_check = vat_input.val();
+		
+		if(vat_number_to_check === ''){
+			vat_number_to_check = undefined;
+		}
 		if ( undefined != vat_number_to_check ) {
 			// Validating EU VAT Number through AJAX call
 			if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
@@ -206,6 +212,7 @@ jQuery( function( $ ) {
 					} else if ( '5' == response ) {
 						var com = splt[1];
 						vat_paragraph.addClass( 'woocommerce-invalid' );
+						vat_paragraph.addClass( 'woocommerce-invalid-mismatch' );
 						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.company_name_mismatch.replace("%company_name%", com) );
 							progress_text.removeClass();

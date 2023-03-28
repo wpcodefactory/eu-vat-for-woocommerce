@@ -3,7 +3,7 @@ Contributors: omardabbas
 Tags: woocommerce, eu, uk, vat, eu vat, woo commerce
 Requires at least: 4.4
 Tested up to: 6.1.1
-Stable tag: 2.9.4
+Stable tag: 2.9.5.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -134,6 +134,15 @@ Password: G6_32e!r@
 3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
 
 == Changelog ==
+
+= 2.9.5.1 - 25/03/2023 =
+* Enhanced field validaiton on page load
+
+= 2.9.5 - 18/03/2023 =
+* PDF invoicing compatibility is part of the free version
+* Fixed a bug in field starting validation on checkout page load
+* Altered classname to allow more control on the field
+* Verified compatibility with WooCommerce 7.5
 
 = 2.9.4 - 08/03/2023 =
 * Enhanced field border color for validation (before & after entering values)
