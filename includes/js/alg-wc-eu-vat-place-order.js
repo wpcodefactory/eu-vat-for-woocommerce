@@ -3,7 +3,7 @@
  *
  * @version 1.6.0
  * @since   1.4.1
- * @author  WPWhale
+ * @author  WPFactory
  * @todo    [dev] replace `billing_eu_vat_number` with `alg_wc_eu_vat_get_field_id()`
  * @todo    [dev] (maybe) also `return false;` when not confirmed
  */

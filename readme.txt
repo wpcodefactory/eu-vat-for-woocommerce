@@ -135,7 +135,8 @@ Password: G6_32e!r@
 
 == Changelog ==
 
-= 2.9.5.1 - 25/03/2023 =
+= 2.9.5.1 - 30/03/2023 =
+* Move to WPFactory.
 * Enhanced field validaiton on page load
 
 = 2.9.5 - 18/03/2023 =

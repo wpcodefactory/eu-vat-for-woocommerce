@@ -3,7 +3,7 @@
  *
  * @version 1.6.1
  * @since   1.0.0
- * @author  WPWhale
+ * @author  WPFactory
  * @todo    [dev] replace `billing_eu_vat_number` and `billing_eu_vat_number_field` with `alg_wc_eu_vat_get_field_id()`
  * @todo    [dev] customizable event for `billing_company` (currently `input`; could be e.g. `change`)
  */

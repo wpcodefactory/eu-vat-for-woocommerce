@@ -1,0 +1,22 @@
+# PhpStorm
+.idea
+.idea/*
+
+# VSCode
+.vscode
+.vscode/*
+
+# Composer
+composer.lock
+
+# Node
+node_modules/
+package.json
+package-lock.json
+
+# Coding standards
+/vendor/dealerdirect
+/vendor/phpcompatibility
+/vendor/squizlabs
+/vendor/wp-coding-standards
+.phpcs.cache
