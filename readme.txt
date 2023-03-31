@@ -3,7 +3,7 @@ Contributors: omardabbas
 Tags: woocommerce, eu, uk, vat, eu vat, woo commerce
 Requires at least: 4.4
 Tested up to: 6.1.1
-Stable tag: 2.9.5.1
+Stable tag: 2.9.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,7 +135,7 @@ Password: G6_32e!r@
 
 == Changelog ==
 
-= 2.9.5.1 - 30/03/2023 =
+= 2.9.6 - 31/03/2023 =
 * Move to WPFactory.
 * Enhanced field validaiton on page load
 
