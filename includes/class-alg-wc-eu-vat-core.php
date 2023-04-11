@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 1.7.2
+ * @version 2.9.7
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -20,7 +20,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 1.7.0
+	 * @version 2.9.7
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
 	 * @todo    [feature] `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
@@ -40,7 +40,7 @@ class Alg_WC_EU_VAT_Core {
 			add_filter( 'init',                                                      array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
 			
 			add_filter( 'woocommerce_checkout_update_order_review',                  array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
-			add_action('woocommerce_before_calculate_totals', 						 array($this, 'maybe_exclude_vat'), PHP_INT_MAX);
+			add_action('woocommerce_before_calculate_totals', 						 array($this, 'maybe_exclude_vat'), 99);
             add_action('woocommerce_before_checkout_billing_form', 					 array($this, 'maybe_exclude_vat'), PHP_INT_MAX);
 			
 			add_action( 'woocommerce_after_checkout_validation',                     array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
