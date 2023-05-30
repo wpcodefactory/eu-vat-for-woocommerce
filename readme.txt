@@ -1,9 +1,9 @@
 === EU/UK VAT Manager for WooCommerce ===
-Contributors: omardabbas
+Contributors: omardabbas, kousikmukherjeeli
 Tags: woocommerce, eu, uk, vat, eu vat, woo commerce
 Requires at least: 4.4
 Tested up to: 6.2
-Stable tag: 2.9.7
+Stable tag: 2.9.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -134,6 +134,10 @@ Password: G6_32e!r@
 3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
 
 == Changelog ==
+
+= 2.9.8 - 30/05/2023 =
+* Update with extra character trim with EU VAT validator response.   
+* WC tested up to 7.6
 
 = 2.9.7 - 11/04/2023 =
 * Update woocommerce_before_calculate_totals priority from MAX to 99, so users can run their own overwrite.  

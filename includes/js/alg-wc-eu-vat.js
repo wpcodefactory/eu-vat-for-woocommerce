@@ -109,7 +109,7 @@ jQuery( function( $ ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat
 	 *
-	 * @version 1.6.0
+	 * @version 2.9.8
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_validate_vat() {
@@ -184,6 +184,7 @@ jQuery( function( $ ) {
 				url: alg_wc_eu_vat_ajax_object.ajax_url,
 				data: data,
 				success: function( response ) {
+					response = response.replace("</pre>", "");
 					response = response.trim();
 					var splt = response.split("|");
 					response = splt[0];
