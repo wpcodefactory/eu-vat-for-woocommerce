@@ -45,17 +45,17 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_no_soap.
 	 *
-	 * @version 1.7.0
+	 * @version 2.9.9
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
 	function alg_wc_eu_vat_validate_vat_no_soap( $country_code, $vat_number, $billing_company, $method ) {
 		$country_code = strtoupper( $country_code );
-		$api_url = "https://ec.europa.eu/taxation_customs/vies/viesquer.do?ms=" . $country_code . "&vat=" . $vat_number;
+		$api_url = "https://ec.europa.eu/taxation_customs/vies/rest-api/ms/" . $country_code . "/vat/" . $vat_number;
 		switch ( $method ) {
 			case 'file_get_contents':
 				if ( ini_get( 'allow_url_fopen' ) ) {
-					$response = file_get_contents( $api_url );
+					$response = json_decode(file_get_contents( $api_url ));
 				} else {
 					alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
 						sprintf( __( 'Error: %s is disabled', 'eu-vat-for-woocommerce' ), 'allow_url_fopen' ) );
@@ -66,7 +66,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 				if ( function_exists( 'curl_version' ) ) {
 					$curl = curl_init( $api_url );
 					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-					$response = curl_exec( $curl );
+					$response = json_decode(curl_exec( $curl ));
 					curl_close( $curl );
 				} else {
 					alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
@@ -80,31 +80,19 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 				__( 'Error: No response', 'eu-vat-for-woocommerce' ) );
 			return null;
 		}
+		// Company name 
+		$example = $response->name1;
 		// Company name
-		if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) && false !== ( $pos = strpos( $response, '<td class="labelStyle">Name</td>' ) ) ) {
-			$company_name = substr( $response, $pos );
-			$company_name = explode( '<td', $company_name );
-			if ( isset( $company_name[2] ) ) {
-				$company_name = $company_name[2];
-				if ( strlen( $company_name ) > 0 ) {
-					$company_name = substr( $company_name, 1 );
-					$company_name = explode( '</td>', $company_name );
-					$company_name = trim( $company_name[0] );
-					$company_name = strtoupper( $company_name );
-				} else {
-					$company_name = '';
-				}
-			} else {
-				$company_name = '';
-			}
+		if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) && $response->name ) {
+			$company_name = $response->name;
 		} else {
 			$company_name = '';
 		}
 		// Final result
-		$return = ( false !== strpos( $response, '="validStyle"' ) &&
-			( 'no' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) || $company_name === $billing_company ) );
+		$return = ( $response->isValid &&
+			( 'no' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) || $company_name === $billing_company ) )
 		if ( ! $return ) {
-			if ( false !== strpos( $response, '="validStyle"' ) ) {
+			if ( $response->isValid ) {
 				alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
 					sprintf( __( 'Error: Company name does not match (%s)', 'eu-vat-for-woocommerce' ), $company_name ) );
 			} else {
