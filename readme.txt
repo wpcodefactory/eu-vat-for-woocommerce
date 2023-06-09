@@ -135,6 +135,9 @@ Password: G6_32e!r@
 
 == Changelog ==
 
+= 2.9.9 - 09/06/2023 =
+* Fixed cURL & Simple validation method by changing the VIES URL API.  
+
 = 2.9.8 - 30/05/2023 =
 * Update with extra character trim with EU VAT validator response.   
 * WC tested up to 7.6
