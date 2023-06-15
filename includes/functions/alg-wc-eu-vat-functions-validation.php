@@ -227,7 +227,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 1.6.1
+	 * @version 2.9.9
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 * @todo    [dev] (maybe) check for minimal length
@@ -259,10 +259,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 		$billing_company = strtoupper( $billing_company );
 		foreach ( $methods as $method ) {
 			if ( null !== ( $result = alg_wc_eu_vat_validate_vat_with_method( $country_code, $vat_number, $billing_company, $method ) ) ) {
-				return $result;
+				return apply_filters('alg_wc_eu_vat_check_alternative', $result, $country_code, $vat_number, $billing_company);
 			}
 		}
-		return null;
+		return apply_filters('alg_wc_eu_vat_check_alternative', null, $country_code, $vat_number, $billing_company);
 	}
 }
 
