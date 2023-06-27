@@ -1,7 +1,7 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 1.6.1
+ * @version 2.9.10
  * @since   1.0.0
  * @author  WPFactory
  * @todo    [dev] replace `billing_eu_vat_number` and `billing_eu_vat_number_field` with `alg_wc_eu_vat_get_field_id()`
@@ -49,7 +49,7 @@ jQuery( function( $ ) {
 	}
 
 	// Initial validate
-	alg_wc_eu_vat_validate_vat();
+	alg_wc_eu_vat_validate_vat(true);
 
 	// On input, start the countdown
 	vat_input.on( 'input', function() {
@@ -109,10 +109,10 @@ jQuery( function( $ ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat
 	 *
-	 * @version 2.9.8
+	 * @version 2.9.10
 	 * @since   1.0.0
 	 */
-	function alg_wc_eu_vat_validate_vat() {
+	function alg_wc_eu_vat_validate_vat(load = false) {
 		
 		if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
 			if( 'yes' == alg_wc_eu_vat_ajax_object.hide_message_on_preserved_countries ){
@@ -161,7 +161,7 @@ jQuery( function( $ ) {
 		
 		var vat_number_to_check = vat_input.val();
 		
-		if(vat_number_to_check === ''){
+		if(load && vat_number_to_check === ''){
 			vat_number_to_check = undefined;
 		}
 		if ( undefined != vat_number_to_check ) {
