@@ -141,7 +141,7 @@ class Alg_WC_EU_VAT_Admin {
 			$current   = isset($_GET[$filter_id])? $_GET[$filter_id] : '';
 
 			echo '<select name="'.$filter_id.'">
-			<option value="">' . __('Select Filter EU VAT…', $domain) . '</option>';
+			<option value="">' . __('Select Filter EU VAT...', $domain) . '</option>';
 
 			$options = $this->get_filter_shop_order_meta( $domain );
 

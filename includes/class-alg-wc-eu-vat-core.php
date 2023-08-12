@@ -125,6 +125,52 @@ class Alg_WC_EU_VAT_Core {
 			add_filter( 'alg_wc_eu_vat_set_eu_vat_country_locale',   array( $this, 'set_eu_vat_country_locale_core' ), PHP_INT_MAX, 3 );
 			
 			add_filter( 'wpo_wcpdf_after_billing_address',   		 array( $this, 'alg_extend_wcpdf_after_billing_address' ), 10, 2  );
+
+			add_action( 'restrict_manage_users', 					 array( $this, 'add_billing_eu_vat_section_filter'), 10 );
+			add_filter( 'pre_get_users', 							 array( $this, 'filter_users_by_billing_eu_vat'), 10 );
+			
+		}
+	}
+
+
+	/**
+	 * add_billing_eu_vat_section_filter.
+	 *
+	 * @version 2.9.11
+	 * @since   2.9.11
+	 */
+	function add_billing_eu_vat_section_filter() {
+		$section = ( isset($_GET[ 'billing_eu_vat_number' ]) && isset($_GET[ 'billing_eu_vat_number' ][0]) && $_GET[ 'billing_eu_vat_number' ][0] == 'yes' ) ? 'yes' : 'no';
+		echo ' <select name="billing_eu_vat_number[]" style="float:none;"><option value="">EU VAT provided ?</option>';
+		$selected = 'yes' == $section ? ' selected="selected"' : '';
+		echo '<option value="yes"' . $selected . '>EU VAT provided</option>';
+		echo '</select>';
+		echo '<input type="submit" class="button" value="Filter">';
+	}
+	
+	/**
+	 * filter_users_by_billing_eu_vat.
+	 *
+	 * @version 2.9.11
+	 * @since   2.9.11
+	 */
+	function filter_users_by_billing_eu_vat( $query ) {
+		global $pagenow;
+
+		if ( is_admin() && 'users.php' == $pagenow) {
+			$section = ( isset($_GET[ 'billing_eu_vat_number' ]) && isset($_GET[ 'billing_eu_vat_number' ][0]) && $_GET[ 'billing_eu_vat_number' ][0] == 'yes' ) ? 'yes' : 'no';
+			if ( 'no' !== $section ) {
+				$meta_query = array(
+					array(
+						'key' => 'billing_eu_vat_number',
+						'value' => '',
+						'compare' => '!=',
+					)
+				);
+				$query->set( 'meta_key', 'billing_eu_vat_number' );
+				$query->set( 'meta_query', $meta_query );
+				
+			}
 			
 		}
 	}

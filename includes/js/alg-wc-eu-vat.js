@@ -112,7 +112,7 @@ jQuery( function( $ ) {
 	 * @version 2.9.10
 	 * @since   1.0.0
 	 */
-	function alg_wc_eu_vat_validate_vat(load = false) {
+	function alg_wc_eu_vat_validate_vat( load = false ) {
 		
 		if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
 			if( 'yes' == alg_wc_eu_vat_ajax_object.hide_message_on_preserved_countries ){
