@@ -2,62 +2,62 @@
 msgid "Check VAT Number"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:85
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:93
 msgid "Let Customer Decide:"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:97
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:222
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:287
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:105
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:230
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:295
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings.php:24
 msgid "EU VAT"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:125
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:133
 msgid "Orders with EU VAT numbers"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:144
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:152
 msgid "Select Filter EU VAT..."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:217
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:342
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:225
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:351
 msgid "Taxes"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:241
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:249
 msgid "Report includes all EU VAT countries with existing sales."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:242
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:250
 msgid "Table is sorted by total tax value."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:257
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:827
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:829
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:914
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:987
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1019
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:265
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:851
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:853
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:938
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1018
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1050
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:86
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:94
 msgid "EU VAT Number"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:330
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:339
 msgid "Customer IP"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:334
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:343
 msgid "Country by IP"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:338
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:347
 msgid "Customer EU VAT Number"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:350
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\admin\class-alg-wc-eu-vat-admin.php:359
 msgid "Validate VAT and remove taxes"
 msgstr ""
 
@@ -171,7 +171,7 @@ msgid "VAT is valid."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-ajax.php:50
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1344
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1375
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:233
 msgid "VAT is not valid."
 msgstr ""
@@ -192,37 +192,37 @@ msgid "VAT is valid, but registered to %company_name%."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-ajax.php:94
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1142
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1173
 #, php-format
 msgid "Error: Country by IP does not match (%s)"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:644
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:662
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:154
 msgid "You didn't set your VAT ID. Are you sure you want to continue?"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:750
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:774
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:235
 msgid "I don't have a VAT ID"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:769
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:793
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:251
 msgid "I have a valid VAT but not exempted"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:983
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1014
 msgid "Customer Decide"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1267
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1309
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1298
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1340
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:62
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1317
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1348
 msgid "Error: VAT is not valid (checkout)"
 msgstr ""
 

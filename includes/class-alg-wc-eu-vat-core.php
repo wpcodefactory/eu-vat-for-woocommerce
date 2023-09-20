@@ -136,12 +136,12 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * add_billing_eu_vat_section_filter.
 	 *
-	 * @version 2.9.11
+	 * @version 2.9.13
 	 * @since   2.9.11
 	 */
 	function add_billing_eu_vat_section_filter() {
 		$section = ( isset($_GET[ 'billing_eu_vat_number' ]) && isset($_GET[ 'billing_eu_vat_number' ][0]) && $_GET[ 'billing_eu_vat_number' ][0] == 'yes' ) ? 'yes' : 'no';
-		echo ' <select name="billing_eu_vat_number[]" style="float:none;"><option value="">EU VAT provided ?</option>';
+		echo ' <select name="billing_eu_vat_number[]" style="float:none;"><option value="">EU VAT not provided</option>';
 		$selected = 'yes' == $section ? ' selected="selected"' : '';
 		echo '<option value="yes"' . $selected . '>EU VAT provided</option>';
 		echo '</select>';
@@ -178,12 +178,13 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * alg_extend_wcpdf_after_billing_address.
 	 *
-	 * @version 1.7.0
+	 * @version 2.9.13
 	 * @since   1.7.0
 	 */
 	function alg_extend_wcpdf_after_billing_address($type, $pdf_order){
 		if( function_exists( 'alg_wc_eu_vat_get_field_id' ) ){
-			$vat_id = get_post_meta( $pdf_order->ID, '_' . alg_wc_eu_vat_get_field_id(), true );
+			/*$vat_id = get_post_meta( $pdf_order->ID, '_' . alg_wc_eu_vat_get_field_id(), true );*/
+			$vat_id = $pdf_order->get_meta( '_' . alg_wc_eu_vat_get_field_id() );
 			if( $vat_id && !empty( $vat_id ) ){
 			?><div class="eu-vat"><?php echo $vat_id; ?></div><?php
 			}
@@ -492,11 +493,19 @@ class Alg_WC_EU_VAT_Core {
 		<?php 
 	}
 	
+	/**
+	 * admin_woocommerce_order_is_vat_exempt.
+	 *
+	 * @version 2.9.13
+	 * @since   2.9.13
+	 */
 	function admin_woocommerce_order_is_vat_exempt( $is_exempt, $instance )
 	{ 
 	   //custom code here
 		$order_id = $instance->get_id();
-		$exempt_vat_from_admin = get_post_meta($order_id, 'exempt_vat_from_admin', true);
+		/*$exempt_vat_from_admin = get_post_meta($order_id, 'exempt_vat_from_admin', true);*/
+		
+		$exempt_vat_from_admin = $instance->get_meta( 'exempt_vat_from_admin' );
 		if($exempt_vat_from_admin == 'yes'){
 			return true;
 		}
@@ -504,10 +513,17 @@ class Alg_WC_EU_VAT_Core {
 		
 	}
 	
+	/**
+	 * admin_function_to_add_the_button.
+	 *
+	 * @version 2.9.13
+	 * @since   2.9.13
+	 */
 	function admin_function_to_add_the_button($order)
 	{   
 		$order_id = $order->get_id();
-		$exempt_vat_from_admin = get_post_meta($order_id, 'exempt_vat_from_admin', true);
+		// $exempt_vat_from_admin = get_post_meta($order_id, 'exempt_vat_from_admin', true);
+		$exempt_vat_from_admin = $order->get_meta( 'exempt_vat_from_admin' );
 		if($exempt_vat_from_admin == 'yes'){
 			$exempt_vat_from_admin = 'yes';
 			$title = 'Impose VAT';
@@ -632,16 +648,24 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * add_place_order_button_confirmation_script.
 	 *
-	 * @version 1.4.1
+	 * @version 2.9.13
 	 * @since   1.4.1
 	 */
 	function add_place_order_button_confirmation_script() {
+
 		if ( function_exists( 'is_checkout' ) && is_checkout() ) {
+
 			wp_enqueue_script( 'alg-wc-eu-vat-place-order',
 				trailingslashit( alg_wc_eu_vat()->plugin_url() ) . 'includes/js/alg-wc-eu-vat-place-order.js', array( 'jquery' ), alg_wc_eu_vat()->version, true );
 			wp_localize_script( 'alg-wc-eu-vat-place-order',
 				'place_order_data', array( 'confirmation_text' => do_shortcode( get_option( 'alg_wc_eu_vat_field_confirmation_text',
 					__( 'You didn\'t set your VAT ID. Are you sure you want to continue?', 'eu-vat-for-woocommerce' ) ) ) ) );
+
+			wp_enqueue_script( 'alg-wc-eu-vat-confirmation', 
+				alg_wc_eu_vat()->plugin_url() . '/includes/js/alg-wc-eu-vat-confirmo.js', array('jquery'), alg_wc_eu_vat()->version, true );
+				
+			wp_enqueue_style( 'alg-wc-eu-vat-confirmation-styles', 
+				alg_wc_eu_vat()->plugin_url() . '/includes/js/css/alg-wc-eu-vat-confirmo.css', array(), alg_wc_eu_vat()->version, false );
 		}
 	}
 
@@ -956,12 +980,14 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * add_eu_vat_number_to_order_billing_address.
 	 *
-	 * @version 1.0.0
+	 * @version 2.9.13
 	 * @since   1.0.0
 	 */
 	function add_eu_vat_number_to_order_billing_address( $fields, $_order ) {
 		$field_name = alg_wc_eu_vat_get_field_id();
-		$fields[ $field_name ] = get_post_meta( alg_wc_eu_vat_get_order_id( $_order ), '_' . $field_name, true );
+		$field_value = $_order->get_meta( '_' . $field_name );
+		// $fields[ $field_name ] = get_post_meta( alg_wc_eu_vat_get_order_id( $_order ), '_' . $field_name, true );
+		$fields[ $field_name ] = $field_value;
 		// $fields[ $field_name . '_customer_decide' ] = get_post_meta( alg_wc_eu_vat_get_order_id( $_order ), '_' . $field_name . '_customer_decide', true );
 		return $fields;
 	}
@@ -969,7 +995,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * add_eu_vat_number_to_order_display.
 	 *
-	 * @version 1.4.0
+	 * @version 2.9.13
 	 * @since   1.0.0
 	 */
 	function add_eu_vat_number_to_order_display( $order ) {
@@ -977,8 +1003,13 @@ class Alg_WC_EU_VAT_Core {
 		$html              = '';
 		$option_name       = '_' . alg_wc_eu_vat_get_field_id();
 		$option_name_customer_decide       = '_' . alg_wc_eu_vat_get_field_id() . '_customer_decide';
+		/*
 		$the_eu_vat_number = get_post_meta( $order_id, $option_name, true );
 		$customer_decide = get_post_meta( $order_id, $option_name_customer_decide, true );
+		*/
+		
+		$the_eu_vat_number = $order->get_meta( $option_name );
+		$customer_decide = $order->get_meta( $option_name_customer_decide );
 		if ( '' != $customer_decide ) {
 			$the_label_cd = do_shortcode( __( 'Customer Decide', 'eu-vat-for-woocommerce' ) );
 			$html .= '<p>' . '<strong>' . $the_label_cd . '</strong>: ' . ($customer_decide==1 ? 'yes' : 'no') . '</p>';

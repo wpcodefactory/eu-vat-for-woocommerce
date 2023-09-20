@@ -2,8 +2,8 @@
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
 Tags: woocommerce, eu, uk, vat, eu vat, woo commerce
 Requires at least: 4.4
-Tested up to: 6.2
-Stable tag: 2.9.12
+Tested up to: 6.3
+Stable tag: 2.9.13
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -134,6 +134,12 @@ Password: G6_32e!r@
 3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
 
 == Changelog ==
+
+= 2.9.13 - 21/09/2023 =
+* Compatibility with WordPress 6.3 verified
+* Update filter text "EU VAT not provided".
+* WC tested up to: 8.1
+* Adjust HPOS compatibility.
 
 = 2.9.12 - 12/08/2023 =
 * HPOS compatibility

@@ -78,9 +78,17 @@ class Alg_WC_EU_VAT_Admin {
 		<?php
 	}
 	
+	/**
+	 * order_phone_backend.
+	 *
+	 * @version 2.9.13
+	 * @since   2.9.13
+	 */
+
 	function order_phone_backend($order){
 		$field_id = alg_wc_eu_vat_get_field_id();
-		$value = get_post_meta( $order->get_id(), '_' . $field_id . '_customer_decide', true );
+		// $value = get_post_meta( $order->get_id(), '_' . $field_id . '_customer_decide', true );
+		$value = $order->get_meta( '_' . $field_id . '_customer_decide' );
 		if($value == 1){
 			echo "<br><p><strong>" . __( 'Let Customer Decide:', 'eu-vat-for-woocommerce' ) . "</strong> Yes</p><br>";
 		}
@@ -295,7 +303,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 1.0.0
+	 * @version 2.9.13
 	 * @since   1.0.0
 	 * @todo    [dev] save actual EU VAT number used on checkout (instead of `get_post_meta( $order_id, '_' . alg_wc_eu_vat_get_field_id(), true )`)
 	 * @todo    [dev] (maybe) add country flag
@@ -309,7 +317,8 @@ class Alg_WC_EU_VAT_Admin {
 		$customer_country = alg_wc_eu_vat_get_customers_location_by_ip( $_customer_ip_address );
 
 		// Customer EU VAT number
-		if ( '' == ( $customer_eu_vat_number = get_post_meta( $order_id, '_' . alg_wc_eu_vat_get_field_id(), true ) ) ) {
+		/*if ( '' == ( $customer_eu_vat_number = get_post_meta( $order_id, '_' . alg_wc_eu_vat_get_field_id(), true ) ) ) {*/
+		if ( '' == ( $customer_eu_vat_number = $_order->get_meta( '_' . alg_wc_eu_vat_get_field_id() ) ) ) {
 			$customer_eu_vat_number = '-';
 		}
 
@@ -353,7 +362,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * validate_vat_and_maybe_remove_taxes.
 	 *
-	 * @version 1.6.0
+	 * @version 2.9.13
 	 * @since   1.0.0
 	 */
 	function validate_vat_and_maybe_remove_taxes() {
@@ -364,8 +373,13 @@ class Alg_WC_EU_VAT_Admin {
 			$order_id = $_GET['validate_vat_and_maybe_remove_taxes'];
 			$order    = wc_get_order( $order_id );
 			if ( $order ) {
+				/*
 				$vat_id          = get_post_meta( $order_id, '_' . alg_wc_eu_vat_get_field_id(), true );
 				$billing_company = get_post_meta( $order_id, '_' . 'billing_company', true );
+				*/
+				
+				$vat_id          = $order->get_meta( '_' . alg_wc_eu_vat_get_field_id() );
+				$billing_company = $order->get_meta( '_' . 'billing_company' );
 				if ( '' != $vat_id ) {
 					$eu_vat_number = alg_wc_eu_vat_parse_vat( $vat_id, $order->get_billing_country() );
 					
