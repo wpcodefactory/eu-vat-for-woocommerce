@@ -1,120 +1,269 @@
 === EU/UK VAT Manager for WooCommerce ===
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
-Tags: woocommerce, eu, uk, vat, eu vat, woo commerce
-Requires at least: 4.4
+Tags: woocommerce, eu, uk, vat, eu vat, vat validation
+Requires at least: 6.1
 Tested up to: 6.3
-Stable tag: 2.9.13
+Stable tag: 2.9.14
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Manage EU/ UK VAT in WooCommerce, validate VAT numbers, exempt or preserve VAT with various settings & cases.
+Manage EU/ UK VAT in WooCommerce, validate VAT numbers real time with VIES, exempt or preserve VAT with various settings & cases
 
 == Description ==
 
-**The All in One EU VAT Manager Plugin**
+> “Great Support: The plugin does exactly what it says and it have worked really well so far. I had a small issue but the developer released a new update the day after which fixed it. Can highly recommend!” – ⭐⭐⭐⭐⭐  [soccing](https://wordpress.org/support/topic/great-support-2527/)
 
-Because of the constant changes in VAT regulations, it became very time-consuming for online store owners to update their webshops to comply with EU VAT regulations.
+---
 
-With this plugin, we made adherence to EU VAT regulations much easier, with a few clicks, we made all settings you need possible to make your WooCommerce store fully compliant with EU VAT regulations in matter of a few clicks.
+**Unlock Seamless B2B Transactions with the UK/EU VAT Manager**
 
-This EU/UK VAT Manager for WooCommerce plugin has all the settings you need to collect VAT numbers, validate them and keep or preserve charges based on validation results.
+In the rapidly evolving eCommerce landscape, the ability to cater to both B2C and B2B customers has become essential for growth and scalability. 
+
+For store owners selling across the UK and EU, navigating the complexities of Value Added Tax (VAT) can be challenging. 
+
+B2B transactions within this region often need validation of VAT numbers to ensure legitimate business purchases, allowing sellers to exempt these buyers from VAT charges, where they report it to their local tax authorities. 
+
+With our **EU/UK VAT Manager for WooCommerce** plugin, you can effortlessly validate UK/EU VAT numbers using [VIES (VAT Information Exchange System) services](https://ec.europa.eu/taxation_customs/vies/#/vat-validation "VIES (VAT Information Exchange System) services"), enabling you to sell to businesses in the EU without the additional tax burden. 
+
+This not only streamlines your checkout process but ensures compliance, boosting trust and confidence among your B2B clientele.
+
+In a nutshell, here is what this plugin does:
+
+* **Collect & Validate VAT numbers:** Adds EU VAT field to checkout page to collect VAT numbers and validate in real time
+
+* **Collect VAT on Signup:** Add the EU VAT field to your WooCommerce signup form, entries will be automatically saved in customer data fields
+
+* **Preserve (keep) or Exempt VAT:** Based on tax laws, select to remove VAT for valid VAT numbers or keep it, per country
+
+* **Custom Progress Messages:** Customize & show messages during validation so customers are informed what's happening behind while communicating with VIES
+
+* **Set Field Requirement:** Go beyond optional & required, the plugin allows you to make the field customization based on different cases (more details below)
+
+* **Add VAT Number to PDF Invoices:** Compatibility with the renowned [PDF Invoice & Packing Slips](https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/ "PDF Invoice & Packing Slips") plugin, or any other plugin manually using field_id `_billing_eu_vat_number`
+
+**Important Note: Throughout this description, we use "EU VAT or VAT" to refer to both EU and UK VAT for simplicity and flow. All options and rules specified for the EU also apply to the UK.**
+
+___
+#### Useful Links ####
+* [**Plugin Main Page**](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Plugin Main Page**")
+* [**Plugin Support Forum**](https://wpfactory.com/support/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Plugin Support Forum**")
+* [**Documentation & How to**](https://wpfactory.com/docs/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Documentation & How to**")
+
+___
+## 🤝 Recommended By##
+
+* [CrocoBlock: 3 Best WooCommerce Tax Plugins to Make Managing Tax Quicker and Easier](https://crocoblock.com/blog/best-woocommerce-tax-plugins/ "CrocoBlock: 3 Best WooCommerce Tax Plugins to Make Managing Tax Quicker and Easier")
+
+* [Common Ninja: Handle EU VAT on WooCommerce](https://www.commoninja.com/discover/wordpress/plugin/eu-vat-for-woocommerce "Common Ninja: Handle EU VAT on WooCommerce")
+
+* [Better Studio: 6 Best WooCommerce Tax Exempt Plugins 🥇](https://betterstudio.com/wordpress-plugins/best-woocommerce-tax-exempt-plugins/ "Better Studio: 6 Best WooCommerce Tax Exempt Plugins 🥇")
+
+* [WPLift: 10 Best WooCommerce Tax Plugins](https://wplift.com/best-woocommerce-tax-plugins/ "WPLift: 10 Best WooCommerce Tax Plugins")
+
+* [LearnWoo: 9 Best WooCommerce Tax Exempt Plugins](https://learnwoo.com/woocommerce-tax-exempt-plugins/ "LearnWoo: 9 Best WooCommerce Tax Exempt Plugins")
+
+___
+
+## 🚀 Main Features: FREE Version##
+
+### 🚀 Collect & Validate EU & UK VAT Numbers ###
+
+* Add VAT field to checkout and/or signup forms to allow customers to enter their VAT numbers
+
+* In real time, check VAT numbers on VIES services to verify if they are valid
+
+* Validate VAT numbers using SOAP web service, with fallback methods like cURL & Simple
+
+### 🚀 Decide to Deduct or Keep VAT For Valid Numbers ###
+
+Once results return if VAT number is valid, you can select what VAT charges to apply:
+
+* Remove VAT completely (generally when selling for businesses outside store base country)
+
+* Preserve VAT for store base country
+
+* Preserve VAT in selected countries of your choice
+
+* Preserve VAT if shipping country is different from billing country
+
+### 🚀 Control Field Visibility & Appearance ###
+
+* Customize field name to reflect the common name for VAT for your audience (like USt, TVA, IVA)
+
+* Customize field placeholder (text appearing inside the field)
+
+* Add description to the field so customers are informed on what to do
+
+* Control field position in checkout page in accordance to other fields
+
+* Customize & label field class for CSS
+
+* Compatible with checkout pages built using page builders by manually adding EU VAT through field_id `_billing_eu_vat_number`
+
+### 🚀 Set Field To Multiple Required/Optional Cases ###
+
+* Select to make the field always required (if only selling B2B for example)
+
+* Make field completely optional for all customers
+
+* Make field required in selected countries only (and optional in the rest)
+
+* Likewise, make field optional in some countries (and required in the rest)
+
+* Select the field to be required ONLY if customer filled "Company" field
+
+* Warn users when field is set to optional by showing customized notification text message
+
+* For Belgium TVA Compatibility: Allow customer to select if they are individual or business, making the option required or optional based on selection
+
+### 🚀 More Options to Validate/Invalidate VAT by Countries & User Roles ###
+
+* Always exempt VAT for selected user roles only
+
+* Always charge VAT for selected user roles only
+
+* Skip VAT validation for selected countries 
+
+* Invalidate VAT checking and reserve VAT if country code in VAT number isn't matching billing country code
+
+### 🚀 Keep Customers Informed with Progress Messages ###
+
+* Enhance checkout experience by showing custom messages related to VAT validation
+
+* Select to show messages on different cases:
+
+1. Validating: While communicating with VIES services
+2. Valid: When results return **Valid**
+3. Invalid: When results return **Invalid**
+4. Validation failed: When communicating with VIES failed for technical reasons
+5. When customer select different billing & shipping countries (if that option is enabled)
+6. When customer uses a wrong company name (if that option is enabled "Pro option")
+
+* Control all messages with CSS: All messages have their own CSS classes to customize them along with your brand colors & guidelines
+
+### 🚀 EU VAT Management for Admin ###
+
+* Add an EU VAT number summary meta box to admin order edit page
+
+* Add an EU VAT number column to admin orders list
+
+* Debug & logging options to monitor all validation events
+
+### 🚀 VAT Reporting ###
+
+With this feature, you can view a detailed breakdown of sales by each EU country, clearly highlighting total tax amount and transactions where zero tax was applied due to valid VAT number validation, offering clarity on your B2B transactions, ensuring transparency and aiding in compliance.
 
 
-== Validation Features ==
+### 🚀 More Advanced Options ###
 
-**1. Collect VAT numbers without any validations:**
+* Import all standard EU Tax rates with a 1-click importer using our tool, accessible on WordPress Tools >> EU Country VAT Rates
 
-Not the default behavior for all stores, but if you need it, the plugin offers this.
+* If your customers are used to provide their VAT numbers without preceding country code, you can tolerate this and treat both numbers the same with a seamless experience for your customers.
 
-**2. Validate VAT numbers with EU/UK VAT databases:**
+* **PDF Invoice & Packing Slips** compatibility:  VAT number will be inserted to PDF invoices generated by [PDF Invoices & Packing Slips](https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/ "PDF Invoices & Packing Slips") for WooCommerce plugin
 
-The plugin checks instantly on checkout page with the VIES services (as well as those for UK) to verify validity of the entered VAT number, based on results, you can select the needed setting to be applied (preserve/keep VAT).
+* For other invoicing plugins, you can also add VAT number to invoice by field_id `_billing_eu_vat_number`
 
-**3. Keep VAT charges in store base country:**
+* Multi-Language Support: Plugin is WPML & Polylang compatible, you can use shortcodes to show different languages messages
 
-When you sell inside your store country, EU VAT regulations require you to keep/charge VAT on these goods.
+* Seamless validation & update Checkout page in real time using AJAX (without refreshing the page)
 
-**4. Preserve VAT in selected countries:**
+___
+> “Best plugin for EU VAT: I was using another plugin that is not supported anymore. Then I found EU/UK VAT Manager for WooCommerce, and really, I’m very happy the other plugin is not supported anymore, not because it was not a good plugin, on the contrary, it was. But in another case probably I didn’t find this amazing plugin, that is even a lot better. EU/UK VAT Manager for WooCommerce is the best plugin to manage the EU VAT. I love the VAT check that is made via Ajax in the background when you are in the checkout. Really kudos for this amazing plugin!” – ⭐⭐⭐⭐⭐ [Jose](https://wordpress.org/support/topic/best-plugin-for-eu-vat/)
 
-If your regulations require you to keep VAT charges when you sell to specific countries (other than your store base country), you can do so by selecting which countries that should have VAT charges applied.
+> “Perfect PLUGIN & Service: I was looking for a plugin for a european based b2b shop which will deduct the VAT from other eu countries. Found this plugin, installed it and it worked perfectly! The VAT was deducted on point and i was very happy. But then i noticed that orders from the same country will also deduct the VAT which I thought was not possible. I contacted Omar and he replied that this new feature will be released soon. Today he messaged me to update the plugin and i did! And guess what, now it works exactly as i needed it! Thanks a lot for this plugin and service!” – ⭐⭐⭐⭐⭐ [khang1985](https://wordpress.org/support/topic/perfect-plugin-service-2/)
+___
 
-**5. Verify billing country:**
+## 🏆 Do More: PRO Version ##
 
-In most cases, you will need to verify that billing country is the same country registered for the entered EU VAT number.
-With a single click, the plugin offers this functionality and act accordingly based on desired setting.
+All the features mentioned above, and many more, are available in the free version. But if you're looking to take things up a notch, consider our enhanced [EU/UK VAT Manager for WooCommerce Pro](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme) plugin.
 
-**6. Using VAT numbers with/without country codes:**
+Upgrade to the Pro version and unlock additional more features, including:
 
-If your customers are used to provide their VAT numbers without preceding country code, you can tolerate this and treat both numbers the same with a seamless experience for your customers.
+### 🏆 Show Specific Payment Method Only for Valid VAT  ###
 
-**7. Progress Messages:**
+If you're selling to businesses and wish to offer them specific payment gateways (such as cheques), you can hide that payment option unless a valid VAT number is provided at checkout.
 
-For a better UX on your checkout page, we provide different fields to show messages to your customers during the validation stages, you can set your messages based on these cases:
-Valid, invalid, validating, company name mismatch, different shipping & billing countries.
+### 🏆 Show/Hide EU VAT Field by Country & User Role  ###
 
-== Frontend Interface options ==
+* Choose the countries where the VAT field should be displayed (Use case example: Hide it for sales within the store's base country, as VAT will always be charged to these customers)
 
-**1. Field label settings:**
+* Show field for selected user roles only
 
-Customize field name, like using BTW in Belgium (which is more common than VAT), change the placeholder (text inside the field), and also add a description to the field if needed.
+### 🏆 More Advanced Pro Options ###
 
-**2. Required/Optional Settings:**
+* **Country Match:** Check if customer's country (located by customer's IP) matches the country used in VAT number
 
-We offer you almost all settings to match your needs, you can set the field to be required in these cases:
+* **Company Name Matching:** Check if company name matches the VAT number, and show custom message if not
 
-Always
-In specific countries
-In all countries except specific countries
-If customer filled company field
-And of course, make it completely optional
+* **Local VAT numbers Handling:** Allow checkout in countries with local VAT numbers which can't be validated (not part of VIES) 
 
-**3. Field placement:**
+* Premium Support
 
-Easil control the location/placement of the EU VAT field on the checkout page, you can also insert it manually using the field_id when using a custom page builder for your checkout page.
+And more...
 
-== More Features ==
+___
+## 💯 Why WPFactory?##
 
-**1. Collect VAT on signup:**
+* **Experience You Can Trust:** Over a decade in the business
+* **Wide Plugin Selection:** Offering 65+ unique and powerful plugins
+* **Highly-Rated Support:** Backed by hundreds of 5-star reviews
+* **Expert Team:** Dedicated developers and technical support at your service
 
-You can add the EU VAT field to your WooCommerce signup form, entries will be automatically saved in customer data fields.
+___
 
-**2. Belgium Compatibility:**
+## What's Next? Check More Plugins by WPFactory##
 
-Due to BE different VAT/BTW regulations, the plugin offers multiple extra features to fully comply with that, like allowing customers to select if they are business or individual, then handle VAT accordingly.
+If you're enjoying our plugin, we'd love for you to explore our other offerings. WPFactory has a diverse range of plugins tailored to enhance your experience. 
 
-**3. PDF Invoice & Packing Slips:**
+Dive in and discover more tools to empower your WooCommerce Store!
 
-Without a doubt, this is one of the most used PDF invoicing plugins, without further customizations, the EU VAT number will be inserted to PDF invoices generated by PDF Invoices & Packing Slips for WooCommerce plugin.
+* [**Min Max Step Quantity**](https://wpfactory.com/item/product-quantity-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Min Max Step Quantity**"): Define a min max, step and default quantity for products, show a dropdown, quantities on archive/categories pages, use decimal quantities, and much more on WooCommerce stores (**[Try our Free version](https://wordpress.org/plugins/product-quantity-for-woocommerce/ "Try our Free version")**)
 
-**4. Tax Rates:**
+* [**Cost of Goods for WooCommerce**](https://wpfactory.com/item/cost-of-goods-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Cost of Goods WooCommerce**"): Make informed decisions to maximize profits, correctly calculate Cost of Goods Sold (COGS) for your WooCommerce store and enhance your financial management capabilities (**[Try our Free version](https://wordpress.org/plugins/cost-of-goods-for-woocommerce/ "Try our Free version")**)
 
-With a matter of a click, you can insert all official VAT rates for EU countries, the tool is accessible from WordPress Tools >> EU Country VAT Rates
+* [**Maximum Products per User**](https://wpfactory.com/item/maximum-products-per-user-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Maximum Products per User**"): Set personalized purchase limits for your customers, define maximum product quantities, catered to specific user roles & selected date range (**[Try our Free version](https://wordpress.org/plugins/maximum-products-per-user-for-woocommerce/ "Try our Free version")**)
 
-== Pro Version ==
+* [**Email Verification for WooCommerce**](https://wpfactory.com/item/email-verification-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Email Verification for WooCommerce**"): Enhance WooCommerce security and credibility with Email Verification best plugin. Ensure genuine customer interactions, eliminate spam, and elevate email marketing efficiency (**[Try our Free version](https://wordpress.org/plugins/maximum-products-per-user-for-woocommerce/ "Try our Free version")**)
 
-We offered almost all the settings you need to make your store compliant with EU VAT regulations with the free version, but if you're interested in getting some extra benefits, you can also check the [Pro version](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=desc&utm_campaign=freeversion) of this plugin that includes:
+* [**Free Shipping Over Amount for WooCommerce**](https://wpfactory.com/item/amount-left-free-shipping-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Free Shipping Over Amount for WooCommerce**"): WooCommerce Advanced Free Shipping plugin, use our plugin to quality customers for free shipping when they spend specific amount, by showing a bar on remaining amounts they need to spend to qualify for free shipping (**[Try our Free version](https://wordpress.org/plugins/amount-left-free-shipping-woocommerce/ "Try our Free version")**)
 
-**1. Verify company name:**
-The plugin can also verify if entered VAT number is registered for the exact same company name filled in “Company” field in checkout, and it can even show a customized message if entered name is different from the registered one.
+* [**Dynamic Pricing & Bulk Quantity Discounts**](https://wpfactory.com/item/product-price-by-quantity-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Dynamic Pricing & Bulk Quantity Discounts**"): Create and manage advanced dynamic pricing and bulk discount rules for WooCommerce, encouraging bulk purchases and driving your sales to new heights (**[Try our Free version](https://wordpress.org/plugins/wholesale-pricing-woocommerce/ "Try our Free version")**)
 
-**2. Verify country by IP:**
-As per EU VAT regulations, there should be a physical evidence that the customer is shopping from & shipping to the country of registered company for that VAT number.
-The plugin will allow you to verify IP using GeoIP lookup databases.
+## ❤️ User Testimonials: See What Others Are Saying!##
 
-**3. Show field in specific countries:**
-By default, EU VAT field will appear in all EU countries, if you want to specifically hide/show it on some countries, you can select what those countries are using this option.
+> “Great plugin. We had a small problem and after contact we received the solution very fast. It works 100% now, thanks!” – ⭐⭐⭐⭐⭐ [niek rijt](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme)
 
-**4. Show field based on user role:**
-This option will allow you to show the field for selected user roles only, while hiding it for all other user roles. 
+> “The plugin works great, and does everything I need for selling to other countries in Europe! Support is great and they help develop new features to make the plugin even more compliant with the laws.” – ⭐⭐⭐⭐⭐ [Vincent Bus](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme)
+
+> “It is great! And support is very helpful even with free version. 5 stars!” – ⭐⭐⭐⭐⭐ [Vera](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme)
+
+> “Great support!: The plugin works great, and does everything I need for selling to other countries in Europe! Support is great and they help develop new features to make the plugin even more compliant with the laws.” – ⭐⭐⭐⭐⭐ [kingwebshops](https://wordpress.org/support/topic/great-support-4410/)
 
 
-= Demo Store =
+== Installation ==
 
-If you want to try the plugin features and play around with its settings before installing it on your live website, feel free to do so on this demo store:
-URL: https://wpwhale.com/demo/wp-admin/
-User: demo
-Password: G6_32e!r@
+**Follow these simplified steps to get your plugin up and running:**
 
+**From the WordPress Admin Panel:**
+1. Navigate to “Plugins” > “Add New”.
+2. Use the search bar and find the plugin using the exact name.
+3. Click “Install Now” for the desired plugin.
+4. Once the installation is finished, click “Activate”.
+
+**Manual Installation Using FTP:**
+1. Download the desired plugin from WordPress.org.
+2. Using your preferred FTP client, upload the entire plugin folder to the /wp-content/plugins/ directory of your WordPress installation.
+3. Go to “Plugins” > “Installed Plugins” in your dashboard and click “Activate”.
+
+**Manual download & upload from the WordPress Admin Panel:**
+1. Download the desired plugin in a ZIP format.
+2. On your site, navigate to “Plugins” > “Add New” and click the “Upload Plugin” button.
+3. Choose the downloaded plugin file and click “Install Now.”
+4. After the installation is complete, click “Activate”.
+
+**Post-Activation:**
+Once activated, access the plugin's settings by navigating to “WooCommerce > Settings” and look for the relevant tab.
 
 == Screenshots ==
 
@@ -134,6 +283,10 @@ Password: G6_32e!r@
 3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
 
 == Changelog ==
+
+= 2.9.14 - 09/11/2023 =
+* WC tested up to: 8.2
+* Add: Validation & Progress > Validate at signup form.
 
 = 2.9.13 - 21/09/2023 =
 * Compatibility with WordPress 6.3 verified
@@ -165,7 +318,7 @@ Password: G6_32e!r@
 
 = 2.9.6 - 31/03/2023 =
 * Move to WPFactory.
-* Enhanced field validaiton on page load
+* Enhanced field validation on page load
 
 = 2.9.5 - 18/03/2023 =
 * PDF invoicing compatibility is part of the free version
@@ -199,11 +352,11 @@ Password: G6_32e!r@
 
 = 2.8.5 - 06/12/2022 =
 * Removed cURL & Simple validation methods as they are no longer used on VIES
-* Added new shortcodes to trasnlate EU VAT field in WPML & Polylang
+* Added new shortcodes to translate EU VAT field in WPML & Polylang
 * Enhancement to UK validation method
 
 = 2.8.4 - 29/11/2022 =
-* Enhanced seesion validation on checkout & cart pages, leading to better performance
+* Enhanced session validation on checkout & cart pages, leading to better performance
 * Added validation messages class names to tooltips
 
 = 2.8.3 - 23/11/2022 =
@@ -218,9 +371,8 @@ Password: G6_32e!r@
 = 2.8.1 - 13/11/2022 =
 * New feature: You can now show a custom message when VAT is valid but not matching company name (probably a minor typo)
 * Fixed a bug in show/hide field for countries
-* Enhancements on registrationg values passed to VAT validation
+* Enhancements on registration values passed to VAT validation
 * Compatibility with WooCommerce 7.1 and WordPress 6.1 verified
-
 
 = 2.8 - 20/09/2022 =
 * Fixed a bug blocking checkout on valid numbers
@@ -256,11 +408,11 @@ Password: G6_32e!r@
 
 
 = 2.6.2 - 26/03/2022 =
-* Added depency to the wp_enqueue_script function related to Ajax handling
+* Added dependency to the wp_enqueue_script function related to Ajax handling
 * Fixed an issue when EU VAT field is optional while creating new users using REST-API
 
 = 2.6.1 - 19/03/2022 =
-* Verified compatibily with WooCommerce 6.3
+* Verified compatibility with WooCommerce 6.3
 * Added a new option in the revamped "Required" section to make the VAT field required if company field is filled 
 
 = 2.6 - 27/02/2022 =
@@ -272,15 +424,15 @@ Password: G6_32e!r@
 = 2.5.4 - 18/02/2022 =
 * Added an option to allow checkout even if VAT is not registered in VIES
 * Added a new option to filter orders with VAT numbers in order admin page
-* Verified compatibily with WooCommerce 6.2
+* Verified compatibility with WooCommerce 6.2
 
 = 2.5.3 - 28/01/2022 =
-* Verified compatibily with WordPress 5.9 & WooCommerce 6.1
+* Verified compatibility with WordPress 5.9 & WooCommerce 6.1
 * Added an option to remove tax if customer is out of EU (Belgium regulations)
 * Added an option to collect & validate VAT numbers in signup forms
 
 = 2.5.2 - 11/12/2021 =
-* Compatibilty issue with Wholesale plugin user roles
+* Compatibility issue with Wholesale plugin user roles
 
 = 2.5.1 - 10/12/2021 =
 * New feature added: Allow specific payment gateway if VAT is valid (i.e. for B2B to allow wire transfers)
@@ -310,15 +462,15 @@ Password: G6_32e!r@
 = 2.4.1 - 13/07/2021 =
 * Added an option to validate VAT based on final destination (if order is sent to a forwarding address)
 * Fixed undefined index & order ID warning messages
-* Verified compatibilty with WooCommerce 5.5 
+* Verified compatibility with WooCommerce 5.5 
 
 = 2.4 - 24/06/2021 =
 * Added a popup section to open official VIES website in orders backend (to verify VAT info on order)
-* Verified compatibilty with WooCommerce 5.4 
+* Verified compatibility with WooCommerce 5.4 
 
 = 2.3.3 - 16/05/2021 =
 * Fixed a bug was showing "Undefined index" errors when connecting through SSH
-* Verified compatibilty with WooCommerce 5.3
+* Verified compatibility with WooCommerce 5.3
 
 = 2.3.2 - 03/05/2021 =
 * Fixed a bug in session not firing in store
@@ -336,7 +488,7 @@ Password: G6_32e!r@
 * Checked compatibility with WC 5.1 & WP 5.7
 
 = 2.2.5 - 28/02/2021 =
-* Tested compatibilty with WC 5.0
+* Tested compatibility with WC 5.0
 
 = 2.2.4 - 27/01/2020 =
 * Tested compatibility with WC 4.9

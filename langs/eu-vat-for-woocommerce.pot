@@ -161,33 +161,33 @@ msgid "No taxes found in this period"
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-ajax.php:48
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:217
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:225
 msgid "Validating VAT. Please wait..."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-ajax.php:49
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:225
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:233
 msgid "VAT is valid."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-ajax.php:50
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1375
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:233
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:241
 msgid "VAT is not valid."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-ajax.php:51
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:241
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:249
 msgid "Validation failed. Please try again."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-ajax.php:52
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:249
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:257
 msgid "Different shipping & billing countries."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-ajax.php:53
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:257
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:265
 msgid "VAT is valid, but registered to %company_name%."
 msgstr ""
 
@@ -218,7 +218,7 @@ msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1298
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\class-alg-wc-eu-vat-core.php:1340
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:62
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:70
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
 
@@ -309,7 +309,7 @@ msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-admin.php:48
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-admin.php:56
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:208
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:216
 msgid "Add"
 msgstr ""
 
@@ -548,13 +548,14 @@ msgstr ""
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:226
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:300
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:52
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:85
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:94
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:133
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:144
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:153
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:60
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:93
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:102
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:141
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:152
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:161
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:264
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:169
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:272
 msgid "Yes"
 msgstr ""
 
@@ -579,15 +580,15 @@ msgid "Choose selected payment method from following field."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:191
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:131
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:142
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:139
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:150
 #, php-format
 msgid "You will need %s plugin to enable this option."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:192
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:132
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:143
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:140
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:151
 msgid "EU VAT for WooCommerce Pro"
 msgstr ""
 
@@ -753,8 +754,8 @@ msgid "Ignored if empty (i.e. field is shown for all countries)."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-general.php:338
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:119
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:187
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:127
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:195
 #, php-format
 msgid "Enter country codes as comma separated list, e.g. %s."
 msgstr ""
@@ -819,235 +820,243 @@ msgid "Enabled/disables EU VAT validation."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:58
-msgid "Message on not valid."
+msgid "Validate at signup form."
 msgstr ""
 
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:59
+msgid "Enabled/disables EU VAT validation at sign up page."
+msgstr ""
+
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:66
+msgid "Message on not valid."
+msgstr ""
+
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:67
 #, php-format
 msgid "Replaced value: %s"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:60
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:68
 msgid ""
 "Message will be displayed, when customer tries to checkout with invalid VAT "
 "number (\"Validate\" option must be enabled)."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:69
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:77
 msgid "First validation method"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:70
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:78
 msgid ""
 "Change this if you are having issues when validating VAT. This only selects "
 "first method to try - if not succeeded, remaining methods will be used for "
 "validation."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:76
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:84
 msgid "SOAP"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:77
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:85
 msgid "cURL"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:78
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:86
 msgid "Simple"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:83
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:91
 msgid "Exempt VAT for valid numbers"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:84
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:92
 msgid "Enables/disabled VAT exemption."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:92
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:100
 msgid "Preserve VAT if shipping country is different from billing country"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:93
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:101
 msgid ""
 "Enables for preserve VAT if shipping country is different from billing "
 "country."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:101
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:109
 msgid "Preserve VAT in selected countries"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:102
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:110
 msgid ""
 "This will validate the VAT, but won't exempt VAT for selected countries."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:103
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:111
 #, php-format
 msgid "Country for \"Base (i.e. store) country\" option is set in \"%s\"."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:104
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:112
 msgid "WooCommerce > Settings > General > Store Address"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:110
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:118
 msgid "Base (i.e. store) country"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:111
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:119
 msgid "Comma separated list"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:112
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:120
 msgid "Disable"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:118
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:126
 msgid "Ignored unless \"Comma separated list\" option is selected above."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:129
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:137
 msgid "Check country by IP"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:130
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:138
 msgid ""
 "This will check if customer's country (located by customer's IP) matches the "
 "country in entered VAT number."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:140
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:148
 msgid "Check company name"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:141
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:149
 msgid "This will check if company name matches the VAT number."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:151
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:159
 msgid "Check for matching billing country code"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:152
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:160
 msgid ""
 "This will check if country code in VAT number matches billing country code."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:159
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:167
 msgid "Allow VAT number input without country code"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:160
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:168
 msgid ""
 "This will allow customers to enter VAT number without leading country code "
 "letters and still get VAT validated. In this case country will be "
 "automatically retrieved from billing country input."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:167
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:175
 msgid "Always exempt VAT for selected user roles"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:168
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:177
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:176
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:185
 msgid "Ignored if empty."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:176
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:184
 msgid "Always not exempt VAT for selected user roles"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:185
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:193
 msgid "Skip VAT validation for selected countries"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:186
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:194
 msgid ""
 "List all countries you want VAT validation to be skipped for (i.e. VAT "
 "always valid). Ignored if empty."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:201
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:209
 msgid "Progress Messages"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:206
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:214
 msgid "Add progress messages"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:207
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:215
 msgid "Enabled/disables progress messages on checkout."
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:214
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:222
 msgid "Validating"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:215
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:223
 msgid ""
 "Message when validation is in progress. If you want to customize the message "
 "using CSS, please use class <code>alg-wc-eu-vat-validating</code>"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:222
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:230
 msgid "Valid"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:223
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:231
 msgid ""
 "Message on valid VAT. If you want to customize the message using CSS, please "
 "use class <code>alg-wc-eu-vat-valid</code>"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:230
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:238
 msgid "Not valid"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:231
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:239
 msgid ""
 "Message on invalid VAT. If you want to customize the message using CSS, "
 "please use class <code>alg-wc-eu-vat-not-valid</code>"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:238
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:246
 msgid "Validation failed"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:239
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:247
 msgid ""
 "Message on VAT validation server timeout etc. If you want to customize the "
 "message using CSS, please use class <code>alg-wc-eu-vat-validation-failed</"
 "code>"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:246
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:254
 msgid "Different shipping & billing countries"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:247
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:255
 msgid ""
 "Message on Different shipping & billing countries. If you want to customize "
 "the message using CSS, please use class <code>alg-wc-eu-vat-not-valid-"
 "billing-country</code>"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:254
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:262
 msgid "Company name mismatch"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:255
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:263
 msgid ""
 "Message on Company name mismatch. If you want to customize the message using "
 "CSS, please use class <code>alg-wc-eu-vat-not-valid-company-mismatch</code>"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:262
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:270
 msgid "Hide messages on preserved countries list"
 msgstr ""
 
-#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:263
+#: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings-validation.php:271
 #: E:\xampp\htdocs\wpfactory-local\wp-content\plugins\eu-vat-for-woocommerce-pro\includes\settings\class-alg-wc-eu-vat-settings.php:49
 msgid ""
 msgstr ""

@@ -1368,7 +1368,7 @@ class Alg_WC_EU_VAT_Core {
 		$form_company_name = isset($_POST['billing_company']) ? esc_attr($_POST['billing_company']) : '';
 		$form_country = isset($_POST['billing_country']) ? esc_attr($_POST['billing_country']) : '';
 		
-		if ( 'yes' === get_option( 'alg_wc_eu_vat_field_required', 'yes' ) ) {
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_field_required', 'yes' ) && 'yes' === get_option( 'alg_wc_eu_vat_validate_sign_up_page', 'yes' ) ) {
 			$is_valid = $this->check_and_save_eu_vat( $eu_vat_to_check, $form_country, $form_company_name );
 			
 			if(!$is_valid){
