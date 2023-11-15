@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 1.7.1
+ * @version 2.9.15
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -45,7 +45,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_no_soap.
 	 *
-	 * @version 1.7.0
+	 * @version 2.9.15
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
@@ -90,7 +90,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 					$company_name = substr( $company_name, 1 );
 					$company_name = explode( '</td>', $company_name );
 					$company_name = trim( $company_name[0] );
-					$company_name = strtoupper( $company_name );
+					$company_name = strtolower( $company_name );
 				} else {
 					$company_name = '';
 				}
@@ -123,7 +123,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 1.7.0
+	 * @version 2.9.15
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
@@ -161,14 +161,14 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 				 * $result = stdClass Object( countryCode, vatNumber, requestDate, valid, name, address )
 				 */
 				$return = ( isset( $result->valid ) ?
-					( $result->valid && ( 'no' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) || strtoupper( $result->name ) === $billing_company ) ) : null );
+					( $result->valid && ( 'no' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) || strtolower( $result->name ) === $billing_company ) ) : null );
 				if ( ! $return ) {
 					if ( isset( $result->valid ) ) {
 						if ( $result->valid ) {
 							alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, 'soap',
-								sprintf( __( 'Error: Company name does not match (%s)', 'eu-vat-for-woocommerce' ), strtoupper( $result->name ) ) );
+								sprintf( __( 'Error: Company name does not match (%s)', 'eu-vat-for-woocommerce' ), strtolower( $result->name ) ) );
 								
-								alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company_name', strtoupper( $result->name ) );
+								alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company_name', strtolower( $result->name ) );
 								alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company', true );
 								
 						} else {
@@ -227,7 +227,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 2.9.9
+	 * @version 2.9.15
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 * @todo    [dev] (maybe) check for minimal length
@@ -256,7 +256,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 				$methods = array( 'soap', 'curl', 'file_get_contents' );
 				break;
 		}
-		$billing_company = strtoupper( $billing_company );
+		$billing_company = strtolower( $billing_company );
 		foreach ( $methods as $method ) {
 			if ( null !== ( $result = alg_wc_eu_vat_validate_vat_with_method( $country_code, $vat_number, $billing_company, $method ) ) ) {
 				return apply_filters('alg_wc_eu_vat_check_alternative', $result, $country_code, $vat_number, $billing_company);
@@ -271,7 +271,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_uk.
 	 *
-	 * @version 1.6.1
+	 * @version 2.9.15
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 * @todo    [dev] (maybe) check for minimal length
@@ -337,7 +337,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 		// Company name
 		if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) && isset($responsedecode['target'])) {
 			if(isset($responsetarget['name'])){
-				$company_name = $responsetarget['name'];
+				$company_name = strtolower( $responsetarget['name'] );
 			}else{
 				$company_name = '';
 			}
