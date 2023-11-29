@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 2.9.15
+ * @version 2.9.16
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -45,13 +45,14 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_no_soap.
 	 *
-	 * @version 2.9.15
+	 * @version 2.9.16
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
 	function alg_wc_eu_vat_validate_vat_no_soap( $country_code, $vat_number, $billing_company, $method ) {
 		$country_code = strtoupper( $country_code );
 		$api_url = "https://ec.europa.eu/taxation_customs/vies/viesquer.do?ms=" . $country_code . "&vat=" . $vat_number;
+		$api_url = "https://ec.europa.eu/taxation_customs/vies/rest-api/ms/" .  $country_code . "/vat/" . $vat_number;
 		switch ( $method ) {
 			case 'file_get_contents':
 				if ( ini_get( 'allow_url_fopen' ) ) {
@@ -75,11 +76,25 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 				}
 				break;
 		}
+
 		if ( false === $response ) {
 			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
 				__( 'Error: No response', 'eu-vat-for-woocommerce' ) );
 			return null;
 		}
+
+		// New validation code with new api url
+		$decoded_result = json_decode($response, true);
+		if ( isset( $decoded_result['isValid'] ) && $decoded_result['isValid'] ) {
+			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
+				__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' ) );
+			return true;
+		} else {
+			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
+					__( 'Error: VAT ID not valid', 'eu-vat-for-woocommerce' ) );
+			return false;
+		}
+
 		// Company name
 		if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) && false !== ( $pos = strpos( $response, '<td class="labelStyle">Name</td>' ) ) ) {
 			$company_name = substr( $response, $pos );

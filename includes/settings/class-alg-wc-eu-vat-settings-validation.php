@@ -30,7 +30,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.9.14
+	 * @version 2.9.16
 	 * @since   1.5.0
 	 * @todo    [dev] (maybe) set default value for "alg_wc_eu_vat_add_progress_text" to "yes"
 	 * @todo    [feature] (important) Message if customer is in base country and VAT is NOT exempted
@@ -199,6 +199,19 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'css'      => 'width:100%;',
 			),
 			array(
+				'title'    => __( 'Validate action trigger', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Validate action will trigger based on your choice. Default: onInput', 'eu-vat-for-woocommerce' ),
+				'desc'     => '',
+				'id'       => 'alg_wc_eu_vat_validate_action_trigger',
+				'default'  => 'oninput',
+				'type'     => 'select',
+				'options'  => array(
+					'oninput'  => __( 'on Input', 'eu-vat-for-woocommerce' ),
+					'onblur' => __( 'on Blur', 'eu-vat-for-woocommerce' ),
+				),
+				'custom_attributes' => '',
+			),
+			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_eu_vat_validation_options',
 			),
@@ -215,7 +228,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'desc_tip' => __( 'Enabled/disables progress messages on checkout.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Add', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_add_progress_text',
-				'default'  => 'no',
+				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
 			array(

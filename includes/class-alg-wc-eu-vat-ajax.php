@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 1.7.0
+ * @version 2.9.16
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -31,7 +31,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 1.7.0
+	 * @version 2.9.16
 	 * @since   1.0.0
 	 * @todo    [dev] (important) `... && function_exists( 'is_checkout' ) && is_checkout()`
 	 */
@@ -41,7 +41,8 @@ class Alg_WC_EU_VAT_AJAX {
 				wp_enqueue_script( 'alg-wc-eu-vat', alg_wc_eu_vat()->plugin_url() . '/includes/js/alg-wc-eu-vat.js', array('jquery'), alg_wc_eu_vat()->version, true );
 				wp_localize_script( 'alg-wc-eu-vat', 'alg_wc_eu_vat_ajax_object', array(
 					'ajax_url'                        => admin_url( 'admin-ajax.php' ),
-					'add_progress_text'               => get_option( 'alg_wc_eu_vat_add_progress_text', 'no' ),
+					'add_progress_text'               => get_option( 'alg_wc_eu_vat_add_progress_text', 'yes' ),
+					'action_trigger'               	  => get_option( 'alg_wc_eu_vat_validate_action_trigger', 'oninput' ),
 					'hide_message_on_preserved_countries'               => get_option( 'alg_wc_eu_vat_hide_message_on_preserved_countries', 'no' ),
 					'preserve_countries' => $this->get_preserve_countrues(),
 					'do_check_company_name'           => ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) ),

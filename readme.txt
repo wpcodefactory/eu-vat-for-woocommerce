@@ -2,8 +2,8 @@
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
 Tags: woocommerce, eu, uk, vat, eu vat, vat validation
 Requires at least: 6.1
-Tested up to: 6.3
-Stable tag: 2.9.15
+Tested up to: 6.4
+Stable tag: 2.9.16
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -283,6 +283,12 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
 
 == Changelog ==
+
+= 2.9.16 - 29/11/2023 =
+* Fix - Update API url of VIES curl validation.
+* Fix - Update "Add progress messages" to default "yes".
+* Add - Validation & Progress > Validate action trigger.
+* Checked compatibility with WC 6.4 & WP 8.3
 
 = 2.9.15 - 15/11/2023 =
 * Fix - Company name match in lowarcase.
