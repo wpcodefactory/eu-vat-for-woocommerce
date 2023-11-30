@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.9.7
+ * @version 2.9.17
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -20,7 +20,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.7
+	 * @version 2.9.17
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
 	 * @todo    [feature] `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
@@ -128,10 +128,24 @@ class Alg_WC_EU_VAT_Core {
 
 			add_action( 'restrict_manage_users', 					 array( $this, 'add_billing_eu_vat_section_filter'), 10 );
 			add_filter( 'pre_get_users', 							 array( $this, 'filter_users_by_billing_eu_vat'), 10 );
+
+			add_action( 'wpo_wcpdf_after_order_details', 			 array( $this, 'add_vat_exempt_text_pdf_footer'), 10, 2 );
 			
 		}
 	}
 
+
+	/* add_vat_exempt_text_pdf_footer.
+	 *
+	 * @version 2.9.17
+	 * @since   2.9.17
+	 */
+	function add_vat_exempt_text_pdf_footer( $document_type, $order ) {
+		$is_vat_exempt = $order->get_meta( 'is_vat_exempt' );
+		if ( 'yes' === $is_vat_exempt ) {
+			echo get_option( 'alg_wc_eu_vat_advanced_vat_shifted_text', __( 'VAT SHIFTED', 'eu-vat-for-woocommerce' ) );
+		} 
+	}
 
 	/**
 	 * add_billing_eu_vat_section_filter.

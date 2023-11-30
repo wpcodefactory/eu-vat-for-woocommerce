@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 1.7.2
+ * @version 2.9.17
  * @since   1.5.0
  * @author  WPFactory
  */
@@ -30,7 +30,7 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.7.2
+	 * @version 2.9.17
 	 * @since   1.5.0
 	 * @todo    [dev] (important) set "Session type" default value to "WC session (recommended)"
 	 */
@@ -117,6 +117,14 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 				'id'       => 'alg_wc_eu_vat_sitepress_optimizer_dynamic_caching',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'VAT shifted text', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Please use text for 3rd party PDF invoice plugin.', 'eu-vat-for-woocommerce' ),
+				'desc'     => '',
+				'id'       => 'alg_wc_eu_vat_advanced_vat_shifted_text',
+				'default'  => __( 'VAT Shifted', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
 			),
 			array(
 				'type'     => 'sectionend',
