@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: woocommerce, eu, uk, vat, eu vat, vat validation
 Requires at least: 6.1
 Tested up to: 6.4
-Stable tag: 2.9.17
+Stable tag: 2.9.18
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -283,6 +283,10 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
 
 == Changelog ==
+
+= 2.9.18 - 04/12/2023 =
+* Add - Admin & Advanced > Enable manual validation of VAT numbers.
+* Add - Admin & Advanced > VAT numbers to pass validation.
 
 = 2.9.17 - 01/12/2023 =
 * Add - Admin & Advanced > VAT shifted text.

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 2.9.17
+ * @version 2.9.18
  * @since   1.5.0
  * @author  WPFactory
  */
@@ -30,7 +30,7 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.9.17
+	 * @version 2.9.18
 	 * @since   1.5.0
 	 * @todo    [dev] (important) set "Session type" default value to "WC session (recommended)"
 	 */
@@ -125,6 +125,22 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 				'id'       => 'alg_wc_eu_vat_advanced_vat_shifted_text',
 				'default'  => __( 'VAT Shifted', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
+			),
+			
+			array(
+				'title'    => __( 'Enable manual validation of VAT numbers', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_manual_validation_enable',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'VAT numbers to pass validation', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enter multiple VAT numbers that have been manually validated, separated by commas.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enter multiple VAT numbers that have been manually validated, separated by commas.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_manual_validation_vat_numbers',
+				'default'  => '',
+				'type'     => 'textarea',
 			),
 			array(
 				'type'     => 'sectionend',

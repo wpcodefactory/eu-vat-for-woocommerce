@@ -242,7 +242,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 2.9.15
+	 * @version 2.9.18
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 * @todo    [dev] (maybe) check for minimal length
@@ -258,6 +258,25 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 		}
 		
 		$vat_number = preg_replace('/\s+/', '', $vat_number);
+		
+		/* Vat validate manually presaved number */
+		if( 'yes' === get_option( 'alg_wc_eu_vat_manual_validation_enable', 'no' ) ) {
+			if( '' != ( $manual_validation_vat_numbers = get_option( 'alg_wc_eu_vat_manual_validation_vat_numbers', '' ) ) ) {
+				$prevalidated_VAT_numbers = array();
+				$prevalidated_VAT_numbers = explode( ',', $manual_validation_vat_numbers );
+				$sanitized_vat_numbers = array_map('trim', $prevalidated_VAT_numbers);
+				
+				$conjuncted_vat_number = $country_code . '' . $vat_number;
+				if( isset($sanitized_vat_numbers[0] ) ){
+					if ( in_array( $conjuncted_vat_number, $sanitized_vat_numbers ) ) {
+						alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, '', __( 'Success: VAT ID valid. Matched with prevalidated VAT numbers.', 'eu-vat-for-woocommerce' ) );
+						return true;
+						
+					}
+				}
+			}
+		}
+		/* Vat validate manually presaved number end */
 		
 		$methods = array();
 		switch ( get_option( 'alg_wc_eu_vat_first_method', 'soap' ) ) {
