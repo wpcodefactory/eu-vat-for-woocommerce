@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.9.17
+ * @version 2.9.19
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -20,7 +20,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.17
+	 * @version 2.9.19
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
 	 * @todo    [feature] `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
@@ -914,14 +914,42 @@ class Alg_WC_EU_VAT_Core {
 			}
 		}
 	}
+	
+	/**
+	 * is_tax_status_none.
+	 *
+	 * @version 2.9.19
+	 * @since   2.9.18
+	 */
+	 
+	function is_tax_status_none(){
+		foreach( WC()->cart->get_cart() as $cart_item ) {
+			
+		  $product_in_cart = $cart_item['product_id'];
+		  $product_info = wc_get_product( $product_in_cart );
+		  $tax_status = $product_info->get_tax_status();
+		  if( $tax_status == 'none' ){
+			  return true;
+		  }
+		  
+	    }
+		return false;
+	}
 
 	/**
 	 * add_eu_vat_checkout_field_to_frontend.
 	 *
-	 * @version 1.7.0
+	 * @version 2.9.19
 	 * @since   1.0.0
 	 */
 	function add_eu_vat_checkout_field_to_frontend( $fields ) {
+		
+		if( 'yes' === get_option( 'alg_wc_eu_vat_field_hide_tax_status_none', 'no' ) ){
+			if($this->is_tax_status_none()){
+				return $fields;
+			}
+		}
+		
 		$user_roles = apply_filters( 'alg_wc_eu_vat_show_for_user_roles', array() );
 		if ( ! empty( $user_roles ) && ! $this->check_current_user_roles( $user_roles ) ) {
 			return $fields;

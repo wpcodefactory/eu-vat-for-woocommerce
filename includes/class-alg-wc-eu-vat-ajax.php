@@ -51,7 +51,7 @@ class Alg_WC_EU_VAT_AJAX {
 					'progress_text_not_valid'         => do_shortcode( get_option( 'alg_wc_eu_vat_progress_text_not_valid',         __( 'VAT is not valid.', 'eu-vat-for-woocommerce' ) ) ),
 					'progress_text_validation_failed' => do_shortcode( get_option( 'alg_wc_eu_vat_progress_text_validation_failed', __( 'Validation failed. Please try again.', 'eu-vat-for-woocommerce' ) ) ),
 					'text_shipping_billing_countries' => do_shortcode( get_option( 'alg_wc_eu_vat_shipping_billing_countries', __( 'Different shipping & billing countries.', 'eu-vat-for-woocommerce' ) ) ),
-					'company_name_mismatch' 		  => do_shortcode( get_option( 'alg_wc_eu_vat_company_name_mismatch', __( 'VAT is valid, but registered to %company_name%.', 'eu-vat-for-woocommerce' ) ) ),
+					'company_name_mismatch' 		  => do_shortcode( get_option( 'alg_wc_eu_vat_company_name_mismatch', __( ' VAT is valid, but registered to %company_name%.', 'eu-vat-for-woocommerce' ) ) ),
 					'is_required' => get_option( 'alg_wc_eu_vat_field_required', 'no' ),
 				) );
 			}

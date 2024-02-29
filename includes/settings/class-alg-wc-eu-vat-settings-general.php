@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 1.7.2
+ * @version 2.9.19
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -43,7 +43,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.7.2
+	 * @version 2.9.19
 	 * @since   1.0.0
 	 * @todo    [dev] check if `clear` is still working (and if yes - change desc)
 	 * @todo    [dev] (maybe) add link to plugin site `'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' . __( 'Visit plugin site', 'eu-vat-for-woocommerce' ) . '</a>'`
@@ -138,6 +138,15 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'multiselect',
 				'class'    => 'wc-enhanced-select',
 				'options'  => $this->allcountries()
+			),
+			
+			array(
+				'title'    => __( 'Remove the VAT field if the tax status is "none"', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Remove VAT from the checkout if any product in the cart has a tax status of "none".', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_field_hide_tax_status_none',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			
 			array(
