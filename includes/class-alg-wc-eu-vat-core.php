@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.9.19
+ * @version 2.9.20
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -137,12 +137,13 @@ class Alg_WC_EU_VAT_Core {
 
 	/* add_vat_exempt_text_pdf_footer.
 	 *
-	 * @version 2.9.17
+	 * @version 2.9.20
 	 * @since   2.9.17
 	 */
 	function add_vat_exempt_text_pdf_footer( $document_type, $order ) {
 		$is_vat_exempt = $order->get_meta( 'is_vat_exempt' );
-		if ( 'yes' === $is_vat_exempt ) {
+		$is_vat_exempt_from_admin = $order->get_meta( 'exempt_vat_from_admin' );
+		if ( 'yes' === $is_vat_exempt || 'yes' === $is_vat_exempt_from_admin) {
 			echo get_option( 'alg_wc_eu_vat_advanced_vat_shifted_text', __( 'VAT SHIFTED', 'eu-vat-for-woocommerce' ) );
 		} 
 	}
