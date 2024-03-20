@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.9.20
+ * @version 2.9.21
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -20,7 +20,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.19
+	 * @version 2.9.21
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
 	 * @todo    [feature] `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
@@ -132,6 +132,41 @@ class Alg_WC_EU_VAT_Core {
 			add_action( 'wpo_wcpdf_after_order_details', 			 array( $this, 'add_vat_exempt_text_pdf_footer'), 10, 2 );
 			
 		}
+		add_filter('woocommerce_rest_prepare_shop_order_object', array( $this, 'alg_wc_eu_vat_filter_order_response' ), PHP_INT_MAX, 3 );
+	}
+	
+	
+	/* alg_wc_eu_vat_filter_order_response.
+	 *
+	 * @version 2.9.21
+	 * @since   2.9.21
+	 */
+	function alg_wc_eu_vat_filter_order_response($response, $post, $request){
+		
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_remove_country_rest_api_enable', 'no' ) ) {
+		
+			$i = 0;
+			$meta_data_count = count($response->data["meta_data"]);
+			while($i < $meta_data_count) {
+				
+				if( $response->data['meta_data'][$i]->get_data()['key'] == '_billing_eu_vat_number' ) {
+					
+					$value = $response->data['meta_data'][$i]->get_data()['value'];
+					
+					$vat_clean = preg_replace('/[^a-zA-Z0-9]/', '', $value);
+					$vat_code = substr($vat_clean,2,15);
+					$vat_country = substr($vat_clean,0,2);
+					
+					$response->data['meta_data'][$i]->__set('value', $vat_code);
+					$response->data['meta_data'][$i]->__set('vat_country', $vat_country);
+					$response->data['meta_data'][$i]->apply_changes();
+				}
+				
+				$i++;
+			}
+		}
+		
+		return $response;
 	}
 
 
