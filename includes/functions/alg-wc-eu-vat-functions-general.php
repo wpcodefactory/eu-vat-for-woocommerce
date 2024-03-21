@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - General
  *
- * @version 1.7.1
+ * @version 2.10.0
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -13,11 +13,11 @@ if ( ! function_exists( 'alg_wc_eu_vat_get_field_id' ) ) {
 	/**
 	 * alg_wc_eu_vat_get_field_id.
 	 *
-	 * @version 1.0.0
+	 * @version 2.10.0
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_get_field_id( $short = false ) {
-		$field_id = 'eu_vat_number';
+		$field_id = apply_filters( 'alg_wc_eu_vat_get_field_id', 'eu_vat_number' );
 		return ( $short ? $field_id : 'billing_' . $field_id );
 	}
 }

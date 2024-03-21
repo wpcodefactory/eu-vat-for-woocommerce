@@ -1,8 +1,8 @@
-/* 
-   confirmo is a simple and light weight js library that works as sweet alert js 
-   written by EdinyangaOttoho
-   2020
- */
+/**
+ * alg-wc-eu-vat-confirmo.js
+ *
+ * @version 2.10.0
+ **/
 var confirmoinit = document.createElement('div');
 confirmoinit.className = 'confirmo-backdrop';
 confirmoinit.id = 'confirmo-modal';
@@ -55,6 +55,12 @@ var confirmo = {
 			}
 			else if (i == "noBg") {
 				document.getElementById("confirmo-right").style.backgroundColor = props[i];
+			}
+			else if (i == "leftText") {
+				document.getElementById("confirmo-left").innerHTML  = '&#10004; ' + props[i];
+			}
+			else if (i == "rightText") {
+				document.getElementById("confirmo-right").innerHTML  = '&times; ' + props[i];
 			}
 			else if (i == "backColor") {
 				document.querySelector(".confirmo-modal").style.backgroundColor = props[i];

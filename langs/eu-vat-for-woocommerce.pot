@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu-vat-for-woocommerce 2.9.21\n"
+"Project-Id-Version: eu-vat-for-woocommerce 2.10.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-03-20T18:51:08+01:00\n"
+"POT-Creation-Date: 2024-03-21T19:35:05+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
@@ -184,6 +184,28 @@ msgstr ""
 #: includes/class-alg-wc-eu-vat-core.php:712
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:163
 msgid "You didn't set your VAT ID. Are you sure you want to continue?"
+msgstr ""
+
+#: includes/class-alg-wc-eu-vat-core.php:712
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:171
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:180
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:202
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:235
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:309
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:52
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:60
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:93
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:102
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:141
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:152
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:161
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:169
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:285
+msgid "Yes"
+msgstr ""
+
+#: includes/class-alg-wc-eu-vat-core.php:712
+msgid "No"
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-core.php:824
@@ -526,23 +548,6 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:170
 msgid "Add EU VAT field to signup form."
-msgstr ""
-
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:171
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:180
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:202
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:235
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:309
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:52
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:60
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:93
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:102
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:141
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:152
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:161
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:169
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:285
-msgid "Yes"
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:178

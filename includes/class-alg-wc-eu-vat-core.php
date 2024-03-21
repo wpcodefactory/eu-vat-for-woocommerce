@@ -709,7 +709,7 @@ class Alg_WC_EU_VAT_Core {
 				trailingslashit( alg_wc_eu_vat()->plugin_url() ) . 'includes/js/alg-wc-eu-vat-place-order.js', array( 'jquery' ), alg_wc_eu_vat()->version, true );
 			wp_localize_script( 'alg-wc-eu-vat-place-order',
 				'place_order_data', array( 'confirmation_text' => do_shortcode( get_option( 'alg_wc_eu_vat_field_confirmation_text',
-					__( 'You didn\'t set your VAT ID. Are you sure you want to continue?', 'eu-vat-for-woocommerce' ) ) ) ) );
+					__( 'You didn\'t set your VAT ID. Are you sure you want to continue?', 'eu-vat-for-woocommerce' ) ) ), 'yes_text' => __( 'Yes', 'eu-vat-for-woocommerce' ), 'no_text' => __( 'No', 'eu-vat-for-woocommerce' ), 'yesBg' => apply_filters( 'alg_wc_eu_vat_confirmation_bg_yes', 'green' ), 'noBg' => apply_filters( 'alg_wc_eu_vat_confirmation_bg_no', 'red' ) ) );
 
 			wp_enqueue_script( 'alg-wc-eu-vat-confirmation', 
 				alg_wc_eu_vat()->plugin_url() . '/includes/js/alg-wc-eu-vat-confirmo.js', array('jquery'), alg_wc_eu_vat()->version, true );
