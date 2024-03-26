@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 2.9.16
+ * @version 2.10.2
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -31,7 +31,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.9.16
+	 * @version 2.10.2
 	 * @since   1.0.0
 	 * @todo    [dev] (important) `... && function_exists( 'is_checkout' ) && is_checkout()`
 	 */
@@ -53,6 +53,7 @@ class Alg_WC_EU_VAT_AJAX {
 					'text_shipping_billing_countries' => do_shortcode( get_option( 'alg_wc_eu_vat_shipping_billing_countries', __( 'Different shipping & billing countries.', 'eu-vat-for-woocommerce' ) ) ),
 					'company_name_mismatch' 		  => do_shortcode( get_option( 'alg_wc_eu_vat_company_name_mismatch', __( ' VAT is valid, but registered to %company_name%.', 'eu-vat-for-woocommerce' ) ) ),
 					'is_required' => get_option( 'alg_wc_eu_vat_field_required', 'no' ),
+					'optional_text'        			  => __( '(optional)', 'eu-vat-for-woocommerce' ),
 				) );
 			}
 		}

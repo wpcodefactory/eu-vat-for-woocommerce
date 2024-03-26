@@ -1,7 +1,7 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 2.9.16
+ * @version 2.10.2
  * @since   1.0.0
  * @author  WPFactory
  * @todo    [dev] replace `billing_eu_vat_number` and `billing_eu_vat_number_field` with `alg_wc_eu_vat_get_field_id()`
@@ -110,7 +110,7 @@ jQuery( function( $ ) {
 			vat_input.removeClass('field-required');
 			vat_input_label.find("abbr").hide();
 			vat_input_label.find("span.optional").remove();
-			vat_input_label.append('<span class="optional">(optional)</span>');
+			vat_input_label.append('<span class="optional">' + alg_wc_eu_vat_ajax_object.optional_text + '</span>');
 			// vat_paragraph.hide();
 		}
 	}
@@ -141,7 +141,7 @@ jQuery( function( $ ) {
 				vat_input.removeClass('field-required');
 				vat_input_label.find("abbr").hide();
 				vat_input_label.find("span.optional").remove();
-				vat_input_label.append('<span class="optional">(optional)</span>');
+				vat_input_label.append('<span class="optional">' + alg_wc_eu_vat_ajax_object.optional_text + '</span>');
 				vat_paragraph.hide();
 				return;
 			}else{
@@ -256,7 +256,7 @@ jQuery( function( $ ) {
 				vat_paragraph.addClass( 'woocommerce-invalid' );
 			} else {
 				// Not required
-				vat_paragraph.addClass( 'woocommerce-validated' );
+				// vat_paragraph.addClass( 'woocommerce-validated' );
 			}
 			$( 'body' ).trigger( 'update_checkout' );
 		}
