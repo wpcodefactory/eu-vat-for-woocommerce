@@ -88,7 +88,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			
 			array(
-				'title'    => __( 'Exempt VAT for valid numbers', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Remove VAT for validated numbers', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Enables/disabled VAT exemption.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_disable_for_valid',
@@ -97,8 +97,8 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			
 			array(
-				'title'    => __( 'Preserve VAT if shipping country is different from billing country', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enables for preserve VAT if shipping country is different from billing country.', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Keep VAT if shipping country is different from billing country', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enables for keep VAT if shipping country is different from billing country.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_preserv_vat_for_different_shipping',
 				'default'  => 'no',
@@ -106,7 +106,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			
 			array(
-				'title'    => __( 'Preserve VAT in selected countries', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Keep VAT in selected countries', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'This will validate the VAT, but won\'t exempt VAT for selected countries.', 'eu-vat-for-woocommerce' ) . ' ' .
 					sprintf( __( 'Country for "Base (i.e. store) country" option is set in "%s".', 'eu-vat-for-woocommerce' ),
 						__( 'WooCommerce > Settings > General > Store Address', 'eu-vat-for-woocommerce' ) ),

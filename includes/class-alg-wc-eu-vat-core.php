@@ -1343,7 +1343,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 1.7.1
+	 * @version 2.10.1
 	 * @since   1.0.0
 	 * @todo    [dev] (important) simplify the code
 	 */
@@ -1390,6 +1390,7 @@ class Alg_WC_EU_VAT_Core {
 					$_posted[ alg_wc_eu_vat_get_field_id() ] != alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' )
 				)
 			) {
+				
 				$is_valid = false;
 				if (
 					'yes' === get_option( 'alg_wc_eu_vat_force_checkout_recheck', 'no' ) &&
@@ -1400,6 +1401,31 @@ class Alg_WC_EU_VAT_Core {
 						( isset( $_posted['billing_country'] ) ? $_posted['billing_country'] : '' ),
 						( isset( $_posted['billing_company'] ) ? $_posted['billing_company'] : '' )
 					);
+				} else {
+					
+					$vat_number = $_posted[ alg_wc_eu_vat_get_field_id() ];
+					$billing_country = isset( $_posted['billing_country'] ) ? $_posted['billing_country'] : '';
+					$billing_company = isset( $_posted['billing_company'] ) ? $_posted['billing_company'] : '';
+					$vat_number = preg_replace('/\s+/', '', $vat_number);
+					$eu_vat_number = alg_wc_eu_vat_parse_vat( $vat_number, $billing_country );
+		
+					/* Vat validate manually presaved number */
+					if( 'yes' === get_option( 'alg_wc_eu_vat_manual_validation_enable', 'no' ) ) {
+						if( '' != ( $manual_validation_vat_numbers = get_option( 'alg_wc_eu_vat_manual_validation_vat_numbers', '' ) ) ) {
+							$prevalidated_VAT_numbers = array();
+							$prevalidated_VAT_numbers = explode( ',', $manual_validation_vat_numbers );
+							$sanitized_vat_numbers = array_map('trim', $prevalidated_VAT_numbers);
+							
+							$conjuncted_vat_number = $billing_country . '' . $eu_vat_number['number'];
+							if( isset($sanitized_vat_numbers[0] ) ){
+								if ( in_array( $conjuncted_vat_number, $sanitized_vat_numbers ) ) {
+									alg_wc_eu_vat_maybe_log( $eu_vat_number['country'], $eu_vat_number['number'], $billing_company, '', __( 'Success (checkout): VAT ID valid. Matched with prevalidated VAT numbers.', 'eu-vat-for-woocommerce' ) );
+									$is_valid = true;
+									
+								}
+							}
+						}
+					}
 				}
 				
 				if ( 'no' != ( $preserve_option_value = get_option( 'alg_wc_eu_vat_preserv_vat_for_different_shipping', 'no' ) ) ) {

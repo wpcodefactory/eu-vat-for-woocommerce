@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 2.9.21
+ * @version 2.10.1
  * @since   1.5.0
  * @author  WPFactory
  */
@@ -30,7 +30,7 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.9.21
+	 * @version 2.10.1
 	 * @since   1.5.0
 	 * @todo    [dev] (important) set "Session type" default value to "WC session (recommended)"
 	 */
@@ -149,6 +149,16 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
+			
+			array(
+				'title'    => __( 'Reduce concurrent request to VIES', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enable if validation fails multiple times and you encounter the "MS_MAX_CONCURRENT_REQ" error after debugging.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_reduce_concurrent_request_enable',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_eu_vat_advanced_options',
