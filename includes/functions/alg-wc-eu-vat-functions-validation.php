@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 2.9.16
+ * @version 2.10.3
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -45,7 +45,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_no_soap.
 	 *
-	 * @version 2.10.1
+	 * @version 2.10.3
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
@@ -67,6 +67,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 				if ( function_exists( 'curl_version' ) ) {
 					$curl = curl_init( $api_url );
 					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+					curl_setopt( $curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 					$response = curl_exec( $curl );
 					curl_close( $curl );
 				} else {
