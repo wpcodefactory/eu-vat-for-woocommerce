@@ -1,0 +1,38 @@
+.wp-block-eu-vat-for-woocommerce-checkout-eu-vat-field {
+	margin: 20px 0;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	/*display: flex;*/
+	align-items: flex-start;
+
+	.block-editor-rich-text__editable {
+		vertical-align: middle;
+		line-height: 24px;
+	}
+
+	.wc-block-components-checkbox {
+		margin-right: 16px;
+		margin-top: 0;
+	}
+	
+}
+
+div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid input, div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch input, div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid label, div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch label{
+		color: #cc1818;
+}
+div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid input, div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch input {
+		border-color: #cc1818;
+}
+#alg_wc_eu_vat_progress.alg-wc-eu-vat-not-valid {
+		color: #cc1818;
+}
+
+.editor-styles-wrapper {
+
+	.wp-block-eu-vat-for-woocommerce-checkout-eu-vat-field {
+		.wc-block-components-checkbox {
+			margin-right: 0;
+			margin-top: 0;
+		}
+	}
+}

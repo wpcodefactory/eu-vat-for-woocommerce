@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu-vat-for-woocommerce 2.10.3\n"
+"Project-Id-Version: eu-vat-for-woocommerce 2.11.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-04T12:47:00+02:00\n"
+"POT-Creation-Date: 2024-05-28T15:43:22+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
@@ -35,6 +35,34 @@ msgstr ""
 msgid "https://wpfactory.com/"
 msgstr ""
 
+#: eu-vat-for-woocommerce-blocks-initialize.php:55
+#: includes/admin/class-alg-wc-eu-vat-admin.php:265
+#: includes/class-alg-wc-eu-vat-core.php:1005
+#: includes/class-alg-wc-eu-vat-core.php:1007
+#: includes/class-alg-wc-eu-vat-core.php:1120
+#: includes/class-alg-wc-eu-vat-core.php:1200
+#: includes/class-alg-wc-eu-vat-core.php:1232
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:86
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:94
+#: build/eu-vat-for-woocommerce-checkout-eu-vat-field-block-frontend.js:1
+#: build/eu-vat-for-woocommerce-checkout-eu-vat-field-block.js:1
+#: src/js/checkout-eu-vat-field-block/block.js:243
+#: src/js/checkout-eu-vat-field-block/edit.js:38
+msgid "EU VAT Number"
+msgstr ""
+
+#: eu-vat-for-woocommerce-blocks-initialize.php:72
+msgid "EU VAT Number Blocks"
+msgstr ""
+
+#: eu-vat-for-woocommerce-blocks-integration.php:95
+msgid "This is some example data from the server"
+msgstr ""
+
+#: eu-vat-for-woocommerce-blocks-integration.php:96
+msgid "I want to receive updates about products and promotions."
+msgstr ""
+
 #: eu-vat-for-woocommerce-pro.php:166
 msgid "Unlock All"
 msgstr ""
@@ -56,17 +84,6 @@ msgstr ""
 
 #: includes/admin/class-alg-wc-eu-vat-admin.php:250
 msgid "Table is sorted by total tax value."
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:265
-#: includes/class-alg-wc-eu-vat-core.php:901
-#: includes/class-alg-wc-eu-vat-core.php:903
-#: includes/class-alg-wc-eu-vat-core.php:1016
-#: includes/class-alg-wc-eu-vat-core.php:1096
-#: includes/class-alg-wc-eu-vat-core.php:1128
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:86
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:94
-msgid "EU VAT Number"
 msgstr ""
 
 #: includes/admin/class-alg-wc-eu-vat-admin.php:339
@@ -153,7 +170,7 @@ msgid "VAT is valid."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:51
-#: includes/class-alg-wc-eu-vat-core.php:1479
+#: includes/class-alg-wc-eu-vat-core.php:1583
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:254
 msgid "VAT is not valid."
 msgstr ""
@@ -177,20 +194,37 @@ msgid "(optional)"
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:96
-#: includes/class-alg-wc-eu-vat-core.php:1251
+#: includes/class-alg-wc-eu-vat-core.php:1355
 msgid "Error: Country by IP does not match (%s)"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:182
+#: includes/class-alg-wc-eu-vat-core.php:199
+#: includes/class-alg-wc-eu-vat-core.php:1526
+msgid "Success (checkout): VAT ID valid. Matched with prevalidated VAT numbers."
+msgstr ""
+
+#: includes/class-alg-wc-eu-vat-core.php:225
+#: includes/class-alg-wc-eu-vat-core.php:1556
+msgid "Error: VAT is not valid (checkout)"
+msgstr ""
+
+#: includes/class-alg-wc-eu-vat-core.php:230
+#: includes/class-alg-wc-eu-vat-core.php:1480
+#: includes/class-alg-wc-eu-vat-core.php:1548
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:70
+msgid "<strong>EU VAT Number</strong> is not valid."
+msgstr ""
+
+#: includes/class-alg-wc-eu-vat-core.php:286
 msgid "VAT SHIFTED"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:712
+#: includes/class-alg-wc-eu-vat-core.php:816
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:163
 msgid "You didn't set your VAT ID. Are you sure you want to continue?"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:712
+#: includes/class-alg-wc-eu-vat-core.php:816
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:171
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:180
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:202
@@ -208,36 +242,22 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:712
+#: includes/class-alg-wc-eu-vat-core.php:816
 msgid "No"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:824
+#: includes/class-alg-wc-eu-vat-core.php:928
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:244
 msgid "I don't have a VAT ID"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:843
+#: includes/class-alg-wc-eu-vat-core.php:947
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:260
 msgid "I have a valid VAT but not exempted"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1092
+#: includes/class-alg-wc-eu-vat-core.php:1196
 msgid "Customer Decide"
-msgstr ""
-
-#: includes/class-alg-wc-eu-vat-core.php:1376
-#: includes/class-alg-wc-eu-vat-core.php:1444
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:70
-msgid "<strong>EU VAT Number</strong> is not valid."
-msgstr ""
-
-#: includes/class-alg-wc-eu-vat-core.php:1422
-msgid "Success (checkout): VAT ID valid. Matched with prevalidated VAT numbers."
-msgstr ""
-
-#: includes/class-alg-wc-eu-vat-core.php:1452
-msgid "Error: VAT is not valid (checkout)"
 msgstr ""
 
 #: includes/functions/alg-wc-eu-vat-functions-debug.php:26
@@ -1049,4 +1069,26 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings.php:128
 msgid "Your settings have been reset."
+msgstr ""
+
+#: build/eu-vat-for-woocommerce-checkout-eu-vat-field-block.js:1
+#: src/js/checkout-eu-vat-field-block/edit.js:26
+msgid "Block options"
+msgstr ""
+
+#: block.json
+msgctxt "block title"
+msgid "Eu Vat For Woocommerce"
+msgstr ""
+
+#: build/js/checkout-eu-vat-field-block/block.json
+#: src/js/checkout-eu-vat-field-block/block.json
+msgctxt "block title"
+msgid "EU VAT Field"
+msgstr ""
+
+#: build/js/checkout-eu-vat-field-block/block.json
+#: src/js/checkout-eu-vat-field-block/block.json
+msgctxt "block description"
+msgid "Adds a EU VAT Field checkbox to the checkout."
 msgstr ""

@@ -78,7 +78,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 1.7.0
+	 * @version 2.11.0
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) better codes (i.e. not 0, 1, 2, 3)
 	 * @todo    [dev] (maybe) `if ( ! isset( $_POST['alg_wc_eu_vat_validate_action'] ) ) return;`
@@ -137,21 +137,40 @@ class Alg_WC_EU_VAT_AJAX {
 			$company_name = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check_company_name' );
 		}
 		
+		$return_status = '';
+		
 		if(!isset($eu_vat_number['number']) || empty($eu_vat_number['number'])){
-			echo '6';
+			$return_status = '6';
 		}  else if ( true === $is_shipping_diff ) {
-			echo '4';
+			$return_status =  '4';
 		}  else if( false === $is_valid && true === $company_name_status ){
-			echo '5|' . $company_name;
+			$return_status =  '5|' . $company_name;
 		}  else if ( false === $is_valid ) {
-			echo '0';
+			$return_status =  '0';
 		} elseif ( true === $is_valid ) {
-			echo '1';
+			$return_status =  '1';
 		} elseif ( null === $is_valid ) {
-			echo '2';
+			$return_status =  '2';
 		} else {
-			echo '3'; // unexpected
+			$return_status =  '3'; // unexpected
 		}
+		
+		if ( isset( $_POST['channel'] ) && 'bloock_api' == $_POST['channel'] ) {
+			$return_data = array();
+			$return_data['status'] = $return_status;
+			if ( !empty( WC()->customer ) && ( true === $is_valid) )  {
+				$is_exempt = true;
+				WC()->customer->set_is_vat_exempt( $is_exempt );
+			} else {
+				$is_exempt = false;
+				WC()->customer->set_is_vat_exempt( $is_exempt );
+			}
+			$alg_wc_eu_vat_valid = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_valid' );
+			wp_send_json($return_data);
+		}else{
+			echo $return_status;
+		}
+		
 		die();
 	}
 	

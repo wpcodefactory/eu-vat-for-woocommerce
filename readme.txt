@@ -1,9 +1,9 @@
 === EU/UK VAT Manager for WooCommerce ===
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
-Tags: woocommerce, eu, uk, vat, eu vat, vat validation
+Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.5
-Stable tag: 2.10.3
+Stable tag: 2.11.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,8 @@ In a nutshell, here is what this plugin does:
 * **Custom Progress Messages:** Customize & show messages during validation so customers are informed what's happening behind while communicating with VIES
 
 * **Set Field Requirement:** Go beyond optional & required, the plugin allows you to make the field customization based on different cases (more details below)
+
+* **Checkout Block-based Compatible:** The plugin works seamlessly with the new block-based Checkout page
 
 * **Add VAT Number to PDF Invoices:** Compatibility with the renowned [PDF Invoice & Packing Slips](https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/ "PDF Invoice & Packing Slips") plugin, or any other plugin manually using field_id `_billing_eu_vat_number`
 
@@ -81,6 +83,11 @@ Once results return if VAT number is valid, you can select what VAT charges to a
 * Preserve VAT in selected countries of your choice
 
 * Preserve VAT if shipping country is different from billing country
+
+### 🚀 Checkout Block-based Compatible ###
+
+With the recent updates to WooCommerce block-based checkout page, our plugin is now compatible with it, to ensure a seamless integration without the need to use classic editor or workarounds.
+
 
 ### 🚀 Control Field Visibility & Appearance ###
 
@@ -282,6 +289,10 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
 
 == Changelog ==
+
+= 2.11.0 - 28/05/2024 =
+* Checkout block support.
+* WC tested up to: 8.9
 
 = 2.10.3 - 04/04/2024 =
 * Fix - error in alg_wc_eu_vat_validate_vat_no_soap() function.
