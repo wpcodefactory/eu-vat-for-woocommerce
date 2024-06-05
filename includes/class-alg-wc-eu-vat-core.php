@@ -141,7 +141,7 @@ class Alg_WC_EU_VAT_Core {
 	
 	/* alg_eu_vat_update_block_order_meta_eu_vat.
 	 *
-	 * @version 2.10.4
+	 * @version 2.11.1
 	 * @since   2.10.4
 	 */
 	function alg_eu_vat_update_block_order_meta_eu_vat( $order, $request ) {
@@ -156,6 +156,7 @@ class Alg_WC_EU_VAT_Core {
 		$posted_billing_company = $billing_address['company'];
 		$posted_eu_vat_id = $data['billing_eu_vat_number'];
 		
+		$is_valid = false;
 		
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_validate', 'yes' ) ) {
 			if (
@@ -231,10 +232,16 @@ class Alg_WC_EU_VAT_Core {
 					);
 					
 				} else {
-					$order->update_meta_data( '_billing_eu_vat_number', $data['billing_eu_vat_number'] );
-					$order->update_meta_data( 'is_vat_exempt', 'yes' );
+					
 				}
 			}
+		}
+		
+		if( isset( $data['billing_eu_vat_number'] ) && !empty( $data['billing_eu_vat_number'] ) ) {
+			$order->update_meta_data( '_billing_eu_vat_number', $data['billing_eu_vat_number'] );
+		}
+		if( $is_valid ) {
+			$order->update_meta_data( 'is_vat_exempt', 'yes' );
 		}
 
     }
