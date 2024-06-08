@@ -10,11 +10,11 @@ export const registerFilters = (pointsLabelPlural, discountRegex) => {
 	registerCheckoutFilters('eu-vat-for-woocommerce', {
 		itemName: ( name, extensions, args ) => {
 			
-			const euvat_val = document.getElementById('billing_eu_vat_number').value;
+			// const euvat_val = document.getElementById('billing_eu_vat_number').value;
 			
-			if( euvat_val !== '' ) {
+			// if( euvat_val !== '' ) {
 				// algWcBlockEuVatValidateVat( euvat_val, false );
-			}
+			// }
 			// return `${name} + extra data!`;
 			return name;
 		},
