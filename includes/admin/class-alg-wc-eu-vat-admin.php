@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 1.6.0
+ * @version 2.11.3
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -16,7 +16,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * Constructor.
 	 *
-	 * @version 1.5.0
+	 * @version 2.11.3
 	 * @since   1.0.0
 	 */
 	function __construct() {
@@ -41,6 +41,10 @@ class Alg_WC_EU_VAT_Admin {
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_add_order_list_column', 'no' ) ) {
 			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_columns' ),    PHP_INT_MAX );
 			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
+			
+			add_filter( 'manage_woocommerce_page_wc-orders_columns', array( $this, 'add_order_columns' ),  PHP_INT_MAX );
+			add_action('manage_woocommerce_page_wc-orders_custom_column', array( $this, 'render_wc_order_columns' ), PHP_INT_MAX, 2);
+			
 			add_action( 'restrict_manage_posts', 				 array( $this, 'display_admin_shop_order_by_meta_filter' ), PHP_INT_MAX );
 			
 			add_filter( 'request',  							 array( $this, 'process_admin_shop_order_marketing_by_meta' ), 99 );
@@ -116,6 +120,26 @@ class Alg_WC_EU_VAT_Admin {
 		if ( 'alg_wc_eu_vat' === $column ) {
 			echo get_post_meta( get_the_ID(), '_'. alg_wc_eu_vat_get_field_id(), true );
 			if ( 'yes' === get_post_meta( get_the_ID(), 'is_vat_exempt', true ) ) {
+				echo ' &#10004;';
+			}
+		}
+	}
+	
+	/**
+	 * render_wc_order_columns.
+	 *
+	 * @version 2.11.3
+	 * @since   2.11.3
+	 */
+	function render_wc_order_columns( $column, $order ) {
+		if ( 'alg_wc_eu_vat' === $column ) {
+			$key = '_'. alg_wc_eu_vat_get_field_id();
+			$vat_value = $order->get_meta($key);
+			$is_vat_exempt = $order->get_meta('is_vat_exempt');
+            if ( ! empty($vat_value) ) {
+                echo $vat_value;
+            }
+			if ( 'yes' === $is_vat_exempt ) {
 				echo ' &#10004;';
 			}
 		}

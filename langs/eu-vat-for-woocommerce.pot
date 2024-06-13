@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu-vat-for-woocommerce 2.11.2\n"
+"Project-Id-Version: eu-vat-for-woocommerce 2.11.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-08T20:47:41+02:00\n"
+"POT-Creation-Date: 2024-06-13T08:04:53+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
@@ -36,7 +36,7 @@ msgid "https://wpfactory.com/"
 msgstr ""
 
 #: eu-vat-for-woocommerce-blocks-initialize.php:55
-#: includes/admin/class-alg-wc-eu-vat-admin.php:265
+#: includes/admin/class-alg-wc-eu-vat-admin.php:289
 #: includes/class-alg-wc-eu-vat-core.php:1012
 #: includes/class-alg-wc-eu-vat-core.php:1014
 #: includes/class-alg-wc-eu-vat-core.php:1127
@@ -67,42 +67,42 @@ msgstr ""
 msgid "Unlock All"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:93
+#: includes/admin/class-alg-wc-eu-vat-admin.php:97
 msgid "Let Customer Decide:"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:105
-#: includes/admin/class-alg-wc-eu-vat-admin.php:230
-#: includes/admin/class-alg-wc-eu-vat-admin.php:295
+#: includes/admin/class-alg-wc-eu-vat-admin.php:109
+#: includes/admin/class-alg-wc-eu-vat-admin.php:254
+#: includes/admin/class-alg-wc-eu-vat-admin.php:319
 #: includes/settings/class-alg-wc-eu-vat-settings.php:24
 msgid "EU VAT"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:249
+#: includes/admin/class-alg-wc-eu-vat-admin.php:273
 msgid "Report includes all EU VAT countries with existing sales."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:250
+#: includes/admin/class-alg-wc-eu-vat-admin.php:274
 msgid "Table is sorted by total tax value."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:339
+#: includes/admin/class-alg-wc-eu-vat-admin.php:363
 msgid "Customer IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:343
+#: includes/admin/class-alg-wc-eu-vat-admin.php:367
 msgid "Country by IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:347
+#: includes/admin/class-alg-wc-eu-vat-admin.php:371
 msgid "Customer EU VAT Number"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:351
+#: includes/admin/class-alg-wc-eu-vat-admin.php:375
 msgid "Taxes"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:359
+#: includes/admin/class-alg-wc-eu-vat-admin.php:383
 msgid "Validate VAT and remove taxes"
 msgstr ""
 
