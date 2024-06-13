@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 2.10.3
+ * @version 2.11.4
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -13,7 +13,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_parse_vat.
 	 *
-	 * @version 1.7.1
+	 * @version 2.11.4
 	 * @since   1.1.0
 	 * @todo    [dev] (maybe) `alg_wc_eu_vat_maybe_log`: extract ID from `$full_vat_number`
 	 */
@@ -31,6 +31,9 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 			}
 		} elseif ( 'yes' === get_option( 'alg_wc_eu_vat_allow_without_country_code', 'no' ) ) {
 			$country = $billing_country;
+			if( 'GR' === $billing_country ) {
+				$country = 'EL';
+			}
 			$number  = $full_vat_number;
 		} else {
 			$country = '';
