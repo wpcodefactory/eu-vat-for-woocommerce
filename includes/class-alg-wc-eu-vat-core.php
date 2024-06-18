@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.9.21
+ * @version 2.11.5
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -511,6 +511,7 @@ class Alg_WC_EU_VAT_Core {
 					
 					if('yes_for_company' === $eu_vat_required){
 						$is_required = false;
+						
 					}
 					
 					$country_locales[ $country_code_re ][ alg_wc_eu_vat_get_field_id( true ) ] = array(
@@ -556,7 +557,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * maybe_exclude_vat_free.
 	 *
-	 * @version 1.7.0
+	 * @version 2.11.5
 	 * @since   1.7.0
 	 */
 	function maybe_exclude_vat_free( $value ) {
@@ -594,15 +595,19 @@ class Alg_WC_EU_VAT_Core {
 			if ( 'EL' === $selected_country ) {
 				$selected_country = 'GR';
 			}
+			
+			$selected_country_at_checkout = WC()->checkout->get_value( 'billing_country' );
+			
 			if ( 'yes' === $preserve_option_value ) {
 				$location = wc_get_base_location();
 				if ( empty( $location['country'] ) ) {
 					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
 				}
-				$preserve_base_country_check_passed = ( strtoupper( $location['country'] ) !== $selected_country );
+				
+				$preserve_base_country_check_passed = ( strtoupper( $location['country'] ) !== $selected_country_at_checkout );
 			} elseif ( '' != get_option( 'alg_wc_eu_vat_preserve_in_base_country_locations', '' ) ) { // `list`
 				$locations = array_map( 'strtoupper', array_map( 'trim', explode( ',', get_option( 'alg_wc_eu_vat_preserve_in_base_country_locations', '' ) ) ) );
-				$preserve_base_country_check_passed = ( ! in_array( $selected_country, $locations ) );
+				$preserve_base_country_check_passed = ( ! in_array( $selected_country_at_checkout, $locations ) );
 			}
 		}
 		
@@ -1065,21 +1070,25 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * is_tax_status_none.
 	 *
-	 * @version 2.9.19
+	 * @version 2.11.5
 	 * @since   2.9.18
 	 */
 	 
 	function is_tax_status_none(){
-		foreach( WC()->cart->get_cart() as $cart_item ) {
-			
-		  $product_in_cart = $cart_item['product_id'];
-		  $product_info = wc_get_product( $product_in_cart );
-		  $tax_status = $product_info->get_tax_status();
-		  if( $tax_status == 'none' ){
-			  return true;
-		  }
-		  
-	    }
+		if( function_exists('WC') ) {
+			if( isset( WC()->cart ) ) {
+				foreach( WC()->cart->get_cart() as $cart_item ) {
+					
+				  $product_in_cart = $cart_item['product_id'];
+				  $product_info = wc_get_product( $product_in_cart );
+				  $tax_status = $product_info->get_tax_status();
+				  if( $tax_status == 'none' ){
+					  return true;
+				  }
+				  
+				}
+			}
+		}
 		return false;
 	}
 
@@ -1454,7 +1463,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 2.10.1
+	 * @version 2.11.5
 	 * @since   1.0.0
 	 * @todo    [dev] (important) simplify the code
 	 */
@@ -1478,15 +1487,34 @@ class Alg_WC_EU_VAT_Core {
 				return;
 			}
 		}
+		
+		$show_eu_vat_field_countries = array();
+		
+		if(!empty($this->show_in_countries)) {
+			$show_eu_vat_field_countries = array_map( 'strtoupper', array_map( 'trim', explode( ',', $this->show_in_countries ) ) );
+		}
+		
+		$country_code = isset( $_posted['billing_country'] ) ? $_posted['billing_country'] : '';
+		
 		if ( 'yes_for_company' === $eu_vat_required ) {
 			if(isset( $_posted['billing_company']) && !empty($_posted['billing_company'])){
 				if(isset( $_posted[alg_wc_eu_vat_get_field_id()]) && empty($_posted[alg_wc_eu_vat_get_field_id()])){
+					
 					$is_valid = false;
-					wc_add_notice(
-						str_replace( '%eu_vat_number%', $_posted[ alg_wc_eu_vat_get_field_id() ],
-							do_shortcode( get_option( 'alg_wc_eu_vat_not_valid_message', __( '<strong>EU VAT Number</strong> is not valid.', 'eu-vat-for-woocommerce' ) ) ) ),
-						'error'
-					);
+					
+					if(!empty($show_eu_vat_field_countries) && (isset($show_eu_vat_field_countries[0]) && !empty($show_eu_vat_field_countries[0]))){
+						if ( !in_array( $country_code, $show_eu_vat_field_countries ) ) {
+							$is_valid = true;
+						}
+					}
+				
+					if( !$is_valid ) {
+						wc_add_notice(
+							str_replace( '%eu_vat_number%', $_posted[ alg_wc_eu_vat_get_field_id() ],
+								do_shortcode( get_option( 'alg_wc_eu_vat_not_valid_message', __( '<strong>EU VAT Number</strong> is not valid.', 'eu-vat-for-woocommerce' ) ) ) ),
+							'error'
+						);
+					}
 				}
 			}
 		}

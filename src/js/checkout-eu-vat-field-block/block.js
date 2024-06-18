@@ -219,6 +219,7 @@ const Block = ({ children, checkoutExtensionData }) => {
 			// this line is to save changes in checkout customer data.
 			wp.data.dispatch('wc/store/cart').invalidateResolutionForStore();
 			
+			
 		},
 		[ setBillingEuVatNumber. setExtensionData ]
 	)

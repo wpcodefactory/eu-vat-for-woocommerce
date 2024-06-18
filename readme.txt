@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.5
-Stable tag: 2.11.4
+Stable tag: 2.11.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -289,6 +289,12 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
 
 == Changelog ==
+
+= 2.11.5 - 18/06/2024 =
+* Fix - "Required if customer fills the company field" and "Show field for selected countries only" cross logic check and fixed.
+* Fix - checkout block move EU VAT field to customer info section.
+* Fix - Some error notice.
+* Fix - issue with "Keep VAT in selected countries".
 
 = 2.11.4 - 13/06/2024 =
 * Fix - “Allow VAT number input without country code” for Greek VATs. 

@@ -11,8 +11,6 @@ composer.lock
 
 # Node
 node_modules/
-package.json
-package-lock.json
 
 # Coding standards
 /vendor/dealerdirect
