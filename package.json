@@ -1,6 +1,6 @@
 {
 	"name": "eu-vat-for-woocommerce",
-	"version": "2.11.5",
+	"version": "2.11.6",
 	"author": "WPFactory",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",

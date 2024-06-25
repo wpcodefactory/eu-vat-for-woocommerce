@@ -1,7 +1,7 @@
 <?php
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
 
-define ( 'EuVatForWoocommerce_VERSION', '0.1.0' );
+define ( 'EuVatForWoocommerce_VERSION', '2.11.6' );
 
 /**
  * Class for integrating with WooCommerce Blocks
@@ -25,6 +25,21 @@ class EuVatForWoocommerce_Blocks_Integration implements IntegrationInterface {
 		$this->register_euvat_block_editor_scripts();
         $this->register_euvat_block_editor_styles();
         $this->register_main_integration();
+		
+		add_action( 'wp_enqueue_scripts', array( $this, 'eu_vat_country_enqueue_script' ) );
+	}
+	
+	/**
+	 * Enqueue country array.
+	 */
+	public function eu_vat_country_enqueue_script() {
+		
+		$wc_countries = new WC_Countries();
+		$countries = $wc_countries->get_countries();
+		$flipped_countries = array_flip( $countries );
+		
+		wp_localize_script( 'eu-vat-for-woocommerce-checkout-eu-vat-field-block-frontend', 'alg_wc_eu_frontend_countries_object', $flipped_countries );
+		
 	}
 
 	/**
@@ -161,6 +176,10 @@ class EuVatForWoocommerce_Blocks_Integration implements IntegrationInterface {
             'eu-vat-for-woocommerce', // text domain
             dirname( __FILE__ ) . '/languages'
         );
+		
+		
+		
+		
     }
 
 	/**

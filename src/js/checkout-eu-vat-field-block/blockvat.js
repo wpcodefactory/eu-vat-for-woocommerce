@@ -1,5 +1,5 @@
 /**
- * External dependencies
+ * checkout block VAT validation 2.11.6
  */
 import { useEffect, useState, useCallback } from '@wordpress/element';
 import { CheckboxControl, ValidatedTextInput } from '@woocommerce/blocks-checkout';
@@ -12,21 +12,67 @@ const { optInDefaultText } = getSetting('eu-vat-for-woocommerce_data', '');
 // Global import
 const { registerCheckoutBlock, extensionCartUpdate } = wc.blocksCheckout;
 
+const { CART_STORE_KEY } = window.wc.wcBlocksData;
+
 
 const { hasError } = false;
 
+const algReloadOnFirst = () => {
+	
+	
+	const store_cb = select( CART_STORE_KEY );
+	const cartData_cb = store_cb.getCartData();
+
+	const billCountry = cartData_cb.billingAddress.country;
+	const billCompany = cartData_cb.billingAddress.company;
+	
+	var payLoad = new URLSearchParams({
+				'action': 'alg_wc_eu_vat_validate_action',
+				'channel': 'bloock_api',
+				'alg_wc_eu_vat_to_check': 'checkout_block_first_load',
+				'billing_country': billCountry,
+				'billing_company': billCompany,
+			});
+			
+	fetch( alg_wc_eu_vat_ajax_object.ajax_url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			},
+			body: payLoad,
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			extensionCartUpdate( {
+				namespace: 'alg-wc-eu-vat-extention-namespace-reload-first',
+				data: {
+					eu_vat_number: ''
+				},
+			} );
+	
+	});
+	console.log('on first load');
+};
+export { algReloadOnFirst };
+
 const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 		
-		const { CART_STORE_KEY } = window.wc.wcBlocksData;
+		const isSameBillingShipping = 'no';
+		if(isUseBillingChecked()){
+			isSameBillingShipping = 'yes';
+		}
 		
 		const store = select( CART_STORE_KEY );
 		const cartData = store.getCartData();
-		
+
 		const billingCountry = cartData.billingAddress.country;
 		const billingCompany = cartData.billingAddress.company;
 		
 		var progress = document.getElementById('alg_wc_eu_vat_progress');
-		var eu_vat_field = document.getElementById('alg_eu_vat_for_woocommerce_field');
+		// var eu_vat_field = document.getElementById('alg_eu_vat_for_woocommerce_field');
+		
+		var eu_vat_field = document.getElementById('contact-alg_eu_vat/billing_eu_vat_number');
+		
 		var place_order_button = document.getElementsByClassName("wc-block-components-checkout-place-order-button")[0];
 		
 		const previous_country = document.getElementById('store_previous_country');
@@ -39,7 +85,7 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 				'channel': 'bloock_api',
 				'alg_wc_eu_vat_to_check': vat_number,
 				'billing_country': billingCountry,
-				'billing_company': billingCompany,
+				'billing_company': billingCompany
 			});
 		
 		progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_validating;
@@ -130,6 +176,15 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 				// this line is to save changes in checkout customer data.
 				if( refresh ) {
 					// wp.data.dispatch('wc/store/cart').invalidateResolutionForStore();
+					
+					extensionCartUpdate( {
+						namespace: 'alg-wc-eu-vat-extention-namespace',
+						data: {
+							eu_vat_number: vat_number,
+							eu_country: billingCountry,
+							same_billing_shipping: isSameBillingShipping,
+						},
+					} );
 				}
 			// }
 			place_order_button.disabled = false;
@@ -138,9 +193,39 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 };
 export { algWcBlockEuVatValidateVat };
 
+const getCountryCode = countryName => {
+	return ( (typeof alg_wc_eu_frontend_countries_object[countryName] !== "undefined" ) ? alg_wc_eu_frontend_countries_object[countryName] : '' );
+};
+
+const isBillingCountryChanged = countryOnChange => {
+	var countryCode = getCountryCode(countryOnChange);
+	const country_stored = document.getElementById('store_previous_country');
+	if( countryCode !== country_stored ) {
+		country_stored.value = countryCode;
+		return true;
+	}
+	
+	return false;
+};
+
+const isUseBillingChecked = () => {
+	var checked = false;
+	var use_same_for_billing_el = document.getElementsByClassName('wc-block-checkout__use-address-for-billing');
+			
+	for ( let m = 0; m < use_same_for_billing_el.length; m++ ) {
+		
+		var checkbx_el = use_same_for_billing_el[m].getElementsByTagName('input');
+		
+		for ( let n = 0; n < checkbx_el.length; n++ ) {
+			checked = checkbx_el[n].checked
+		}
+	}
+	
+	return checked;
+};
+
 const Block = ({ children, checkoutExtensionData }) => {
-	const [checked, setChecked] = useState(false);
-	const [ billingEuVatNumber, setBillingEuVatNumber ] = useState('');
+	
 	const { setExtensionData, getExtensionData } = checkoutExtensionData;
 	
 
@@ -149,8 +234,6 @@ const Block = ({ children, checkoutExtensionData }) => {
 	);
 	
 	const { CART_STORE_KEY } = window.wc.wcBlocksData;
-	
-	
 		
 	const store = select( CART_STORE_KEY );
 	const cartData = store.getCartData();
@@ -159,114 +242,98 @@ const Block = ({ children, checkoutExtensionData }) => {
 
 	useEffect(() => {
 		
-		setExtensionData( 'eu-vat-for-woocommerce-block-example', 'billing_eu_vat_number', billingEuVatNumber  );
+		var vat_number = document.getElementById('contact-alg_eu_vat/billing_eu_vat_number');
 		
-		var gov = document.getElementById('contact-namespace/gov-id');
+		var verifyOnFirstLoad = function() {
+			if(vat_number.value !== '' ){
+				algWcBlockEuVatValidateVat( vat_number.value, true );
+			}
+			
+		};
+		
+		setTimeout(verifyOnFirstLoad, 500);
+		
 		var onChange = function(evt) {
-		  console.info(this.value);
-		  // or
-		  console.info(evt.target.value);
-		  console.info("test");
+		  
 		  algWcBlockEuVatValidateVat( evt.target.value, true );
+		  
 		};
 		
-		gov.addEventListener('input', onChange, false);
-
-		/*
-		if ( !billingEuVatNumber ) {
-			setValidationErrors({
-				'billing_eu_vat_number': {
-					message: __('Please enter a valid EU VAT number.', 'eu-vat-for-woocommerce'),
-					hidden: false,
-				},
-			});
-			return;
-		}
-		*/
+		vat_number.addEventListener('input', onChange, false);
 		
-		clearValidationError('billing_eu_vat_number');
-	}, [clearValidationError, setValidationErrors, checked, setExtensionData]);
-	
-	
-	
-	
-	const onInputChange = useCallback(
-		( value ) => {
-			setBillingEuVatNumber( value );
-			setExtensionData( 'eu-vat-for-woocommerce-block-example', 'billing_eu_vat_number', value );
-			if(value == ''){
-				/*
-				setValidationErrors({
-					'billing_eu_vat_number': {
-						message: __('', 'eu-vat-for-woocommerce'),
-						hidden: true,
-					}
-				});
-				return;
-				*/
+		var onChangeInput = function(evt) {
+			
+			var $objVal = evt.target.value;
+			if( isBillingCountryChanged ($objVal) ) {
+				if(vat_number.value !== '' ){
+					algWcBlockEuVatValidateVat( vat_number.value, true );
+				}
 			}
-			else
-			{
-				// console.log(alg_wc_eu_vat_ajax_object.add_progress_text);
-				algWcBlockEuVatValidateVat( value, true );
+			
+		};
+		
+		var onChangeCheckbox = function(evt) {
+			addlistenerToCountryField();
+		};
+		
+		var addlistenerToCountryField = function() {
+			
+			var use_same_address = false;
+			var addListenerID = 'billing-country';
+			
+			if( isUseBillingChecked() ) {
+				use_same_address = true;
+				addListenerID = 'shipping-country';
+			}
+			
+			var countries_input = document.getElementsByClassName('wc-block-components-country-input');
+			
+			for ( let i = 0; i < countries_input.length; i++ ) {
+			  
+			  if ( countries_input[i].children[0].getAttribute('id').toString() === addListenerID ) {
+				  var inputs = countries_input[i].getElementsByTagName('input');
+				  
+				  for ( let j = 0; j < inputs.length; j++) {
+					  
+					  inputs[j].addEventListener('blur', onChangeInput, false);
+					  // inputs[j].addEventListener('focus', onChangeInput, false);
+					  // inputs[j].addEventListener('input', onChangeInput, false);
+					  
+				  }
+				  
+			  }
+			  
+			}
+		};
+		
+		window.addEventListener("load", function(event) {
+			
+			
+			addlistenerToCountryField();
+			
+			var use_same_for_billing = document.getElementsByClassName('wc-block-checkout__use-address-for-billing');
+			
+			for ( let k = 0; k < use_same_for_billing.length; k++ ) {
 				
-				extensionCartUpdate( {
-					namespace: 'alg-wc-eu-vat-extention-namespace',
-					data: {
-						eu_vat_number: value
-					},
-				} );
+				var checkbx = use_same_for_billing[k].getElementsByTagName('input');
+				
+				for ( let l = 0; l < checkbx.length; l++ ) {
+					checkbx[l].addEventListener('change', onChangeCheckbox, false);
+				}
 			}
-		},
-		[ setBillingEuVatNumber. setExtensionData ]
-	)
+			
+			
+			
+		});
+		
+
+	}, [clearValidationError, setValidationErrors, setExtensionData]);
 	
-	const onInputBlur = useCallback(
-		( value ) => {
-			setBillingEuVatNumber( value );
-			setExtensionData( 'eu-vat-for-woocommerce-block-example', 'billing_eu_vat_number', value );
-			if(value == ''){
-				/*
-				setValidationErrors({
-					'billing_eu_vat_number': {
-						message: __('', 'eu-vat-for-woocommerce'),
-						hidden: true,
-					}
-				});
-				*/
-			}
-			
-			// this line is to save changes in checkout customer data.
-			// wp.data.dispatch('wc/store/cart').invalidateResolutionForStore();
-			
-			
-		},
-		[ setBillingEuVatNumber. setExtensionData ]
-	)
-
-	const { validationError, validationErrorInput  } = useSelect((select) => {
-		const store = select('wc/store/validation');
-		return {
-			validationError: store.getValidationError('eu-vat-for-woocommerce'),
-			validationErrorInput: store.getValidationError('billing_eu_vat_number')
-		};
-	});
-
+	
+	
 	return (
 		<>
 			<div id={ 'alg_eu_vat_for_woocommerce_field' } className={ 'alg-eu-vat-for-woocommerce-fields' }> 
-				<ValidatedTextInput
-					id="billing_eu_vat_number"
-					type="text"
-					required={true}
-					className={'billing-eu-vat-number'}
-					label={
-						__( 'EU VAT Number', 'eu-vat-for-woocommerce' )
-					}
-					value={ billingEuVatNumber }
-					onChange={ onInputChange }
-					onBlur={ onInputBlur }
-				/>
 				<div id="alg_wc_eu_vat_progress"></div>
 				<div id="custom-checkout"></div>
 				<input type="hidden" id="store_previous_country" name="store_previous_country" value={ billingCountry } />

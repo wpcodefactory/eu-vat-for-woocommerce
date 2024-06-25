@@ -21,8 +21,12 @@ class Alg_WC_EU_VAT_AJAX {
 	 */
 	function __construct() {
 		add_action( 'wp_enqueue_scripts',                           array( $this, 'enqueue_scripts' ) );
+		
 		add_action( 'wp_ajax_alg_wc_eu_vat_validate_action',        array( $this, 'alg_wc_eu_vat_validate_action' ) );
 		add_action( 'wp_ajax_nopriv_alg_wc_eu_vat_validate_action', array( $this, 'alg_wc_eu_vat_validate_action' ) );
+		
+		add_action( 'wp_ajax_alg_wc_eu_vat_validate_action_first_load',        array( $this, 'alg_wc_eu_vat_validate_action_first_load' ) );
+		add_action( 'wp_ajax_nopriv_alg_wc_eu_vat_validate_action_first_load', array( $this, 'alg_wc_eu_vat_validate_action_first_load' ) );
 		
 		add_action( 'wp_ajax_exempt_vat_from_admin',        array( $this, 'alg_wc_eu_vat_exempt_vat_from_admin' ) );
 		add_action( 'wp_ajax_nopriv_exempt_vat_from_admin', array( $this, 'alg_wc_eu_vat_exempt_vat_from_admin' ) );
@@ -74,18 +78,38 @@ class Alg_WC_EU_VAT_AJAX {
 		}
 		return $return;
 	}
+	
+	function alg_wc_eu_vat_validate_action_first_load( $param ) {
+		$alg_wc_eu_vat_valid = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_valid' );
+		
+		$return_data = array();
+		$return_data['status'] = 0;
+		if($alg_wc_eu_vat_valid == true) {
+			$return_data['status'] = 1;
+		}
+		wp_send_json($return_data);
+	}
 
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 2.11.0
+	 * @version 2.11.6
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) better codes (i.e. not 0, 1, 2, 3)
 	 * @todo    [dev] (maybe) `if ( ! isset( $_POST['alg_wc_eu_vat_validate_action'] ) ) return;`
 	 */
+	 
 	function alg_wc_eu_vat_validate_action( $param ) {
+		$vat_number = '';
 		if ( isset( $_POST['alg_wc_eu_vat_to_check'] ) && '' != $_POST['alg_wc_eu_vat_to_check'] ) {
-			$eu_vat_number   = alg_wc_eu_vat_parse_vat( $_POST['alg_wc_eu_vat_to_check'], $_POST['billing_country'] );
+			$vat_number = $_POST['alg_wc_eu_vat_to_check'];
+		}
+		if($vat_number == 'checkout_block_first_load') {
+			$vat_number = WC()->customer->get_meta('_wc_other/alg_eu_vat/billing_eu_vat_number');
+		}
+		
+		if ( isset( $_POST['alg_wc_eu_vat_to_check'] ) && '' != $_POST['alg_wc_eu_vat_to_check'] ) {
+			$eu_vat_number   = alg_wc_eu_vat_parse_vat( $vat_number, $_POST['billing_country'] );
 			$billing_company = ( isset( $_POST['billing_company'] ) ? $_POST['billing_company'] : '' );
 			if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_ip_location_country', 'no' ) ) {
 				$country_by_ip   = alg_wc_eu_vat_get_customers_location_by_ip();
