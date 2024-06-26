@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu-vat-for-woocommerce 2.11.6\n"
+"Project-Id-Version: eu-vat-for-woocommerce 2.11.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-25T13:28:19+02:00\n"
+"POT-Creation-Date: 2024-06-26T11:41:23+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
@@ -36,12 +36,12 @@ msgid "https://wpfactory.com/"
 msgstr ""
 
 #: eu-vat-for-woocommerce-blocks-initialize.php:55
-#: includes/admin/class-alg-wc-eu-vat-admin.php:289
-#: includes/class-alg-wc-eu-vat-core.php:1147
-#: includes/class-alg-wc-eu-vat-core.php:1149
-#: includes/class-alg-wc-eu-vat-core.php:1266
-#: includes/class-alg-wc-eu-vat-core.php:1346
-#: includes/class-alg-wc-eu-vat-core.php:1378
+#: includes/admin/class-alg-wc-eu-vat-admin.php:356
+#: includes/class-alg-wc-eu-vat-core.php:1155
+#: includes/class-alg-wc-eu-vat-core.php:1157
+#: includes/class-alg-wc-eu-vat-core.php:1274
+#: includes/class-alg-wc-eu-vat-core.php:1354
+#: includes/class-alg-wc-eu-vat-core.php:1386
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:86
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:94
 #: build/eu-vat-for-woocommerce-checkout-eu-vat-field-block.js:1
@@ -66,42 +66,42 @@ msgstr ""
 msgid "Unlock All"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:97
+#: includes/admin/class-alg-wc-eu-vat-admin.php:104
 msgid "Let Customer Decide:"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:109
-#: includes/admin/class-alg-wc-eu-vat-admin.php:254
-#: includes/admin/class-alg-wc-eu-vat-admin.php:319
+#: includes/admin/class-alg-wc-eu-vat-admin.php:116
+#: includes/admin/class-alg-wc-eu-vat-admin.php:321
+#: includes/admin/class-alg-wc-eu-vat-admin.php:386
 #: includes/settings/class-alg-wc-eu-vat-settings.php:24
 msgid "EU VAT"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:273
+#: includes/admin/class-alg-wc-eu-vat-admin.php:340
 msgid "Report includes all EU VAT countries with existing sales."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:274
+#: includes/admin/class-alg-wc-eu-vat-admin.php:341
 msgid "Table is sorted by total tax value."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:363
+#: includes/admin/class-alg-wc-eu-vat-admin.php:430
 msgid "Customer IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:367
+#: includes/admin/class-alg-wc-eu-vat-admin.php:434
 msgid "Country by IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:371
+#: includes/admin/class-alg-wc-eu-vat-admin.php:438
 msgid "Customer EU VAT Number"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:375
+#: includes/admin/class-alg-wc-eu-vat-admin.php:442
 msgid "Taxes"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:383
+#: includes/admin/class-alg-wc-eu-vat-admin.php:450
 msgid "Validate VAT and remove taxes"
 msgstr ""
 
@@ -169,7 +169,7 @@ msgid "VAT is valid."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:55
-#: includes/class-alg-wc-eu-vat-core.php:1748
+#: includes/class-alg-wc-eu-vat-core.php:1756
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:254
 msgid "VAT is not valid."
 msgstr ""
@@ -193,38 +193,38 @@ msgid "(optional)"
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:120
-#: includes/class-alg-wc-eu-vat-core.php:1501
+#: includes/class-alg-wc-eu-vat-core.php:1509
 msgid "Error: Country by IP does not match (%s)"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:189
-#: includes/class-alg-wc-eu-vat-core.php:353
-#: includes/class-alg-wc-eu-vat-core.php:1644
-#: includes/class-alg-wc-eu-vat-core.php:1713
+#: includes/class-alg-wc-eu-vat-core.php:197
+#: includes/class-alg-wc-eu-vat-core.php:361
+#: includes/class-alg-wc-eu-vat-core.php:1652
+#: includes/class-alg-wc-eu-vat-core.php:1721
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:70
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:322
-#: includes/class-alg-wc-eu-vat-core.php:1691
+#: includes/class-alg-wc-eu-vat-core.php:330
+#: includes/class-alg-wc-eu-vat-core.php:1699
 msgid "Success (checkout): VAT ID valid. Matched with prevalidated VAT numbers."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:348
-#: includes/class-alg-wc-eu-vat-core.php:1721
+#: includes/class-alg-wc-eu-vat-core.php:356
+#: includes/class-alg-wc-eu-vat-core.php:1729
 msgid "Error: VAT is not valid (checkout)"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:415
+#: includes/class-alg-wc-eu-vat-core.php:423
 msgid "VAT SHIFTED"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:958
+#: includes/class-alg-wc-eu-vat-core.php:966
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:163
 msgid "You didn't set your VAT ID. Are you sure you want to continue?"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:958
+#: includes/class-alg-wc-eu-vat-core.php:966
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:171
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:180
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:202
@@ -242,21 +242,21 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:958
+#: includes/class-alg-wc-eu-vat-core.php:966
 msgid "No"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1070
+#: includes/class-alg-wc-eu-vat-core.php:1078
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:244
 msgid "I don't have a VAT ID"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1089
+#: includes/class-alg-wc-eu-vat-core.php:1097
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:260
 msgid "I have a valid VAT but not exempted"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1342
+#: includes/class-alg-wc-eu-vat-core.php:1350
 msgid "Customer Decide"
 msgstr ""
 

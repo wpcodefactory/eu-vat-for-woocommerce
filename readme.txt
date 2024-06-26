@@ -290,6 +290,9 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 
 == Changelog ==
 
+= 2.11.7 - 26/06/2024 =
+* Update - Wc Order HPOS EU VAT filter.
+
 = 2.11.6 - 25/06/2024 =
 * Fix - checkout block VAT validation.
 

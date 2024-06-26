@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 2.11.3
+ * @version 2.11.7
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -16,7 +16,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.11.3
+	 * @version 2.11.7
 	 * @since   1.0.0
 	 */
 	function __construct() {
@@ -42,15 +42,22 @@ class Alg_WC_EU_VAT_Admin {
 			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_columns' ),    PHP_INT_MAX );
 			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
 			
+			// HPOS column
 			add_filter( 'manage_woocommerce_page_wc-orders_columns', array( $this, 'add_order_columns' ),  PHP_INT_MAX );
 			add_action('manage_woocommerce_page_wc-orders_custom_column', array( $this, 'render_wc_order_columns' ), PHP_INT_MAX, 2);
 			
 			add_action( 'restrict_manage_posts', 				 array( $this, 'display_admin_shop_order_by_meta_filter' ), PHP_INT_MAX );
 			
+			// HOPS filter
+			add_action( 'woocommerce_order_list_table_restrict_manage_orders', 				 array( $this, 'display_admin_shop_order_by_meta_filter_HPOS' ), PHP_INT_MAX, 2 );
+			
 			add_filter( 'request',  							 array( $this, 'process_admin_shop_order_marketing_by_meta' ), 99 );
 			add_filter( 'woocommerce_shop_order_search_fields',  array( $this, 'shop_order_meta_search_fields'), 10, 1 );
 			
 			add_filter('pre_get_posts', 						 array( $this, 'euvat_filter_orders'), 100);
+			
+			// HOPS filter query
+			add_filter('woocommerce_order_list_table_prepare_items_query_args', 						 array( $this, 'euvat_filter_orders_HPOS'), 100);
 		}
 		
 		
@@ -159,6 +166,36 @@ class Alg_WC_EU_VAT_Admin {
 	}
 	
 	/**
+	 * display_admin_shop_order_by_meta_filter_HPOS.
+	 *
+	 * @version 2.11.7
+	 * @since   2.11.7
+	 */
+	 
+	function display_admin_shop_order_by_meta_filter_HPOS( $post_type, $which ) {
+		
+		if( 'shop_order' !== $post_type ) {
+			return;
+		}
+		
+		$domain    = 'eu-vat-for-woocommerce';
+		$filter_id = 'filter_shop_order_by_meta';
+		$current   = isset($_GET[$filter_id])? $_GET[$filter_id] : '';
+
+		echo '<select name="'.$filter_id.'">
+		<option value="">' . __('Select Filter EU VAT...', $domain) . '</option>';
+
+		$options = $this->get_filter_shop_order_meta( $domain );
+
+		foreach ( $options as $key => $label ) {
+			printf( '<option value="%s"%s>%s</option>', $key, 
+				$key === $current ? '" selected="selected"' : '', $label );
+		}
+		echo '</select>';
+		
+	}
+	
+	/**
 	 * display_admin_shop_order_by_meta_filter.
 	 *
 	 * @version 1.5.0
@@ -168,7 +205,7 @@ class Alg_WC_EU_VAT_Admin {
 		global $pagenow, $typenow;
 
 		if( 'shop_order' === $typenow && 'edit.php' === $pagenow ) {
-			$domain    = 'woocommerce';
+			$domain    = 'eu-vat-for-woocommerce';
 			$filter_id = 'filter_shop_order_by_meta';
 			$current   = isset($_GET[$filter_id])? $_GET[$filter_id] : '';
 
@@ -217,6 +254,36 @@ class Alg_WC_EU_VAT_Admin {
 		return $meta_keys;
 	}
 	
+	/**
+	 * euvat_filter_orders_HPOS.
+	 *
+	 * @version 2.11.7
+	 * @since   2.11.7
+	 */
+	 
+	function euvat_filter_orders_HPOS( $query_args ) {
+		
+		$filter_id = 'filter_shop_order_by_meta';
+		
+		if( isset( $_GET[ $filter_id ] ) && $_GET[ $filter_id ] ) {
+			$query_args[ 'meta_query' ] = array(
+				array(
+					'key' => '_billing_eu_vat_number',
+					'value' => array(''),
+					'compare' => 'NOT IN',
+				)
+			);
+		}
+
+		return $query_args;
+	}
+	
+	/**
+	 * euvat_filter_orders.
+	 *
+	 * @version 2.11.7
+	 * @since   2.11.7
+	 */
 	function euvat_filter_orders($query) {
 		global $pagenow, $typenow;
 		
