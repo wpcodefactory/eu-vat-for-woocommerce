@@ -1,7 +1,7 @@
 <?php
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
 
-define ( 'EuVatForWoocommerce_VERSION', '2.11.6' );
+define ( 'EuVatForWoocommerce_VERSION', '2.11.7' );
 
 /**
  * Class for integrating with WooCommerce Blocks

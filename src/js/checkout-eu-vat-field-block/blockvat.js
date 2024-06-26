@@ -57,7 +57,7 @@ export { algReloadOnFirst };
 
 const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 		
-		const isSameBillingShipping = 'no';
+		var isSameBillingShipping = 'no';
 		if(isUseBillingChecked()){
 			isSameBillingShipping = 'yes';
 		}

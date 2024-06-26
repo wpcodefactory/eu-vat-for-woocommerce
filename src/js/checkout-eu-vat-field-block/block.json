@@ -1,7 +1,7 @@
 {
 	"apiVersion": 2,
 	"name": "eu-vat-for-woocommerce/checkout-eu-vat-field",
-	"version": "2.11.6",
+	"version": "2.11.7",
 	"title": "EU VAT Field",
 	"category": "woocommerce",
 	"description": "Adds a EU VAT Field checkbox to the checkout.",
