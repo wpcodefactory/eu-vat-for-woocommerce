@@ -28,7 +28,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.11.7
+	 * @version 2.11.10
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
 	 * @todo    [feature] `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
@@ -147,20 +147,24 @@ class Alg_WC_EU_VAT_Core {
 		
 		// checkout block
 		
-		if ( version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' ) ) {
-			
-			add_action('woocommerce_init', array( $this, 'register_additional_checkout_block_field' ), PHP_INT_MAX );
-			
-			require_once ( __DIR__.'/../eu-vat-for-woocommerce-blocks-initialize.php') ;
-			
-			add_action( 'woocommerce_store_api_checkout_update_order_from_request', array( $this, 'alg_eu_vat_update_block_order_meta_eu_vat' ), 10, 2 );
-			add_action( 'woocommerce_blocks_loaded', array( $this, 'alg_wc_eu_woocommerce_store_api_register_update_callback' ), 10 );
-			add_action( 'woocommerce_blocks_validate_location_contact_fields', array( $this, 'alg_wc_eu_woocommerce_validate_eu_vat_field_checkout_block' ), 10, 3 );
-			add_action( 'woocommerce_blocks_validate_location_address_fields', array( $this, 'alg_wc_eu_woocommerce_validate_eu_vat_field_checkout_block' ), 10, 3 );
-			
-			
-			add_filter( 'woocommerce_blocks_get_default_value_for_alg_eu_vat/billing_eu_vat_number', array( $this, 'alg_eu_vat_update_default_value_for_eu_vat_field' ), 99, 3 );
-			
+		
+		
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_enable_checkout_block_field', 'no' ) ) {
+			if ( version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' ) ) {
+				
+				add_action('woocommerce_init', array( $this, 'register_additional_checkout_block_field' ), PHP_INT_MAX );
+				
+				require_once ( __DIR__.'/../eu-vat-for-woocommerce-blocks-initialize.php') ;
+				
+				add_action( 'woocommerce_store_api_checkout_update_order_from_request', array( $this, 'alg_eu_vat_update_block_order_meta_eu_vat' ), 10, 2 );
+				add_action( 'woocommerce_blocks_loaded', array( $this, 'alg_wc_eu_woocommerce_store_api_register_update_callback' ), 10 );
+				add_action( 'woocommerce_blocks_validate_location_contact_fields', array( $this, 'alg_wc_eu_woocommerce_validate_eu_vat_field_checkout_block' ), 10, 3 );
+				add_action( 'woocommerce_blocks_validate_location_address_fields', array( $this, 'alg_wc_eu_woocommerce_validate_eu_vat_field_checkout_block' ), 10, 3 );
+				
+				
+				add_filter( 'woocommerce_blocks_get_default_value_for_alg_eu_vat/billing_eu_vat_number', array( $this, 'alg_eu_vat_update_default_value_for_eu_vat_field' ), 99, 3 );
+				
+			}
 		}
 		
 	}
@@ -687,11 +691,11 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * maybe_exclude_vat_free.
 	 *
-	 * @version 2.11.9
+	 * @version 2.11.10
 	 * @since   1.7.0
 	 */
 	function maybe_exclude_vat_free( $value ) {
-		
+		$selected_country_at_checkout = '';
 		$preserve_base_country_check_passed = true;
 		if ( 'no' != ( $preserve_option_value = get_option( 'alg_wc_eu_vat_preserve_in_base_country', 'no' ) ) ) {
 			$selected_country = substr( alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' ), 0, 2 );
@@ -728,6 +732,7 @@ class Alg_WC_EU_VAT_Core {
 				$selected_country = 'GR';
 			}
 			
+			$selected_country_at_checkout = WC()->checkout->get_value( 'billing_country' );
 			
 			if ( 'yes' === $preserve_option_value ) {
 				$location = wc_get_base_location();
