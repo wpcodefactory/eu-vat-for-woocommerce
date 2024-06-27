@@ -191,7 +191,8 @@ jQuery( function( $ ) {
 				type: "POST",
 				url: alg_wc_eu_vat_ajax_object.ajax_url,
 				data: data,
-				success: function( response ) {
+				success: function( resp ) {
+					var response = resp.res;
 					response = response.replace("</pre>", "");
 					response = response.trim();
 					var splt = response.split("|");
@@ -235,6 +236,14 @@ jQuery( function( $ ) {
 							progress_text.removeClass();
 							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
 						}
+					} else if ( '7' == response ) {
+						vat_paragraph.removeClass( 'woocommerce-invalid' );
+						vat_paragraph.removeClass( 'woocommerce-validated' );
+						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_validation_preserv );
+							progress_text.removeClass();
+							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
+						}
 					} else {
 						vat_paragraph.addClass( 'woocommerce-invalid' );
 						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
@@ -243,7 +252,13 @@ jQuery( function( $ ) {
 							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
 						}
 					}
-					$( 'body' ).trigger( 'update_checkout' );
+					
+					var refresh_checkout = function() {
+						$( 'body' ).trigger( 'update_checkout' );
+					};
+					
+					setTimeout( refresh_checkout, 800 );
+					
 				},
 			} );
 		} else {
@@ -258,7 +273,11 @@ jQuery( function( $ ) {
 				// Not required
 				// vat_paragraph.addClass( 'woocommerce-validated' );
 			}
-			$( 'body' ).trigger( 'update_checkout' );
+			
+			var refresh_checkout_end = function() {
+						$( 'body' ).trigger( 'update_checkout' );
+			};
+			setTimeout( refresh_checkout_end, 800 );
 		}
 	};
 } );

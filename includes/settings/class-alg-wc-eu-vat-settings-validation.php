@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 2.9.14
+ * @version 2.11.9
  * @since   1.5.0
  * @author  WPFactory
  */
@@ -30,7 +30,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.9.16
+	 * @version 2.11.9
 	 * @since   1.5.0
 	 * @todo    [dev] (maybe) set default value for "alg_wc_eu_vat_add_progress_text" to "yes"
 	 * @todo    [feature] (important) Message if customer is in base country and VAT is NOT exempted
@@ -210,6 +210,15 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 					'onblur' => __( 'on Blur', 'eu-vat-for-woocommerce' ),
 				),
 				'custom_attributes' => '',
+			),
+			
+			array(
+				'title'    => __( 'Force validate on cart and checkout page load/reload', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enabled/disables force validate on cart/checkout page.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Add', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_validate_force_page_reload',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'     => 'sectionend',
