@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 2.11.7
+ * @version 2.11.11
  * @since   1.0.0
  * @author  WPFactory
  */

@@ -215,8 +215,17 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'Force validate on cart and checkout page load/reload', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Enabled/disables force validate on cart/checkout page.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Add', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_force_page_reload',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			
+			array(
+				'title'    => __( 'Accept the VAT number if VIES is not available', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enabled/disables Accept the VAT number if VIES is not available.( MS_UNAVAILABLE, GLOBAL_MAX_CONCURRENT_REQ, MS_MAX_CONCURRENT_REQ )', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_validate_vies_not_available',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
@@ -288,6 +297,25 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'text',
 				'css'      => 'width:100%;',
 			),
+			
+			array(
+				'title'    => __( 'Country preserved', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Message on billing country preserved for VAT. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-not-valid-country-preserved</code>', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_progress_text_validation_preserv',
+				'default'  => __( 'VAT preserved for this billing country.', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
+				'css'      => 'width:100%;',
+			),
+			
+			array(
+				'title'    => __( 'VIES error message', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Message on VIES error. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-not-valid-vies-error</code>', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_progress_text_validation_vies_error',
+				'default'  => __( 'VAT accepted due to VIES error: %vies_error%. The admin will check the VAT validation again and proceed accordingly.', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
+				'css'      => 'width:100%;',
+			),
+			
 			array(
 				'title'    => __( 'Hide messages on preserved countries list', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( '', 'eu-vat-for-woocommerce' ),

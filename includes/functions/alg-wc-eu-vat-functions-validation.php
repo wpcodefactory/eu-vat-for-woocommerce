@@ -150,7 +150,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 2.10.1
+	 * @version 2.11.11
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
@@ -224,8 +224,19 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 		} catch( Exception $exception ) {
 			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, 'soap',
 				sprintf( __( 'Error: Exception: %s', 'eu-vat-for-woocommerce' ), $exception->getMessage() ) );
-		
+			
+			if('yes' === get_option( 'alg_wc_eu_vat_validate_vies_not_available', 'no' )) {
+				
+				$accepted_exception = array('MS_UNAVAILABLE', 'GLOBAL_MAX_CONCURRENT_REQ', 'MS_MAX_CONCURRENT_REQ');
+				if( in_array($exception->getMessage(), $accepted_exception) ) {
+					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_vies_error_message',    $exception->getMessage() );
+			
+					return false;
+				}
+			}
+			
 			return null;
+			
 		}
 	}
 }
@@ -266,6 +277,8 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	 * @todo    [dev] (maybe) check for minimal length
 	 */
 	function alg_wc_eu_vat_validate_vat( $country_code, $vat_number, $billing_company = '' ) {
+		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_vies_error_message',    null );
+		
 		if ( '' != ( $skip_countries = get_option( 'alg_wc_eu_vat_advanced_skip_countries', array() ) ) ) {
 			if(!empty($skip_countries)){
 				$skip_countries = array_map( 'strtoupper', array_map( 'trim', explode( ',', $skip_countries ) ) );

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 2.10.2
+ * @version 2.11.11
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -35,7 +35,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.10.2
+	 * @version 2.11.11
 	 * @since   1.0.0
 	 * @todo    [dev] (important) `... && function_exists( 'is_checkout' ) && is_checkout()`
 	 */
@@ -54,9 +54,10 @@ class Alg_WC_EU_VAT_AJAX {
 					'progress_text_valid'             => do_shortcode( get_option( 'alg_wc_eu_vat_progress_text_valid',             __( 'VAT is valid.', 'eu-vat-for-woocommerce' ) ) ),
 					'progress_text_not_valid'         => do_shortcode( get_option( 'alg_wc_eu_vat_progress_text_not_valid',         __( 'VAT is not valid.', 'eu-vat-for-woocommerce' ) ) ),
 					'progress_text_validation_failed' => do_shortcode( get_option( 'alg_wc_eu_vat_progress_text_validation_failed', __( 'Validation failed. Please try again.', 'eu-vat-for-woocommerce' ) ) ),
-					'progress_text_validation_preserv' => do_shortcode( get_option( 'alg_wc_eu_vat_progress_text_validation_preserv', __( 'VAT preserved for this country', 'eu-vat-for-woocommerce' ) ) ),
+					'progress_text_validation_preserv' => do_shortcode( get_option( 'alg_wc_eu_vat_progress_text_validation_preserv', __( 'VAT preserved for this billing country', 'eu-vat-for-woocommerce' ) ) ),
 					'text_shipping_billing_countries' => do_shortcode( get_option( 'alg_wc_eu_vat_shipping_billing_countries', __( 'Different shipping & billing countries.', 'eu-vat-for-woocommerce' ) ) ),
 					'company_name_mismatch' 		  => do_shortcode( get_option( 'alg_wc_eu_vat_company_name_mismatch', __( ' VAT is valid, but registered to %company_name%.', 'eu-vat-for-woocommerce' ) ) ),
+					'vies_not_available' 		  => do_shortcode( get_option( 'alg_wc_eu_vat_progress_text_validation_vies_error', __( ' VAT accepted due to VIES error: %vies_error%. The admin will check the VAT validation again and proceed accordingly.', 'eu-vat-for-woocommerce' ) ) ),
 					'is_required' => get_option( 'alg_wc_eu_vat_field_required', 'no' ),
 					'optional_text'        			  => __( '(optional)', 'eu-vat-for-woocommerce' ),
 				) );
@@ -129,6 +130,17 @@ class Alg_WC_EU_VAT_AJAX {
 			$is_valid = null;
 		}
 		
+		
+		$vat_allow_vias_not_available = false;
+		if( !$is_valid ){
+			if( alg_wc_eu_vat()->core->get_error_vies_unavailable() !== null ) {
+				$is_valid = true;
+				$vat_allow_vias_not_available = true;
+			}
+		}
+		
+		
+		
 		$is_shipping_diff = false;
 		$is_preserv = false;
 		
@@ -188,6 +200,7 @@ class Alg_WC_EU_VAT_AJAX {
 		}
 		
 		$return_status = '';
+		$return_error = '';
 		
 		if(!isset($eu_vat_number['number']) || empty($eu_vat_number['number'])){
 			$return_status = '6';
@@ -195,6 +208,9 @@ class Alg_WC_EU_VAT_AJAX {
 			$return_status =  '4';
 		}  else if ( true === $is_preserv ) {
 			$return_status =  '7';
+		} else if ( true === $vat_allow_vias_not_available ) {
+			$return_status =  '8';
+			$return_error = alg_wc_eu_vat()->core->get_error_vies_unavailable();
 		}  else if( false === $is_valid && true === $company_name_status ){
 			$return_status =  '5|' . $company_name;
 		}  else if ( false === $is_valid ) {
@@ -223,7 +239,7 @@ class Alg_WC_EU_VAT_AJAX {
 			wp_send_json($return_data);
 		}else{
 			// echo $return_status;
-			wp_send_json(array('res' => $return_status) );
+			wp_send_json(array('res' => $return_status, 'error' => $return_error) );
 		}
 		
 		die();

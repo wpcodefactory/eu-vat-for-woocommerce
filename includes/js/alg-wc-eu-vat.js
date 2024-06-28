@@ -117,7 +117,7 @@ jQuery( function( $ ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat
 	 *
-	 * @version 2.9.10
+	 * @version 2.11.11
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_validate_vat( load = false ) {
@@ -193,6 +193,7 @@ jQuery( function( $ ) {
 				data: data,
 				success: function( resp ) {
 					var response = resp.res;
+					var err = resp.error;
 					response = response.replace("</pre>", "");
 					response = response.trim();
 					var splt = response.split("|");
@@ -241,6 +242,14 @@ jQuery( function( $ ) {
 						vat_paragraph.removeClass( 'woocommerce-validated' );
 						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_validation_preserv );
+							progress_text.removeClass();
+							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
+						}
+					} else if ( '8' == response ) {
+						vat_paragraph.removeClass( 'woocommerce-invalid' );
+						vat_paragraph.removeClass( 'woocommerce-validated' );
+						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+							progress_text.text( alg_wc_eu_vat_ajax_object.vies_not_available.replace("%vies_error%", err) );
 							progress_text.removeClass();
 							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
 						}
