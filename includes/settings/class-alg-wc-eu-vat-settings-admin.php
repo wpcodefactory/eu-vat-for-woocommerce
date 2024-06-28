@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 2.11.10
+ * @version 2.11.12
  * @since   1.5.0
  * @author  WPFactory
  */
@@ -30,7 +30,7 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.11.10
+	 * @version 2.11.12
 	 * @since   1.5.0
 	 * @todo    [dev] (important) set "Session type" default value to "WC session (recommended)"
 	 */
@@ -163,6 +163,15 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 				'title'    => __( 'Checkout block field', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_enable_checkout_block_field',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			
+			array(
+				'title'    => __( 'Autofill company name from VAT ID', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Please use validation method SOAP for this option to work.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_advance_enable_company_name_autofill',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

@@ -1,7 +1,7 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 2.10.2
+ * @version 2.11.12
  * @since   1.0.0
  * @author  WPFactory
  * @todo    [dev] replace `billing_eu_vat_number` and `billing_eu_vat_number_field` with `alg_wc_eu_vat_get_field_id()`
@@ -194,6 +194,8 @@ jQuery( function( $ ) {
 				success: function( resp ) {
 					var response = resp.res;
 					var err = resp.error;
+					var company_name = resp.company;
+					
 					response = response.replace("</pre>", "");
 					response = response.trim();
 					var splt = response.split("|");
@@ -260,6 +262,10 @@ jQuery( function( $ ) {
 							progress_text.removeClass();
 							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
 						}
+					}
+					
+					if( alg_wc_eu_vat_ajax_object.autofill_company_name == 'yes' && company_name !== '') {
+						$( '#billing_company' ).val(company_name).change();
 					}
 					
 					var refresh_checkout = function() {

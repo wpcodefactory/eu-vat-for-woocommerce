@@ -60,6 +60,7 @@ class Alg_WC_EU_VAT_AJAX {
 					'vies_not_available' 		  => do_shortcode( get_option( 'alg_wc_eu_vat_progress_text_validation_vies_error', __( ' VAT accepted due to VIES error: %vies_error%. The admin will check the VAT validation again and proceed accordingly.', 'eu-vat-for-woocommerce' ) ) ),
 					'is_required' => get_option( 'alg_wc_eu_vat_field_required', 'no' ),
 					'optional_text'        			  => __( '(optional)', 'eu-vat-for-woocommerce' ),
+					'autofill_company_name'      => get_option( 'alg_wc_eu_vat_advance_enable_company_name_autofill', 'no' ),
 				) );
 			}
 		}
@@ -223,6 +224,14 @@ class Alg_WC_EU_VAT_AJAX {
 			$return_status =  '3'; // unexpected
 		}
 		
+		$return_company_name = '';
+		$company_name = alg_wc_eu_vat_session_get('alg_wc_eu_vat_to_return_company_name', null);
+		if( isset($company_name) && !empty($company_name) ) {
+			if( preg_match("/[a-z]/i", $company_name)){
+				$return_company_name = $company_name;
+			}
+		}
+		
 		
 		
 		if ( isset( $_POST['channel'] ) && 'bloock_api' == $_POST['channel'] ) {
@@ -239,7 +248,7 @@ class Alg_WC_EU_VAT_AJAX {
 			wp_send_json($return_data);
 		}else{
 			// echo $return_status;
-			wp_send_json(array('res' => $return_status, 'error' => $return_error) );
+			wp_send_json(array( 'res' => $return_status, 'company'=>$return_company_name, 'error' => $return_error ) );
 		}
 		
 		die();

@@ -150,7 +150,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 2.11.11
+	 * @version 2.11.12
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
@@ -184,6 +184,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 					'countryCode' => $country_code,
 					'vatNumber'   => $vat_number,
 				) );
+				
 				/**
 				 * $result = stdClass Object( countryCode, vatNumber, requestDate, valid, name, address )
 				 */
@@ -209,6 +210,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 				} else {
 					alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, 'soap',
 						__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' ) );
+				}
+				
+				if ( isset( $result->name ) ) {
+					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_return_company_name', strtolower( $result->name ) );
 				}
 				
 				// store result to session 
@@ -253,6 +258,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_with_method' ) ) {
 		
 		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company_name', null );
 		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company', null );
+		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_return_company_name', null );
 		
 		if($country_code == 'GB'){
 			return alg_wc_eu_vat_validate_vat_uk( $country_code, $vat_number, $billing_company, $method );

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 2.11.9
+ * @version 2.11.12
  * @since   1.5.0
  * @author  WPFactory
  */
@@ -30,7 +30,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.11.9
+	 * @version 2.11.12
 	 * @since   1.5.0
 	 * @todo    [dev] (maybe) set default value for "alg_wc_eu_vat_add_progress_text" to "yes"
 	 * @todo    [feature] (important) Message if customer is in base country and VAT is NOT exempted
@@ -223,7 +223,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			
 			array(
 				'title'    => __( 'Accept the VAT number if VIES is not available', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enabled/disables Accept the VAT number if VIES is not available.( MS_UNAVAILABLE, GLOBAL_MAX_CONCURRENT_REQ, MS_MAX_CONCURRENT_REQ )', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enabled/disables Accept the VAT number if VIES is not available.( <code>MS_UNAVAILABLE</code>, <code>GLOBAL_MAX_CONCURRENT_REQ</code>, <code>MS_MAX_CONCURRENT_REQ</code> )', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_vies_not_available',
 				'default'  => 'no',
