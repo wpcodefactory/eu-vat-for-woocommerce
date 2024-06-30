@@ -71,7 +71,8 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 		var progress = document.getElementById('alg_wc_eu_vat_progress');
 		// var eu_vat_field = document.getElementById('alg_eu_vat_for_woocommerce_field');
 		
-		var eu_vat_field = document.getElementById('contact-alg_eu_vat/billing_eu_vat_number');
+		// var eu_vat_field = document.getElementById('contact-alg_eu_vat/billing_eu_vat_number');
+		var eu_vat_field = document.getElementById('contact-alg_eu_vat-billing_eu_vat_number');
 		
 		var place_order_button = document.getElementsByClassName("wc-block-components-checkout-place-order-button")[0];
 		
@@ -159,7 +160,27 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 				progress.classList.remove("alg-wc-eu-vat-not-valid");
 				
 				// clearValidationError('billing_eu_vat_number');
-				
+			} else if ( '7' == response ) {
+				eu_vat_field.classList.remove( 'woocommerce-invalid' );
+				eu_vat_field.classList.remove( 'woocommerce-validated' );
+				if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+					progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_validation_preserv;
+					progress.classList.remove("alg-wc-eu-vat-valid");
+					progress.classList.remove("alg-wc-eu-vat-validating");
+					progress.classList.remove("alg-wc-eu-vat-not-valid");
+					progress.classList.add("alg-wc-eu-vat-not-valid");
+				}
+			} else if ( '8' == response ) {
+				eu_vat_field.classList.remove( 'woocommerce-invalid' );
+				eu_vat_field.classList.remove( 'woocommerce-validated' );
+				if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+					progress.innerHTML = alg_wc_eu_vat_ajax_object.vies_not_available;
+					progress.classList.remove("alg-wc-eu-vat-valid");
+					progress.classList.remove("alg-wc-eu-vat-validating");
+					progress.classList.remove("alg-wc-eu-vat-not-valid");
+					
+					progress.classList.add("alg-wc-eu-vat-not-valid");
+				}
 			} else {
 				
 				eu_vat_field.classList.add( 'woocommerce-invalid' );
@@ -167,6 +188,8 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 				progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_validation_failed;
 				progress.classList.remove("alg-wc-eu-vat-valid");
 				progress.classList.remove("alg-wc-eu-vat-validating");
+				progress.classList.remove("alg-wc-eu-vat-not-valid");
+				
 				progress.classList.add("alg-wc-eu-vat-not-valid");
 			} 
 			
@@ -242,7 +265,8 @@ const Block = ({ children, checkoutExtensionData }) => {
 
 	useEffect(() => {
 		
-		var vat_number = document.getElementById('contact-alg_eu_vat/billing_eu_vat_number');
+		// var vat_number = document.getElementById('contact-alg_eu_vat/billing_eu_vat_number');
+		var vat_number = document.getElementById('contact-alg_eu_vat-billing_eu_vat_number');
 		
 		var verifyOnFirstLoad = function() {
 			if(vat_number.value !== '' ){

@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.5
-Stable tag: 2.11.12
+Stable tag: 2.12.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -289,6 +289,9 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
 
 == Changelog ==
+
+= 2.12.0 - 30/06/2024 =
+*Fix - checkout block compatibility.
 
 = 2.11.12 - 29/06/2024 =
 * Add - Autofill company name from VAT ID.

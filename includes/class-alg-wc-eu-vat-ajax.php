@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 2.11.11
+ * @version 2.11.12
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -96,7 +96,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 2.11.9
+	 * @version 2.11.12
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) better codes (i.e. not 0, 1, 2, 3)
 	 * @todo    [dev] (maybe) `if ( ! isset( $_POST['alg_wc_eu_vat_validate_action'] ) ) return;`
@@ -237,6 +237,8 @@ class Alg_WC_EU_VAT_AJAX {
 		if ( isset( $_POST['channel'] ) && 'bloock_api' == $_POST['channel'] ) {
 			$return_data = array();
 			$return_data['status'] = $return_status;
+			$return_data['company'] = $return_company_name;
+			$return_data['error'] = $return_error;
 			if ( !empty( WC()->customer ) && ( true === $is_valid) )  {
 				$is_exempt = true;
 				WC()->customer->set_is_vat_exempt( $is_exempt );
