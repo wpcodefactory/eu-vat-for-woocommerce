@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.11.7
+ * @version 2.12.2
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -882,7 +882,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * admin_inline_js.
 	 *
-	 * @version 1.4.1
+	 * @version 2.12.2
 	 * @since   1.4.1
 	 */
 	function admin_inline_js()
@@ -928,7 +928,8 @@ class Alg_WC_EU_VAT_Core {
 						type: "POST",
 						url: '<?php echo admin_url("admin-ajax.php"); ?>',
 						data: data,
-						success: function( response ) {
+						success: function( resp ) {
+							var response = resp.res;
 							response = response.trim();
 							// $( 'body' ).trigger( 'update_checkout' );
 							$("#woocommerce-order-data").unblock();
