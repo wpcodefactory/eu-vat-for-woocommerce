@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.12.2
+ * @version 2.12.3
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -766,6 +766,13 @@ class Alg_WC_EU_VAT_Core {
 		return $preserve_base_country_check_passed;
 	}
 	
+	/**
+	 * eu_vat_admin_footer.
+	 *
+	 * @version 2.12.3
+	 * @since   1.7.0
+	 */
+	 
 	function eu_vat_admin_footer() {
     ?>
 		<script type="text/javascript">
@@ -798,14 +805,17 @@ class Alg_WC_EU_VAT_Core {
 			});
 		});
 		</script>
-		<?php if ( version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' ) ) { ?>
-		<style>
-		#order_data .order_data_column_container .order_data_column div.address p:nth-child(4), #order_data .order_data_column_container .order_data_column div.edit_address p.form-field._billing_eu_vat_number_field {
-		   display:none !important;
-		}
-		
-		</style>
+		<?php
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_enable_checkout_block_field', 'no' ) ) {
+			if ( version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' ) ) { ?>
+				<style>
+				#order_data .order_data_column_container .order_data_column div.address p:nth-child(4), #order_data .order_data_column_container .order_data_column div.edit_address p.form-field._billing_eu_vat_number_field {
+				   display:none !important;
+				}
+				
+				</style>
 		<?php 
+			}
 		}
 	}
 	
