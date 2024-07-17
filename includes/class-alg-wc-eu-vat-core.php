@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.12.3
+ * @version 2.12.4
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -28,7 +28,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.11.10
+	 * @version 2.12.4
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
 	 * @todo    [feature] `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
@@ -140,10 +140,11 @@ class Alg_WC_EU_VAT_Core {
 			add_action( 'wpo_wcpdf_after_order_details', 			 array( $this, 'add_vat_exempt_text_pdf_footer'), 10, 2 );
 			
 		}
+		
 		add_filter('woocommerce_rest_prepare_shop_order_object', array( $this, 'alg_wc_eu_vat_filter_order_response' ), PHP_INT_MAX, 3 );
 		
 		
-		
+		add_filter('yith_ywpi_template_editor_customer_info_placeholders', array( $this, 'alg_wc_eu_vat_support_yith_invoice' ), PHP_INT_MAX, 1 );
 		
 		// checkout block
 		
@@ -170,6 +171,15 @@ class Alg_WC_EU_VAT_Core {
 	}
 	
 	
+	/* alg_wc_eu_vat_support_yith_invoice.
+	 *
+	 * @version 2.12.4
+	 * @since   2.12.4
+	 */
+	function alg_wc_eu_vat_support_yith_invoice($fields_billing) {
+		$fields_billing[] = 'billing_eu_vat_number';
+		return $fields_billing;
+	}
 	
 	/* alg_eu_vat_update_default_value_for_eu_vat_field.
 	 *
@@ -1439,6 +1449,7 @@ class Alg_WC_EU_VAT_Core {
 						alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', null );
 						alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company', null );
 						alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company_name', null );
+						alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid_before_preserve', null );
 					}
 				}
 			}
@@ -1624,13 +1635,14 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * filter_available_payment_gateways_allowed.
 	 *
-	 * @version 1.7.0
+	 * @version 2.12.4
 	 * @since   1.0.0
 	 * @todo    [fix] (important) mini cart
 	 */
 	function filter_available_payment_gateways_allowed( $available_gateways ) {
 		
 		$gateways = $available_gateways;
+		$is_vat_valid = false;
 		
 		if ( $this->check_current_user_roles( get_option( 'alg_wc_eu_vat_exempt_for_user_roles', array() ) ) ) {
 			$is_exempt = true;
@@ -1641,6 +1653,11 @@ class Alg_WC_EU_VAT_Core {
 		} else {
 			$is_exempt = false;
 		}
+		
+		if(true === alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_valid_before_preserve' )) {
+			$is_vat_valid = true;
+		}
+		
 		
 		$alg_wc_eu_vat_allowed_payment_gateway = get_option( 'alg_wc_eu_vat_allowed_payment_gateway', array() );
 		$alg_wc_eu_vat_allow_specific_payment = get_option( 'alg_wc_eu_vat_allow_specific_payment', 'no' );
@@ -1653,9 +1670,9 @@ class Alg_WC_EU_VAT_Core {
 					}
 				}
 				
-				if($is_exempt){
+				if( $is_exempt || $is_vat_valid ){
 					return $gateways;
-				}else{
+				} else {
 					return $available_gateways;
 				}
 			}else{

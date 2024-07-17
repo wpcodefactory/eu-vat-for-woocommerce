@@ -145,6 +145,8 @@ class Alg_WC_EU_VAT_AJAX {
 		$is_shipping_diff = false;
 		$is_preserv = false;
 		
+		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid_before_preserve',    $is_valid );
+		
 		if ( $is_valid && 'no' != ( $preserve_option_value_base_country = get_option( 'alg_wc_eu_vat_preserve_in_base_country', 'no' ) ) ) {
 			
 			$selected_country_at_checkout = $_POST['billing_country'];
@@ -177,6 +179,7 @@ class Alg_WC_EU_VAT_AJAX {
 			}
 		}
 			
+		
 		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid',    $is_valid );
 		if ( true === $is_shipping_diff ) {
 			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', null );
