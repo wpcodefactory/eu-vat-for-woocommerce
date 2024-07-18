@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.12.4
+ * @version 2.12.5
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -28,7 +28,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.12.4
+	 * @version 2.12.5
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
 	 * @todo    [feature] `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
@@ -110,12 +110,16 @@ class Alg_WC_EU_VAT_Core {
 				add_filter( 'wp_enqueue_scripts',                                    array( $this, 'add_place_order_button_confirmation_script' ) );
 			}
 			
-			if ( is_admin() ) {
-				add_filter('woocommerce_order_is_vat_exempt',  array( $this, 'admin_order_is_vat_exempt' ), PHP_INT_MAX, 2 );
+			if ( 'yes' === get_option( 'alg_wc_eu_vat_validate_vat_admin_side', 'no' ) ) {
+				if ( is_admin() ) {
+					add_filter('woocommerce_order_is_vat_exempt',  array( $this, 'admin_order_is_vat_exempt' ), PHP_INT_MAX, 2 );
+				}
+				add_filter('woocommerce_order_is_vat_exempt', array( $this, 'admin_woocommerce_order_is_vat_exempt'), PHP_INT_MAX, 2);
 			}
+			
+			
 			add_action( 'admin_print_scripts', array( $this, 'admin_inline_js' ), PHP_INT_MAX );
 			
-			add_filter('woocommerce_order_is_vat_exempt', array( $this, 'admin_woocommerce_order_is_vat_exempt'), PHP_INT_MAX, 2);
 			
 			add_action('woocommerce_order_item_add_action_buttons', array( $this, 'admin_function_to_add_the_button'), PHP_INT_MAX);
 			

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 2.11.12
+ * @version 2.12.5
  * @since   1.5.0
  * @author  WPFactory
  */
@@ -30,7 +30,7 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.11.12
+	 * @version 2.12.5
 	 * @since   1.5.0
 	 * @todo    [dev] (important) set "Session type" default value to "WC session (recommended)"
 	 */
@@ -58,6 +58,16 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
+			
+			array(
+				'title'    => __( 'VAT Validation for Orders Created Manually from the Admin Side', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Validate VAT when an order is created manually from the admin side.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_validate_vat_admin_side',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_eu_vat_admin_options',
