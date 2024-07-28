@@ -299,6 +299,14 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			
 			array(
+				'title'    => __( 'Enable country preserve message', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enabled/disables country preserve validation message.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_validate_enable_preserve_message',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
 				'title'    => __( 'Country preserved', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Message on billing country preserved for VAT. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-not-valid-country-preserved</code>', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_progress_text_validation_preserv',

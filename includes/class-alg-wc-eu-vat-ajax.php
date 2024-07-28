@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 2.11.12
+ * @version 2.12.6
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -96,7 +96,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 2.11.12
+	 * @version 2.12.6
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) better codes (i.e. not 0, 1, 2, 3)
 	 * @todo    [dev] (maybe) `if ( ! isset( $_POST['alg_wc_eu_vat_validate_action'] ) ) return;`
@@ -162,6 +162,10 @@ class Alg_WC_EU_VAT_AJAX {
 				$locations = array_map( 'strtoupper', array_map( 'trim', explode( ',', get_option( 'alg_wc_eu_vat_preserve_in_base_country_locations', '' ) ) ) );
 				$is_preserv = ( in_array( $selected_country_at_checkout, $locations ) );
 			}
+		}
+		
+		if ( 'yes' != get_option( 'alg_wc_eu_vat_validate_enable_preserve_message', 'no' ) ) {
+			$is_preserv = false;
 		}
 		
 		if($is_preserv) {

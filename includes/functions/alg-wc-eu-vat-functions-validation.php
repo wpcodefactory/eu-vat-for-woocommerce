@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 2.11.4
+ * @version 2.12.6
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -150,7 +150,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 2.11.12
+	 * @version 2.12.6
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
@@ -242,6 +242,23 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 			
 			return null;
 			
+		} catch (SoapFault $fault) {
+			
+			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, 'soap',
+				sprintf( __( 'Error: SoapFault: %s', 'eu-vat-for-woocommerce' ), $fault->getMessage() ) );
+				
+			if ($fault->faultcode >= 500 && $fault->faultcode < 600) {
+				// Custom handling for 5xx errors
+				// ACCEPT THE VAT  BECAUSE VIES IS DOWN
+				
+				if('yes' === get_option( 'alg_wc_eu_vat_validate_vies_not_available', 'no' )) {
+				
+					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_vies_error_message',    $fault->getMessage() );
+			
+					return false;
+					
+				}
+			}
 		}
 	}
 }

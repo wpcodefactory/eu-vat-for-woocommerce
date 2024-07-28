@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 2.11.11
+ * @version 2.12.6
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -377,18 +377,22 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * add_meta_box.
 	 *
-	 * @version 1.0.0
+	 * @version 2.12.6
 	 * @since   1.0.0
 	 */
 	function add_meta_box() {
-		add_meta_box(
-			'alg-wc-eu-vat',
-			__( 'EU VAT', 'eu-vat-for-woocommerce' ),
-			array( $this, 'create_meta_box' ),
-			'shop_order',
-			'side',
-			'low'
-		);
+		$current_screen = get_current_screen()->id;
+
+		if($current_screen=='shop_order' || $current_screen=='woocommerce_page_wc-orders') {
+			add_meta_box(
+				'alg-wc-eu-vat',
+				__( 'EU VAT', 'eu-vat-for-woocommerce' ),
+				array( $this, 'create_meta_box' ),
+				$current_screen,
+				'side',
+				'low'
+			);
+		}
 	}
 
 	/**
