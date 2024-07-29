@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 2.12.6
+ * @version 2.12.7
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -150,7 +150,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 2.12.6
+	 * @version 2.12.7
 	 * @since   1.0.0
 	 * @return  mixed: bool on successful checking, null otherwise
 	 */
@@ -259,6 +259,8 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 					
 				}
 			}
+			
+			return null;
 		}
 	}
 }
