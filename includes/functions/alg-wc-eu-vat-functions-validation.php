@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 2.12.7
+ * @version 2.12.8
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -13,12 +13,12 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_parse_vat.
 	 *
-	 * @version 2.11.4
+	 * @version 2.12.8
 	 * @since   1.1.0
 	 * @todo    [dev] (maybe) `alg_wc_eu_vat_maybe_log`: extract ID from `$full_vat_number`
 	 */
 	function alg_wc_eu_vat_parse_vat( $full_vat_number, $billing_country ) {
-		$full_vat_number = str_replace('-','',strtoupper( $full_vat_number ));
+		$full_vat_number = str_replace(['-','.',' '],'',strtoupper( $full_vat_number ));
 		$billing_country = strtoupper( $billing_country );
 		if ( strlen( $full_vat_number ) > 2 && ( $country = substr( $full_vat_number, 0, 2 ) ) && ctype_alpha( $country ) ) {
 			if ( 'no' === get_option( 'alg_wc_eu_vat_check_billing_country_code', 'no' ) || ( 'EL' === $country ? 'GR' : $country ) == $billing_country ) {

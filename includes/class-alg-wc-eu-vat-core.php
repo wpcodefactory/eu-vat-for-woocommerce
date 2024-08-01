@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.12.5
+ * @version 2.12.8
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -1690,7 +1690,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 2.11.5
+	 * @version 2.12.8
 	 * @since   1.0.0
 	 * @todo    [dev] (important) simplify the code
 	 */
@@ -1795,8 +1795,9 @@ class Alg_WC_EU_VAT_Core {
 				}
 				
 				if ( 'no' != ( $preserve_option_value = get_option( 'alg_wc_eu_vat_preserv_vat_for_different_shipping', 'no' ) ) ) {
-					$billing_country = $_REQUEST['billing_country'];
-					$shipping_country = $_REQUEST['shipping_country'];
+					$billing_country = isset( $_REQUEST['billing_country'] ) ? $_REQUEST['billing_country'] : '';
+					$shipping_country = isset( $_REQUEST['shipping_country'] ) ? $_REQUEST['shipping_country'] : '';
+					
 					$is_country_same = ( strtoupper( $billing_country ) !== strtoupper( $shipping_country) );
 					if(!$is_country_same && !$is_valid){
 						$is_valid = true;
