@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 2.12.6
+ * @version 2.12.9
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -398,14 +398,21 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.9.13
+	 * @version 2.12.9
 	 * @since   1.0.0
 	 * @todo    [dev] save actual EU VAT number used on checkout (instead of `get_post_meta( $order_id, '_' . alg_wc_eu_vat_get_field_id(), true )`)
 	 * @todo    [dev] (maybe) add country flag
 	 */
-	function create_meta_box() {
+	function create_meta_box( $object ) {
+		
+		// remove for HPOS 
+		/*
 		$order_id             = get_the_ID();
 		$_order               = wc_get_order( $order_id );
+		*/ 
+		
+		$_order = is_a( $object, 'WP_Post' ) ? wc_get_order( $object->ID ) : $object;
+		
 		$_customer_ip_address = ( alg_wc_eu_vat()->core->is_wc_version_below_3_0_0 ? $_order->customer_ip_address : $_order->get_customer_ip_address() );
 
 		// Country by IP
