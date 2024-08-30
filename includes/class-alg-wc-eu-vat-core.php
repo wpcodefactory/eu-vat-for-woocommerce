@@ -1848,7 +1848,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * add_eu_vat_registration_woocommerce_validation.
 	 *
-	 * @version 2.12.9
+	 * @version 2.12.10
 	 * @since   1.0.0
 	 * @todo    [dev] new field to signup form.
 	 */
@@ -1867,7 +1867,7 @@ class Alg_WC_EU_VAT_Core {
 				
 				if( isset( $_REQUEST ) && isset( $_REQUEST['oauth_consumer_key'] ) && ! empty( $_REQUEST['oauth_consumer_key'] ) ) {
 					
-				} else {
+				} else if (! strpos( $_SERVER['REQUEST_URI'], 'wp-json')) {
 					$errors->add( $field_id . '_error', $text_not_valid );
 				}
 			}
