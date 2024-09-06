@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.12.9
+ * @version 2.12.11
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -124,6 +124,7 @@ class Alg_WC_EU_VAT_Core {
 			add_action('woocommerce_order_item_add_action_buttons', array( $this, 'admin_function_to_add_the_button'), PHP_INT_MAX);
 			
 			add_action( 'admin_footer', array( $this, 'eu_vat_admin_footer'), PHP_INT_MAX );
+			add_action( 'wp_footer', array( $this, 'eu_vat_wp_footer'), PHP_INT_MAX );
 			
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'filter_available_payment_gateways_allowed' ), PHP_INT_MAX );
 			
@@ -782,6 +783,25 @@ class Alg_WC_EU_VAT_Core {
 	}
 	
 	/**
+	 * eu_vat_wp_footer.
+	 *
+	 * @version 2.12.11
+	 * @since   2.12.11
+	 */
+	 
+	function eu_vat_wp_footer() {
+    
+	if ( 'yes' === get_option( 'alg_wc_eu_vat_remove_validation_color', 'no' ) ) { ?>
+	<style>
+		.form-row.woocommerce-invalid input#billing_eu_vat_number{
+			box-shadow: inset 2px 0 0 transparent;
+		}
+	</style>
+	<?php 
+		}
+	}
+	
+	/**
 	 * eu_vat_admin_footer.
 	 *
 	 * @version 2.12.3
@@ -831,6 +851,13 @@ class Alg_WC_EU_VAT_Core {
 				</style>
 		<?php 
 			}
+		}
+		
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_remove_validation_color', 'no' ) ) { ?>
+		.form-row.woocommerce-invalid input.#billing_eu_vat_number{
+			box-shadow: inset 2px 0 0 transparent;
+		}
+		<?php
 		}
 	}
 	

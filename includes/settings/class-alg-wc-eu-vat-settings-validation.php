@@ -332,6 +332,16 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
+			
+			array(
+				'title'    => __( 'Remove validation color', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Remove the validation color from the VAT field (this may depend on the theme)', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_remove_validation_color',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_eu_vat_messages_options',
