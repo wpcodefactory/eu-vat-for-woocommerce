@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.12.11
+ * @version 2.12.12
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -804,7 +804,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * eu_vat_admin_footer.
 	 *
-	 * @version 2.12.3
+	 * @version 2.12.12
 	 * @since   1.7.0
 	 */
 	 
@@ -853,12 +853,6 @@ class Alg_WC_EU_VAT_Core {
 			}
 		}
 		
-		if ( 'yes' === get_option( 'alg_wc_eu_vat_remove_validation_color', 'no' ) ) { ?>
-		.form-row.woocommerce-invalid input.#billing_eu_vat_number{
-			box-shadow: inset 2px 0 0 transparent;
-		}
-		<?php
-		}
 	}
 	
 	/**

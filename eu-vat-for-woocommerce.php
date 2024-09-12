@@ -3,7 +3,7 @@
 Plugin Name: EU/UK VAT for WooCommerce
 Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
 Description: Manage EU VAT in WooCommerce. Beautifully.
-Version: 2.12.11
+Version: 2.12.12
 Author: WPFactory
 Author URI: https://wpfactory.com/
 Text Domain: eu-vat-for-woocommerce
@@ -33,8 +33,23 @@ final class Alg_WC_EU_VAT {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '2.12.11';
+	public $version = '2.12.12';
+	
+	/**
+	 * core object.
+	 *
+	 * @var   Alg_WC_EU_VAT_Core class instance
+	 * @since 2.12.12
+	 */
+	 
 	public $core = null;
+	
+	/**
+	 * admin settings.
+	 *
+	 * @var   array
+	 * @since 2.12.12
+	 */
 	public $settings = array();
 
 	/**

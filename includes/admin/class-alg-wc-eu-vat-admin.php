@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 2.12.9
+ * @version 2.12.12
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -398,7 +398,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.12.9
+	 * @version 2.12.12
 	 * @since   1.0.0
 	 * @todo    [dev] save actual EU VAT number used on checkout (instead of `get_post_meta( $order_id, '_' . alg_wc_eu_vat_get_field_id(), true )`)
 	 * @todo    [dev] (maybe) add country flag
@@ -456,6 +456,7 @@ class Alg_WC_EU_VAT_Admin {
 		);
 
 		// Output
+		$order_id = $_order->get_id();
 		echo alg_wc_eu_vat_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
 		echo '<p>' . '<a href="' . add_query_arg( 'validate_vat_and_maybe_remove_taxes', $order_id ) . '">' .
 			__( 'Validate VAT and remove taxes', 'eu-vat-for-woocommerce' ) . '</a>' . '</p>';
