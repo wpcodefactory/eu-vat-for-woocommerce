@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Tool - EU country VAT Rates
  *
- * @version 1.7.0
+ * @version 2.12.13
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -101,7 +101,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	/**
 	 * add_eu_countries_vat_rates.
 	 *
-	 * @version 1.7.0
+	 * @version 2.12.13
 	 * @since   1.0.0
 	 */
 	function add_eu_countries_vat_rates() {
@@ -120,7 +120,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 				'tax_rate_country'  => $country,
 				'tax_rate'          => $rate,
 
-				'tax_rate_name'     => isset( $_POST['alg_wc_eu_vat_tax_name'] ) ? $_POST['alg_wc_eu_vat_tax_name'] : __( 'VAT', 'woocommerce' ),
+				'tax_rate_name'     => isset( $_POST['alg_wc_eu_vat_tax_name'] ) ? esc_attr($_POST['alg_wc_eu_vat_tax_name']) : __( 'VAT', 'woocommerce' ),
 				'tax_rate_priority' => 1,
 				'tax_rate_compound' => 0,
 				'tax_rate_shipping' => 1,
@@ -167,7 +167,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	/**
 	 * create_eu_countries_vat_rates_tool.
 	 *
-	 * @version 1.5.0
+	 * @version 2.12.13
 	 * @since   1.0.0
 	 */
 	function create_eu_countries_vat_rates_tool() {
@@ -181,7 +181,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 		$the_tool_html .= $header_html;
 
 		$data = array();
-		$the_name = ( isset( $_POST['alg_wc_eu_vat_tax_name'] ) ? $_POST['alg_wc_eu_vat_tax_name'] : __( 'VAT', 'woocommerce' ) );
+		$the_name = ( isset( $_POST['alg_wc_eu_vat_tax_name'] ) ? esc_attr($_POST['alg_wc_eu_vat_tax_name']) : __( 'VAT', 'woocommerce' ) );
 		$data[] = array(
 			__( 'Name', 'eu-vat-for-woocommerce' ) . '<br>' .
 				'<input class="input-text" type="text" name="alg_wc_eu_vat_tax_name" value="' . $the_name . '">',

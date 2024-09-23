@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 2.12.6
+ * @version 2.12.13
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -66,6 +66,13 @@ class Alg_WC_EU_VAT_AJAX {
 		}
 	}
 	
+	/**
+	 * get_preserve_countrues.
+	 *
+	 * @version 2.12.13
+	 * @since   2.12.13
+	 */
+	 
 	function get_preserve_countrues(){
 		$return = array();
 		$preservecountries = get_option( 'alg_wc_eu_vat_preserve_in_base_country', 'no' );
@@ -82,6 +89,12 @@ class Alg_WC_EU_VAT_AJAX {
 		return $return;
 	}
 	
+	/**
+	 * alg_wc_eu_vat_validate_action_first_load.
+	 *
+	 * @version 2.12.13
+	 * @since   2.12.13
+	 */
 	function alg_wc_eu_vat_validate_action_first_load( $param ) {
 		$alg_wc_eu_vat_valid = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_valid' );
 		
@@ -96,7 +109,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 2.12.6
+	 * @version 2.12.13
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) better codes (i.e. not 0, 1, 2, 3)
 	 * @todo    [dev] (maybe) `if ( ! isset( $_POST['alg_wc_eu_vat_validate_action'] ) ) return;`
@@ -105,7 +118,7 @@ class Alg_WC_EU_VAT_AJAX {
 	function alg_wc_eu_vat_validate_action( $param ) {
 		$vat_number = '';
 		if ( isset( $_POST['alg_wc_eu_vat_to_check'] ) && '' != $_POST['alg_wc_eu_vat_to_check'] ) {
-			$vat_number = $_POST['alg_wc_eu_vat_to_check'];
+			$vat_number = esc_attr($_POST['alg_wc_eu_vat_to_check']);
 		}
 		if($vat_number == 'checkout_block_first_load') {
 			if ( version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' ) ) {
@@ -114,8 +127,8 @@ class Alg_WC_EU_VAT_AJAX {
 		}
 		
 		if ( isset( $_POST['alg_wc_eu_vat_to_check'] ) && '' != $_POST['alg_wc_eu_vat_to_check'] ) {
-			$eu_vat_number   = alg_wc_eu_vat_parse_vat( $vat_number, $_POST['billing_country'] );
-			$billing_company = ( isset( $_POST['billing_company'] ) ? $_POST['billing_company'] : '' );
+			$eu_vat_number   = alg_wc_eu_vat_parse_vat( $vat_number, esc_attr($_POST['billing_country']) );
+			$billing_company = ( isset( $_POST['billing_company'] ) ? esc_attr($_POST['billing_company']) : '' );
 			if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_ip_location_country', 'no' ) ) {
 				$country_by_ip   = alg_wc_eu_vat_get_customers_location_by_ip();
 				$is_county_valid = ( $country_by_ip === $eu_vat_number['country'] );
@@ -149,7 +162,7 @@ class Alg_WC_EU_VAT_AJAX {
 		
 		if ( $is_valid && 'no' != ( $preserve_option_value_base_country = get_option( 'alg_wc_eu_vat_preserve_in_base_country', 'no' ) ) ) {
 			
-			$selected_country_at_checkout = $_POST['billing_country'];
+			$selected_country_at_checkout = esc_attr($_POST['billing_country']);
 			
 			if ( 'yes' === $preserve_option_value_base_country ) {
 				$location = wc_get_base_location();
@@ -190,10 +203,10 @@ class Alg_WC_EU_VAT_AJAX {
 		}else if ( true === $is_preserv ) {
 			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', null );
 		}else{
-			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', ( isset( $_POST['alg_wc_eu_vat_to_check'] ) ? $_POST['alg_wc_eu_vat_to_check'] : '' ) );
+			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', ( isset( $_POST['alg_wc_eu_vat_to_check'] ) ? esc_attr($_POST['alg_wc_eu_vat_to_check']) : '' ) );
 		}
 		
-		$alg_wc_eu_vat_belgium_compatibility = ( isset( $_POST['alg_wc_eu_vat_belgium_compatibility'] ) ? $_POST['alg_wc_eu_vat_belgium_compatibility'] : '' );
+		$alg_wc_eu_vat_belgium_compatibility = ( isset( $_POST['alg_wc_eu_vat_belgium_compatibility'] ) ? esc_attr($_POST['alg_wc_eu_vat_belgium_compatibility']) : '' );
 		
 		if( $alg_wc_eu_vat_belgium_compatibility == 'yes' ){
 			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid',    $is_valid );
@@ -263,9 +276,15 @@ class Alg_WC_EU_VAT_AJAX {
 		die();
 	}
 	
+	/**
+	 * alg_wc_eu_vat_exempt_vat_from_admin.
+	 *
+	 * @version 2.12.13
+	 * @since   2.12.13
+	 */
 	function alg_wc_eu_vat_exempt_vat_from_admin( $param ){
 		if ( isset( $_POST['order_id'] ) && '' != $_POST['order_id'] ) {
-			$orderid = $_POST['order_id'];
+			$orderid = esc_attr($_POST['order_id']);
 			if(isset( $_POST['status'] ) && 'yes' == $_POST['status'] ){
 				update_post_meta($orderid, 'exempt_vat_from_admin', 'never');
 				echo "never";
