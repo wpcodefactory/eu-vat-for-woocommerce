@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 2.12.13
+ * @version 2.12.14
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -35,13 +35,13 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.11.11
+	 * @version 2.12.14
 	 * @since   1.0.0
 	 * @todo    [dev] (important) `... && function_exists( 'is_checkout' ) && is_checkout()`
 	 */
 	function enqueue_scripts() {
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_validate', 'yes' ) ) {
-			if ( ( function_exists( 'is_checkout' ) && is_checkout() ) || is_account_page() ) {
+			if ( ( function_exists( 'is_checkout' ) && is_checkout() ) || ( is_account_page() && ! is_wc_endpoint_url( 'edit-address' ) ) ) {
 				wp_enqueue_script( 'alg-wc-eu-vat', alg_wc_eu_vat()->plugin_url() . '/includes/js/alg-wc-eu-vat.js', array('jquery'), alg_wc_eu_vat()->version, true );
 				wp_localize_script( 'alg-wc-eu-vat', 'alg_wc_eu_vat_ajax_object', array(
 					'ajax_url'                        => admin_url( 'admin-ajax.php' ),
@@ -279,10 +279,15 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_exempt_vat_from_admin.
 	 *
-	 * @version 2.12.13
+	 * @version 2.12.14
 	 * @since   2.12.13
 	 */
 	function alg_wc_eu_vat_exempt_vat_from_admin( $param ){
+		
+		if ( ! current_user_can('manage_options') || ! wp_verify_nonce( $_POST['nonce'], 'alg-wc-eu-vat-ajax-nonce' ) ) {
+			exit;
+		}
+		
 		if ( isset( $_POST['order_id'] ) && '' != $_POST['order_id'] ) {
 			$orderid = esc_attr($_POST['order_id']);
 			if(isset( $_POST['status'] ) && 'yes' == $_POST['status'] ){

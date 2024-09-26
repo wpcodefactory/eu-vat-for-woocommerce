@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 2.12.13
+ * @version 2.12.14
  * @since   1.0.0
  * @author  WPFactory
  */
@@ -28,7 +28,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.12.5
+	 * @version 2.12.14
 	 * @since   1.0.0
 	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
 	 * @todo    [feature] `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
@@ -144,6 +144,8 @@ class Alg_WC_EU_VAT_Core {
 
 			add_action( 'wpo_wcpdf_after_order_details', 			 array( $this, 'add_vat_exempt_text_pdf_footer'), 10, 2 );
 			
+			add_filter('woocommerce_billing_fields', 				 array( $this, 'add_frontend_edit_billing_fields' ), 10 );
+			
 		}
 		
 		add_filter('woocommerce_rest_prepare_shop_order_object', array( $this, 'alg_wc_eu_vat_filter_order_response' ), PHP_INT_MAX, 3 );
@@ -175,6 +177,28 @@ class Alg_WC_EU_VAT_Core {
 		
 	}
 	
+	
+	/* add_frontend_edit_billing_fields.
+	 *
+	 * @version 2.12.14
+	 * @since   2.12.14
+	 */
+	function add_frontend_edit_billing_fields( $fields ) {
+		
+		$field_id = alg_wc_eu_vat_get_field_id();
+		
+		$fields[$field_id] = array(
+			'label' 		=> do_shortcode( get_option( 'alg_wc_eu_vat_field_label', __( 'EU VAT Number', 'eu-vat-for-woocommerce' ) ) ), 
+			'placeholder' 	=> do_shortcode( get_option( 'alg_wc_eu_vat_field_placeholder', __( 'EU VAT Number', 'eu-vat-for-woocommerce' ) ) ),
+			'required' 		=> false, 
+			'clear' 		=> false, 
+			'type' 			=> 'text', 
+			'class' 		=> array('alg-wc-frontend-billing-edit'),
+			'priority' 		=> get_option( 'alg_wc_eu_vat_field_priority', 200 ),
+		);
+
+		return $fields;
+	}
 	
 	/* alg_wc_eu_vat_support_yith_invoice.
 	 *
@@ -799,6 +823,14 @@ class Alg_WC_EU_VAT_Core {
 	</style>
 	<?php 
 		}
+		
+		?>
+		<style>
+		div.woocommerce-MyAccount-content .alg-wc-frontend-billing-edit {
+			display: block !important;
+		}
+		</style>
+		<?php
 	}
 	
 	/**
@@ -809,6 +841,8 @@ class Alg_WC_EU_VAT_Core {
 	 */
 	 
 	function eu_vat_admin_footer() {
+		
+		$nonce = wp_create_nonce('alg-wc-eu-vat-ajax-nonce');
     ?>
 		<script type="text/javascript">
 		jQuery('body').on('click', '.exempt_vat_from_admin', function() {
@@ -826,6 +860,7 @@ class Alg_WC_EU_VAT_Core {
 						action:   'exempt_vat_from_admin',
 						order_id: order_id,
 						status: status,
+						'nonce': '<?php echo $nonce; ?>'
 					};
 			jQuery.ajax({
 				url:  woocommerce_admin_meta_boxes.ajax_url,
