@@ -2,19 +2,18 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 2.12.5
+ * @version 3.0.0
  * @since   1.5.0
+ *
  * @author  WPFactory
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_WC_EU_VAT_Settings_Admin' ) ) :
 
 class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 
-	public $id = '';
-	public $desc = '';
 	/**
 	 * Constructor.
 	 *
@@ -30,9 +29,8 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.12.5
+	 * @version 3.0.0
 	 * @since   1.5.0
-	 * @todo    [dev] (important) set "Session type" default value to "WC session (recommended)"
 	 */
 	function get_settings() {
 
@@ -58,7 +56,6 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-			
 			array(
 				'title'    => __( 'VAT Validation for Orders Created Manually from the Admin Side', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Validate VAT when an order is created manually from the admin side.', 'eu-vat-for-woocommerce' ),
@@ -67,17 +64,36 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-			
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_eu_vat_admin_options',
 			),
+
 			array(
-				'title'    => __( 'Language Guide', 'product-quantity-for-woocommerce' ),
-				'desc'    => '<table class="form-table" style="width:67%;"><tbody><tr valign="top" class=""><th scope="row" class="titledesc">' . __( 'WPML OR Polylang', 'product-quantity-for-woocommerce' ) . '</th><td class="forminp forminp-checkbox">' . __( 'If you are using multi-language store with WPML or Polylang, you can use shortcodes to show different languages
-Example: You can [alg_wc_eu_vat_translate lang="EN"] Desired message
-Shortcode [/alg_wc_eu_vat_translate] can be used to show English messages, similar to other languages you have.
-Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages', 'product-quantity-for-woocommerce' ) . '</td></tr></tbody></table>',
+				'title'    => __( 'Language Guide', 'eu-vat-for-woocommerce' ),
+				'desc'     =>
+					'<table class="form-table" style="width:67%;">' .
+						'<tbody>' .
+							'<tr valign="top" class="">' .
+								'<th scope="row" class="titledesc">' .
+									__( 'WPML or Polylang', 'eu-vat-for-woocommerce' ) .
+								'</th>' .
+								'<td class="forminp forminp-checkbox">' .
+									__( 'If you are using multi-language store with WPML or Polylang, you can use shortcodes to show different languages.', 'eu-vat-for-woocommerce' ) .
+									'<br>' .
+									sprintf(
+										__( 'Example: %s can be used to show English messages, similar to other languages you have.', 'eu-vat-for-woocommerce' ),
+										'<code>[alg_wc_eu_vat_translate lang="en"]Your VAT number is valid.[/alg_wc_eu_vat_translate]</code>'
+									) .
+									'<br>' .
+									sprintf(
+										__( 'Use %s as fallback for non-defined languages.', 'eu-vat-for-woocommerce' ),
+										'<code>[alg_wc_eu_vat_translate not_lang=" "]</code>'
+									) .
+								'</td>' .
+							'</tr>' .
+						'</tbody>' .
+					'</table>',
 				'type'     => 'title',
 				'id'       => 'alg_wc_pq_qty_language_guide',
 			),
@@ -105,7 +121,6 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 			array(
 				'title'    => __( 'Session type', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_session_type',
-				/*'default'  => 'standard',*/
 				'default'  => 'wc',
 				'type'     => 'select',
 				'class'    => 'wc-enhanced-select',
@@ -136,7 +151,6 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 				'default'  => __( 'VAT Shifted', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
 			),
-			
 			array(
 				'title'    => __( 'Enable manual validation of VAT numbers', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
@@ -159,7 +173,6 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-			
 			array(
 				'title'    => __( 'Reduce concurrent request to VIES', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
@@ -168,7 +181,6 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-			
 			array(
 				'title'    => __( 'Checkout block field', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
@@ -176,7 +188,6 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-			
 			array(
 				'title'    => __( 'Autofill company name from VAT ID', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
@@ -185,7 +196,6 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-			
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_eu_vat_advanced_options',
@@ -204,7 +214,7 @@ Use [alg_wc_eu_vat_translate not_lang=" "] as fallback for non-defined languages
 					'<li>' . sprintf( __( 'EU VAT report: %s.', 'eu-vat-for-woocommerce' ),
 						'<a href="' . admin_url( 'admin.php?page=wc-reports&tab=taxes&report=alg_wc_eu_vat' ) . '">' . __( 'WooCommerce > Reports > Taxes > EU VAT', 'eu-vat-for-woocommerce' ) . '</a>' ) . '</li>' .
 					'<li>' . sprintf( __( 'You can use shortcodes in field label, placeholder, description and all messages options, e.g.: %s.', 'eu-vat-for-woocommerce' ),
-						'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/#alg_wc_eu_vat_translate"><code>[alg_wc_eu_vat_translate]</code></a>' ) . '</li>' .
+						'<a target="_blank" href="https://wpfactory.com/kb/eu-vat-for-woocommerce/shortcodes/"><code>[alg_wc_eu_vat_translate]</code></a>' ) . '</li>' .
 					'<li>' . sprintf( __( 'Plugin description on %s.', 'eu-vat-for-woocommerce' ),
 						'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">WPFactory</a>' ) . '</li>' .
 				'</ul>',

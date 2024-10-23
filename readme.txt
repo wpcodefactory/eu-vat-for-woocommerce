@@ -1,9 +1,9 @@
 === EU/UK VAT Manager for WooCommerce ===
-Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
+Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli, aegkr
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.6
-Stable tag: 2.12.14
+Stable tag: 3.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -19,13 +19,13 @@ Manage EU/ UK VAT in WooCommerce, validate VAT numbers real time with VIES, exem
 
 **Unlock Seamless B2B Transactions with the UK/EU VAT Manager**
 
-In the rapidly evolving eCommerce landscape, the ability to cater to both B2C and B2B customers has become essential for growth and scalability. 
+In the rapidly evolving eCommerce landscape, the ability to cater to both B2C and B2B customers has become essential for growth and scalability.
 
-For store owners selling across the UK and EU, navigating the complexities of Value Added Tax (VAT) can be challenging. 
+For store owners selling across the UK and EU, navigating the complexities of Value Added Tax (VAT) can be challenging.
 
-B2B transactions within this region often need validation of VAT numbers to ensure legitimate business purchases, allowing sellers to exempt these buyers from VAT charges, where they report it to their local tax authorities. 
+B2B transactions within this region often need validation of VAT numbers to ensure legitimate business purchases, allowing sellers to exempt these buyers from VAT charges, where they report it to their local tax authorities.
 
-With our **EU/UK VAT Manager for WooCommerce** plugin, you can effortlessly validate UK/EU VAT numbers using [VIES (VAT Information Exchange System) services](https://ec.europa.eu/taxation_customs/vies/#/vat-validation "VIES (VAT Information Exchange System) services"), enabling you to sell to businesses in the EU without the additional tax burden. 
+With our **EU/UK VAT Manager for WooCommerce** plugin, you can effortlessly validate UK/EU VAT numbers using [VIES (VAT Information Exchange System) services](https://ec.europa.eu/taxation_customs/vies/#/vat-validation "VIES (VAT Information Exchange System) services"), enabling you to sell to businesses in the EU without the additional tax burden.
 
 This not only streamlines your checkout process but ensures compliance, boosting trust and confidence among your B2B clientele.
 
@@ -125,7 +125,7 @@ With the recent updates to WooCommerce block-based checkout page, our plugin is 
 
 * Always charge VAT for selected user roles only
 
-* Skip VAT validation for selected countries 
+* Skip VAT validation for selected countries
 
 * Invalidate VAT checking and reserve VAT if country code in VAT number isn't matching billing country code
 
@@ -199,7 +199,7 @@ If you're selling to businesses and wish to offer them specific payment gateways
 
 * **Company Name Matching:** Check if company name matches the VAT number, and show custom message if not
 
-* **Local VAT numbers Handling:** Allow checkout in countries with local VAT numbers which can't be validated (not part of VIES) 
+* **Local VAT numbers Handling:** Allow checkout in countries with local VAT numbers which can't be validated (not part of VIES)
 
 * Premium Support
 
@@ -290,6 +290,17 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 
 == Changelog ==
 
+= 3.0.0 - 23/10/2024 =
+* Fix - Localization issue.
+* Fix - Tax calculation on country change.
+* Fix - Cross-Site Request Forgery vulnerability.
+* Add - Keep VAT for specific products.
+* Dev - General - "Enable plugin" option removed.
+* Dev - Admin settings descriptions updated.
+* Dev - Code refactoring and cleanup.
+* WC tested up to: 9.3.
+* WooCommerce added to the "Requires Plugins" (plugin header).
+
 = 2.12.14 - 26/09/2024 =
 * Fix - Cross-Site Scripting vulnerability.
 * Add - EU VAT filed to "My Account" - "Edit Address".
@@ -309,12 +320,12 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 
 = 2.12.9 - 28/08/2024 =
 * Fix - Order metabox HPOS function support.
-* Fix - Added a condition for the EU VAT field on the checkout and cart pages, restricting it from appearing on other pages where the object is not available. 
+* Fix - Added a condition for the EU VAT field on the checkout and cart pages, restricting it from appearing on other pages where the object is not available.
 * Fix - skip validation when create user through API.
 
 = 2.12.8 - 01/08/2024 =
 * Compatibility with WordPress 6.6 verified.
-* Fix - alg_wc_eu_vat_parse_vat() trim vat number with ['-','.',' '] 
+* Fix - alg_wc_eu_vat_parse_vat() trim vat number with ['-','.',' ']
 
 = 2.12.7 - 30/07/2024 =
 * Fix - Accept VAT when VIES is down (extra catch soapFault).
@@ -371,7 +382,7 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 * Fix - issue with "Keep VAT in selected countries".
 
 = 2.11.4 - 13/06/2024 =
-* Fix - “Allow VAT number input without country code” for Greek VATs. 
+* Fix - “Allow VAT number input without country code” for Greek VATs.
 
 = 2.11.3 - 13/06/2024 =
 * HOPS - ADMIN ORDERS LIST FOR EU VAT.
@@ -450,15 +461,15 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 * update js function alg_wc_eu_vat_validate_vat with load flag
 
 = 2.9.9 - 15/06/2023 =
-* extend validation result with new hook alg_wc_eu_vat_check_alternative   
+* extend validation result with new hook alg_wc_eu_vat_check_alternative
 * WC tested up to: 7.8
 
 = 2.9.8 - 30/05/2023 =
-* update with extra character trim with eu VAT validator response.   
+* update with extra character trim with eu VAT validator response.
 * WC tested up to: 7.6
 
 = 2.9.7 - 11/04/2023 =
-* Update woocommerce_before_calculate_totals priority from MAX to 99, so users can run their own overwrite.  
+* Update woocommerce_before_calculate_totals priority from MAX to 99, so users can run their own overwrite.
 * Compatibility with WordPress 6.2 verified
 
 = 2.9.6 - 31/03/2023 =
@@ -558,7 +569,7 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 
 = 2.6.1 - 19/03/2022 =
 * Verified compatibility with WooCommerce 6.3
-* Added a new option in the revamped "Required" section to make the VAT field required if company field is filled 
+* Added a new option in the revamped "Required" section to make the VAT field required if company field is filled
 
 = 2.6 - 27/02/2022 =
 * Added a new option to make the field required on selected countries only
@@ -607,11 +618,11 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 = 2.4.1 - 13/07/2021 =
 * Added an option to validate VAT based on final destination (if order is sent to a forwarding address)
 * Fixed undefined index & order ID warning messages
-* Verified compatibility with WooCommerce 5.5 
+* Verified compatibility with WooCommerce 5.5
 
 = 2.4 - 24/06/2021 =
 * Added a popup section to open official VIES website in orders backend (to verify VAT info on order)
-* Verified compatibility with WooCommerce 5.4 
+* Verified compatibility with WooCommerce 5.4
 
 = 2.3.3 - 16/05/2021 =
 * Fixed a bug was showing "Undefined index" errors when connecting through SSH

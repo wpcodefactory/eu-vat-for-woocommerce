@@ -3,18 +3,16 @@
 Plugin Name: EU/UK VAT for WooCommerce
 Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
 Description: Manage EU VAT in WooCommerce. Beautifully.
-Version: 2.12.14
+Version: 3.0.0
 Author: WPFactory
 Author URI: https://wpfactory.com/
 Text Domain: eu-vat-for-woocommerce
 Domain Path: /langs
-Copyright: © 2023 WPFactory
-WC tested up to: 9.2
-License: GNU General Public License v3.0
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+WC tested up to: 9.3
+Requires Plugins: woocommerce
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_WC_EU_VAT' ) ) :
 
@@ -22,7 +20,7 @@ if ( ! class_exists( 'Alg_WC_EU_VAT' ) ) :
  * Main Alg_WC_EU_VAT Class
  *
  * @class   Alg_WC_EU_VAT
- * @version 2.12.14
+ * @version 3.0.0
  * @since   1.0.0
  */
 final class Alg_WC_EU_VAT {
@@ -33,17 +31,17 @@ final class Alg_WC_EU_VAT {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '2.12.14';
-	
+	public $version = '3.0.0';
+
 	/**
 	 * core object.
 	 *
 	 * @var   Alg_WC_EU_VAT_Core class instance
 	 * @since 2.12.12
 	 */
-	 
+
 	public $core = null;
-	
+
 	/**
 	 * admin settings.
 	 *
@@ -78,7 +76,7 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * Alg_WC_EU_VAT Constructor.
 	 *
-	 * @version 1.7.1
+	 * @version 3.0.0
 	 * @since   1.0.0
 	 * @access  public
 	 */
@@ -87,7 +85,10 @@ final class Alg_WC_EU_VAT {
 		// Check for active plugins
 		if (
 			! $this->is_plugin_active( 'woocommerce/woocommerce.php' ) ||
-			( 'eu-vat-for-woocommerce.php' === basename( __FILE__ ) && $this->is_plugin_active( 'eu-vat-for-woocommerce-pro/eu-vat-for-woocommerce-pro.php' ) )
+			(
+				'eu-vat-for-woocommerce.php' === basename( __FILE__ ) &&
+				$this->is_plugin_active( 'eu-vat-for-woocommerce-pro/eu-vat-for-woocommerce-pro.php' )
+			)
 		) {
 			return;
 		}
@@ -96,7 +97,7 @@ final class Alg_WC_EU_VAT {
 		require_once( 'includes/functions/alg-wc-eu-vat-functions-debug.php' );
 
 		// Set up localisation
-		load_plugin_textdomain( 'eu-vat-for-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
+		add_action( 'init', array( $this, 'localize' ) );
 
 		// Pro
 		if ( 'eu-vat-for-woocommerce-pro.php' === basename( __FILE__ ) ) {
@@ -125,6 +126,20 @@ final class Alg_WC_EU_VAT {
 				in_array( $plugin, apply_filters( 'active_plugins', ( array ) get_option( 'active_plugins', array() ) ) ) ||
 				( is_multisite() && array_key_exists( $plugin, ( array ) get_site_option( 'active_sitewide_plugins', array() ) ) )
 			)
+		);
+	}
+
+	/**
+	 * localize.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 */
+	function localize() {
+		load_plugin_textdomain(
+			'eu-vat-for-woocommerce',
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/langs/'
 		);
 	}
 
@@ -243,16 +258,22 @@ if ( ! function_exists( 'alg_wc_eu_vat' ) ) {
 	}
 }
 
+/**
+ * alg_wc_eu_vat.
+ */
 alg_wc_eu_vat();
 
+/**
+ * alg_wc_eu_vat_admin_js_field_control.
+ */
 if ( ! function_exists( 'alg_wc_eu_vat_admin_js_field_control' ) ) {
 	function alg_wc_eu_vat_admin_js_field_control() {
 		?>
 		<script>
 		jQuery(document).ready(function() {
-			
+
 			var eu_vat_required = jQuery('#alg_wc_eu_vat_field_required');
-			
+
 			/*
 			if (eu_vat_required.is(':checked')) {
 				toogle_customer_decide(2);
@@ -267,9 +288,9 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_js_field_control' ) ) {
 			}else{
 				toogle_required_countries(1);
 			}
-			
+
 			eu_vat_required.change(function() {
-				
+
 				/*
 				if (jQuery(this).is(':checked')) {
 					toogle_customer_decide(2);
@@ -277,7 +298,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_js_field_control' ) ) {
 					toogle_customer_decide(1);
 				}
 				*/
-				
+
 				if(jQuery(this).val() == 'yes_for_countries'){
 					toogle_required_countries(2);
 				}else if(jQuery(this).val() == 'no_for_countries'){
@@ -285,16 +306,16 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_js_field_control' ) ) {
 				}else{
 					toogle_required_countries(1);
 				}
-				
+
 			});
-			
-			
-		});	
-		
+
+
+		});
+
 		function toogle_customer_decide(flag = 1) {
 			var customer_decide = jQuery('#alg_wc_eu_vat_field_let_customer_decide');
 			var customer_decide_label = jQuery('#alg_wc_eu_vat_field_let_customer_decide_label');
-			
+
 			if(flag==1){
 				//customer_decide.closest('tr').hide();
 				//customer_decide_label.closest('tr').hide();
@@ -307,10 +328,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_js_field_control' ) ) {
 				customer_decide_label.removeAttr('disabled');
 			}
 		}
-		
+
 		function toogle_required_countries(flag = 1) {
 			var field_required_countries = jQuery('#alg_wc_eu_vat_field_required_countries');
-			
+
 			if(flag==1){
 				field_required_countries.attr('disabled', 'disabled');
 			}else{
@@ -318,7 +339,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_js_field_control' ) ) {
 			}
 		}
 		</script>
-		<?php 
+		<?php
 	}
 }
 add_action('admin_footer', 'alg_wc_eu_vat_admin_js_field_control');
@@ -326,6 +347,9 @@ add_action('admin_footer', 'alg_wc_eu_vat_admin_js_field_control');
 add_action( 'wp_ajax_alg_wc_eu_vat_update_closedate', 'alg_wc_eu_vat_update_closedate' );
 add_action( 'wp_ajax_nopriv_alg_wc_eu_vat_update_closedate', 'alg_wc_eu_vat_update_closedate' );
 
+/**
+ * alg_wc_eu_vat_update_closedate.
+ */
 if ( ! function_exists( 'alg_wc_eu_vat_update_closedate' ) ) {
 	function alg_wc_eu_vat_update_closedate(){
 		$user_id = get_current_user_id();
@@ -337,7 +361,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_update_closedate' ) ) {
 		die;
 	}
 }
-	
+
+/**
+ * alg_wc_eu_vat_admin_footer_js.
+ */
 if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
 	add_action('admin_footer', 'alg_wc_eu_vat_admin_footer_js');
 	function alg_wc_eu_vat_admin_footer_js($data) {
@@ -377,7 +404,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
 				border-radius: 50%;
 				font-size: 32px;
 			}
-			
+
 			.alg_wc_eu_vat_name_heading{
 				position: relative;
 			}
@@ -393,7 +420,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
 				z-index: 99;
 				font-weight: 600;
 				border-radius: 10px;
-				
+
 			}
 			.alg_wc_eu_vat-button-upsell{
 				display:inline-flex;
@@ -447,9 +474,11 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
 	}
 }
 
+/**
+ * before_woocommerce_init.
+ */
 add_action( 'before_woocommerce_init', function() {
 	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', dirname(__FILE__), true );
 	}
 } );
-

@@ -7,7 +7,7 @@
  * @author  WPFactory
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	/**

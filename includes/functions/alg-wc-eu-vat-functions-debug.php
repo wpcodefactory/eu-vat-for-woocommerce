@@ -7,7 +7,7 @@
  * @author  WPFactory
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'ALG_WC_EU_VAT_DEBUG' ) ) {
 	define( 'ALG_WC_EU_VAT_DEBUG', ( 'yes' === get_option( 'alg_wc_eu_vat_debug', 'no' ) ) );

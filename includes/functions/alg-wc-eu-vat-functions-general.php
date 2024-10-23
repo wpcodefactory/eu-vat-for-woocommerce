@@ -7,7 +7,7 @@
  * @author  WPFactory
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'alg_wc_eu_vat_get_field_id' ) ) {
 	/**
@@ -53,7 +53,6 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_start' ) ) {
 	 */
 	function alg_wc_eu_vat_session_start() {
 		if ( ! defined( 'ALG_WC_EU_VAT_SESSION_TYPE' ) ) {
-			/*define( 'ALG_WC_EU_VAT_SESSION_TYPE', get_option( 'alg_wc_eu_vat_session_type', 'standard' ) );*/
 			define( 'ALG_WC_EU_VAT_SESSION_TYPE', get_option( 'alg_wc_eu_vat_session_type', 'wc' ) );
 		}
 		switch ( ALG_WC_EU_VAT_SESSION_TYPE ) {

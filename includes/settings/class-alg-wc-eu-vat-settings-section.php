@@ -2,16 +2,33 @@
 /**
  * EU VAT for WooCommerce - Section Settings
  *
- * @version 1.2.0
+ * @version 3.0.0
  * @since   1.0.0
+ *
  * @author  WPFactory
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_WC_EU_VAT_Settings_Section' ) ) :
 
 class Alg_WC_EU_VAT_Settings_Section {
+
+	/**
+	 * id.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 */
+	public $id;
+
+	/**
+	 * desc.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 */
+	public $desc;
 
 	/**
 	 * Constructor.

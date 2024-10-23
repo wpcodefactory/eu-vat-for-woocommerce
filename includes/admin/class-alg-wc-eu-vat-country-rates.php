@@ -2,12 +2,13 @@
 /**
  * EU VAT for WooCommerce - Tool - EU country VAT Rates
  *
- * @version 2.12.13
+ * @version 3.0.0
  * @since   1.0.0
+ *
  * @author  WPFactory
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_WC_EU_VAT_Countries_VAT_Rates_Tool' ) ) :
 
@@ -18,6 +19,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	 *
 	 * @version 1.0.0
 	 * @since   1.0.0
+	 *
 	 * @todo    [dev] (maybe) add option to disable the tool
 	 */
 	function __construct() {
@@ -63,6 +65,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	 *
 	 * @version 1.0.0
 	 * @since   1.0.0
+	 *
 	 * @todo    [dev] (maybe) check `MC`, `IM`
 	 */
 	function get_european_union_countries_with_vat() {
@@ -101,13 +104,22 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	/**
 	 * add_eu_countries_vat_rates.
 	 *
-	 * @version 2.12.13
+	 * @version 3.0.0
 	 * @since   1.0.0
 	 */
 	function add_eu_countries_vat_rates() {
+
 		if ( ! isset( $_POST['add_eu_countries_vat_rates'] ) ) {
 			return;
 		}
+
+		if (
+			! isset( $_POST['alg_wc_eu_vat_nonce'] ) ||
+			! check_admin_referer( 'alg_wc_eu_vat_rates', 'alg_wc_eu_vat_nonce' )
+		) {
+			return;
+		}
+
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			return;
 		}
@@ -116,15 +128,13 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 			if ( WC_Tax::find_rates( array( 'country' => $country ) ) ) {
 				continue;
 			}
-			$tax_rate = array(
+			$tax_rate    = array(
 				'tax_rate_country'  => $country,
 				'tax_rate'          => $rate,
-
-				'tax_rate_name'     => isset( $_POST['alg_wc_eu_vat_tax_name'] ) ? esc_attr($_POST['alg_wc_eu_vat_tax_name']) : __( 'VAT', 'woocommerce' ),
+				'tax_rate_name'     => isset( $_POST['alg_wc_eu_vat_tax_name'] ) ? sanitize_text_field( $_POST['alg_wc_eu_vat_tax_name'] ) : __( 'VAT', 'woocommerce' ),
 				'tax_rate_priority' => 1,
 				'tax_rate_compound' => 0,
 				'tax_rate_shipping' => 1,
-
 				'tax_rate_order'    => $loop++,
 				'tax_rate_class'    => '',
 			);
@@ -167,65 +177,85 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	/**
 	 * create_eu_countries_vat_rates_tool.
 	 *
-	 * @version 2.12.13
+	 * @version 3.0.0
 	 * @since   1.0.0
 	 */
 	function create_eu_countries_vat_rates_tool() {
-		$header_html  = '';
-		$header_html .= '<h2>' . __( 'EU country VAT Rates Tool', 'eu-vat-for-woocommerce' ) . '</h2>';
+		$header_html = '<h2>' . __( 'EU country VAT Rates Tool', 'eu-vat-for-woocommerce' ) . '</h2>';
 		$header_html .= '<h3>' . __( 'Add all EU country VAT standard rates to WooCommerce.', 'eu-vat-for-woocommerce' ) . '</h3>';
-		$header_html .= '<p><em>' . '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=alg_wc_eu_vat' ) . '">' .
-			__( 'Plugin settings', 'eu-vat-for-woocommerce' ) . '</a>' . '</em></p>';
+		$header_html .= '<p><em>' . '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=alg_wc_eu_vat' ) ) . '">' . __( 'Plugin settings', 'eu-vat-for-woocommerce' ) . '</a>' . '</em></p>';
 
-		$the_tool_html  = '';
-		$the_tool_html .= $header_html;
+		$the_tool_html = $header_html;
 
-		$data = array();
-		$the_name = ( isset( $_POST['alg_wc_eu_vat_tax_name'] ) ? esc_attr($_POST['alg_wc_eu_vat_tax_name']) : __( 'VAT', 'woocommerce' ) );
-		$data[] = array(
+		$data          = array();
+		$the_name      = $_POST['alg_wc_eu_vat_tax_name'] ?? __( 'VAT', 'woocommerce' );
+		$nonce_field   = wp_nonce_field( 'alg_wc_eu_vat_rates', 'alg_wc_eu_vat_nonce', true, false );
+		$data[]        = array(
 			__( 'Name', 'eu-vat-for-woocommerce' ) . '<br>' .
-				'<input class="input-text" type="text" name="alg_wc_eu_vat_tax_name" value="' . $the_name . '">',
+			'<input class="input-text" type="text" name="alg_wc_eu_vat_tax_name" value="' . esc_attr( $the_name ) . '">',
 			'<em>' . __( 'Note: will not add duplicates for country.', 'eu-vat-for-woocommerce' ) . '</em>' . '<br>' .
-				'<input class="button-primary" type="submit" name="add_eu_countries_vat_rates" value="' . __( 'Add EU country VAT Rates', 'eu-vat-for-woocommerce' ) . '">',
+			$nonce_field .
+			'<input class="button-primary" type="submit" name="add_eu_countries_vat_rates" value="' . __( 'Add EU country VAT Rates', 'eu-vat-for-woocommerce' ) . '">',
 		);
 		$the_tool_html .= '<p>';
 		$the_tool_html .= '<form method="post" action="">';
-		$the_tool_html .=  alg_wc_eu_vat_get_table_html( $data, array( 'table_heading_type' => 'none', 'table_class' => 'widefat', 'table_style' => 'width:50%;min-width:300px;' ) );
+		$the_tool_html .= alg_wc_eu_vat_get_table_html( $data, array(
+			'table_heading_type' => 'none',
+			'table_class'        => 'widefat',
+			'table_style'        => 'width:50%;min-width:300px;'
+		) );
 		$the_tool_html .= '</form>';
 		$the_tool_html .= '</p>';
 
 		$the_tool_html .= '<h4>' . __( 'List of EU VAT rates to be added', 'eu-vat-for-woocommerce' ) . '</h4>';
-		$eu_vat_rates = $this->get_european_union_countries_with_vat();
-		$data = array();
-		$data[] = array(
+		$eu_vat_rates  = $this->get_european_union_countries_with_vat();
+		$data          = array();
+		$data[]        = array(
 			'#',
 			__( 'Country', 'eu-vat-for-woocommerce' ),
 			__( 'Rate', 'eu-vat-for-woocommerce' ),
 		);
+
 		$i = 1;
 		foreach ( $eu_vat_rates as $country => $rate ) {
-			$data[] = array( $i++, $country . ' - ' . alg_wc_eu_vat_get_country_name_by_code( $country ), $rate . '%' );
+			$data[] = array(
+				$i++,
+				$country . ' - ' . alg_wc_eu_vat_get_country_name_by_code( $country ),
+				$rate . '%'
+			);
 		}
-		$the_tool_html .= alg_wc_eu_vat_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'width:50%;min-width:300px;' ) );
+		$the_tool_html .= alg_wc_eu_vat_get_table_html( $data, array(
+			'table_class' => 'widefat',
+			'table_style' => 'width:50%;min-width:300px;'
+		) );
 
-		$the_tool_html .= '<h4>' . __( 'Current standard tax rates', 'eu-vat-for-woocommerce' ) . '</h4>';
+		$the_tool_html      .= '<h4>' . __( 'Current standard tax rates', 'eu-vat-for-woocommerce' ) . '</h4>';
 		$standard_tax_rates = $this->get_rates_for_tax_class( '' );
-		$data = array();
-		$data[] = array(
+		$data               = array();
+		$data[]             = array(
 			'',
 			__( 'Country', 'eu-vat-for-woocommerce' ),
 			__( 'Rate', 'eu-vat-for-woocommerce' ),
 			__( 'Name', 'eu-vat-for-woocommerce' ),
 		);
+
 		$i = 1;
 		foreach ( $standard_tax_rates as $tax_rate_object ) {
-			$data[] = array( $i++, $tax_rate_object->tax_rate_country . ' - ' . alg_wc_eu_vat_get_country_name_by_code( $tax_rate_object->tax_rate_country ),
-				$tax_rate_object->tax_rate . '%', $tax_rate_object->tax_rate_name );
+			$data[] = array(
+				$i++,
+				$tax_rate_object->tax_rate_country . ' - ' . alg_wc_eu_vat_get_country_name_by_code( $tax_rate_object->tax_rate_country ),
+				$tax_rate_object->tax_rate . '%',
+				$tax_rate_object->tax_rate_name
+			);
 		}
-		$the_tool_html .= alg_wc_eu_vat_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'width:75%;min-width:300px;' ) );
+		$the_tool_html .= alg_wc_eu_vat_get_table_html( $data, array(
+			'table_class' => 'widefat',
+			'table_style' => 'width:75%;min-width:300px;'
+		) );
 
 		echo '<div class="wrap">' . $the_tool_html . '</div>';
 	}
+
 }
 
 endif;

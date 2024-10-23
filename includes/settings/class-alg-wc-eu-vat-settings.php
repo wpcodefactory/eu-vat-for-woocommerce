@@ -4,10 +4,11 @@
  *
  * @version 1.2.1
  * @since   1.0.0
+ *
  * @author  WPFactory
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_WC_EU_VAT_Settings' ) ) :
 
@@ -48,7 +49,7 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 			array(
 				'title'    => __( '', 'eu-vat-for-woocommerce' ),
 				'type'     => 'title',
-				'desc'	   => apply_filters( 'alg_wc_eu_vat_advertise' , '<div class="alg_wc_eu_vat_right_ad">
+				'desc'     => apply_filters( 'alg_wc_eu_vat_advertise' , '<div class="alg_wc_eu_vat_right_ad">
 				<div class="alg_wc_eu_vat-sidebar__section">
 				<div class="alg_wc_eu_vat_name_heading">
 				<img class="alg_wc_eu_vat_resize" src="https://wpfactory.com/wp-content/uploads/EU-VAT-for-WooCommerce-300x300.png">
@@ -92,9 +93,9 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 				'id'        => $this->id . '_' . $current_section . '_reset_options',
 			),
 		) );
-		
-		$return = array_merge($initialarray, $return);
-		
+
+		$return = array_merge( $initialarray, $return );
+
 		return $return;
 	}
 
