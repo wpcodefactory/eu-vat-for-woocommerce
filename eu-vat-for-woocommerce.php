@@ -3,13 +3,15 @@
 Plugin Name: EU/UK VAT for WooCommerce
 Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
 Description: Manage EU VAT in WooCommerce. Beautifully.
-Version: 3.0.1
+Version: 3.1.0
 Author: WPFactory
 Author URI: https://wpfactory.com/
 Text Domain: eu-vat-for-woocommerce
 Domain Path: /langs
 WC tested up to: 9.3
 Requires Plugins: woocommerce
+License: GNU General Public License v3.0
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
 
 defined( 'ABSPATH' ) || exit;
@@ -20,7 +22,7 @@ if ( ! class_exists( 'Alg_WC_EU_VAT' ) ) :
  * Main Alg_WC_EU_VAT Class
  *
  * @class   Alg_WC_EU_VAT
- * @version 3.0.0
+ * @version 3.1.0
  * @since   1.0.0
  */
 final class Alg_WC_EU_VAT {
@@ -31,7 +33,7 @@ final class Alg_WC_EU_VAT {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '3.0.1';
+	public $version = '3.1.0';
 
 	/**
 	 * core object.
@@ -76,8 +78,9 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * Alg_WC_EU_VAT Constructor.
 	 *
-	 * @version 3.0.0
+	 * @version 3.1.0
 	 * @since   1.0.0
+	 *
 	 * @access  public
 	 */
 	function __construct() {
@@ -93,15 +96,20 @@ final class Alg_WC_EU_VAT {
 			return;
 		}
 
+		// Load libs
+		if ( is_admin() ) {
+			require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+		}
+
 		// For debug
-		require_once( 'includes/functions/alg-wc-eu-vat-functions-debug.php' );
+		require_once plugin_dir_path( __FILE__ ) . 'includes/functions/alg-wc-eu-vat-functions-debug.php';
 
 		// Set up localisation
 		add_action( 'init', array( $this, 'localize' ) );
 
 		// Pro
 		if ( 'eu-vat-for-woocommerce-pro.php' === basename( __FILE__ ) ) {
-			require_once( 'includes/pro/class-alg-wc-eu-vat-pro.php' );
+			require_once plugin_dir_path( __FILE__ ) . 'includes/pro/class-alg-wc-eu-vat-pro.php';
 		}
 
 		// Include required files
@@ -146,66 +154,128 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * Include required core files used in admin and on the frontend.
 	 *
-	 * @version 1.5.0
+	 * @version 3.1.0
 	 * @since   1.0.0
 	 */
 	function includes() {
+
 		// Functions
-		require_once( 'includes/functions/alg-wc-eu-vat-functions-general.php' );
+		require_once plugin_dir_path( __FILE__ ) . 'includes/functions/alg-wc-eu-vat-functions-general.php';
+
 		// Core
-		$this->core = require_once( 'includes/class-alg-wc-eu-vat-core.php' );
+		$this->core = require_once plugin_dir_path( __FILE__ ) . 'includes/class-alg-wc-eu-vat-core.php';
+
 	}
 
 	/**
 	 * admin.
 	 *
-	 * @version 1.5.0
+	 * @version 3.1.0
 	 * @since   1.2.0
 	 */
 	function admin() {
+
 		// Action links
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
+
+		// "Recommendations" page
+		$this->add_cross_selling_library();
+
+		// WC Settings tab as WPFactory submenu item
+		$this->move_wc_settings_tab_to_wpfactory_menu();
+
 		// Settings
 		add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_woocommerce_settings_tab' ) );
-		require_once( 'includes/settings/class-alg-wc-eu-vat-settings-section.php' );
+		require_once plugin_dir_path( __FILE__ ) . 'includes/settings/class-alg-wc-eu-vat-settings-section.php';
 		$this->settings = array();
-		$this->settings['general']    = require_once( 'includes/settings/class-alg-wc-eu-vat-settings-general.php' );
-		$this->settings['validation'] = require_once( 'includes/settings/class-alg-wc-eu-vat-settings-validation.php' );
-		$this->settings['admin']      = require_once( 'includes/settings/class-alg-wc-eu-vat-settings-admin.php' );
+		$this->settings['general']    = require_once plugin_dir_path( __FILE__ ) . 'includes/settings/class-alg-wc-eu-vat-settings-general.php';
+		$this->settings['validation'] = require_once plugin_dir_path( __FILE__ ) . 'includes/settings/class-alg-wc-eu-vat-settings-validation.php';
+		$this->settings['admin']      = require_once plugin_dir_path( __FILE__ ) . 'includes/settings/class-alg-wc-eu-vat-settings-admin.php';
+
 		// Rates tool
-		require_once( 'includes/admin/class-alg-wc-eu-vat-country-rates.php' );
+		require_once plugin_dir_path( __FILE__ ) . 'includes/admin/class-alg-wc-eu-vat-country-rates.php';
+
 		// Version update
 		if ( get_option( 'alg_wc_eu_vat_version', '' ) !== $this->version ) {
 			add_action( 'admin_init', array( $this, 'version_updated' ) );
 		}
+
 	}
 
 	/**
 	 * Show action links on the plugin screen.
 	 *
-	 * @version 1.2.0
+	 * @version 3.1.0
 	 * @since   1.0.0
+	 *
 	 * @param   mixed $links
 	 * @return  array
 	 */
 	function action_links( $links ) {
 		$custom_links = array();
-		$custom_links[] = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=alg_wc_eu_vat' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>';
+		$custom_links[] = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=alg_wc_eu_vat' ) . '">' .
+			__( 'Settings', 'eu-vat-for-woocommerce' ) .
+		'</a>';
 		if ( 'eu-vat-for-woocommerce.php' === basename( __FILE__ ) ) {
 			$custom_links[] = '<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' .
-				__( 'Unlock All', 'eu-vat-for-woocommerce' ) . '</a>';
+				__( 'Unlock All', 'eu-vat-for-woocommerce' ) .
+			'</a>';
 		}
 		return array_merge( $custom_links, $links );
 	}
 
 	/**
+	 * add_cross_selling_library.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function add_cross_selling_library() {
+
+		if ( ! class_exists( '\WPFactory\WPFactory_Cross_Selling\WPFactory_Cross_Selling' ) ) {
+			return;
+		}
+
+		$cross_selling = new \WPFactory\WPFactory_Cross_Selling\WPFactory_Cross_Selling();
+		$cross_selling->setup( array( 'plugin_file_path' => __FILE__ ) );
+		$cross_selling->init();
+
+	}
+
+	/**
+	 * move_wc_settings_tab_to_wpfactory_menu.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function move_wc_settings_tab_to_wpfactory_menu() {
+
+		if ( ! class_exists( '\WPFactory\WPFactory_Admin_Menu\WPFactory_Admin_Menu' ) ) {
+			return;
+		}
+
+		$wpfactory_admin_menu = \WPFactory\WPFactory_Admin_Menu\WPFactory_Admin_Menu::get_instance();
+
+		if ( ! method_exists( $wpfactory_admin_menu, 'move_wc_settings_tab_to_wpfactory_menu' ) ) {
+			return;
+		}
+
+		$wpfactory_admin_menu->move_wc_settings_tab_to_wpfactory_menu( array(
+			'wc_settings_tab_id' => 'alg_wc_eu_vat',
+			'menu_title'         => __( 'EU VAT', 'eu-vat-for-woocommerce' ),
+			'page_title'         => __( 'EU VAT', 'eu-vat-for-woocommerce' ),
+		) );
+
+	}
+
+	/**
 	 * Add EU VAT settings tab to WooCommerce settings.
 	 *
-	 * @version 1.2.0
+	 * @version 3.1.0
 	 * @since   1.0.0
 	 */
 	function add_woocommerce_settings_tab( $settings ) {
-		$settings[] = require_once( 'includes/settings/class-alg-wc-eu-vat-settings.php' );
+		$settings[] = require_once plugin_dir_path( __FILE__ ) . 'includes/settings/class-alg-wc-eu-vat-settings.php';
 		return $settings;
 	}
 
@@ -251,6 +321,7 @@ if ( ! function_exists( 'alg_wc_eu_vat' ) ) {
 	 *
 	 * @version 1.0.0
 	 * @since   1.0.0
+	 *
 	 * @return  Alg_WC_EU_VAT
 	 */
 	function alg_wc_eu_vat() {
@@ -270,92 +341,71 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_js_field_control' ) ) {
 	function alg_wc_eu_vat_admin_js_field_control() {
 		?>
 		<script>
-		jQuery(document).ready(function() {
+		jQuery( document ).ready( function () {
 
-			var eu_vat_required = jQuery('#alg_wc_eu_vat_field_required');
+			var eu_vat_required = jQuery( '#alg_wc_eu_vat_field_required' );
 
-			/*
-			if (eu_vat_required.is(':checked')) {
-				toogle_customer_decide(2);
-			}else{
-				toogle_customer_decide(1);
-			}
-			*/
-			if(eu_vat_required.val() == 'yes_for_countries'){
-				toogle_required_countries(2);
-			}else if(eu_vat_required.val() == 'no_for_countries'){
-				toogle_required_countries(2);
-			}else{
-				toogle_required_countries(1);
+			if ( 'yes_for_countries' == eu_vat_required.val() ) {
+				toogle_required_countries( 2 );
+			} else if( 'no_for_countries' == eu_vat_required.val() ) {
+				toogle_required_countries( 2 );
+			} else {
+				toogle_required_countries( 1 );
 			}
 
-			eu_vat_required.change(function() {
+			eu_vat_required.change( function () {
 
-				/*
-				if (jQuery(this).is(':checked')) {
-					toogle_customer_decide(2);
+				if ( 'yes_for_countries' == jQuery(this).val() ){
+					toogle_required_countries( 2 );
+				}else if ( 'no_for_countries' == jQuery(this).val() ) {
+					toogle_required_countries( 2 );
 				}else{
-					toogle_customer_decide(1);
-				}
-				*/
-
-				if(jQuery(this).val() == 'yes_for_countries'){
-					toogle_required_countries(2);
-				}else if(jQuery(this).val() == 'no_for_countries'){
-					toogle_required_countries(2);
-				}else{
-					toogle_required_countries(1);
+					toogle_required_countries( 1 );
 				}
 
-			});
+			} );
 
+		} );
 
-		});
+		function toogle_customer_decide( flag = 1 ) {
+			var customer_decide = jQuery( '#alg_wc_eu_vat_field_let_customer_decide' );
+			var customer_decide_label = jQuery( '#alg_wc_eu_vat_field_let_customer_decide_label' );
 
-		function toogle_customer_decide(flag = 1) {
-			var customer_decide = jQuery('#alg_wc_eu_vat_field_let_customer_decide');
-			var customer_decide_label = jQuery('#alg_wc_eu_vat_field_let_customer_decide_label');
-
-			if(flag==1){
-				//customer_decide.closest('tr').hide();
-				//customer_decide_label.closest('tr').hide();
-				customer_decide.attr('disabled', 'disabled');
-				customer_decide_label.attr('disabled', 'disabled');
-			}else{
-				//customer_decide.closest('tr').show();
-				//customer_decide_label.closest('tr').show();
-				customer_decide.removeAttr('disabled');
-				customer_decide_label.removeAttr('disabled');
+			if ( 1 == flag ) {
+				customer_decide.attr( 'disabled', 'disabled' );
+				customer_decide_label.attr( 'disabled', 'disabled' );
+			} else {
+				customer_decide.removeAttr( 'disabled' );
+				customer_decide_label.removeAttr( 'disabled' );
 			}
 		}
 
-		function toogle_required_countries(flag = 1) {
-			var field_required_countries = jQuery('#alg_wc_eu_vat_field_required_countries');
+		function toogle_required_countries( flag = 1 ) {
+			var field_required_countries = jQuery( '#alg_wc_eu_vat_field_required_countries' );
 
-			if(flag==1){
-				field_required_countries.attr('disabled', 'disabled');
-			}else{
-				field_required_countries.removeAttr('disabled');
+			if ( 1 == flag ) {
+				field_required_countries.attr( 'disabled', 'disabled' );
+			} else {
+				field_required_countries.removeAttr( 'disabled' );
 			}
 		}
 		</script>
 		<?php
 	}
 }
-add_action('admin_footer', 'alg_wc_eu_vat_admin_js_field_control');
+add_action( 'admin_footer', 'alg_wc_eu_vat_admin_js_field_control' );
 
 add_action( 'wp_ajax_alg_wc_eu_vat_update_closedate', 'alg_wc_eu_vat_update_closedate' );
 add_action( 'wp_ajax_nopriv_alg_wc_eu_vat_update_closedate', 'alg_wc_eu_vat_update_closedate' );
-
 /**
  * alg_wc_eu_vat_update_closedate.
  */
 if ( ! function_exists( 'alg_wc_eu_vat_update_closedate' ) ) {
 	function alg_wc_eu_vat_update_closedate(){
 		$user_id = get_current_user_id();
-		if($user_id > 0){
-			$phpdatetime  = time();
-			update_user_meta($user_id, 'alg_wc_eu_vat_closedate', $phpdatetime);
+		if ( $user_id > 0 ) {
+			$phpdatetime = time();
+			update_user_meta( $user_id, 'alg_wc_eu_vat_closedate', $phpdatetime );
 		}
 		echo "ok";
 		die;
@@ -366,32 +416,32 @@ if ( ! function_exists( 'alg_wc_eu_vat_update_closedate' ) ) {
  * alg_wc_eu_vat_admin_footer_js.
  */
 if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
-	add_action('admin_footer', 'alg_wc_eu_vat_admin_footer_js');
-	function alg_wc_eu_vat_admin_footer_js($data) {
+	add_action( 'admin_footer', 'alg_wc_eu_vat_admin_footer_js' );
+	function alg_wc_eu_vat_admin_footer_js( $data ) {
 		?>
 			<script>
-				jQuery(document).ready(function() {
-					jQuery(".alg_wc_eu_vat_close").on('click', function(){
+				jQuery( document ).ready( function () {
+					jQuery( ".alg_wc_eu_vat_close" ).on( 'click', function () {
 						var closeData = {
-							'action'  : 'alg_wc_eu_vat_update_closedate'
+							'action' : 'alg_wc_eu_vat_update_closedate'
 						};
 
-						jQuery.ajax({
+						jQuery.ajax( {
 							type   : 'POST',
 							url    : <?php echo "'" . admin_url( 'admin-ajax.php' ) . "'"; ?>,
 							data   : closeData,
 							async  : true,
-							success: function( response ) {
-								if(response=='ok'){
-									jQuery(".alg_wc_eu_vat_right_ad").remove();
+							success: function ( response ) {
+								if ( 'ok' == response ) {
+									jQuery( ".alg_wc_eu_vat_right_ad" ).remove();
 								}
 							},
-						});
-					});
-				})
+						} );
+					} );
+				} );
 			</script>
 			<style>
-			.alg_wc_eu_vat_close{
+			.alg_wc_eu_vat_close {
 				position: absolute;
 				right:-13px;
 				top: -26px;
@@ -405,10 +455,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
 				font-size: 32px;
 			}
 
-			.alg_wc_eu_vat_name_heading{
+			.alg_wc_eu_vat_name_heading {
 				position: relative;
 			}
-			.alg_wc_eu_vat_right_ad{
+			.alg_wc_eu_vat_right_ad {
 				position: absolute;
 				right:20px;
 				padding: 16px;
@@ -422,7 +472,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
 				border-radius: 10px;
 
 			}
-			.alg_wc_eu_vat-button-upsell{
+			.alg_wc_eu_vat-button-upsell {
 				display:inline-flex;
 				align-items:center;
 				justify-content:center;
@@ -440,25 +490,25 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
 				background-color:#7ce577;
 				font-weight: 600;
 			}
-			.alg_wc_eu_vat-button-upsell:hover{
+			.alg_wc_eu_vat-button-upsell:hover {
 				background-color:#7ce577;
 				color:#000;
 				font-weight: 600;
 			}
-			.alg_wc_eu_vat-sidebar__section li:before{
+			.alg_wc_eu_vat-sidebar__section li:before {
 				content:"+";
 				position:absolute;
 				left:0;
 				font-weight:700
 			}
-			.alg_wc_eu_vat-sidebar__section li{
+			.alg_wc_eu_vat-sidebar__section li {
 				list-style:none;
 				margin-left:20px
 			}
-			.alg_wc_eu_vat-sidebar__section{
+			.alg_wc_eu_vat-sidebar__section {
 				position: relative;
 			}
-			img.alg_wc_eu_vat_resize{
+			img.alg_wc_eu_vat_resize {
 				width: 60px;
 				float: right;
 				position: absolute;
@@ -466,7 +516,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
 				top: -15px;
 				padding-left: 10px;
 			}
-			.alg_wc_eu_vat_text{
+			.alg_wc_eu_vat_text {
 				margin-right: 18%;
 			}
 			</style>
@@ -479,6 +529,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_admin_footer_js' ) ) {
  */
 add_action( 'before_woocommerce_init', function() {
 	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', dirname(__FILE__), true );
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+			'custom_order_tables',
+			dirname(__FILE__),
+			true
+		);
 	}
 } );

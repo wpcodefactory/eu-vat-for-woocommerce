@@ -24,12 +24,20 @@ msgstr ""
 msgid "I want to receive updates about products and promotions."
 msgstr ""
 
-#: eu-vat-for-woocommerce.php:193
+#: eu-vat-for-woocommerce.php:217
 msgid "Settings"
 msgstr ""
 
-#: eu-vat-for-woocommerce.php:196
+#: eu-vat-for-woocommerce.php:221
 msgid "Unlock All"
+msgstr ""
+
+#: eu-vat-for-woocommerce.php:265 eu-vat-for-woocommerce.php:266
+#: includes/admin/class-alg-wc-eu-vat-admin.php:116
+#: includes/admin/class-alg-wc-eu-vat-admin.php:321
+#: includes/admin/class-alg-wc-eu-vat-admin.php:389
+#: includes/settings/class-alg-wc-eu-vat-settings.php:25
+msgid "EU VAT"
 msgstr ""
 
 #: includes/admin/class-alg-wc-eu-vat-admin.php:76
@@ -38,13 +46,6 @@ msgstr ""
 
 #: includes/admin/class-alg-wc-eu-vat-admin.php:104
 msgid "Let Customer Decide:"
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:116
-#: includes/admin/class-alg-wc-eu-vat-admin.php:321
-#: includes/admin/class-alg-wc-eu-vat-admin.php:389
-#: includes/settings/class-alg-wc-eu-vat-settings.php:25
-msgid "EU VAT"
 msgstr ""
 
 #: includes/admin/class-alg-wc-eu-vat-admin.php:164
@@ -130,7 +131,7 @@ msgstr ""
 
 #: includes/admin/class-alg-wc-eu-vat-country-rates.php:215
 #: includes/admin/class-alg-wc-eu-vat-country-rates.php:237
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:146
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:144
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:237
 msgid "Country"
 msgstr ""
@@ -144,43 +145,43 @@ msgstr ""
 msgid "Current standard tax rates"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:47
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:45
 msgid "Export CSV"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:58
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:56
 msgid "Year"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:59
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:57
 msgid "Last month"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:60
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:58
 msgid "This month"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:147
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:145
 msgid "Number of orders"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:148
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:146
 msgid "Total sales"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:149
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:147
 msgid "Total sales with zero tax"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:150
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:148
 msgid "Total tax"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:171
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:169
 msgid "Totals"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:181
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:179
 msgid "No taxes found in this period"
 msgstr ""
 
@@ -317,14 +318,14 @@ msgstr ""
 msgid "Country: [%s]; VAT ID: [%s]; Company: [%s]; Method: [%s]"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-general.php:71
+#: includes/functions/alg-wc-eu-vat-functions-general.php:72
 msgid "Can't create session (headers already sent)."
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-general.php:72
+#: includes/functions/alg-wc-eu-vat-functions-general.php:73
 msgid ""
 "Try selecting \"WC session (recommended)\" for \"Session type\" in "
-"\"WooCommerce > Settings > EU VAT > Admin & Advanced > Advanced Options\"."
+"\"WPFactory > EU VAT > Admin & Advanced > Advanced Options\"."
 msgstr ""
 
 #: includes/functions/alg-wc-eu-vat-functions-validation.php:28

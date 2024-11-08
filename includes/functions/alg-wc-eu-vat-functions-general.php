@@ -2,8 +2,9 @@
 /**
  * EU VAT for WooCommerce - Functions - General
  *
- * @version 2.10.0
+ * @version 3.1.0
  * @since   1.0.0
+ *
  * @author  WPFactory
  */
 
@@ -48,7 +49,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_start' ) ) {
 	/**
 	 * alg_wc_eu_vat_session_start.
 	 *
-	 * @version 1.7.1
+	 * @version 3.1.0
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_start() {
@@ -69,7 +70,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_start' ) ) {
 						]);
 					} else {
 						$message = __( 'Can\'t create session (headers already sent).', 'eu-vat-for-woocommerce' ) . ' ' .
-							__( 'Try selecting "WC session (recommended)" for "Session type" in "WooCommerce > Settings > EU VAT > Admin & Advanced > Advanced Options".', 'eu-vat-for-woocommerce' );
+							__( 'Try selecting "WC session (recommended)" for "Session type" in "WPFactory > EU VAT > Admin & Advanced > Advanced Options".', 'eu-vat-for-woocommerce' );
 						alg_wc_eu_vat_maybe_log( false, false, false, false, $message );
 					}
 				}

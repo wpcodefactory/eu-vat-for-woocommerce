@@ -2,7 +2,7 @@
 /**
  * Taxes by EU VAT country report.
  *
- * @version 1.5.0
+ * @version 3.1.0
  * @since   1.5.0
  *
  * @package    WooCommerce/Admin/Reports
@@ -10,9 +10,7 @@
  * @see        `/woocommerce/includes/admin/reports/class-wc-report-taxes-by-code.php`
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+defined( 'ABSPATH' ) || exit;
 
 /**
  * WC_Report_Alg_WC_EU_VAT

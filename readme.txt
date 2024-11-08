@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.6
-Stable tag: 3.0.1
+Stable tag: 3.1.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -269,7 +269,7 @@ WPFactory has a diverse range of plugins tailored to enhance your experience, so
 4. After the installation is complete, click “Activate”.
 
 **Post-Activation:**
-Once activated, access the plugin's settings by navigating to “WooCommerce > Settings” and look for the relevant tab.
+Once activated, access the plugin's settings by navigating to the “WPFactory” menu and look for the relevant tab.
 
 == Screenshots ==
 
@@ -286,9 +286,15 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 
 1. Upload the entire plugin folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
-3. Start by visiting plugin settings at "WooCommerce > Settings > EU VAT".
+3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 3.1.0 - 08/11/2024 =
+* Dev - Plugin settings moved to the "WPFactory" menu.
+* Dev - "Recommendations" added.
+* Dev - "Key Manager" added.
+* Dev - Code refactoring and cleanup.
 
 = 3.0.1 - 30/10/2024 =
 * Fix - Adjusted the VAT validation message location during account creation.
