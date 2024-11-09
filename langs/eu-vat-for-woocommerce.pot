@@ -1,12 +1,12 @@
 #: eu-vat-for-woocommerce-blocks-initialize.php:55
 #: includes/admin/class-alg-wc-eu-vat-admin.php:356
-#: includes/class-alg-wc-eu-vat-core.php:213
-#: includes/class-alg-wc-eu-vat-core.php:214
-#: includes/class-alg-wc-eu-vat-core.php:1234
-#: includes/class-alg-wc-eu-vat-core.php:1236
-#: includes/class-alg-wc-eu-vat-core.php:1350
-#: includes/class-alg-wc-eu-vat-core.php:1427
-#: includes/class-alg-wc-eu-vat-core.php:1459
+#: includes/class-alg-wc-eu-vat-core.php:405
+#: includes/class-alg-wc-eu-vat-core.php:406
+#: includes/class-alg-wc-eu-vat-core.php:1426
+#: includes/class-alg-wc-eu-vat-core.php:1428
+#: includes/class-alg-wc-eu-vat-core.php:1542
+#: includes/class-alg-wc-eu-vat-core.php:1619
+#: includes/class-alg-wc-eu-vat-core.php:1651
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:69
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:76
 msgid "EU VAT Number"
@@ -24,15 +24,15 @@ msgstr ""
 msgid "I want to receive updates about products and promotions."
 msgstr ""
 
-#: eu-vat-for-woocommerce.php:217
+#: eu-vat-for-woocommerce.php:238
 msgid "Settings"
 msgstr ""
 
-#: eu-vat-for-woocommerce.php:221
+#: eu-vat-for-woocommerce.php:242
 msgid "Unlock All"
 msgstr ""
 
-#: eu-vat-for-woocommerce.php:265 eu-vat-for-woocommerce.php:266
+#: eu-vat-for-woocommerce.php:286 eu-vat-for-woocommerce.php:287
 #: includes/admin/class-alg-wc-eu-vat-admin.php:116
 #: includes/admin/class-alg-wc-eu-vat-admin.php:321
 #: includes/admin/class-alg-wc-eu-vat-admin.php:389
@@ -196,7 +196,7 @@ msgid "VAT is valid."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:55
-#: includes/class-alg-wc-eu-vat-core.php:1902
+#: includes/class-alg-wc-eu-vat-core.php:2094
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:272
 msgid "VAT is not valid."
 msgstr ""
@@ -230,40 +230,40 @@ msgid "(optional)"
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:138
-#: includes/class-alg-wc-eu-vat-core.php:1604
+#: includes/class-alg-wc-eu-vat-core.php:1796
 #, php-format
 msgid "Error: Country by IP does not match (%s)"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:264
-#: includes/class-alg-wc-eu-vat-core.php:428
-#: includes/class-alg-wc-eu-vat-core.php:1781
-#: includes/class-alg-wc-eu-vat-core.php:1851
+#: includes/class-alg-wc-eu-vat-core.php:456
+#: includes/class-alg-wc-eu-vat-core.php:620
+#: includes/class-alg-wc-eu-vat-core.php:1973
+#: includes/class-alg-wc-eu-vat-core.php:2043
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:70
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:397
-#: includes/class-alg-wc-eu-vat-core.php:1828
+#: includes/class-alg-wc-eu-vat-core.php:589
+#: includes/class-alg-wc-eu-vat-core.php:2020
 msgid ""
 "Success (checkout): VAT ID valid. Matched with prevalidated VAT numbers."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:423
-#: includes/class-alg-wc-eu-vat-core.php:1859
+#: includes/class-alg-wc-eu-vat-core.php:615
+#: includes/class-alg-wc-eu-vat-core.php:2051
 msgid "Error: VAT is not valid (checkout)"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:491
+#: includes/class-alg-wc-eu-vat-core.php:683
 msgid "VAT SHIFTED"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1035
+#: includes/class-alg-wc-eu-vat-core.php:1227
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:129
 msgid "You didn't set your VAT ID. Are you sure you want to continue?"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1035
+#: includes/class-alg-wc-eu-vat-core.php:1227
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:136
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:144
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:164
@@ -285,29 +285,29 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1035
+#: includes/class-alg-wc-eu-vat-core.php:1227
 msgid "No"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1151
+#: includes/class-alg-wc-eu-vat-core.php:1343
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:202
 msgid "I don't have a VAT ID"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1171
+#: includes/class-alg-wc-eu-vat-core.php:1363
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:217
 msgid "I have a valid VAT but not exempted"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1423
+#: includes/class-alg-wc-eu-vat-core.php:1615
 msgid "Customer Decide"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1939
+#: includes/class-alg-wc-eu-vat-core.php:2131
 msgid "Keep VAT for this product"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1940
+#: includes/class-alg-wc-eu-vat-core.php:2132
 msgid ""
 "Enable this to ensure VAT is charged on this product, even if the customer "
 "provides a valid VAT number."
