@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name: EU/UK VAT for WooCommerce
+Plugin Name: EU/UK VAT Manager for WooCommerce
 Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
 Description: Manage EU VAT in WooCommerce. Beautifully.
-Version: 3.1.1
+Version: 3.1.2
 Author: WPFactory
 Author URI: https://wpfactory.com/
 Text Domain: eu-vat-for-woocommerce
 Domain Path: /langs
-WC tested up to: 9.3
+WC tested up to: 9.4
 Requires Plugins: woocommerce
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -33,7 +33,7 @@ final class Alg_WC_EU_VAT {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '3.1.1';
+	public $version = '3.1.2';
 
 	/**
 	 * core object.
