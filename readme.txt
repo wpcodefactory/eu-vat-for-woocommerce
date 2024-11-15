@@ -1,9 +1,9 @@
-=== EU/UK VAT Manager for WooCommerce ===
+=== EU/UK VAT Validation Manager for WooCommerce ===
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli, aegkr
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.7
-Stable tag: 3.1.2
+Stable tag: 3.1.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -25,7 +25,7 @@ For store owners selling across the UK and EU, navigating the complexities of Va
 
 B2B transactions within this region often need validation of VAT numbers to ensure legitimate business purchases, allowing sellers to exempt these buyers from VAT charges, where they report it to their local tax authorities.
 
-With our **EU/UK VAT Manager for WooCommerce** plugin, you can effortlessly validate UK/EU VAT numbers using [VIES (VAT Information Exchange System) services](https://ec.europa.eu/taxation_customs/vies/#/vat-validation "VIES (VAT Information Exchange System) services"), enabling you to sell to businesses in the EU without the additional tax burden.
+With our **EU/UK VAT Validation Manager for WooCommerce** plugin, you can effortlessly validate UK/EU VAT numbers using [VIES (VAT Information Exchange System) services](https://ec.europa.eu/taxation_customs/vies/#/vat-validation "VIES (VAT Information Exchange System) services"), enabling you to sell to businesses in the EU without the additional tax burden.
 
 This not only streamlines your checkout process but ensures compliance, boosting trust and confidence among your B2B clientele.
 
@@ -179,7 +179,7 @@ ___
 
 ## 🏆 Do More: PRO Version ##
 
-All the features mentioned above, and many more, are available in the free version. But if you're looking to take things up a notch, consider our enhanced [EU/UK VAT Manager for WooCommerce Pro](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme) plugin.
+All the features mentioned above, and many more, are available in the free version. But if you're looking to take things up a notch, consider our enhanced [EU/UK VAT Validation Manager for WooCommerce Pro](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme) plugin.
 
 Upgrade to the Pro version and unlock additional more features, including:
 
@@ -227,7 +227,7 @@ WPFactory has a diverse range of plugins tailored to enhance your experience, so
 
 * [**Order Minimum/Maximum Amount**](https://wpfactory.com/item/order-minimum-maximum-amount-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Order Minimum/Maximum Amount**"): Customize order limits by amount, quantity, weight, or volume, including user role, category, and more (**[Free version](https://wordpress.org/plugins/order-minimum-amount-for-woocommerce/ "Free version")**)
 
-* [**EU/UK VAT Manager for WooCommerce**](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**EU/UK VAT Manager for WooCommerce**"): Automate VAT compliance for your WooCommerce store, including settings and VIES validation for a seamless experience (**[Free version](https://wordpress.org/plugins/eu-vat-for-woocommerce/ "Free version")**)
+* [**EU/UK VAT Validation Manager for WooCommerce**](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**EU/UK VAT Validation Manager for WooCommerce**"): Automate VAT compliance for your WooCommerce store, including settings and VIES validation for a seamless experience (**[Free version](https://wordpress.org/plugins/eu-vat-for-woocommerce/ "Free version")**)
 
 * [**Email Verification for WooCommerce**](https://wpfactory.com/item/email-verification-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Email Verification for WooCommerce**"): Boost security and credibility by verifying customer emails, reducing spam, and improving email marketing (**[Free version](https://wordpress.org/plugins/maximum-products-per-user-for-woocommerce/ "Free version")**)
 
@@ -290,7 +290,11 @@ Once activated, access the plugin's settings by navigating to the “WPFactory�
 
 == Changelog ==
 
+= 3.1.3 - 15/11/2024 =
+* Plugin name updated (was "EU/UK VAT Manager for WooCommerce").
+
 = 3.1.2 - 14/11/2024 =
+* Fix - Missing library files uploaded.
 * WC tested up to: 9.4.
 * Tested up to: 6.7.
 
