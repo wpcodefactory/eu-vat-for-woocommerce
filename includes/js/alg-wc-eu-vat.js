@@ -1,7 +1,7 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 3.0.1
+ * @version 3.1.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -118,7 +118,7 @@ jQuery( function ( $ ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 3.0.0
+	 * @version 3.1.4
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_validate_vat( load = false ) {
@@ -271,8 +271,15 @@ jQuery( function ( $ ) {
 						}
 					}
 
-					if ( alg_wc_eu_vat_ajax_object.autofill_company_name == 'yes' && company_name !== '' ) {
+					if (
+						'yes' == alg_wc_eu_vat_ajax_object.autofill_company_name &&
+						'' !== company_name
+					) {
 						$( '#billing_company' ).val( company_name ).change();
+						vat_paragraph.removeClass( 'woocommerce-invalid' );
+						vat_paragraph.removeClass( 'woocommerce-invalid-mismatch' );
+						vat_paragraph.addClass( 'woocommerce-validated' );
+						progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_valid );
 					}
 
 					var refresh_checkout = function () {

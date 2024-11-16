@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.7
-Stable tag: 3.1.3
+Stable tag: 3.1.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -289,6 +289,10 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 3.1.4 - 16/11/2024 =
+* Fix - VAT error message not disappearing after company name update.
+* Dev - Code refactoring and cleanup.
 
 = 3.1.3 - 15/11/2024 =
 * Plugin name updated (was "EU/UK VAT Manager for WooCommerce").

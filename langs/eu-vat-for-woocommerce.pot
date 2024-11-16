@@ -196,7 +196,7 @@ msgid "VAT is valid."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:55
-#: includes/class-alg-wc-eu-vat-core.php:2094
+#: includes/class-alg-wc-eu-vat-core.php:2127
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:272
 msgid "VAT is not valid."
 msgstr ""
@@ -216,6 +216,7 @@ msgid "Different shipping & billing countries."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:59
+#: includes/class-alg-wc-eu-vat-core.php:2063
 msgid " VAT is valid, but registered to %company_name%."
 msgstr ""
 
@@ -237,20 +238,20 @@ msgstr ""
 
 #: includes/class-alg-wc-eu-vat-core.php:456
 #: includes/class-alg-wc-eu-vat-core.php:620
-#: includes/class-alg-wc-eu-vat-core.php:1973
-#: includes/class-alg-wc-eu-vat-core.php:2043
+#: includes/class-alg-wc-eu-vat-core.php:1980
+#: includes/class-alg-wc-eu-vat-core.php:2076
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:70
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-core.php:589
-#: includes/class-alg-wc-eu-vat-core.php:2020
+#: includes/class-alg-wc-eu-vat-core.php:2029
 msgid ""
 "Success (checkout): VAT ID valid. Matched with prevalidated VAT numbers."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-core.php:615
-#: includes/class-alg-wc-eu-vat-core.php:2051
+#: includes/class-alg-wc-eu-vat-core.php:2084
 msgid "Error: VAT is not valid (checkout)"
 msgstr ""
 
@@ -303,11 +304,11 @@ msgstr ""
 msgid "Customer Decide"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:2131
+#: includes/class-alg-wc-eu-vat-core.php:2164
 msgid "Keep VAT for this product"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:2132
+#: includes/class-alg-wc-eu-vat-core.php:2165
 msgid ""
 "Enable this to ensure VAT is charged on this product, even if the customer "
 "provides a valid VAT number."
