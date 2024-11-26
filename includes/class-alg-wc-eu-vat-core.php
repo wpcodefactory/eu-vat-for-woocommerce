@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 3.1.4
+ * @version 3.1.5
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -45,7 +45,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.1
+	 * @version 3.1.5
 	 * @since   1.0.0
 	 *
 	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
@@ -168,11 +168,9 @@ class Alg_WC_EU_VAT_Core {
 			if ( version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' ) ) {
 
 				add_action( 'woocommerce_init', array( $this, 'register_additional_checkout_block_field' ), PHP_INT_MAX );
-
-				require_once __DIR__ . '/../eu-vat-for-woocommerce-blocks-initialize.php';
+				add_action( 'woocommerce_init', array( $this, 'alg_wc_eu_woocommerce_store_api_register_update_callback' ), 10 );
 
 				add_action( 'woocommerce_store_api_checkout_update_order_from_request', array( $this, 'alg_eu_vat_update_block_order_meta_eu_vat' ), 10, 2 );
-				add_action( 'woocommerce_blocks_loaded', array( $this, 'alg_wc_eu_woocommerce_store_api_register_update_callback' ), 10 );
 				add_action( 'woocommerce_blocks_validate_location_contact_fields', array( $this, 'alg_wc_eu_woocommerce_validate_eu_vat_field_checkout_block' ), 10, 3 );
 				add_action( 'woocommerce_blocks_validate_location_address_fields', array( $this, 'alg_wc_eu_woocommerce_validate_eu_vat_field_checkout_block' ), 10, 3 );
 

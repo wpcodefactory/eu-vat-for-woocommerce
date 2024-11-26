@@ -1,7 +1,7 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 3.1.4
+ * @version 3.1.5
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -311,9 +311,11 @@ jQuery( function ( $ ) {
 } );
 
 /**
+ * For VAT Blocks.
+ *
  * Move VAT validation process message section into `wc-block-components-address-form__alg_eu_vat-billing_eu_vat_number`.
  *
- * @version 3.0.1
+ * @version 3.1.5
  * @since   3.0.1
  */
 // Wait for all resources to load
@@ -328,5 +330,12 @@ window.onload = () => {
 
 		// Move the sourceDiv into the targetDiv
 		targetDiv.appendChild( sourceDiv ); // Append sourceDiv as a child of targetDiv
+	}
+
+	// If the progress text is disabled, remove the sourceDiv from the DOM
+	if ( 'no' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
+		if ( sourceDiv ) {
+			sourceDiv.style.display = 'none'; // Hide the element
+		}
 	}
 };
