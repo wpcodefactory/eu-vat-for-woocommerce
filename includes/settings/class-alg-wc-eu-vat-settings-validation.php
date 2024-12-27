@@ -69,7 +69,6 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'id'       => 'alg_wc_eu_vat_not_valid_message',
 				'default'  => __( '<strong>EU VAT Number</strong> is not valid.', 'eu-vat-for-woocommerce' ),
 				'type'     => 'textarea',
-				// 'css'      => 'width:100%;',
 				'alg_wc_eu_vat_raw' => true,
 			),
 
@@ -128,10 +127,8 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'id'       => 'alg_wc_eu_vat_preserve_in_base_country_locations',
 				'default'  => '',
 				'type'     => 'text',
-				// 'css'      => 'width:100%;',
 				'custom_attributes' => '',
 			),
-
 
 			array(
 				'title'    => __( 'Check country by IP', 'eu-vat-for-woocommerce' ),

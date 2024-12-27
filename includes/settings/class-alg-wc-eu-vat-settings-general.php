@@ -91,11 +91,11 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'select',
 				'class'    => 'wc-enhanced-select',
 				'options'  => array(
-					'no'  => __( 'Optional', 'eu-vat-for-woocommerce' ),
-					'yes' => __( 'Required', 'eu-vat-for-woocommerce' ),
-					'yes_for_countries'  => __( 'Required in the following countries', 'eu-vat-for-woocommerce' ),
+					'no'                => __( 'Optional', 'eu-vat-for-woocommerce' ),
+					'yes'               => __( 'Required', 'eu-vat-for-woocommerce' ),
+					'yes_for_countries' => __( 'Required in the following countries', 'eu-vat-for-woocommerce' ),
 					'no_for_countries'  => __( 'Required in all countries except following countries', 'eu-vat-for-woocommerce' ),
-					'yes_for_company'  => __( 'Required if customer fills the company field', 'eu-vat-for-woocommerce' ),
+					'yes_for_company'   => __( 'Required if customer fills the company field', 'eu-vat-for-woocommerce' ),
 				),
 			),
 			array(

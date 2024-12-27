@@ -1,0 +1,20 @@
+<wpml-config>
+	<admin-texts>
+		<key name="alg_wc_eu_vat_field_label"/>
+		<key name="alg_wc_eu_vat_field_placeholder"/>
+		<key name="alg_wc_eu_vat_field_description"/>
+		<key name="alg_wc_eu_vat_field_confirmation_text"/>
+		<key name="alg_wc_eu_vat_field_let_customer_decide_label"/>
+		<key name="alg_wc_eu_vat_belgium_compatibility_label"/>
+		<key name="alg_wc_eu_vat_not_valid_message"/>
+		<key name="alg_wc_eu_vat_progress_text_validating"/>
+		<key name="alg_wc_eu_vat_progress_text_valid"/>
+		<key name="alg_wc_eu_vat_progress_text_not_valid"/>
+		<key name="alg_wc_eu_vat_progress_text_validation_failed"/>
+		<key name="alg_wc_eu_vat_shipping_billing_countries"/>
+		<key name="alg_wc_eu_vat_company_name_mismatch"/>
+		<key name="alg_wc_eu_vat_progress_text_validation_preserv"/>
+		<key name="alg_wc_eu_vat_progress_text_validation_vies_error"/>
+		<key name="alg_wc_eu_vat_advanced_vat_shifted_text"/>
+	</admin-texts>
+</wpml-config>
