@@ -3,7 +3,7 @@
 Plugin Name: EU/UK VAT Validation Manager for WooCommerce
 Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
 Description: Manage EU VAT in WooCommerce. Beautifully.
-Version: 3.1.6
+Version: 3.2.0
 Author: WPFactory
 Author URI: https://wpfactory.com/
 Text Domain: eu-vat-for-woocommerce
@@ -16,12 +16,46 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Declare compatibility with custom order tables for WooCommerce.
+ *
+ * @version 3.2.0
+ * @since   2.9.12
+ *
+ * @see     https://github.com/woocommerce/woocommerce/wiki/High-Performance-Order-Storage-Upgrade-Recipe-Book#declaring-extension-incompatibility
+ */
+add_action( 'before_woocommerce_init', function () {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+			'custom_order_tables',
+			__FILE__,
+			true
+		);
+	}
+} );
+
+if ( 'eu-vat-for-woocommerce.php' === basename( __FILE__ ) ) {
+	/**
+	 * Check if Pro plugin version is activated.
+	 *
+	 * @version 3.2.0
+	 * @since   3.2.0
+	 */
+	$plugin = 'eu-vat-for-woocommerce-pro/eu-vat-for-woocommerce-pro.php';
+	if (
+		in_array( $plugin, (array) get_option( 'active_plugins', array() ), true ) ||
+		( is_multisite() && array_key_exists( $plugin, (array) get_site_option( 'active_sitewide_plugins', array() ) ) )
+	) {
+		return;
+	}
+}
+
 if ( ! class_exists( 'Alg_WC_EU_VAT' ) ) :
 
 /**
  * Main Alg_WC_EU_VAT Class
  *
- * @version 3.1.1
+ * @version 3.2.0
  * @since   1.0.0
  *
  * @class   Alg_WC_EU_VAT
@@ -34,7 +68,7 @@ final class Alg_WC_EU_VAT {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '3.1.6';
+	public $version = '3.2.0';
 
 	/**
 	 * core object.
@@ -79,24 +113,15 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * Alg_WC_EU_VAT Constructor.
 	 *
-	 * @version 3.1.1
+	 * @version 3.2.0
 	 * @since   1.0.0
 	 *
 	 * @access  public
 	 */
 	function __construct() {
 
-		// Declare compatibility with custom order tables for WooCommerce
-		add_action( 'before_woocommerce_init', array( $this, 'wc_declare_compatibility' ) );
-
-		// Check for active plugins
-		if (
-			! $this->is_plugin_active( 'woocommerce/woocommerce.php' ) ||
-			(
-				'eu-vat-for-woocommerce.php' === basename( __FILE__ ) &&
-				$this->is_plugin_active( 'eu-vat-for-woocommerce-pro/eu-vat-for-woocommerce-pro.php' )
-			)
-		) {
+		// Check for active WooCommerce plugin
+		if ( ! function_exists( 'WC' ) ) {
 			return;
 		}
 
@@ -124,39 +149,6 @@ final class Alg_WC_EU_VAT {
 			$this->admin();
 		}
 
-	}
-
-	/**
-	 * wc_declare_compatibility.
-	 *
-	 * @version 3.1.1
-	 * @since   2.9.12
-	 *
-	 * @see     https://github.com/woocommerce/woocommerce/wiki/High-Performance-Order-Storage-Upgrade-Recipe-Book#declaring-extension-incompatibility
-	 */
-	function wc_declare_compatibility() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
-				'custom_order_tables',
-				dirname( __FILE__ ),
-				true
-			);
-		}
-	}
-
-	/**
-	 * is_plugin_active.
-	 *
-	 * @version 1.7.1
-	 * @since   1.7.1
-	 */
-	function is_plugin_active( $plugin ) {
-		return ( function_exists( 'is_plugin_active' ) ? is_plugin_active( $plugin ) :
-			(
-				in_array( $plugin, apply_filters( 'active_plugins', ( array ) get_option( 'active_plugins', array() ) ) ) ||
-				( is_multisite() && array_key_exists( $plugin, ( array ) get_site_option( 'active_sitewide_plugins', array() ) ) )
-			)
-		);
 	}
 
 	/**

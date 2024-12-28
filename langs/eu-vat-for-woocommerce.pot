@@ -24,65 +24,65 @@ msgstr ""
 msgid "I want to receive updates about products and promotions."
 msgstr ""
 
-#: eu-vat-for-woocommerce.php:239
+#: eu-vat-for-woocommerce.php:231
 msgid "Settings"
 msgstr ""
 
-#: eu-vat-for-woocommerce.php:243
+#: eu-vat-for-woocommerce.php:235
 msgid "Unlock All"
 msgstr ""
 
-#: eu-vat-for-woocommerce.php:287 eu-vat-for-woocommerce.php:288
-#: includes/admin/class-alg-wc-eu-vat-admin.php:116
-#: includes/admin/class-alg-wc-eu-vat-admin.php:321
-#: includes/admin/class-alg-wc-eu-vat-admin.php:389
+#: eu-vat-for-woocommerce.php:279 eu-vat-for-woocommerce.php:280
+#: includes/admin/class-alg-wc-eu-vat-admin.php:113
+#: includes/admin/class-alg-wc-eu-vat-admin.php:320
+#: includes/admin/class-alg-wc-eu-vat-admin.php:387
 #: includes/settings/class-alg-wc-eu-vat-settings.php:25
 msgid "EU VAT"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:76
+#: includes/admin/class-alg-wc-eu-vat-admin.php:74
 msgid "Check VAT Number"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:104
+#: includes/admin/class-alg-wc-eu-vat-admin.php:101
 msgid "Let Customer Decide:"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:164
+#: includes/admin/class-alg-wc-eu-vat-admin.php:161
 msgid "Orders with EU VAT numbers"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:186
-#: includes/admin/class-alg-wc-eu-vat-admin.php:213
+#: includes/admin/class-alg-wc-eu-vat-admin.php:183
+#: includes/admin/class-alg-wc-eu-vat-admin.php:210
 msgid "Select Filter EU VAT..."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:316
-#: includes/admin/class-alg-wc-eu-vat-admin.php:453
+#: includes/admin/class-alg-wc-eu-vat-admin.php:315
+#: includes/admin/class-alg-wc-eu-vat-admin.php:445
 msgid "Taxes"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:340
+#: includes/admin/class-alg-wc-eu-vat-admin.php:339
 msgid "Report includes all EU VAT countries with existing sales."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:341
+#: includes/admin/class-alg-wc-eu-vat-admin.php:340
 msgid "Table is sorted by total tax value."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:441
+#: includes/admin/class-alg-wc-eu-vat-admin.php:433
 msgid "Customer IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:445
+#: includes/admin/class-alg-wc-eu-vat-admin.php:437
 msgid "Country by IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:449
+#: includes/admin/class-alg-wc-eu-vat-admin.php:441
 msgid "Customer EU VAT Number"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:462
+#: includes/admin/class-alg-wc-eu-vat-admin.php:454
 msgid "Validate VAT and remove taxes"
 msgstr ""
 
@@ -185,52 +185,52 @@ msgstr ""
 msgid "No taxes found in this period"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:54
+#: includes/class-alg-wc-eu-vat-ajax.php:57
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:253
 msgid "Validating VAT. Please wait..."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:55
+#: includes/class-alg-wc-eu-vat-ajax.php:58
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:261
 msgid "VAT is valid."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:56
+#: includes/class-alg-wc-eu-vat-ajax.php:59
 #: includes/class-alg-wc-eu-vat-core.php:2125
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:269
 msgid "VAT is not valid."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:57
+#: includes/class-alg-wc-eu-vat-ajax.php:60
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:277
 msgid "Validation failed. Please try again."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:58
+#: includes/class-alg-wc-eu-vat-ajax.php:61
 msgid "VAT preserved for this billing country"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:59
+#: includes/class-alg-wc-eu-vat-ajax.php:62
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:285
 msgid "Different shipping & billing countries."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:60
+#: includes/class-alg-wc-eu-vat-ajax.php:63
 #: includes/class-alg-wc-eu-vat-core.php:2061
 msgid " VAT is valid, but registered to %company_name%."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:61
+#: includes/class-alg-wc-eu-vat-ajax.php:64
 msgid ""
 " VAT accepted due to VIES error: %vies_error%. The admin will check the VAT "
 "validation again and proceed accordingly."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:63
+#: includes/class-alg-wc-eu-vat-ajax.php:66
 msgid "(optional)"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:137
+#: includes/class-alg-wc-eu-vat-ajax.php:140
 #: includes/class-alg-wc-eu-vat-core.php:1794
 #, php-format
 msgid "Error: Country by IP does not match (%s)"

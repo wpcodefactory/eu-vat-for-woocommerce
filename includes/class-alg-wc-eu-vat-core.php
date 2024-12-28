@@ -675,9 +675,9 @@ class Alg_WC_EU_VAT_Core {
 	 * @since   2.9.17
 	 */
 	function add_vat_exempt_text_pdf_footer( $document_type, $order ) {
-		$is_vat_exempt = $order->get_meta( 'is_vat_exempt' );
+		$is_vat_exempt            = $order->get_meta( 'is_vat_exempt' );
 		$is_vat_exempt_from_admin = $order->get_meta( 'exempt_vat_from_admin' );
-		if ( 'yes' === $is_vat_exempt || 'yes' === $is_vat_exempt_from_admin) {
+		if ( 'yes' === $is_vat_exempt || 'yes' === $is_vat_exempt_from_admin ) {
 			echo get_option( 'alg_wc_eu_vat_advanced_vat_shifted_text', __( 'VAT SHIFTED', 'eu-vat-for-woocommerce' ) );
 		}
 	}
@@ -1095,7 +1095,7 @@ class Alg_WC_EU_VAT_Core {
 			$exempt_vat_from_admin = 'never';
 			$title = 'Exempt VAT';
 		}
-		echo '<button id="exempt_vat_from_admin"  type="button" class="button exempt_vat_from_admin button-primary" data-status="'.$exempt_vat_from_admin.'" data-order_id="'. esc_attr($order->get_id())  .'" >'.$title.'</button>';
+		echo '<button id="exempt_vat_from_admin"  type="button" class="button exempt_vat_from_admin button-primary" data-status="' . $exempt_vat_from_admin . '" data-order_id="'. esc_attr($order->get_id())  .'" >'.$title.'</button>';
 	}
 
 	/**
