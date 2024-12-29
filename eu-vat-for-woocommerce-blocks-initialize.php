@@ -1,6 +1,6 @@
 <?php
 /**
- * EU VAT for WooCommerce - Block Initialize
+ * EU VAT for WooCommerce - Blocks Initialize
  *
  * @version 3.2.1
  *
