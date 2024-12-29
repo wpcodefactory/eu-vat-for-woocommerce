@@ -1,4 +1,4 @@
-#: eu-vat-for-woocommerce-blocks-initialize.php:55
+#: eu-vat-for-woocommerce-blocks-initialize.php:74
 #: includes/admin/class-alg-wc-eu-vat-admin.php:356
 #: includes/class-alg-wc-eu-vat-core.php:403
 #: includes/class-alg-wc-eu-vat-core.php:404
@@ -12,7 +12,7 @@
 msgid "EU VAT Number"
 msgstr ""
 
-#: eu-vat-for-woocommerce-blocks-initialize.php:72
+#: eu-vat-for-woocommerce-blocks-initialize.php:94
 msgid "EU VAT Number Blocks"
 msgstr ""
 
