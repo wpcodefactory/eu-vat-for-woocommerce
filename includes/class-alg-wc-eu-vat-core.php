@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 3.1.5
+ * @version 3.2.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -48,35 +48,41 @@ class Alg_WC_EU_VAT_Core {
 	 * @version 3.1.5
 	 * @since   1.0.0
 	 *
-	 * @todo    [dev] (maybe) "eu vat number" to "eu vat"
-	 * @todo    [feature] `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
+	 * @todo    (dev) "eu vat number" to "eu vat"?
+	 * @todo    (feature) `add_eu_vat_verify_button` (`woocommerce_form_field_text`) (`return ( alg_wc_eu_vat_get_field_id() === $key ) ? $field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'eu-vat-for-woocommerce' ) . '</a>]' . '</span>' : $field;`)
 	 */
 	function __construct() {
 
 		// Properties
 		$this->is_wc_version_below_3_0_0 = version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' );
+
 		// Functions
 		require_once( 'functions/alg-wc-eu-vat-functions-validation.php' );
+
 		// Classes
 		require_once( 'class-alg-wc-eu-vat-shortcode.php' );
 		$this->eu_vat_ajax_instance = require_once( 'class-alg-wc-eu-vat-ajax.php' );
 		require_once( 'admin/class-alg-wc-eu-vat-admin.php' );
+
 		// Hooks: Session, exclusion, validation
 		add_action( 'init', array( $this, 'start_session' ) );
 		add_filter( 'init', array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
 
 		add_filter( 'woocommerce_checkout_update_order_review', array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
-		add_action('woocommerce_before_calculate_totals', array( $this, 'maybe_exclude_vat' ), 99);
-		add_action('woocommerce_before_checkout_billing_form', array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX);
+		add_action( 'woocommerce_before_calculate_totals', array( $this, 'maybe_exclude_vat' ), 99);
+		add_action( 'woocommerce_before_checkout_billing_form', array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX);
 
 		add_action( 'woocommerce_after_checkout_validation', array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
+
 		// Hooks: Customer meta, default value
 		add_filter( 'woocommerce_customer_meta_fields', array( $this, 'add_eu_vat_number_customer_meta_field' ) );
 		add_filter( 'default_checkout_' . alg_wc_eu_vat_get_field_id(), array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
+
 		// Hooks: Frontend
 		if ( 'yes' !== get_option( 'alg_wc_eu_vat_hide_eu_vat', 'no' ) ) {
 			add_filter( 'woocommerce_checkout_fields', array( $this, 'add_eu_vat_checkout_field_to_frontend' ), 99 );
 		}
+
 		// Hooks: Display
 		$positions = get_option( 'alg_wc_eu_vat_display_position', array( 'after_order_table' ) );
 		if ( empty( $positions ) ) {
@@ -98,10 +104,12 @@ class Alg_WC_EU_VAT_Core {
 			add_filter( 'woocommerce_address_to_edit', array( $this, 'add_eu_vat_number_to_editable_fields' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_customer_save_address', array( $this, 'save_eu_vat_number_from_editable_fields' ), PHP_INT_MAX, 2 );
 		}
+
 		// Show zero VAT
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_always_show_zero_vat', 'no' ) ) {
 			add_filter( 'woocommerce_cart_tax_totals', array( $this, 'always_show_zero_vat' ), PHP_INT_MAX, 2 );
 		}
+
 		// Shortcodes
 		add_shortcode( 'alg_wc_eu_vat_translate', array( $this, 'language_shortcode' ) );
 
@@ -392,20 +400,28 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * add_frontend_edit_billing_fields.
 	 *
-	 * @version 2.12.14
+	 * @version 3.2.2
 	 * @since   2.12.14
 	 */
 	function add_frontend_edit_billing_fields( $fields ) {
 
+		$user_roles = apply_filters( 'alg_wc_eu_vat_show_for_user_roles', array() );
+		if (
+			! empty( $user_roles ) &&
+			! $this->check_current_user_roles( $user_roles )
+		) {
+			return $fields;
+		}
+
 		$field_id = alg_wc_eu_vat_get_field_id();
 
-		$fields[$field_id] = array(
+		$fields[ $field_id ] = array(
 			'label'       => do_shortcode( get_option( 'alg_wc_eu_vat_field_label', __( 'EU VAT Number', 'eu-vat-for-woocommerce' ) ) ),
 			'placeholder' => do_shortcode( get_option( 'alg_wc_eu_vat_field_placeholder', __( 'EU VAT Number', 'eu-vat-for-woocommerce' ) ) ),
 			'required'    => false,
 			'clear'       => false,
 			'type'        => 'text',
-			'class'       => array('alg-wc-frontend-billing-edit'),
+			'class'       => array( 'alg-wc-frontend-billing-edit' ),
 			'priority'    => get_option( 'alg_wc_eu_vat_field_priority', 200 ),
 		);
 
@@ -1504,25 +1520,28 @@ class Alg_WC_EU_VAT_Core {
 	 */
 	function add_eu_vat_checkout_field_to_frontend( $fields ) {
 
-		if( 'yes' === get_option( 'alg_wc_eu_vat_field_hide_tax_status_none', 'no' ) ){
-			if($this->is_tax_status_none()){
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_field_hide_tax_status_none', 'no' ) ) {
+			if ( $this->is_tax_status_none() ) {
 				return $fields;
 			}
 		}
 
 		$user_roles = apply_filters( 'alg_wc_eu_vat_show_for_user_roles', array() );
-		if ( ! empty( $user_roles ) && ! $this->check_current_user_roles( $user_roles ) ) {
+		if (
+			! empty( $user_roles ) &&
+			! $this->check_current_user_roles( $user_roles )
+		) {
 			return $fields;
 		}
-		$is_required = ( 'yes' === get_option( 'alg_wc_eu_vat_field_required', 'no' ) );
 
-		if( $is_required && 'yes' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' ) ){
+		$is_required = ( 'yes' === get_option( 'alg_wc_eu_vat_field_required', 'no' ) );
+		if ( $is_required && 'yes' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' ) ) {
 			$fields['billing'][ alg_wc_eu_vat_get_field_id() . '_customer_decide' ] = $this->get_customer_decide_field_data();
 		}
 
-
 		$fields['billing'][ alg_wc_eu_vat_get_field_id() ] = $this->get_field_data();
-		if( 'yes' === get_option( 'alg_wc_eu_vat_belgium_compatibility', 'no' ) ){
+
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_belgium_compatibility', 'no' ) ) {
 			$fields['billing'][ alg_wc_eu_vat_get_field_id() . '_belgium_compatibility' ] = $this->belgium_compatibility_field_data();
 		}
 
@@ -1715,7 +1734,7 @@ class Alg_WC_EU_VAT_Core {
 	 * @version 1.7.0
 	 * @since   1.7.0
 	 *
-	 * @todo    [dev] (maybe) assign `array( 'guest' )` if `wp_get_current_user()` does not exist
+	 * @todo    (dev) assign `array( 'guest' )` if `wp_get_current_user()` does not exist?
 	 */
 	function check_current_user_roles( $user_roles_to_check ) {
 		if ( ! empty( $user_roles_to_check ) ) {
