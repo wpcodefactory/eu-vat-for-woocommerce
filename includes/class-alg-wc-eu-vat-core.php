@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 3.2.2
+ * @version 3.2.3
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -1024,57 +1024,44 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * eu_vat_admin_footer.
 	 *
-	 * @version 2.12.12
+	 * @version 3.2.3
 	 * @since   1.7.0
 	 */
 	function eu_vat_admin_footer() {
-
-		$nonce = wp_create_nonce('alg-wc-eu-vat-ajax-nonce');
+		$nonce = wp_create_nonce( 'alg-wc-eu-vat-ajax-nonce' );
 		?>
 		<script type="text/javascript">
-		jQuery('body').on('click', '.exempt_vat_from_admin', function() {
-			jQuery( '#woocommerce-order-items' ).block({
-					message: null,
-					overlayCSS: {
-						background: '#fff',
-						opacity: 0.6
-					}
-			});
+		jQuery( 'body' ).on( 'click', '.exempt_vat_from_admin', function () {
+			jQuery( '#woocommerce-order-items' ).block( {
+				message: null,
+				overlayCSS: {
+					background: '#fff',
+					opacity: 0.6
+				}
+			} );
 
-			var order_id = jQuery(this).data('order_id');
-			var status = jQuery(this).data('status');
+			var order_id = jQuery( this ).data( 'order_id' );
+			var status = jQuery( this ).data( 'status' );
 			var data = {
-						action:   'exempt_vat_from_admin',
-						order_id: order_id,
-						status: status,
-						'nonce': '<?php echo $nonce; ?>'
-					};
-			jQuery.ajax({
+				action: 'exempt_vat_from_admin',
+				order_id: order_id,
+				status: status,
+				'nonce': '<?php echo $nonce; ?>'
+			};
+			jQuery.ajax( {
 				url:  woocommerce_admin_meta_boxes.ajax_url,
 				data: data,
 				type: 'POST',
-				success: function( response ) {
+				success: function ( response ) {
 					jQuery( '#woocommerce-order-items' ).unblock();
-					if( response == 'yes' || response == 'never' ){
-						jQuery('.calculate-action').click();
+					if ( 'yes' == response || 'never' == response ) {
+						jQuery( '.calculate-action' ).click();
 					}
 				}
-			});
-		});
+			} );
+		} );
 		</script>
 		<?php
-		if ( 'yes' === get_option( 'alg_wc_eu_vat_enable_checkout_block_field', 'no' ) ) {
-			if ( version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' ) ) { ?>
-				<style>
-				#order_data .order_data_column_container .order_data_column div.address p:nth-child(4), #order_data .order_data_column_container .order_data_column div.edit_address p.form-field._billing_eu_vat_number_field {
-				   display:none !important;
-				}
-
-				</style>
-		<?php
-			}
-		}
-
 	}
 
 	/**

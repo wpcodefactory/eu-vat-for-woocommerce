@@ -2,11 +2,11 @@
 #: includes/admin/class-alg-wc-eu-vat-admin.php:356
 #: includes/class-alg-wc-eu-vat-core.php:419
 #: includes/class-alg-wc-eu-vat-core.php:420
-#: includes/class-alg-wc-eu-vat-core.php:1440
-#: includes/class-alg-wc-eu-vat-core.php:1442
-#: includes/class-alg-wc-eu-vat-core.php:1559
-#: includes/class-alg-wc-eu-vat-core.php:1636
-#: includes/class-alg-wc-eu-vat-core.php:1668
+#: includes/class-alg-wc-eu-vat-core.php:1427
+#: includes/class-alg-wc-eu-vat-core.php:1429
+#: includes/class-alg-wc-eu-vat-core.php:1546
+#: includes/class-alg-wc-eu-vat-core.php:1623
+#: includes/class-alg-wc-eu-vat-core.php:1655
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:69
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:76
 msgid "EU VAT Number"
@@ -196,7 +196,7 @@ msgid "VAT is valid."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:59
-#: includes/class-alg-wc-eu-vat-core.php:2144
+#: includes/class-alg-wc-eu-vat-core.php:2131
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:269
 msgid "VAT is not valid."
 msgstr ""
@@ -216,7 +216,7 @@ msgid "Different shipping & billing countries."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:63
-#: includes/class-alg-wc-eu-vat-core.php:2080
+#: includes/class-alg-wc-eu-vat-core.php:2067
 msgid " VAT is valid, but registered to %company_name%."
 msgstr ""
 
@@ -231,27 +231,27 @@ msgid "(optional)"
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-ajax.php:140
-#: includes/class-alg-wc-eu-vat-core.php:1813
+#: includes/class-alg-wc-eu-vat-core.php:1800
 #, php-format
 msgid "Error: Country by IP does not match (%s)"
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-core.php:470
 #: includes/class-alg-wc-eu-vat-core.php:634
-#: includes/class-alg-wc-eu-vat-core.php:1997
-#: includes/class-alg-wc-eu-vat-core.php:2093
+#: includes/class-alg-wc-eu-vat-core.php:1984
+#: includes/class-alg-wc-eu-vat-core.php:2080
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:70
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-core.php:603
-#: includes/class-alg-wc-eu-vat-core.php:2046
+#: includes/class-alg-wc-eu-vat-core.php:2033
 msgid ""
 "Success (checkout): VAT ID valid. Matched with prevalidated VAT numbers."
 msgstr ""
 
 #: includes/class-alg-wc-eu-vat-core.php:629
-#: includes/class-alg-wc-eu-vat-core.php:2101
+#: includes/class-alg-wc-eu-vat-core.php:2088
 msgid "Error: VAT is not valid (checkout)"
 msgstr ""
 
@@ -259,12 +259,12 @@ msgstr ""
 msgid "VAT SHIFTED"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1241
+#: includes/class-alg-wc-eu-vat-core.php:1228
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:129
 msgid "You didn't set your VAT ID. Are you sure you want to continue?"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1241
+#: includes/class-alg-wc-eu-vat-core.php:1228
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:136
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:144
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:164
@@ -286,29 +286,29 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1241
+#: includes/class-alg-wc-eu-vat-core.php:1228
 msgid "No"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1357
+#: includes/class-alg-wc-eu-vat-core.php:1344
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:202
 msgid "I don't have a VAT ID"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1377
+#: includes/class-alg-wc-eu-vat-core.php:1364
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:217
 msgid "I have a valid VAT but not exempted"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1632
+#: includes/class-alg-wc-eu-vat-core.php:1619
 msgid "Customer Decide"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:2181
+#: includes/class-alg-wc-eu-vat-core.php:2168
 msgid "Keep VAT for this product"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:2182
+#: includes/class-alg-wc-eu-vat-core.php:2169
 msgid ""
 "Enable this to ensure VAT is charged on this product, even if the customer "
 "provides a valid VAT number."
