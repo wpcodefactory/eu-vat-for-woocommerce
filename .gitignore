@@ -9,6 +9,9 @@
 # Composer
 composer.lock
 
+# NPM files
+bun.lockb
+
 # Node
 node_modules/
 

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Settings
  *
- * @version 1.2.1
+ * @version 4.0.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -17,14 +17,47 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @version 1.2.0
+	 * @version 4.0.0
 	 * @since   1.0.0
 	 */
 	function __construct() {
+
 		$this->id    = 'alg_wc_eu_vat';
 		$this->label = __( 'EU VAT', 'eu-vat-for-woocommerce' );
 		parent::__construct();
+
 		add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'maybe_unsanitize_option' ), PHP_INT_MAX, 3 );
+
+		add_action( 'admin_footer', array( $this, 'add_js_admin_field_control' ) );
+
+	}
+
+	/**
+	 * add_js_admin_field_control.
+	 *
+	 * @version 4.0.0
+	 *
+	 * @todo    (dev) add `toogle_customer_decide()`?
+	 */
+	function add_js_admin_field_control() {
+		?>
+		<script>
+			jQuery( document ).ready( function () {
+				function toogle_required_countries_field() {
+					switch ( jQuery( '#alg_wc_eu_vat_field_required' ).val() ) {
+						case 'yes_for_countries':
+						case 'no_for_countries':
+							jQuery( '#alg_wc_eu_vat_field_required_countries' ).removeAttr( 'disabled' );
+							break;
+						default:
+							jQuery( '#alg_wc_eu_vat_field_required_countries' ).attr( 'disabled', 'disabled' );
+					}
+				}
+				toogle_required_countries_field();
+				jQuery( '#alg_wc_eu_vat_field_required' ).change( toogle_required_countries_field );
+			} );
+		</script>
+		<?php
 	}
 
 	/**
@@ -34,48 +67,22 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 	 * @since   1.2.0
 	 */
 	function maybe_unsanitize_option( $value, $option, $raw_value ) {
-		return ( ! empty( $option['alg_wc_eu_vat_raw'] ) ? $raw_value : $value );
+		return (
+			! empty( $option['alg_wc_eu_vat_raw'] ) ?
+			$raw_value :
+			$value
+		);
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.2.0
+	 * @version 4.0.0
 	 * @since   1.0.0
 	 */
 	function get_settings() {
 		global $current_section;
-		$initialarray = array(
-			array(
-				'title'    => __( '', 'eu-vat-for-woocommerce' ),
-				'type'     => 'title',
-				'desc'     => apply_filters( 'alg_wc_eu_vat_advertise' , '<div class="alg_wc_eu_vat_right_ad">
-				<div class="alg_wc_eu_vat-sidebar__section">
-				<div class="alg_wc_eu_vat_name_heading">
-				<img class="alg_wc_eu_vat_resize" src="https://wpfactory.com/wp-content/uploads/EU-VAT-for-WooCommerce-300x300.png">
-				<p class="alg_wc_eu_vat_text">Enjoying the plugin? Unleash its full potential with the premium version, it allows you to:</p>
-				</div>
-				<ul>
-					<li>
-						<strong>Show the VAT field for specific countries of your choice.</strong>
-					</li>
-					<li>
-						<strong>Keep VAT in your store country EVEN if number is validated.</strong>
-					</li>
-					<li>
-						<strong>Match company name along with VAT number.</strong>
-					</li>
-				</ul>
-				<p style="text-align:center">
-				<a id="alg_wc_eu_vat-premium-button" class="alg_wc_pq-button-upsell" href="https://wpfactory.com/item/eu-vat-for-woocommerce/" target="_blank">Get EU VAT for WooCommerce Pro</a>
-				</p>
-				<br>
-			</div>
-			</div>'),
-				'id'       => $this->id . '_' . $current_section . '_options_ad_section',
-			)
-		);
-		$return = array_merge( apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ), array(
+		$settings = array_merge( apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ), array(
 			array(
 				'title'     => __( 'Reset Settings', 'eu-vat-for-woocommerce' ),
 				'type'      => 'title',
@@ -93,10 +100,7 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 				'id'        => $this->id . '_' . $current_section . '_reset_options',
 			),
 		) );
-
-		$return = array_merge( $initialarray, $return );
-
-		return $return;
+		return apply_filters( 'alg_wc_eu_vat_get_settings', $settings, $current_section, $this->id, $this );
 	}
 
 	/**
@@ -121,12 +125,13 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 	/**
 	 * admin_notice_settings_reset.
 	 *
-	 * @version 1.2.1
+	 * @version 4.0.0
 	 * @since   1.2.1
 	 */
 	function admin_notice_settings_reset() {
 		echo '<div class="notice notice-warning is-dismissible"><p><strong>' .
-			__( 'Your settings have been reset.', 'eu-vat-for-woocommerce' ) . '</strong></p></div>';
+			esc_html__( 'Your settings have been reset.', 'eu-vat-for-woocommerce' ) .
+		'</strong></p></div>';
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 3.0.0
+ * @version 4.0.0
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.11.12
+	 * @version 4.0.0
 	 * @since   1.5.0
 	 *
 	 * @todo    [dev] (maybe) set default value for "alg_wc_eu_vat_add_progress_text" to "yes"
@@ -55,11 +55,19 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Validate at signup form.', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enabled/disables EU VAT validation at sign up page.', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Validate at sign-up form', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enabled/disables EU VAT validation at sign-up page.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_sign_up_page',
 				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Validate in "My account"', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enabled/disables EU VAT validation in "My account".', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_validate_my_account',
+				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
 			array(

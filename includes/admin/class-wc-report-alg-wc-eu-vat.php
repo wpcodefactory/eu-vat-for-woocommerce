@@ -42,7 +42,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 			class="export_csv"
 			data-export="table"
 		>
-			<?php esc_html_e( 'Export CSV', 'woocommerce' ); ?>
+			<?php esc_html_e( 'Export CSV', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?>
 		</a>
 		<?php
 	}
@@ -52,11 +52,13 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 	 */
 	public function output_report() {
 
+		// phpcs:disable WordPress.WP.I18n.TextDomainMismatch
 		$ranges = array(
 			'year'       => __( 'Year', 'woocommerce' ),
 			'last_month' => __( 'Last month', 'woocommerce' ),
 			'month'      => __( 'This month', 'woocommerce' ),
 		);
+		// phpcs:enable WordPress.WP.I18n.TextDomainMismatch
 
 		$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( wp_unslash( $_GET['range'] ) ) : 'last_month';
 
@@ -142,10 +144,10 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 			<thead>
 				<tr>
 					<th><?php _e( 'Country', 'woocommerce' ); ?></th>
-					<th class="total_row"><?php _e( 'Number of orders', 'woocommerce' ); ?></th>
-					<th class="total_row"><?php _e( 'Total sales', 'woocommerce' ); ?></th>
+					<th class="total_row"><?php _e( 'Number of orders', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
+					<th class="total_row"><?php _e( 'Total sales', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
 					<th class="total_row"><?php _e( 'Total sales with zero tax', 'woocommerce' ); ?></th>
-					<th class="total_row"><?php _e( 'Total tax', 'woocommerce' ); ?></th>
+					<th class="total_row"><?php _e( 'Total tax', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
 				</tr>
 			</thead>
 			<?php if ( ! empty( $tax_rows ) ) : ?>
@@ -166,7 +168,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 				</tbody>
 				<tfoot>
 					<tr>
-						<th scope="row"><?php _e( 'Totals', 'woocommerce' ); ?></th>
+						<th scope="row"><?php _e( 'Totals', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
 						<th class="total_row"><?php echo array_sum( wp_list_pluck( $tax_rows, 'count' ) ); ?></th>
 						<th class="total_row"><?php echo wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum' ) ) ); ?></th>
 						<th class="total_row"><?php echo wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum_no_tax' ) ) ); ?></th>
@@ -176,7 +178,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 			<?php else : ?>
 				<tbody>
 					<tr>
-						<td><?php _e( 'No taxes found in this period', 'woocommerce' ); ?></td>
+						<td><?php _e( 'No taxes found in this period', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></td>
 					</tr>
 				</tbody>
 			<?php endif; ?>

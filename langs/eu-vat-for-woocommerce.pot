@@ -1,147 +1,179 @@
-#: eu-vat-for-woocommerce-blocks-initialize.php:74
-#: includes/admin/class-alg-wc-eu-vat-admin.php:356
-#: includes/class-alg-wc-eu-vat-core.php:420
-#: includes/class-alg-wc-eu-vat-core.php:421
-#: includes/class-alg-wc-eu-vat-core.php:1432
-#: includes/class-alg-wc-eu-vat-core.php:1434
-#: includes/class-alg-wc-eu-vat-core.php:1551
-#: includes/class-alg-wc-eu-vat-core.php:1628
-#: includes/class-alg-wc-eu-vat-core.php:1660
+#: includes/admin/class-alg-wc-eu-vat-admin-exempt.php:62
+msgid "Impose VAT"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin-exempt.php:65
+msgid "Exempt VAT"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin-users-list.php:58
+msgid "EU VAT not provided"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin-users-list.php:59
+msgid "EU VAT provided"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin-users-list.php:60
+msgid "Filter"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:191
+msgid "Check VAT Number"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:219
+msgid "Let Customer Decide:"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:230
+#: includes/admin/class-alg-wc-eu-vat-admin.php:435
+#: includes/admin/class-alg-wc-eu-vat-admin.php:510
+#: includes/class-alg-wc-eu-vat.php:241 includes/class-alg-wc-eu-vat.php:242
+#: includes/settings/class-alg-wc-eu-vat-settings.php:26
+msgid "EU VAT"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:278
+msgid "Orders with EU VAT numbers"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:299
+#: includes/admin/class-alg-wc-eu-vat-admin.php:326
+msgid "Select Filter EU VAT..."
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:430
+#: includes/admin/class-alg-wc-eu-vat-admin.php:568
+msgid "Taxes"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:454
+msgid "Report includes all EU VAT countries with existing sales."
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:455
+msgid "Table is sorted by total tax value."
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:474
+#: includes/blocks/eu-vat-for-woocommerce-blocks-initialize.php:78
+#: includes/class-alg-wc-eu-vat-core.php:176
+#: includes/class-alg-wc-eu-vat-core.php:177
+#: includes/class-alg-wc-eu-vat-core.php:756
+#: includes/class-alg-wc-eu-vat-core.php:758
+#: includes/class-alg-wc-eu-vat-core.php:855
+#: includes/class-alg-wc-eu-vat-display.php:74
+#: includes/class-alg-wc-eu-vat-display.php:136
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:69
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:76
 msgid "EU VAT Number"
 msgstr ""
 
-#: eu-vat-for-woocommerce-blocks-initialize.php:94
-msgid "EU VAT Number Blocks"
-msgstr ""
-
-#: eu-vat-for-woocommerce-blocks-integration.php:110
-msgid "This is some example data from the server"
-msgstr ""
-
-#: eu-vat-for-woocommerce-blocks-integration.php:111
-msgid "I want to receive updates about products and promotions."
-msgstr ""
-
-#: eu-vat-for-woocommerce.php:231
-msgid "Settings"
-msgstr ""
-
-#: eu-vat-for-woocommerce.php:235
-msgid "Unlock All"
-msgstr ""
-
-#: eu-vat-for-woocommerce.php:279 eu-vat-for-woocommerce.php:280
-#: includes/admin/class-alg-wc-eu-vat-admin.php:113
-#: includes/admin/class-alg-wc-eu-vat-admin.php:320
-#: includes/admin/class-alg-wc-eu-vat-admin.php:387
-#: includes/settings/class-alg-wc-eu-vat-settings.php:25
-msgid "EU VAT"
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:74
-msgid "Check VAT Number"
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:101
-msgid "Let Customer Decide:"
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:161
-msgid "Orders with EU VAT numbers"
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:183
-#: includes/admin/class-alg-wc-eu-vat-admin.php:210
-msgid "Select Filter EU VAT..."
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:315
-#: includes/admin/class-alg-wc-eu-vat-admin.php:445
-msgid "Taxes"
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:339
-msgid "Report includes all EU VAT countries with existing sales."
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:340
-msgid "Table is sorted by total tax value."
-msgstr ""
-
-#: includes/admin/class-alg-wc-eu-vat-admin.php:433
+#: includes/admin/class-alg-wc-eu-vat-admin.php:556
 msgid "Customer IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:437
+#: includes/admin/class-alg-wc-eu-vat-admin.php:560
 msgid "Country by IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:441
+#: includes/admin/class-alg-wc-eu-vat-admin.php:564
 msgid "Customer EU VAT Number"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:454
+#: includes/admin/class-alg-wc-eu-vat-admin.php:580
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:542
+msgid "Business Name"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:584
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:545
+msgid "Business Address"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:588
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:548
+msgid "Country Code"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:592
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:551
+msgid "VAT Number"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:612
 msgid "Validate VAT and remove taxes"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:134
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:191
+#: includes/admin/class-alg-wc-eu-vat-admin.php:623
+msgid "Get VAT details"
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:692
+msgid "VAT details have been updated successfully."
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-admin.php:695
+msgid "VAT details update failed. Please update the valid VAT number."
+msgstr ""
+
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:137
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:195
 msgid "VAT"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:156
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:160
 msgid "EU country VAT rates were successfully added."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:169
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:170
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:173
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:174
 msgid "EU country VAT Rates"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:184
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:188
 msgid "EU country VAT Rates Tool"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:185
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:189
 msgid "Add all EU country VAT standard rates to WooCommerce."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:186
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:190
 msgid "Plugin settings"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:194
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:239
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:198
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:243
 msgid "Name"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:196
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:200
 msgid "Note: will not add duplicates for country."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:198
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:202
 msgid "Add EU country VAT Rates"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:210
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:214
 msgid "List of EU VAT rates to be added"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:215
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:237
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:144
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:219
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:241
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:146
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:237
 msgid "Country"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:216
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:238
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:220
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:242
 msgid "Rate"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-country-rates.php:232
+#: includes/admin/class-alg-wc-eu-vat-country-rates.php:236
 msgid "Current standard tax rates"
 msgstr ""
 
@@ -149,122 +181,137 @@ msgstr ""
 msgid "Export CSV"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:56
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:57
 msgid "Year"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:57
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:58
 msgid "Last month"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:58
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:59
 msgid "This month"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:145
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:147
 msgid "Number of orders"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:146
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:148
 msgid "Total sales"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:147
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:149
 msgid "Total sales with zero tax"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:148
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:150
 msgid "Total tax"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:169
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:171
 msgid "Totals"
 msgstr ""
 
-#: includes/admin/class-wc-report-alg-wc-eu-vat.php:179
+#: includes/admin/class-wc-report-alg-wc-eu-vat.php:181
 msgid "No taxes found in this period"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:57
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:253
+#: includes/blocks/class-alg-wc-eu-vat-checkout-block.php:243
+msgid ""
+"Success (checkout): VAT ID valid. Matched with pre-validated VAT numbers."
+msgstr ""
+
+#: includes/blocks/class-alg-wc-eu-vat-checkout-block.php:269
+#: includes/class-alg-wc-eu-vat-core.php:1312
+msgid "Error: VAT is not valid (checkout)"
+msgstr ""
+
+#: includes/blocks/class-alg-wc-eu-vat-checkout-block.php:279
+#: includes/class-alg-wc-eu-vat-core.php:1203
+#: includes/class-alg-wc-eu-vat-core.php:1304
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:78
+msgid "<strong>EU VAT Number</strong> is not valid."
+msgstr ""
+
+#: includes/blocks/class-alg-wc-eu-vat-checkout-block.php:340
+msgid "<strong>EU VAT Number</strong> is required."
+msgstr ""
+
+#: includes/blocks/eu-vat-for-woocommerce-blocks-initialize.php:98
+msgid "EU VAT Number Blocks"
+msgstr ""
+
+#: includes/blocks/eu-vat-for-woocommerce-blocks-integration.php:129
+msgid "This is some example data from the server"
+msgstr ""
+
+#: includes/blocks/eu-vat-for-woocommerce-blocks-integration.php:130
+msgid "I want to receive updates about products and promotions."
+msgstr ""
+
+#: includes/class-alg-wc-eu-vat-ajax.php:86
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:261
 msgid "Validating VAT. Please wait..."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:58
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:261
+#: includes/class-alg-wc-eu-vat-ajax.php:92
+#: includes/class-alg-wc-eu-vat-ajax.php:116
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:269
 msgid "VAT is valid."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:59
-#: includes/class-alg-wc-eu-vat-core.php:2136
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:269
+#: includes/class-alg-wc-eu-vat-ajax.php:98
+#: includes/class-alg-wc-eu-vat-sign-up-form.php:73
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:277
 msgid "VAT is not valid."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:60
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:277
+#: includes/class-alg-wc-eu-vat-ajax.php:104
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:285
 msgid "Validation failed. Please try again."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:61
+#: includes/class-alg-wc-eu-vat-ajax.php:112
 msgid "VAT preserved for this billing country"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:62
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:285
+#: includes/class-alg-wc-eu-vat-ajax.php:123
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:293
 msgid "Different shipping & billing countries."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:63
-#: includes/class-alg-wc-eu-vat-core.php:2072
+#: includes/class-alg-wc-eu-vat-ajax.php:129
+#: includes/class-alg-wc-eu-vat-core.php:1291
 msgid " VAT is valid, but registered to %company_name%."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:64
+#: includes/class-alg-wc-eu-vat-ajax.php:135
 msgid ""
 " VAT accepted due to VIES error: %vies_error%. The admin will check the VAT "
 "validation again and proceed accordingly."
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:66
+#: includes/class-alg-wc-eu-vat-ajax.php:139
 msgid "(optional)"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-ajax.php:140
-#: includes/class-alg-wc-eu-vat-core.php:1805
+#: includes/class-alg-wc-eu-vat-ajax.php:240
+#: includes/class-alg-wc-eu-vat-core.php:1015
 #, php-format
 msgid "Error: Country by IP does not match (%s)"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:475
-#: includes/class-alg-wc-eu-vat-core.php:639
-#: includes/class-alg-wc-eu-vat-core.php:1989
-#: includes/class-alg-wc-eu-vat-core.php:2085
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:70
-msgid "<strong>EU VAT Number</strong> is not valid."
-msgstr ""
-
-#: includes/class-alg-wc-eu-vat-core.php:608
-#: includes/class-alg-wc-eu-vat-core.php:2038
-msgid ""
-"Success (checkout): VAT ID valid. Matched with prevalidated VAT numbers."
-msgstr ""
-
-#: includes/class-alg-wc-eu-vat-core.php:634
-#: includes/class-alg-wc-eu-vat-core.php:2093
-msgid "Error: VAT is not valid (checkout)"
-msgstr ""
-
-#: includes/class-alg-wc-eu-vat-core.php:702
+#: includes/class-alg-wc-eu-vat-compatibility.php:68
 msgid "VAT SHIFTED"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1233
+#: includes/class-alg-wc-eu-vat-core.php:547
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:129
 msgid "You didn't set your VAT ID. Are you sure you want to continue?"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1233
+#: includes/class-alg-wc-eu-vat-core.php:550
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:136
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:144
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:164
@@ -272,46 +319,60 @@ msgstr ""
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:262
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:52
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:60
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:92
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:101
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:138
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:149
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:158
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:68
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:100
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:109
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:146
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:157
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:166
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:215
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:224
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:301
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:327
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:336
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:174
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:223
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:232
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:309
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:335
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:344
 msgid "Yes"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1233
+#: includes/class-alg-wc-eu-vat-core.php:551
 msgid "No"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1349
+#: includes/class-alg-wc-eu-vat-core.php:669
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:202
 msgid "I don't have a VAT ID"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1369
+#: includes/class-alg-wc-eu-vat-core.php:691
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:217
 msgid "I have a valid VAT but not exempted"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:1624
+#: includes/class-alg-wc-eu-vat-core.php:1257
+msgid ""
+"Success (checkout): VAT ID valid. Matched with prevalidated VAT numbers."
+msgstr ""
+
+#: includes/class-alg-wc-eu-vat-display.php:69
 msgid "Customer Decide"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:2173
+#: includes/class-alg-wc-eu-vat-keep-vat-individual-product.php:51
 msgid "Keep VAT for this product"
 msgstr ""
 
-#: includes/class-alg-wc-eu-vat-core.php:2174
+#: includes/class-alg-wc-eu-vat-keep-vat-individual-product.php:52
 msgid ""
 "Enable this to ensure VAT is charged on this product, even if the customer "
 "provides a valid VAT number."
+msgstr ""
+
+#: includes/class-alg-wc-eu-vat.php:191
+msgid "Settings"
+msgstr ""
+
+#: includes/class-alg-wc-eu-vat.php:196
+msgid "Unlock All"
 msgstr ""
 
 #: includes/functions/alg-wc-eu-vat-functions-debug.php:26
@@ -329,65 +390,62 @@ msgid ""
 "\"WPFactory > EU VAT > Admin & Advanced > Advanced Options\"."
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:28
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:46
 #, php-format
 msgid "Error: Country code does not match (%s)"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:65
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:78
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:387
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:399
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:89
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:103
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:373
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:386
 #, php-format
 msgid "Error: %s is disabled"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:86
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:408
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:112
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:395
 msgid "Error: No response"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:94
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:139
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:212
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:340
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:463
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:121
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:193
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:325
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:449
 msgid "Success: VAT ID is valid"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:102
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:135
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:204
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:459
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:129
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:185
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:445
 msgid "Error: VAT ID not valid"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:132
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:197
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:452
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:178
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:438
 #, php-format
 msgid "Error: Company name does not match (%s)"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:208
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:189
 msgid "Error: Result is not set"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:225
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:206
 msgid "Error: SoapClient class does not exist"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:231
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:212
 #, php-format
 msgid "Error: Exception: %s"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:248
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:229
 #, php-format
 msgid "Error: SoapFault: %s"
 msgstr ""
 
-#: includes/functions/alg-wc-eu-vat-functions-validation.php:328
+#: includes/functions/alg-wc-eu-vat-functions-validation.php:312
 msgid "Success: VAT ID valid. Matched with prevalidated VAT numbers."
 msgstr ""
 
@@ -395,210 +453,210 @@ msgstr ""
 msgid "Admin & Advanced"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:39
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:40
 msgid "Admin Options"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:44
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:45
 msgid "Meta box"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:45
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:46
 msgid "Adds EU VAT number summary meta box to admin order edit page."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:46
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:54
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:244
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:47
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:55
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:252
 msgid "Add"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:52
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:53
 msgid "Column"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:53
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:54
 msgid "Adds EU VAT number column to admin orders list."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:60
-msgid "VAT Validation for Orders Created Manually from the Admin Side"
-msgstr ""
-
 #: includes/settings/class-alg-wc-eu-vat-settings-admin.php:61
-msgid "Validate VAT when an order is created manually from the admin side."
+msgid "VAT validation for orders created manually from the admin side"
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-admin.php:62
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:114
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:134
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:141
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:156
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:171
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:178
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:186
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:193
+msgid "Validate VAT when an order is created manually from the admin side."
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:63
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:83
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:103
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:110
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:125
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:140
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:147
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:155
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:162
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:113
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:121
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:208
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:290
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:348
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:370
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:378
 msgid "Enable"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:73
-msgid "Language Guide"
-msgstr ""
-
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:79
-msgid "WPML or Polylang"
-msgstr ""
-
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:82
-msgid ""
-"If you are using multi-language store with WPML or Polylang, you can use "
-"shortcodes to show different languages."
-msgstr ""
-
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:85
-#, php-format
-msgid ""
-"Example: %s can be used to show English messages, similar to other languages "
-"you have."
-msgstr ""
-
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:90
-#, php-format
-msgid "Use %s as fallback for non-defined languages."
-msgstr ""
-
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:108
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:77
 msgid "Advanced Options"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:113
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:82
 msgid "Debug"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:115
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:84
 #, php-format
 msgid "Log will be added to %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:116
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:85
 msgid "WooCommerce > Status > Logs"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:122
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:91
 msgid "Session type"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:128
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:97
 msgid "Standard PHP session"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:129
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:98
 msgid "WC session (recommended)"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:133
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:102
 msgid "Force VAT recheck on checkout"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:140
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:109
 msgid "Enable if sitepress optimizer dynamic caching plugin not works"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:147
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:116
 msgid "VAT shifted text"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:148
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:117
 msgid "Please use text for 3rd party PDF invoice plugin."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:151
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:120
 msgid "VAT Shifted"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:155
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:124
 msgid "Enable manual validation of VAT numbers"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:162
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:131
 msgid "VAT numbers to pass validation"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:163
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:164
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:132
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:133
 msgid ""
 "Enter multiple VAT numbers that have been manually validated, separated by "
 "commas."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:170
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:139
 msgid "Remove country from VAT number in REST API"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:177
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:146
 msgid "Reduce concurrent request to VIES"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:179
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:148
 msgid ""
 "Enable if validation fails multiple times and you encounter the "
 "\"MS_MAX_CONCURRENT_REQ\" error after debugging."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:185
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:154
 msgid "Checkout block field"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:192
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:161
 msgid "Autofill company name from VAT ID"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:194
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:163
 msgid "Please use validation method SOAP for this option to work."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:207
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:177
 msgid "Additional Info"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:211
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:181
 #, php-format
 msgid "Field ID used for EU VAT: %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:212
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:182
 #, php-format
 msgid "Tool for adding EU country standard VAT rates: %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:213
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:183
 msgid "Tools > EU country VAT Rates"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:214
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:184
 #, php-format
 msgid "EU VAT report: %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:215
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:185
 msgid "WooCommerce > Reports > Taxes > EU VAT"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:216
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:186
 #, php-format
 msgid ""
 "You can use shortcodes in field label, placeholder, description and all "
 "messages options, e.g.: %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:218
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:188
 #, php-format
 msgid "Plugin description on %s."
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:201
+msgid "Language Guide"
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:206
+msgid ""
+"If you have multi-language store with WPML or Polylang, you can use "
+"shortcodes to show different languages."
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:208
+msgid "For example:"
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:212
+#, php-format
+msgid ""
+"%s can be used to show English messages, similar to other languages you have."
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:218
+#, php-format
+msgid "%s can be used as a fallback for non-defined languages."
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:25
@@ -704,11 +762,11 @@ msgid "Confirmation notice text"
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:134
-msgid "Add EU VAT field to signup form"
+msgid "Add EU VAT field to sign-up form"
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:135
-msgid "Add EU VAT field to signup form."
+msgid "Add EU VAT field to sign-up form."
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:142
@@ -732,15 +790,15 @@ msgid "Choose selected payment method from following field."
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:162
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:136
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:147
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:144
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:155
 #, php-format
 msgid "You will need %s plugin to enable this option."
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:163
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:137
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:148
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:145
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:156
 msgid "EU VAT for WooCommerce Pro"
 msgstr ""
 
@@ -905,54 +963,62 @@ msgstr ""
 msgid "Ignored if empty (i.e. field is shown for all countries)."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:299
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:126
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:192
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:301
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:134
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:200
 #, php-format
 msgid "Enter country codes as comma separated list, e.g. %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:300
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:303
 #, php-format
 msgid "to show field for EU VAT countries only enter: %s"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:311
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:328
 msgid "Show field for selected user roles only"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:312
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:329
 msgid "Ignored if empty (i.e. field is shown for all user roles)."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:330
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:352
 msgid "Display Options"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:335
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:357
 msgid "Display"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:336
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:358
 msgid "If empty - will display after order table."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:342
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:364
 msgid "After order table"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:343
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:365
 msgid "In billing address"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:347
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:369
 msgid "Hide EU VAT field from checkout"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:349
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:371
 msgid ""
 "This option might be needed when you're customizing your checkout page using "
 "a page builder plugin and want to fully-control field visibility"
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:377
+msgid "Show VAT details in checkout"
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:379
+msgid "Retrieves and shows business name, address, etc. in checkout"
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:25
@@ -972,345 +1038,352 @@ msgid "Enabled/disables EU VAT validation."
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:58
-msgid "Validate at signup form."
+msgid "Validate at sign-up form"
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:59
-msgid "Enabled/disables EU VAT validation at sign up page."
+msgid "Enabled/disables EU VAT validation at sign-up page."
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:66
-msgid "Message on not valid."
+msgid "Validate in \"My account\""
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:67
+msgid "Enabled/disables EU VAT validation in \"My account\"."
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:74
+msgid "Message on not valid."
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:75
 #, php-format
 msgid "Replaced value: %s"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:68
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:76
 msgid ""
 "Message will be displayed, when customer tries to checkout with invalid VAT "
 "number (\"Validate\" option must be enabled)."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:76
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:84
 msgid "First validation method"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:77
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:85
 msgid ""
 "Change this if you are having issues when validating VAT. This only selects "
 "first method to try - if not succeeded, remaining methods will be used for "
 "validation."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:83
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:91
 msgid "SOAP"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:84
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:92
 msgid "cURL"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:85
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:93
 msgid "Simple"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:90
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:98
 msgid "Remove VAT for validated numbers"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:91
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:99
 msgid "Enables/disabled VAT exemption."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:99
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:107
 msgid "Keep VAT if shipping country is different from billing country"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:100
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:108
 msgid ""
 "Enables for keep VAT if shipping country is different from billing country."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:108
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:116
 msgid "Keep VAT in selected countries"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:109
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:117
 msgid ""
 "This will validate the VAT, but won't exempt VAT for selected countries."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:110
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:118
 #, php-format
 msgid "Country for \"Base (i.e. store) country\" option is set in \"%s\"."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:111
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:119
 msgid "WooCommerce > Settings > General > Store Address"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:117
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:125
 msgid "Base (i.e. store) country"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:118
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:126
 msgid "Comma separated list"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:119
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:127
 msgid "Disable"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:125
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:133
 msgid "Ignored unless \"Comma separated list\" option is selected above."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:134
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:142
 msgid "Check country by IP"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:135
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:143
 msgid ""
 "This will check if customer's country (located by customer's IP) matches the "
 "country in entered VAT number."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:145
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:153
 msgid "Check company name"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:146
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:154
 msgid "This will check if company name matches the VAT number."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:156
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:164
 msgid "Check for matching billing country code"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:157
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:165
 msgid ""
 "This will check if country code in VAT number matches billing country code."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:164
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:172
 msgid "Allow VAT number input without country code"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:165
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:173
 msgid ""
 "This will allow customers to enter VAT number without leading country code "
 "letters and still get VAT validated. In this case country will be "
 "automatically retrieved from billing country input."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:172
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:180
 msgid "Always exempt VAT for selected user roles"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:173
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:182
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:181
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:190
 msgid "Ignored if empty."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:181
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:189
 msgid "Always not exempt VAT for selected user roles"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:190
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:198
 msgid "Skip VAT validation for selected countries"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:191
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:199
 msgid ""
 "List all countries you want VAT validation to be skipped for (i.e. VAT "
 "always valid). Ignored if empty."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:199
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:207
 msgid "Validate action trigger"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:200
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:208
 msgid "Validate action will trigger based on your choice. Default: onInput"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:206
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:214
 msgid "on Input"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:207
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:215
 msgid "on Blur"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:213
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:221
 msgid "Force validate on cart and checkout page load/reload"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:214
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:222
 msgid "Enabled/disables force validate on cart/checkout page."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:222
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:230
 msgid "Accept the VAT number if VIES is not available"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:223
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:231
 msgid ""
 "Enabled/disables Accept the VAT number if VIES is not available."
 "( <code>MS_UNAVAILABLE</code>, <code>GLOBAL_MAX_CONCURRENT_REQ</code>, "
 "<code>MS_MAX_CONCURRENT_REQ</code> )"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:237
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:245
 msgid "Progress Messages"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:242
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:250
 msgid "Add progress messages"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:243
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:251
 msgid "Enabled/disables progress messages on checkout."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:250
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:258
 msgid "Validating"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:251
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:259
 msgid ""
 "Message when validation is in progress. If you want to customize the message "
 "using CSS, please use class <code>alg-wc-eu-vat-validating</code>"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:258
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:266
 msgid "Valid"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:259
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:267
 msgid ""
 "Message on valid VAT. If you want to customize the message using CSS, please "
 "use class <code>alg-wc-eu-vat-valid</code>"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:266
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:274
 msgid "Not valid"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:267
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:275
 msgid ""
 "Message on invalid VAT. If you want to customize the message using CSS, "
 "please use class <code>alg-wc-eu-vat-not-valid</code>"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:274
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:282
 msgid "Validation failed"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:275
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:283
 msgid ""
 "Message on VAT validation server timeout etc. If you want to customize the "
 "message using CSS, please use class <code>alg-wc-eu-vat-validation-failed</"
 "code>"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:282
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:290
 msgid "Different shipping & billing countries"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:283
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:291
 msgid ""
 "Message on Different shipping & billing countries. If you want to customize "
 "the message using CSS, please use class <code>alg-wc-eu-vat-not-valid-"
 "billing-country</code>"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:290
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:298
 msgid "Company name mismatch"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:291
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:299
 msgid ""
 "Message on Company name mismatch. If you want to customize the message using "
 "CSS, please use class <code>alg-wc-eu-vat-not-valid-company-mismatch</code>"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:293
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:301
 msgid "VAT is valid, but registered to %company_name%."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:299
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:307
 msgid "Enable country preserve message"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:300
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:308
 msgid "Enabled/disables country preserve validation message."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:307
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:315
 msgid "Country preserved"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:308
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:316
 msgid ""
 "Message on billing country preserved for VAT. If you want to customize the "
 "message using CSS, please use class <code>alg-wc-eu-vat-not-valid-country-"
 "preserved</code>"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:310
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:318
 msgid "VAT preserved for this billing country."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:316
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:324
 msgid "VIES error message"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:317
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:325
 msgid ""
 "Message on VIES error. If you want to customize the message using CSS, "
 "please use class <code>alg-wc-eu-vat-not-valid-vies-error</code>"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:319
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:327
 msgid ""
 "VAT accepted due to VIES error: %vies_error%. The admin will check the VAT "
 "validation again and proceed accordingly."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:325
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:333
 msgid "Hide messages on preserved countries list"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:326
-#: includes/settings/class-alg-wc-eu-vat-settings.php:50
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:334
 msgid ""
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:334
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:342
 msgid "Remove validation color"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:335
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:343
 msgid ""
 "Remove the validation color from the VAT field (this may depend on the theme)"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings.php:80
+#: includes/settings/class-alg-wc-eu-vat-settings.php:87
 msgid "Reset Settings"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings.php:85
+#: includes/settings/class-alg-wc-eu-vat-settings.php:92
 msgid "Reset section settings"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings.php:86
+#: includes/settings/class-alg-wc-eu-vat-settings.php:93
 msgid "Reset"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings.php:129
+#: includes/settings/class-alg-wc-eu-vat-settings.php:133
 msgid "Your settings have been reset."
 msgstr ""

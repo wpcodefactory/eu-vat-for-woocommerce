@@ -131,7 +131,11 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 			$tax_rate    = array(
 				'tax_rate_country'  => $country,
 				'tax_rate'          => $rate,
-				'tax_rate_name'     => isset( $_POST['alg_wc_eu_vat_tax_name'] ) ? sanitize_text_field( $_POST['alg_wc_eu_vat_tax_name'] ) : __( 'VAT', 'woocommerce' ),
+				'tax_rate_name'     => (
+					isset( $_POST['alg_wc_eu_vat_tax_name'] ) ?
+					sanitize_text_field( $_POST['alg_wc_eu_vat_tax_name'] ) :
+					__( 'VAT', 'woocommerce' ) // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
+				),
 				'tax_rate_priority' => 1,
 				'tax_rate_compound' => 0,
 				'tax_rate_shipping' => 1,
@@ -188,7 +192,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 		$the_tool_html = $header_html;
 
 		$data          = array();
-		$the_name      = $_POST['alg_wc_eu_vat_tax_name'] ?? __( 'VAT', 'woocommerce' );
+		$the_name      = $_POST['alg_wc_eu_vat_tax_name'] ?? __( 'VAT', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
 		$nonce_field   = wp_nonce_field( 'alg_wc_eu_vat_rates', 'alg_wc_eu_vat_nonce', true, false );
 		$data[]        = array(
 			__( 'Name', 'eu-vat-for-woocommerce' ) . '<br>' .

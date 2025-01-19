@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.7
-Stable tag: 3.2.4
+Stable tag: 4.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -88,7 +88,6 @@ Once results return if VAT number is valid, you can select what VAT charges to a
 
 With the recent updates to WooCommerce block-based checkout page, our plugin is now compatible with it, to ensure a seamless integration without the need to use classic editor or workarounds.
 
-
 ### 🚀 Control Field Visibility & Appearance ###
 
 * Customize field name to reflect the common name for VAT for your audience (like USt, TVA, IVA)
@@ -155,7 +154,6 @@ With the recent updates to WooCommerce block-based checkout page, our plugin is 
 ### 🚀 VAT Reporting ###
 
 With this feature, you can view a detailed breakdown of sales by each EU country, clearly highlighting total tax amount and transactions where zero tax was applied due to valid VAT number validation, offering clarity on your B2B transactions, ensuring transparency and aiding in compliance.
-
 
 ### 🚀 More Advanced Options ###
 
@@ -235,7 +233,6 @@ WPFactory has a diverse range of plugins tailored to enhance your experience, so
 
 * [**Dynamic Pricing & Bulk Quantity Discounts**](https://wpfactory.com/item/product-price-by-quantity-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Dynamic Pricing & Bulk Quantity Discounts**"): Advanced dynamic pricing and discount rules for WooCommerce, encouraging bulk purchases and driving more sales (**[Free version](https://wordpress.org/plugins/wholesale-pricing-woocommerce/ "Free version")**)
 
-
 ## ❤️ User Testimonials: See What Others Are Saying!##
 
 > “Great plugin. We had a small problem and after contact we received the solution very fast. It works 100% now, thanks!” – ⭐⭐⭐⭐⭐ [niek rijt](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme)
@@ -245,7 +242,6 @@ WPFactory has a diverse range of plugins tailored to enhance your experience, so
 > “It is great! And support is very helpful even with free version. 5 stars!” – ⭐⭐⭐⭐⭐ [Vera](https://wpfactory.com/item/eu-vat-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme)
 
 > “Great support!: The plugin works great, and does everything I need for selling to other countries in Europe! Support is great and they help develop new features to make the plugin even more compliant with the laws.” – ⭐⭐⭐⭐⭐ [kingwebshops](https://wordpress.org/support/topic/great-support-4410/)
-
 
 == Installation ==
 
@@ -265,7 +261,7 @@ WPFactory has a diverse range of plugins tailored to enhance your experience, so
 **Manual download & upload from the WordPress Admin Panel:**
 1. Download the desired plugin in a ZIP format.
 2. On your site, navigate to “Plugins” > “Add New” and click the “Upload Plugin” button.
-3. Choose the downloaded plugin file and click “Install Now.”
+3. Choose the downloaded plugin file and click “Install Now”.
 4. After the installation is complete, click “Activate”.
 
 **Post-Activation:**
@@ -289,6 +285,25 @@ Once activated, access the plugin's settings by navigating to the “WPFactory�
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.0.0 - 19/01/2025 =
+* Fix - Sessions - Session status check added.
+* Fix - Keep VAT for specific products - "get_cart was called incorrectly" PHP notice fixed (`did_action( 'wp_loaded' )` check added).
+* Fix - Exempt VAT - Fixed.
+* Fix - Required / Optional in countries - Fixed.
+* Fix - Checkout block field - "Keep VAT in selected countries" option fixed.
+* Fix - Checkout block field - User meta copied (on `woocommerce_customer_save_address` and `woocommerce_created_customer`).
+* Fix - Checkout block field - The duplicated EU VAT field removed from the admin order edit page.
+* Fix - Checkout block field - The EU VAT field removed from the "My account > Account details".
+* Dev - Security - Output escaped.
+* Dev - Validation Options - 'Validate in "My account"' option added (defaults to `no`).
+* Dev - General - "Show VAT details in checkout" option added (defaults to `no`).
+* Dev - "Get VAT details" link added in order for retrieving VAT details.
+* Dev - VAT IDs with non-alphanumeric symbols are not allowed now.
+* Dev - Checkout block field - Block-related JavaScript code moved to a dedicated block file.
+* Dev - Admin settings descriptions updated.
+* Dev - Major code refactoring and cleanup.
+* Dev - Coding standards improved.
 
 = 3.2.4 - 10/01/2025 =
 * Fix - Checkout block field - Default value fixed.
@@ -385,8 +400,8 @@ Once activated, access the plugin's settings by navigating to the “WPFactory�
 * Fix - Accept VAT when VIES is down (extra catch soapFault).
 
 = 2.12.6 - 29/07/2024 =
-* WC tested up to: 9.1
 * Accept VAT when VIES is down (extra catch soapFault).
+* WC tested up to: 9.1.
 
 = 2.12.5 - 18/07/2024 =
 * Add - Admin & Advanced > VAT Validation for Orders Created Manually from the Admin Side.
@@ -394,19 +409,19 @@ Once activated, access the plugin's settings by navigating to the “WPFactory�
 
 = 2.12.4 - 17/07/2024 =
 * Fix - added condition for filter_available_payment_gateways_allowed() for preserved countries.
-* Add - Yith invoice eu vat field.
+* Add - YITH invoice EU VAT field.
 
 = 2.12.3 - 02/07/2024 =
-* Fix - eu_vat_admin_footer() for admin order creation.
+* Fix - `eu_vat_admin_footer()` for admin order creation.
 
 = 2.12.2 - 01/07/2024 =
-* Fix - admin_inline_js() for admin order creation.
+* Fix - `admin_inline_js()` for admin order creation.
 
 = 2.12.1 - 30/06/2024 =
-* Fix - deployment.
+* Fix - Deployment.
 
 = 2.12.0 - 30/06/2024 =
-* Fix - checkout block compatibility.
+* Fix - Checkout block compatibility.
 
 = 2.11.12 - 29/06/2024 =
 * Add - Autofill company name from VAT ID.
@@ -421,31 +436,31 @@ Once activated, access the plugin's settings by navigating to the “WPFactory�
 * Add - Force validate on cart and checkout page load/reload.
 
 = 2.11.8 - 26/06/2024 =
-* Fix - react constant error.
+* Fix - React constant error.
 
 = 2.11.7 - 26/06/2024 =
-* Update - Wc Order HPOS EU VAT filter.
+* Update - WC Order HPOS EU VAT filter.
 
 = 2.11.6 - 25/06/2024 =
-* Fix - checkout block VAT validation.
+* Fix - Checkout block VAT validation.
 
 = 2.11.5 - 18/06/2024 =
 * Fix - "Required if customer fills the company field" and "Show field for selected countries only" cross logic check and fixed.
-* Fix - checkout block move EU VAT field to customer info section.
+* Fix - Checkout block move EU VAT field to customer info section.
 * Fix - Some error notice.
-* Fix - issue with "Keep VAT in selected countries".
+* Fix - Issue with "Keep VAT in selected countries".
 
 = 2.11.4 - 13/06/2024 =
-* Fix - “Allow VAT number input without country code” for Greek VATs.
+* Fix - "Allow VAT number input without country code" for Greek VATs.
 
 = 2.11.3 - 13/06/2024 =
-* HOPS - ADMIN ORDERS LIST FOR EU VAT.
+* Dev - HPOS - Admin orders list for EU VAT.
 
 = 2.11.2 - 09/06/2024 =
-* Fix - Checout block error.
+* Fix - Checkout block error.
 
 = 2.11.1 - 05/06/2024 =
-* Update condition in alg_eu_vat_update_block_order_meta_eu_vat()
+* Dev - Update condition in `alg_eu_vat_update_block_order_meta_eu_vat()`.
 
 = 2.11.0 - 28/05/2024 =
 * Checkout block support.
@@ -615,7 +630,6 @@ Once activated, access the plugin's settings by navigating to the “WPFactory�
 * Fixed an issue in validating VAT on signup if field was empty
 * Fixed a PHP Deprecated warning message & PHP Uncaught TypeError: explode()
 * Verified compatibility with WooCommerce 6.4
-
 
 = 2.6.2 - 26/03/2022 =
 * Added dependency to the wp_enqueue_script function related to Ajax handling

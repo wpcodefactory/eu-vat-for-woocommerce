@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - General
  *
- * @version 3.1.0
+ * @version 4.0.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -108,7 +108,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_set' ) ) {
 	/**
 	 * alg_wc_eu_vat_session_set.
 	 *
-	 * @version 1.2.1
+	 * @version 4.0.0
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_set( $key, $value ) {
@@ -122,7 +122,9 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_set' ) ) {
 				}
 				break;
 			default: // 'standard'
-				session_start();
+				if ( PHP_SESSION_ACTIVE !== session_status() ) {
+					session_start();
+				}
 				$_SESSION[ $key ] = $value;
 				session_write_close();
 				break;

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 3.0.0
+ * @version 4.0.0
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,11 +29,12 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.0.0
+	 * @version 4.0.0
 	 * @since   1.5.0
 	 */
 	function get_settings() {
 
+		// Admin Options
 		$admin_settings = array(
 			array(
 				'title'    => __( 'Admin Options', 'eu-vat-for-woocommerce' ),
@@ -57,7 +58,7 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'VAT Validation for Orders Created Manually from the Admin Side', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'VAT validation for orders created manually from the admin side', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Validate VAT when an order is created manually from the admin side.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_vat_admin_side',
@@ -68,41 +69,9 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_eu_vat_admin_options',
 			),
-
-			array(
-				'title'    => __( 'Language Guide', 'eu-vat-for-woocommerce' ),
-				'desc'     =>
-					'<table class="form-table" style="width:67%;">' .
-						'<tbody>' .
-							'<tr valign="top" class="">' .
-								'<th scope="row" class="titledesc">' .
-									__( 'WPML or Polylang', 'eu-vat-for-woocommerce' ) .
-								'</th>' .
-								'<td class="forminp forminp-checkbox">' .
-									__( 'If you are using multi-language store with WPML or Polylang, you can use shortcodes to show different languages.', 'eu-vat-for-woocommerce' ) .
-									'<br>' .
-									sprintf(
-										__( 'Example: %s can be used to show English messages, similar to other languages you have.', 'eu-vat-for-woocommerce' ),
-										'<code>[alg_wc_eu_vat_translate lang="en"]Your VAT number is valid.[/alg_wc_eu_vat_translate]</code>'
-									) .
-									'<br>' .
-									sprintf(
-										__( 'Use %s as fallback for non-defined languages.', 'eu-vat-for-woocommerce' ),
-										'<code>[alg_wc_eu_vat_translate not_lang=" "]</code>'
-									) .
-								'</td>' .
-							'</tr>' .
-						'</tbody>' .
-					'</table>',
-				'type'     => 'title',
-				'id'       => 'alg_wc_pq_qty_language_guide',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_pq_qty_language_guide',
-			),
 		);
 
+		// Advanced Options
 		$advanced_settings = array(
 			array(
 				'title'    => __( 'Advanced Options', 'eu-vat-for-woocommerce' ),
@@ -202,12 +171,13 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 			),
 		);
 
+		// Additional Info
 		$additional_info = array(
 			array(
 				'title'    => '&#8505;' . ' ' . __( 'Additional Info', 'eu-vat-for-woocommerce' ),
 				'type'     => 'title',
 				'id'       => 'alg_wc_eu_vat_additional_info',
-				'desc'     => '<ul style="background-color:white;padding:10px 30px;color:black;list-style-type:square;margin-top:50px;">' .
+				'desc'     => '<ul style="background-color:white;padding:10px 30px;color:black;list-style-type:square;margin-top:1em;">' .
 					'<li>' . sprintf( __( 'Field ID used for EU VAT: %s.', 'eu-vat-for-woocommerce' ) , '<code>' . '_' . alg_wc_eu_vat_get_field_id() . '</code>' ) . '</li>' .
 					'<li>' . sprintf( __( 'Tool for adding EU country standard VAT rates: %s.', 'eu-vat-for-woocommerce' ),
 						'<a href="' . admin_url( 'tools.php?page=alg-wc-eu-vat-country-rates' ) . '">' . __( 'Tools > EU country VAT Rates', 'eu-vat-for-woocommerce' ) . '</a>' ) . '</li>' .
@@ -225,7 +195,46 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 			),
 		);
 
-		return array_merge( $admin_settings, $advanced_settings, $additional_info );
+		// Language Guide
+		$language_guide = array(
+			array(
+				'title'    => '&#8505;' . ' ' . __( 'Language Guide', 'eu-vat-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_eu_vat_language_guide',
+				'desc'     => (
+					'<p>' .
+						__( 'If you have multi-language store with WPML or Polylang, you can use shortcodes to show different languages.', 'eu-vat-for-woocommerce' ) .
+						' ' .
+						__( 'For example:', 'eu-vat-for-woocommerce' ) .
+					'</p>' .
+					'<p>' .
+						sprintf(
+							__( '%s can be used to show English messages, similar to other languages you have.', 'eu-vat-for-woocommerce' ),
+							'<code>[alg_wc_eu_vat_translate lang="en"]Your VAT number is valid.[/alg_wc_eu_vat_translate]</code>'
+						) .
+					'</p>' .
+					'<p>' .
+						sprintf(
+							__( '%s can be used as a fallback for non-defined languages.', 'eu-vat-for-woocommerce' ),
+							'<code>[alg_wc_eu_vat_translate not_lang="en"]Your VAT number is valid.[/alg_wc_eu_vat_translate]</code>'
+						) .
+					'</p>'
+				),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_eu_vat_language_guide',
+			),
+		);
+
+		// Result
+		return array_merge(
+			$admin_settings,
+			$advanced_settings,
+			$additional_info,
+			$language_guide
+		);
+
 	}
 
 }

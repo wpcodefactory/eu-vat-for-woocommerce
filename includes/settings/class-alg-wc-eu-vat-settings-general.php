@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 3.0.0
+ * @version 4.0.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -45,7 +45,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.0.0
+	 * @version 4.0.0
 	 * @since   1.0.0
 	 *
 	 * @todo    [dev] check if `clear` is still working (and if yes - change desc)
@@ -131,8 +131,8 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'css'      => 'width:100%;',
 			),
 			array(
-				'title'    => __( 'Add EU VAT field to signup form', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Add EU VAT field to signup form.', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Add EU VAT field to sign-up form', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Add EU VAT field to sign-up form.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_field_signup_form',
 				'default'  => 'no',
@@ -296,11 +296,28 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'Show field for selected countries only', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Ignored if empty (i.e. field is shown for all countries).', 'eu-vat-for-woocommerce' ),
-				'desc'     => sprintf( __( 'Enter country codes as comma separated list, e.g. %s.', 'eu-vat-for-woocommerce' ),
-					sprintf( __( 'to show field for EU VAT countries only enter: %s', 'eu-vat-for-woocommerce' ),
-						'<code>' . ( version_compare( $this->eu_get_woo_version_number(), '4.0.0', '<=' ) ? implode( ',', WC()->countries->get_european_union_countries() ) : implode( ',', WC()->countries->get_european_union_countries( 'eu_vat' ) ) ). '</code>' ) ) .
-					apply_filters( 'alg_wc_eu_vat_settings', '<br>' . sprintf( 'You will need %s plugin to enable this option.',
-						'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">EU VAT for WooCommerce Pro</a>' ) ),
+				'desc'     => (
+					sprintf(
+						__( 'Enter country codes as comma separated list, e.g. %s.', 'eu-vat-for-woocommerce' ),
+						sprintf(
+							__( 'to show field for EU VAT countries only enter: %s', 'eu-vat-for-woocommerce' ),
+							'<code>' .
+								(
+									version_compare( $this->eu_get_woo_version_number(), '4.0.0', '<=' ) ?
+									implode( ',', WC()->countries->get_european_union_countries() ) :
+									implode( ',', WC()->countries->get_european_union_countries( 'eu_vat' ) )
+								) .
+							'</code>'
+						)
+					) .
+					apply_filters(
+						'alg_wc_eu_vat_settings',
+						'<br>' . sprintf(
+							'You will need %s plugin to enable this option.',
+							'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">EU VAT for WooCommerce Pro</a>'
+						)
+					)
+				),
 				'id'       => 'alg_wc_eu_vat_show_in_countries',
 				'default'  => '',
 				'type'     => 'text',
@@ -310,8 +327,13 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'Show field for selected user roles only', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Ignored if empty (i.e. field is shown for all user roles).', 'eu-vat-for-woocommerce' ),
-				'desc'     => apply_filters( 'alg_wc_eu_vat_settings', sprintf( 'You will need %s plugin to enable this option.',
-					'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">EU VAT for WooCommerce Pro</a>' ) ),
+				'desc'     => apply_filters(
+					'alg_wc_eu_vat_settings',
+					sprintf(
+						'You will need %s plugin to enable this option.',
+						'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">EU VAT for WooCommerce Pro</a>'
+					)
+				),
 				'id'       => 'alg_wc_eu_vat_show_for_user_roles',
 				'default'  => array(),
 				'type'     => 'multiselect',
@@ -348,6 +370,14 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'This option might be needed when you\'re customizing your checkout page using a page builder plugin and want to fully-control field visibility', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_hide_eu_vat',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Show VAT details in checkout', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Retrieves and shows business name, address, etc. in checkout', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_show_vat_details',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

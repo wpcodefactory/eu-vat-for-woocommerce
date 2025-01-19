@@ -1,13 +1,13 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 3.1.5
+ * @version 4.0.0
  * @since   1.0.0
  *
  * @author  WPFactory
  *
- * @todo    [dev] replace `billing_eu_vat_number` and `billing_eu_vat_number_field` with `alg_wc_eu_vat_get_field_id()`
- * @todo    [dev] customizable event for `billing_company` (currently `input`; could be e.g. `change`)
+ * @todo    (dev) replace `billing_eu_vat_number` and `billing_eu_vat_number_field` with `alg_wc_eu_vat_get_field_id()`
+ * @todo    (dev) customizable event for `billing_company` (currently `input`; could be e.g., `change`)
  */
 
 jQuery( function ( $ ) {
@@ -28,12 +28,17 @@ jQuery( function ( $ ) {
 	var vat_input_label                 = $( 'label[for="billing_eu_vat_number"]' );
 
 	// Add progress text
-	if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+	if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 		vat_paragraph.append( '<div id="alg_wc_eu_vat_progress"></div>' );
 		var progress_text = $( 'div[id="alg_wc_eu_vat_progress"]' );
 	}
 
-	if ( 'yes_for_company' == alg_wc_eu_vat_ajax_object.is_required ) {
+	// Display VAT details
+	if ( 'yes' === alg_wc_eu_vat_ajax_object.show_vat_details ) {
+		vat_paragraph.append( '<div id="alg_wc_eu_vat_details"></div>' );
+	}
+
+	if ( 'yes_for_company' === alg_wc_eu_vat_ajax_object.is_required ) {
 		billing_company.blur( function () {
 			is_company_name_not_empty();
 		} );
@@ -50,7 +55,7 @@ jQuery( function ( $ ) {
 	// Initial validate
 	alg_wc_eu_vat_validate_vat( true );
 
-	if ( 'onblur' == alg_wc_eu_vat_ajax_object.action_trigger ) {
+	if ( 'onblur' === alg_wc_eu_vat_ajax_object.action_trigger ) {
 		// On blur, start the countdown
 		vat_input.on( 'blur', function () {
 			clearTimeout( input_timer );
@@ -128,8 +133,8 @@ jQuery( function ( $ ) {
 		}
 
 		if (
-			'yes' == alg_wc_eu_vat_ajax_object.add_progress_text &&
-			'yes' == alg_wc_eu_vat_ajax_object.hide_message_on_preserved_countries &&
+			'yes' === alg_wc_eu_vat_ajax_object.add_progress_text &&
+			'yes' === alg_wc_eu_vat_ajax_object.hide_message_on_preserved_countries &&
 			alg_wc_eu_vat_ajax_object.preserve_countries.length > 0
 		) {
 			if ( jQuery.inArray( vat_input_billing_country.val(), alg_wc_eu_vat_ajax_object.preserve_countries ) >= 0 ) {
@@ -186,6 +191,12 @@ jQuery( function ( $ ) {
 				progress_text.removeClass();
 				progress_text.addClass( 'alg-wc-eu-vat-validating' );
 			}
+
+			const vatDetailsDiv = document.getElementById( 'alg_wc_eu_vat_details' );
+			if ( vatDetailsDiv ) {
+				vatDetailsDiv.innerHTML = '';
+			}
+
 			var data = {
 				'action': 'alg_wc_eu_vat_validate_action',
 				'alg_wc_eu_vat_to_check': vat_number_to_check,
@@ -199,7 +210,7 @@ jQuery( function ( $ ) {
 				url: alg_wc_eu_vat_ajax_object.ajax_url,
 				data: data,
 				success: function ( resp ) {
-					var response = resp.res;
+					var response = resp.status;
 					var err = resp.error;
 					var company_name = resp.company;
 
@@ -208,71 +219,71 @@ jQuery( function ( $ ) {
 					var splt = response.split( "|" );
 					response = splt[0];
 
-					if ( '1' == response ) {
+					if ( '1' === response ) {
 						vat_paragraph.addClass( 'woocommerce-validated' );
-						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_valid );
 							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-valid' );
+							progress_text.addClass( 'alg-wc-eu-vat-valid alg-wc-eu-vat-valid-color' );
 						}
-					} else if ( '0' == response ) {
+					} else if ( '0' === response ) {
 						vat_paragraph.addClass( 'woocommerce-invalid' );
-						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_not_valid );
 							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-not-valid' );
+							progress_text.addClass( 'alg-wc-eu-vat-not-valid alg-wc-eu-vat-error-color' );
 						}
-					} else if ( '4' == response ) {
+					} else if ( '4' === response ) {
 						vat_paragraph.addClass( 'woocommerce-invalid' );
-						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.text_shipping_billing_countries );
 							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-not-valid-billing-country' );
+							progress_text.addClass( 'alg-wc-eu-vat-not-valid-billing-country alg-wc-eu-vat-error-color' );
 						}
-					} else if ( '5' == response ) {
+					} else if ( '5' === response ) {
 						var com = splt[1];
 						vat_paragraph.addClass( 'woocommerce-invalid' );
 						vat_paragraph.addClass( 'woocommerce-invalid-mismatch' );
-						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.company_name_mismatch.replace( "%company_name%", com ) );
 							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-not-valid-company-mismatch' );
+							progress_text.addClass( 'alg-wc-eu-vat-not-valid-company-mismatch alg-wc-eu-vat-error-color' );
 						}
-					} else if ( '6' == response ) {
-						vat_paragraph.removeClass( 'woocommerce-invalid' );
+					} else if ( '6' === response ) {
 						vat_paragraph.removeClass( 'woocommerce-validated' );
-						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+						vat_paragraph.addClass( 'woocommerce-invalid' );
+						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_validation_failed );
 							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
+							progress_text.addClass( 'alg-wc-eu-vat-validation-failed alg-wc-eu-vat-error-color' );
 						}
-					} else if ( '7' == response ) {
+					} else if ( '7' === response ) {
 						vat_paragraph.removeClass( 'woocommerce-invalid' );
 						vat_paragraph.removeClass( 'woocommerce-validated' );
-						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_validation_preserv );
 							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
+							progress_text.addClass( 'alg-wc-eu-vat-validation-failed alg-wc-eu-vat-error-color' );
 						}
-					} else if ( '8' == response ) {
+					} else if ( '8' === response ) {
 						vat_paragraph.removeClass( 'woocommerce-invalid' );
 						vat_paragraph.removeClass( 'woocommerce-validated' );
-						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.vies_not_available.replace( "%vies_error%", err ) );
 							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
+							progress_text.addClass( 'alg-wc-eu-vat-validation-failed alg-wc-eu-vat-error-color' );
 						}
 					} else {
 						vat_paragraph.addClass( 'woocommerce-invalid' );
-						if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_validation_failed );
 							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-validation-failed' );
+							progress_text.addClass( 'alg-wc-eu-vat-validation-failed alg-wc-eu-vat-error-color' );
 						}
 					}
 
 					if (
-						'yes' == alg_wc_eu_vat_ajax_object.autofill_company_name &&
+						'yes' === alg_wc_eu_vat_ajax_object.autofill_company_name &&
 						'' !== company_name
 					) {
 						$( '#billing_company' ).val( company_name ).change();
@@ -280,6 +291,19 @@ jQuery( function ( $ ) {
 						vat_paragraph.removeClass( 'woocommerce-invalid-mismatch' );
 						vat_paragraph.addClass( 'woocommerce-validated' );
 						progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_valid );
+					}
+
+					if ( resp.vat_details && vatDetailsDiv ) {
+						let vat_details = resp.vat_details;
+						let ulElement = document.createElement( 'ul' );
+						for ( let key in vat_details ) {
+							if ( vat_details.hasOwnProperty( key ) ) {
+								let liElement = document.createElement( 'li' );
+								liElement.textContent = `${vat_details[key].label}: ${vat_details[key].data}`;
+								ulElement.appendChild( liElement );
+							}
+						}
+						vatDetailsDiv?.replaceChildren( ulElement );
 					}
 
 					var refresh_checkout = function () {
@@ -292,7 +316,7 @@ jQuery( function ( $ ) {
 			} );
 		} else {
 			// VAT input is empty
-			if ( 'yes' == alg_wc_eu_vat_ajax_object.add_progress_text ) {
+			if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
 				progress_text.text( '' );
 			}
 			if ( vat_paragraph.hasClass( 'validate-required' ) ) {
@@ -315,7 +339,7 @@ jQuery( function ( $ ) {
  *
  * Move VAT validation process message section into `wc-block-components-address-form__alg_eu_vat-billing_eu_vat_number`.
  *
- * @version 3.1.5
+ * @version 4.0.0
  * @since   3.0.1
  */
 // Wait for all resources to load
@@ -330,12 +354,5 @@ window.onload = () => {
 
 		// Move the sourceDiv into the targetDiv
 		targetDiv.appendChild( sourceDiv ); // Append sourceDiv as a child of targetDiv
-	}
-
-	// If the progress text is disabled, remove the sourceDiv from the DOM
-	if ( 'no' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-		if ( sourceDiv ) {
-			sourceDiv.style.display = 'none'; // Hide the element
-		}
 	}
 };
