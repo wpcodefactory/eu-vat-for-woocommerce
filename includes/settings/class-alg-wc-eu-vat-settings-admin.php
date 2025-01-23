@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,8 +29,12 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   1.5.0
+	 *
+	 * @todo    (dev) separate into "Admin" and "Advanced"?
+	 * @todo    (dev) `alg_wc_eu_vat_enable_checkout_block_field` default to `yes`?
+	 * @todo    (dev) "Sitepress" - should be "SiteGround"?
 	 */
 	function get_settings() {
 
@@ -81,8 +85,13 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'Debug', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => sprintf( __( 'Log will be added to %s.', 'eu-vat-for-woocommerce' ),
-					'<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '">' . __( 'WooCommerce > Status > Logs', 'eu-vat-for-woocommerce' ) . '</a>' ),
+				'desc_tip' => sprintf(
+					/* Translators: %s: Logs link. */
+					__( 'Log will be added to %s.', 'eu-vat-for-woocommerce' ),
+					'<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '">' .
+						__( 'WooCommerce > Status > Logs', 'eu-vat-for-woocommerce' ) .
+					'</a>'
+				),
 				'id'       => 'alg_wc_eu_vat_debug',
 				'default'  => 'no',
 				'type'     => 'checkbox',
@@ -106,7 +115,7 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Enable if sitepress optimizer dynamic caching plugin not works', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Enable if Sitepress optimizer dynamic caching plugin does not work', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_sitepress_optimizer_dynamic_caching',
 				'default'  => 'no',
@@ -178,15 +187,45 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'title',
 				'id'       => 'alg_wc_eu_vat_additional_info',
 				'desc'     => '<ul style="background-color:white;padding:10px 30px;color:black;list-style-type:square;margin-top:1em;">' .
-					'<li>' . sprintf( __( 'Field ID used for EU VAT: %s.', 'eu-vat-for-woocommerce' ) , '<code>' . '_' . alg_wc_eu_vat_get_field_id() . '</code>' ) . '</li>' .
-					'<li>' . sprintf( __( 'Tool for adding EU country standard VAT rates: %s.', 'eu-vat-for-woocommerce' ),
-						'<a href="' . admin_url( 'tools.php?page=alg-wc-eu-vat-country-rates' ) . '">' . __( 'Tools > EU country VAT Rates', 'eu-vat-for-woocommerce' ) . '</a>' ) . '</li>' .
-					'<li>' . sprintf( __( 'EU VAT report: %s.', 'eu-vat-for-woocommerce' ),
-						'<a href="' . admin_url( 'admin.php?page=wc-reports&tab=taxes&report=alg_wc_eu_vat' ) . '">' . __( 'WooCommerce > Reports > Taxes > EU VAT', 'eu-vat-for-woocommerce' ) . '</a>' ) . '</li>' .
-					'<li>' . sprintf( __( 'You can use shortcodes in field label, placeholder, description and all messages options, e.g.: %s.', 'eu-vat-for-woocommerce' ),
-						'<a target="_blank" href="https://wpfactory.com/kb/eu-vat-for-woocommerce/shortcodes/"><code>[alg_wc_eu_vat_translate]</code></a>' ) . '</li>' .
-					'<li>' . sprintf( __( 'Plugin description on %s.', 'eu-vat-for-woocommerce' ),
-						'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">WPFactory</a>' ) . '</li>' .
+					'<li>' .
+						sprintf(
+							/* Translators: %s: Field ID. */
+							__( 'Field ID used for EU VAT: %s.', 'eu-vat-for-woocommerce' ) ,
+							'<code>' . '_' . alg_wc_eu_vat_get_field_id() . '</code>'
+						) .
+					'</li>' .
+					'<li>' .
+						sprintf(
+							/* Translators: %s: Tool link. */
+							__( 'Tool for adding EU country standard VAT rates: %s.', 'eu-vat-for-woocommerce' ),
+							'<a href="' . admin_url( 'tools.php?page=alg-wc-eu-vat-country-rates' ) . '">' .
+								__( 'Tools > EU country VAT Rates', 'eu-vat-for-woocommerce' ) .
+							'</a>'
+						) .
+					'</li>' .
+					'<li>' .
+						sprintf(
+							/* Translators: %s: Report link. */
+							__( 'EU VAT report: %s.', 'eu-vat-for-woocommerce' ),
+							'<a href="' . admin_url( 'admin.php?page=wc-reports&tab=taxes&report=alg_wc_eu_vat' ) . '">' .
+								__( 'WooCommerce > Reports > Taxes > EU VAT', 'eu-vat-for-woocommerce' ) .
+							'</a>'
+						) .
+					'</li>' .
+					'<li>' .
+						sprintf(
+							/* Translators: %s: Site link. */
+							__( 'You can use shortcodes in field label, placeholder, description and all messages options, e.g.: %s.', 'eu-vat-for-woocommerce' ),
+							'<a target="_blank" href="https://wpfactory.com/kb/eu-vat-for-woocommerce/shortcodes/"><code>[alg_wc_eu_vat_translate]</code></a>'
+						) .
+					'</li>' .
+					'<li>' .
+						sprintf(
+							/* Translators: %s: Site link. */
+							__( 'Plugin description on %s.', 'eu-vat-for-woocommerce' ),
+							'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">WPFactory</a>'
+						) .
+					'</li>' .
 				'</ul>',
 			),
 			array(
@@ -209,12 +248,14 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 					'</p>' .
 					'<p>' .
 						sprintf(
+							/* Translators: %s: Shortcode example. */
 							__( '%s can be used to show English messages, similar to other languages you have.', 'eu-vat-for-woocommerce' ),
 							'<code>[alg_wc_eu_vat_translate lang="en"]Your VAT number is valid.[/alg_wc_eu_vat_translate]</code>'
 						) .
 					'</p>' .
 					'<p>' .
 						sprintf(
+							/* Translators: %s: Shortcode example. */
 							__( '%s can be used as a fallback for non-defined languages.', 'eu-vat-for-woocommerce' ),
 							'<code>[alg_wc_eu_vat_translate not_lang="en"]Your VAT number is valid.[/alg_wc_eu_vat_translate]</code>'
 						) .

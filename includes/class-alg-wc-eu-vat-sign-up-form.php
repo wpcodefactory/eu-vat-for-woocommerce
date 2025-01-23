@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Sign-up Form
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -50,14 +50,19 @@ class Alg_WC_EU_VAT_Sign_Up_Form {
 	/**
 	 * validate_field_in_woocommerce_register_form.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `alg_wc_eu_vat_field_required`?
 	 * @todo    (dev) `elseif`?
 	 */
 	function validate_field_in_woocommerce_register_form( $username, $email, $errors ) {
-		$field_id        = alg_wc_eu_vat_get_field_id();
+		$field_id = alg_wc_eu_vat_get_field_id();
+
+		if ( ! isset( $_POST[ $field_id ] ) ) {
+			return;
+		}
+
 		$eu_vat_to_check = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
 
 		$form_company_name = ( isset( $_POST['billing_company'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) : '' );
@@ -78,7 +83,7 @@ class Alg_WC_EU_VAT_Sign_Up_Form {
 					! empty( $_REQUEST['oauth_consumer_key'] )
 				) {
 
-				} elseif ( ! strpos( $_SERVER['REQUEST_URI'], 'wp-json' ) ) {
+				} elseif ( ! strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), 'wp-json' ) ) {
 					$errors->add( $field_id . '_error', $text_not_valid );
 				}
 			}

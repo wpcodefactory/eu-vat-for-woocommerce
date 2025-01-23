@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Users List
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -46,17 +46,16 @@ class Alg_WC_EU_VAT_Admin_Users_List {
 	/**
 	 * add_users_filter.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   2.9.11
 	 *
 	 * @todo    (fix) rename "EU VAT not provided" to "All users"
 	 */
 	function add_users_filter() {
-		$selected = ( 'yes' === $this->get_value() ? ' selected="selected"' : '' );
 		?>
 		<select name="billing_eu_vat_number[]" style="float:none;">
 			<option value=""><?php echo esc_html__( 'EU VAT not provided', 'eu-vat-for-woocommerce' ); ?></option>
-			<option value="yes"<?php echo $selected; ?>><?php echo esc_html__( 'EU VAT provided', 'eu-vat-for-woocommerce' ); ?></option>
+			<option value="yes"<?php selected( $this->get_value(), 'yes' ); ?>><?php echo esc_html__( 'EU VAT provided', 'eu-vat-for-woocommerce' ); ?></option>
 		</select><input type="submit" class="button" value="<?php echo esc_attr__( 'Filter', 'eu-vat-for-woocommerce' ); ?>">
 		<?php
 	}

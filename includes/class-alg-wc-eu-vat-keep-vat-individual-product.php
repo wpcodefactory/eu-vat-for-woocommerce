@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Keep VAT for Individual Product
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -59,14 +59,14 @@ class Alg_WC_EU_VAT_Keep_VAT_Individual_Product {
 	/**
 	 * Saves a checkbox to keep VAT for an individual product.
 	 *
-	 * @version 3.0.0
+	 * @version 4.1.0
 	 * @since   3.0.0
 	 */
 	function save_keep_vat_individual_product( $product ) {
 		if ( isset( $_POST['_alg_wc_eu_vat_keep_vat'] ) ) {
 			$product->update_meta_data(
 				'_alg_wc_eu_vat_keep_vat',
-				wc_clean( wp_unslash( $_POST['_alg_wc_eu_vat_keep_vat'] ) )
+				sanitize_text_field( wp_unslash( $_POST['_alg_wc_eu_vat_keep_vat'] ) )
 			);
 		}
 	}

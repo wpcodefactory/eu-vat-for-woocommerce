@@ -2,26 +2,22 @@
 /**
  * Taxes by EU VAT country report.
  *
- * @version 3.1.0
+ * @version 4.1.0
  * @since   1.5.0
  *
  * @package    WooCommerce/Admin/Reports
- * @wc_version 3.7.0
  * @see        `/woocommerce/includes/admin/reports/class-wc-report-taxes-by-code.php`
  */
 
 defined( 'ABSPATH' ) || exit;
 
-/**
- * WC_Report_Alg_WC_EU_VAT
- *
- * @package     WooCommerce/Admin/Reports
- * @wc_version  2.1.0
- */
 class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 
 	/**
 	 * Get the legend for the main chart sidebar.
+	 *
+	 * @version 1.5.0
+	 * @since   1.5.0
 	 *
 	 * @return array
 	 */
@@ -31,6 +27,9 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 
 	/**
 	 * Output an export link.
+	 *
+	 * @version 1.5.0
+	 * @since   1.5.0
 	 */
 	public function get_export_button() {
 
@@ -49,6 +48,9 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 
 	/**
 	 * Output the report.
+	 *
+	 * @version 1.5.0
+	 * @since   1.5.0
 	 */
 	public function output_report() {
 
@@ -103,7 +105,8 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 	/**
 	 * Get the main chart.
 	 *
-	 * @version 1.5.0
+	 * @version 4.1.0
+	 * @since   1.5.0
 	 */
 	public function get_main_chart() {
 		$tax_rows = array();
@@ -143,11 +146,11 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 		<table class="widefat">
 			<thead>
 				<tr>
-					<th><?php _e( 'Country', 'woocommerce' ); ?></th>
-					<th class="total_row"><?php _e( 'Number of orders', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
-					<th class="total_row"><?php _e( 'Total sales', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
-					<th class="total_row"><?php _e( 'Total sales with zero tax', 'woocommerce' ); ?></th>
-					<th class="total_row"><?php _e( 'Total tax', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
+					<th><?php esc_html_e( 'Country', 'eu-vat-for-woocommerce' ); ?></th>
+					<th class="total_row"><?php esc_html_e( 'Number of orders', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
+					<th class="total_row"><?php esc_html_e( 'Total sales', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
+					<th class="total_row"><?php esc_html_e( 'Total sales with zero tax', 'eu-vat-for-woocommerce' ); ?></th>
+					<th class="total_row"><?php esc_html_e( 'Total tax', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
 				</tr>
 			</thead>
 			<?php if ( ! empty( $tax_rows ) ) : ?>
@@ -158,9 +161,9 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 						<tr>
 							<th scope="row"><?php echo $this->get_flag_img( $country ); ?></th>
 							<td class="total_row"><?php echo $tax_row['count']; ?></td>
-							<td class="total_row"><?php echo wc_price( $tax_row['sum'] ); ?></td>
-							<td class="total_row"><?php echo wc_price( $tax_row['sum_no_tax'] ); ?></td>
-							<td class="total_row"><?php echo wc_price( $tax_row['tax'] ); ?></td>
+							<td class="total_row"><?php echo wp_kses_post( wc_price( $tax_row['sum'] ) ); ?></td>
+							<td class="total_row"><?php echo wp_kses_post( wc_price( $tax_row['sum_no_tax'] ) ); ?></td>
+							<td class="total_row"><?php echo wp_kses_post( wc_price( $tax_row['tax'] ) ); ?></td>
 						</tr>
 						<?php
 					}
@@ -168,17 +171,17 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 				</tbody>
 				<tfoot>
 					<tr>
-						<th scope="row"><?php _e( 'Totals', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
+						<th scope="row"><?php esc_html_e( 'Totals', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
 						<th class="total_row"><?php echo array_sum( wp_list_pluck( $tax_rows, 'count' ) ); ?></th>
-						<th class="total_row"><?php echo wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum' ) ) ); ?></th>
-						<th class="total_row"><?php echo wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum_no_tax' ) ) ); ?></th>
-						<th class="total_row"><?php echo wc_price( array_sum( wp_list_pluck( $tax_rows, 'tax' ) ) ); ?></th>
+						<th class="total_row"><?php echo wp_kses_post( wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum' ) ) ) ); ?></th>
+						<th class="total_row"><?php echo wp_kses_post( wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum_no_tax' ) ) ) ); ?></th>
+						<th class="total_row"><?php echo wp_kses_post( wc_price( array_sum( wp_list_pluck( $tax_rows, 'tax' ) ) ) ); ?></th>
 					</tr>
 				</tfoot>
 			<?php else : ?>
 				<tbody>
 					<tr>
-						<td><?php _e( 'No taxes found in this period', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></td>
+						<td><?php esc_html_e( 'No taxes found in this period', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></td>
 					</tr>
 				</tbody>
 			<?php endif; ?>

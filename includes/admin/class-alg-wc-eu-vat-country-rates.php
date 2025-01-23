@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Tool - EU country VAT Rates
  *
- * @version 3.0.0
+ * @version 4.1.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -104,7 +104,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	/**
 	 * add_eu_countries_vat_rates.
 	 *
-	 * @version 3.0.0
+	 * @version 4.1.0
 	 * @since   1.0.0
 	 */
 	function add_eu_countries_vat_rates() {
@@ -133,7 +133,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 				'tax_rate'          => $rate,
 				'tax_rate_name'     => (
 					isset( $_POST['alg_wc_eu_vat_tax_name'] ) ?
-					sanitize_text_field( $_POST['alg_wc_eu_vat_tax_name'] ) :
+					sanitize_text_field( wp_unslash( $_POST['alg_wc_eu_vat_tax_name'] ) ) :
 					__( 'VAT', 'woocommerce' ) // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
 				),
 				'tax_rate_priority' => 1,
@@ -181,18 +181,30 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	/**
 	 * create_eu_countries_vat_rates_tool.
 	 *
-	 * @version 3.0.0
+	 * @version 4.1.0
 	 * @since   1.0.0
 	 */
 	function create_eu_countries_vat_rates_tool() {
-		$header_html = '<h2>' . __( 'EU country VAT Rates Tool', 'eu-vat-for-woocommerce' ) . '</h2>';
-		$header_html .= '<h3>' . __( 'Add all EU country VAT standard rates to WooCommerce.', 'eu-vat-for-woocommerce' ) . '</h3>';
-		$header_html .= '<p><em>' . '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=alg_wc_eu_vat' ) ) . '">' . __( 'Plugin settings', 'eu-vat-for-woocommerce' ) . '</a>' . '</em></p>';
+		$header_html = '<h2>' .
+			__( 'EU country VAT Rates Tool', 'eu-vat-for-woocommerce' ) .
+		'</h2>';
+		$header_html .= '<h3>' .
+			__( 'Add all EU country VAT standard rates to WooCommerce.', 'eu-vat-for-woocommerce' ) .
+		'</h3>';
+		$header_html .= '<p><em>' .
+			'<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=alg_wc_eu_vat' ) ) . '">' .
+				__( 'Plugin settings', 'eu-vat-for-woocommerce' ) .
+			'</a>' .
+		'</em></p>';
 
 		$the_tool_html = $header_html;
 
 		$data          = array();
-		$the_name      = $_POST['alg_wc_eu_vat_tax_name'] ?? __( 'VAT', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
+		$the_name      = (
+			isset( $_POST['alg_wc_eu_vat_tax_name'] ) ?
+			sanitize_text_field( wp_unslash( $_POST['alg_wc_eu_vat_tax_name'] ) ) :
+			__( 'VAT', 'woocommerce' ) // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
+		);
 		$nonce_field   = wp_nonce_field( 'alg_wc_eu_vat_rates', 'alg_wc_eu_vat_nonce', true, false );
 		$data[]        = array(
 			__( 'Name', 'eu-vat-for-woocommerce' ) . '<br>' .

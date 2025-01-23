@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Display
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -168,7 +168,7 @@ class Alg_WC_EU_VAT_Display {
 	/**
 	 * save_eu_vat_number_from_editable_fields.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   1.3.0
 	 */
 	function save_eu_vat_number_from_editable_fields( $user_id, $load_address ) {
@@ -180,7 +180,8 @@ class Alg_WC_EU_VAT_Display {
 				update_user_meta( $user_id, $field_id, $value );
 			}
 			if ( isset( $_POST[ $field_id_cd ] ) && 1 == $_POST[ $field_id_cd ] ) {
-				update_user_meta( $user_id, $field_id_cd, $_POST[ $field_id_cd ] );
+				$value_cd = sanitize_text_field( wp_unslash( $_POST[ $field_id_cd ] ) );
+				update_user_meta( $user_id, $field_id_cd, $value_cd );
 			}
 		}
 	}

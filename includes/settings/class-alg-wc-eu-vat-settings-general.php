@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -45,14 +45,15 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [dev] check if `clear` is still working (and if yes - change desc)
-	 * @todo    [dev] (maybe) add link to plugin site `'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' . __( 'Visit plugin site', 'eu-vat-for-woocommerce' ) . '</a>'`
-	 * @todo    [dev] (maybe) set `alg_wc_eu_vat_display_position` default to `in_billing_address` (instead of `after_order_table`)
-	 * @todo    [dev] (maybe) change "CSS class" to "Alignment"
-	 * @todo    [feature] (maybe) option to change default meta key
+	 * @todo    (dev) Belgium Compatibility: rename?
+	 * @todo    (dev) check if `clear` is still working (and if yes - change desc)
+	 * @todo    (dev) add link to plugin site `'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' . __( 'Visit plugin site', 'eu-vat-for-woocommerce' ) . '</a>'`?
+	 * @todo    (dev) set `alg_wc_eu_vat_display_position` default to `in_billing_address` (instead of `after_order_table`)?
+	 * @todo    (dev) change "CSS class" to "Alignment"?
+	 * @todo    (feature) option to change default meta key?
 	 */
 	function get_settings() {
 
@@ -100,12 +101,12 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Required / Optional in countries', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Only work for ( Required in the following countries / Required in all countries except following countries ) for above setting.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Only works for ( Required in the following countries / Required in all countries except following countries ) for above settings.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_field_required_countries',
 				'default'  => '',
 				'type'     => 'multiselect',
 				'class'    => 'wc-enhanced-select',
-				'options'  => $this->allcountries()
+				'options'  => $this->get_all_countries()
 			),
 			array(
 				'title'    => __( 'Remove the VAT field if the tax status is "none"', 'eu-vat-for-woocommerce' ),
@@ -139,12 +140,12 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Allow checkout on unregistered VAT numbers', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Allow checkout on unregistered VAT numbers.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_field_allow_unregistered_vat_no',
-				'default'  => 'no',
-				'type'     => 'checkbox',
+				'title'             => __( 'Allow checkout on unregistered VAT numbers', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Allow checkout on unregistered VAT numbers.', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_field_allow_unregistered_vat_no',
+				'default'           => 'no',
+				'type'              => 'checkbox',
 				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
 			),
 			array(
@@ -158,23 +159,34 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'id'       => 'alg_wc_eu_vat_pay_control_title',
 			),
 			array(
-				'title'    => __( 'Show specific payment method ONLY if VAT is valid', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Choose selected payment method from following field.', 'eu-vat-for-woocommerce' ) . apply_filters( 'alg_wc_eu_vat_settings', '<br>' . sprintf( __( 'You will need %s plugin to enable this option.', 'eu-vat-for-woocommerce' ),
-					'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' . __( 'EU VAT for WooCommerce Pro', 'eu-vat-for-woocommerce' ) . '</a>' ) ),
-				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_allow_specific_payment',
-				'default'  => 'no',
-				'type'     => 'checkbox',
+				'title'             => __( 'Show specific payment method ONLY if VAT is valid', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => (
+					__( 'Choose selected payment method from following field.', 'eu-vat-for-woocommerce' ) .
+					apply_filters(
+						'alg_wc_eu_vat_settings',
+						'<br>' . sprintf(
+							/* Translators: %s: Plugin link. */
+							__( 'You will need %s plugin to enable this option.', 'eu-vat-for-woocommerce' ),
+							'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' .
+								__( 'EU/UK VAT Validation Manager for WooCommerce Pro', 'eu-vat-for-woocommerce' ) .
+							'</a>'
+						)
+					)
+				),
+				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_allow_specific_payment',
+				'default'           => 'no',
+				'type'              => 'checkbox',
 				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
 			),
 			array(
-				'title'    => __( 'Method to show for valid VAT only', 'payment-gateways-per-product-categories-for-woocommerce' ),
-				'desc_tip' => __( 'Allow specific payment methods if VAT is valid.', 'payment-gateways-per-product-categories-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_allowed_payment_gateway',
-				'default'  => '',
-				'type'     => 'multiselect',
-				'class'    => 'wc-enhanced-select',
-				'options'  => $this->allGateways(),
+				'title'             => __( 'Method to show for valid VAT only', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Allow specific payment methods if VAT is valid.', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_allowed_payment_gateway',
+				'default'           => '',
+				'type'              => 'multiselect',
+				'class'             => 'wc-enhanced-select',
+				'options'           => $this->get_all_payment_gateways(),
 				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
 			),
 			array(
@@ -228,21 +240,27 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'id'       => 'alg_wc_eu_vat_frontend_two_options',
 			),
 			array(
-				'title'    => __( 'Priority (i.e. position)', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Sets EU VAT field\'s position in the billing section of the checkout page.', 'eu-vat-for-woocommerce' ) . ' ' .
-					sprintf( __( 'Here are the default fields priorities: %s.', 'eu-vat-for-woocommerce' ), '<br>' . implode( '<br>', array(
-						__( 'First name', 'eu-vat-for-woocommerce' )  . ' - 10',
-						__( 'Last name', 'eu-vat-for-woocommerce' )   . ' - 20',
-						__( 'Company', 'eu-vat-for-woocommerce' )     . ' - 30',
-						__( 'Country', 'eu-vat-for-woocommerce' )     . ' - 40',
-						__( 'Address 1', 'eu-vat-for-woocommerce' )   . ' - 50',
-						__( 'Address 2', 'eu-vat-for-woocommerce' )   . ' - 60',
-						__( 'City', 'eu-vat-for-woocommerce' )        . ' - 70',
-						__( 'State', 'eu-vat-for-woocommerce' )       . ' - 80',
-						__( 'Postcode', 'eu-vat-for-woocommerce' )    . ' - 90',
-						__( 'Phone', 'eu-vat-for-woocommerce' )       . ' - 100',
-						__( 'Email', 'eu-vat-for-woocommerce' )       . ' - 110',
-					) ) ),
+				'title'    => __( 'Priority (i.e., position)', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => (
+					__( 'Sets EU VAT field\'s position in the billing section of the checkout page.', 'eu-vat-for-woocommerce' ) . ' ' .
+					sprintf(
+						/* Translators: %s: Priority list. */
+						__( 'Here are the default fields priorities: %s.', 'eu-vat-for-woocommerce' ),
+						'<br>' . implode( '<br>', array(
+							__( 'First name', 'eu-vat-for-woocommerce' )  . ' - 10',
+							__( 'Last name', 'eu-vat-for-woocommerce' )   . ' - 20',
+							__( 'Company', 'eu-vat-for-woocommerce' )     . ' - 30',
+							__( 'Country', 'eu-vat-for-woocommerce' )     . ' - 40',
+							__( 'Address 1', 'eu-vat-for-woocommerce' )   . ' - 50',
+							__( 'Address 2', 'eu-vat-for-woocommerce' )   . ' - 60',
+							__( 'City', 'eu-vat-for-woocommerce' )        . ' - 70',
+							__( 'State', 'eu-vat-for-woocommerce' )       . ' - 80',
+							__( 'Postcode', 'eu-vat-for-woocommerce' )    . ' - 90',
+							__( 'Phone', 'eu-vat-for-woocommerce' )       . ' - 100',
+							__( 'Email', 'eu-vat-for-woocommerce' )       . ' - 110',
+						) )
+					)
+				),
 				'id'       => 'alg_wc_eu_vat_field_priority',
 				'default'  => 200,
 				'type'     => 'number',
@@ -294,12 +312,14 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Show field for selected countries only', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Ignored if empty (i.e. field is shown for all countries).', 'eu-vat-for-woocommerce' ),
-				'desc'     => (
+				'title'             => __( 'Show field for selected countries only', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Ignored if empty (i.e., field is shown for all countries).', 'eu-vat-for-woocommerce' ),
+				'desc'              => (
 					sprintf(
-						__( 'Enter country codes as comma separated list, e.g. %s.', 'eu-vat-for-woocommerce' ),
+						/* Translators: %s: Country list example. */
+						__( 'Enter country codes as comma separated list, e.g., %s.', 'eu-vat-for-woocommerce' ),
 						sprintf(
+							/* Translators: %s: Country list. */
 							__( 'to show field for EU VAT countries only enter: %s', 'eu-vat-for-woocommerce' ),
 							'<code>' .
 								(
@@ -314,31 +334,31 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 						'alg_wc_eu_vat_settings',
 						'<br>' . sprintf(
 							'You will need %s plugin to enable this option.',
-							'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">EU VAT for WooCommerce Pro</a>'
+							'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">EU/UK VAT Validation Manager for WooCommerce Pro</a>'
 						)
 					)
 				),
-				'id'       => 'alg_wc_eu_vat_show_in_countries',
-				'default'  => '',
-				'type'     => 'text',
-				'css'      => 'width:100%;',
+				'id'                => 'alg_wc_eu_vat_show_in_countries',
+				'default'           => '',
+				'type'              => 'text',
+				'css'               => 'width:100%;',
 				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
 			),
 			array(
-				'title'    => __( 'Show field for selected user roles only', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Ignored if empty (i.e. field is shown for all user roles).', 'eu-vat-for-woocommerce' ),
-				'desc'     => apply_filters(
+				'title'             => __( 'Show field for selected user roles only', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Ignored if empty (i.e., field is shown for all user roles).', 'eu-vat-for-woocommerce' ),
+				'desc'              => apply_filters(
 					'alg_wc_eu_vat_settings',
 					sprintf(
 						'You will need %s plugin to enable this option.',
-						'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">EU VAT for WooCommerce Pro</a>'
+						'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">EU/UK VAT Validation Manager for WooCommerce Pro</a>'
 					)
 				),
-				'id'       => 'alg_wc_eu_vat_show_for_user_roles',
-				'default'  => array(),
-				'type'     => 'multiselect',
-				'class'    => 'wc-enhanced-select',
-				'options'  => $this->get_all_user_roles(),
+				'id'                => 'alg_wc_eu_vat_show_for_user_roles',
+				'default'           => array(),
+				'type'              => 'multiselect',
+				'class'             => 'wc-enhanced-select',
+				'options'           => $this->get_all_user_roles(),
 				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
 			),
 			array(
@@ -392,10 +412,12 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 
 	/**
 	 * eu_get_woo_version_number.
+	 *
+	 * @version 4.1.0
 	 */
 	function eu_get_woo_version_number() {
 
-		// If get_plugins() isn't available, require it
+		// If `get_plugins()` isn't available, require it
 		if ( ! function_exists( 'get_plugins' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
@@ -404,41 +426,38 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 		$plugin_folder = get_plugins( '/' . 'woocommerce' );
 		$plugin_file   = 'woocommerce.php';
 
-		// If the plugin version number is set, return it
-		if ( isset( $plugin_folder[ $plugin_file ]['Version'] ) ) {
-			return $plugin_folder[ $plugin_file ]['Version'];
-		} else {
-			// Otherwise return null
-			return NULL;
-		}
+		// If the plugin version number is set, return it; otherwise return null
+		return ( $plugin_folder[ $plugin_file ]['Version'] ?? NULL );
 
 	}
 
 	/**
-	 * allGateways.
+	 * get_all_payment_gateways.
 	 *
-	 * @version 3.0.0
+	 * @version 4.1.0
+	 *
+	 * @todo    (dev) `alg_wc_pgpp_pay_titles`: rename?
 	 */
-	public function allGateways() {
+	function get_all_payment_gateways() {
 		$available_gateways = WC()->payment_gateways->payment_gateways();
 		$gateways_settings  = array();
 		foreach ( $available_gateways as $gateway_id => $gateway ) {
-			if ( ! empty( $gateway->method_title ) ) {
-				$gateways_settings[ $gateway_id ] = $gateway->method_title . ' - ' . $gateway->title;
-			}else{
-				$gateways_settings[ $gateway_id ] = $gateway->title;
-			}
+			$gateways_settings[ $gateway_id ] = (
+				! empty( $gateway->method_title ) ?
+				$gateway->method_title . ' - ' . $gateway->title :
+				$gateway->title
+			);
 		}
 		update_option( 'alg_wc_pgpp_pay_titles', $gateways_settings );
 		return $gateways_settings;
 	}
 
 	/**
-	 * allcountries.
+	 * get_all_countries.
 	 *
-	 * @version 3.0.0
+	 * @version 4.1.0
 	 */
-	public function allcountries() {
+	function get_all_countries() {
 		$countries_obj    = new WC_Countries();
 		return $countries = $countries_obj->__get('countries');
 	}

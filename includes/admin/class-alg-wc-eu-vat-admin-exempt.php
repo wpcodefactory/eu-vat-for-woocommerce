@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Exempt VAT from Admin
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -80,42 +80,42 @@ class Alg_WC_EU_VAT_Admin_Exempt {
 	/**
 	 * add_js.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   1.7.0
 	 */
 	function add_js() {
 		$nonce = wp_create_nonce( 'alg-wc-eu-vat-ajax-nonce' );
 		?>
 		<script type="text/javascript">
-		jQuery( 'body' ).on( 'click', '.exempt_vat_from_admin', function () {
-			jQuery( '#woocommerce-order-items' ).block( {
-				message: null,
-				overlayCSS: {
-					background: '#fff',
-					opacity: 0.6
-				}
-			} );
-
-			var order_id = jQuery( this ).data( 'order_id' );
-			var status = jQuery( this ).data( 'status' );
-			var data = {
-				action: 'exempt_vat_from_admin',
-				order_id: order_id,
-				status: status,
-				nonce: '<?php echo $nonce; ?>'
-			};
-			jQuery.ajax( {
-				url:  woocommerce_admin_meta_boxes.ajax_url,
-				data: data,
-				type: 'POST',
-				success: function ( response ) {
-					jQuery( '#woocommerce-order-items' ).unblock();
-					if ( 'yes' == response || 'never' == response ) {
-						jQuery( '.calculate-action' ).click();
+			jQuery( 'body' ).on( 'click', '.exempt_vat_from_admin', function () {
+				jQuery( '#woocommerce-order-items' ).block( {
+					message: null,
+					overlayCSS: {
+						background: '#fff',
+						opacity: 0.6
 					}
-				}
+				} );
+
+				var order_id = jQuery( this ).data( 'order_id' );
+				var status = jQuery( this ).data( 'status' );
+				var data = {
+					action: 'exempt_vat_from_admin',
+					order_id: order_id,
+					status: status,
+					nonce: '<?php echo esc_js( $nonce ); ?>'
+				};
+				jQuery.ajax( {
+					url:  woocommerce_admin_meta_boxes.ajax_url,
+					data: data,
+					type: 'POST',
+					success: function ( response ) {
+						jQuery( '#woocommerce-order-items' ).unblock();
+						if ( 'yes' == response || 'never' == response ) {
+							jQuery( '.calculate-action' ).click();
+						}
+					}
+				} );
 			} );
-		} );
 		</script>
 		<?php
 	}
@@ -123,7 +123,7 @@ class Alg_WC_EU_VAT_Admin_Exempt {
 	/**
 	 * ajax.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   2.12.13
 	 *
 	 * @todo    (dev) reload page?
@@ -132,9 +132,13 @@ class Alg_WC_EU_VAT_Admin_Exempt {
 
 		if (
 			! current_user_can( 'manage_options' ) ||
-			! wp_verify_nonce( $_POST['nonce'], 'alg-wc-eu-vat-ajax-nonce' )
+			! isset( $_POST['nonce'] ) ||
+			! wp_verify_nonce(
+				sanitize_text_field( wp_unslash( $_POST['nonce'] ) ),
+				'alg-wc-eu-vat-ajax-nonce'
+			)
 		) {
-			exit;
+			wp_die( esc_html__( 'Something went wrong.', 'eu-vat-for-woocommerce' ) );
 		}
 
 		if ( ! empty( $_POST['order_id'] ) ) {

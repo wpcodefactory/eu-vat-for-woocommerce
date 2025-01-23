@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -40,6 +40,8 @@ class Alg_WC_EU_VAT_Admin {
 
 		// Admin orders list
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_add_order_list_column', 'no' ) ) {
+
+			// Column
 			add_filter( 'manage_edit-shop_order_columns', array( $this, 'add_order_columns' ), PHP_INT_MAX );
 			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
 
@@ -47,18 +49,20 @@ class Alg_WC_EU_VAT_Admin {
 			add_filter( 'manage_woocommerce_page_wc-orders_columns', array( $this, 'add_order_columns' ), PHP_INT_MAX );
 			add_action( 'manage_woocommerce_page_wc-orders_custom_column', array( $this, 'render_wc_order_columns' ), PHP_INT_MAX, 2 );
 
+			// Filter
 			add_action( 'restrict_manage_posts', array( $this, 'display_admin_shop_order_by_meta_filter' ), PHP_INT_MAX );
 
-			// HOPS filter
-			add_action( 'woocommerce_order_list_table_restrict_manage_orders', array( $this, 'display_admin_shop_order_by_meta_filter_HPOS' ), PHP_INT_MAX, 2 );
+			// HPOS filter
+			add_action( 'woocommerce_order_list_table_restrict_manage_orders', array( $this, 'display_admin_shop_order_by_meta_filter_hpos' ), PHP_INT_MAX, 2 );
 
 			add_filter( 'request', array( $this, 'process_admin_shop_order_marketing_by_meta' ), 99 );
 			add_filter( 'woocommerce_shop_order_search_fields',  array( $this, 'shop_order_meta_search_fields'), 10, 1 );
 
 			add_filter( 'pre_get_posts', array( $this, 'euvat_filter_orders' ), 100 );
 
-			// HOPS filter query
-			add_filter( 'woocommerce_order_list_table_prepare_items_query_args', array( $this, 'euvat_filter_orders_HPOS' ), 100 );
+			// HPOS filter query
+			add_filter( 'woocommerce_order_list_table_prepare_items_query_args', array( $this, 'euvat_filter_orders_hpos' ), 100 );
+
 		}
 
 		add_action( 'woocommerce_admin_order_data_after_billing_address', array( $this, 'order_phone_backend' ), 10, 1 );
@@ -95,7 +99,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * admin_inline_js.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   1.4.1
 	 *
 	 * @todo    (dev) `response`?
@@ -140,7 +144,7 @@ class Alg_WC_EU_VAT_Admin {
 					};
 					$.ajax( {
 						type: "POST",
-						url: '<?php echo admin_url( "admin-ajax.php" ); ?>',
+						url: '<?php echo esc_url( admin_url( "admin-ajax.php" ) ); ?>',
 						data: data,
 						success: function ( response ) {
 							$( "#woocommerce-order-data" ).unblock();
@@ -158,23 +162,32 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * admin_order_is_vat_exempt.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   1.4.1
 	 */
 	function admin_order_is_vat_exempt( $is_exempt, $order ) {
 		global $pagenow;
 		if (
 			'admin-ajax.php' === $pagenow &&
+			isset( $_REQUEST['action'] ) &&
 			'woocommerce_calc_line_taxes' === $_REQUEST['action']
 		) {
 			if ( alg_wc_eu_vat()->core->check_current_user_roles( get_option( 'alg_wc_eu_vat_exempt_for_user_roles', array() ) ) ) {
+
 				$is_exempt = true;
+
 			} elseif ( alg_wc_eu_vat()->core->check_current_user_roles( get_option( 'alg_wc_eu_vat_not_exempt_for_user_roles', array() ) ) ) {
+
 				$is_exempt = false;
+
 			} elseif ( alg_wc_eu_vat()->core->is_validate_and_exempt() && alg_wc_eu_vat()->core->is_valid_and_exists() ) {
+
 				$is_exempt = apply_filters( 'alg_wc_eu_vat_maybe_exclude_vat', true );
+
 			} else {
+
 				$is_exempt = false;
+
 			}
 		}
 		return $is_exempt;
@@ -198,10 +211,12 @@ class Alg_WC_EU_VAT_Admin {
 
 	/**
 	 * popup_order_meta_box_content.
+	 *
+	 * @version 4.1.0
 	 */
 	function popup_order_meta_box_content( $post ) {
+		add_thickbox();
 		?>
-		<?php add_thickbox(); ?>
 		<a href="https://ec.europa.eu/taxation_customs/vies?TB_iframe=true&width=772&height=485" class="thickbox button">Open VIES</a>
 		<?php
 	}
@@ -209,14 +224,14 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * order_phone_backend.
 	 *
-	 * @version 2.9.13
+	 * @version 4.1.0
 	 * @since   2.9.13
 	 */
 	function order_phone_backend( $order ) {
 		$field_id = alg_wc_eu_vat_get_field_id();
 		$value    = $order->get_meta( '_' . $field_id . '_customer_decide' );
 		if ( 1 == $value ) {
-			echo "<br><p><strong>" . __( 'Let Customer Decide:', 'eu-vat-for-woocommerce' ) . "</strong> Yes</p><br>";
+			echo "<br><p><strong>" . esc_html__( 'Let Customer Decide:', 'eu-vat-for-woocommerce' ) . "</strong> Yes</p><br>";
 		}
 	}
 
@@ -234,12 +249,12 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * render_order_columns.
 	 *
-	 * @version 1.5.0
+	 * @version 4.1.0
 	 * @since   1.5.0
 	 */
 	function render_order_columns( $column ) {
 		if ( 'alg_wc_eu_vat' === $column ) {
-			echo get_post_meta( get_the_ID(), '_'. alg_wc_eu_vat_get_field_id(), true );
+			echo esc_html( get_post_meta( get_the_ID(), '_'. alg_wc_eu_vat_get_field_id(), true ) );
 			if ( 'yes' === get_post_meta( get_the_ID(), 'is_vat_exempt', true ) ) {
 				echo ' &#10004;';
 			}
@@ -249,7 +264,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * render_wc_order_columns.
 	 *
-	 * @version 2.11.3
+	 * @version 4.1.0
 	 * @since   2.11.3
 	 */
 	function render_wc_order_columns( $column, $order ) {
@@ -258,7 +273,7 @@ class Alg_WC_EU_VAT_Admin {
 			$vat_value     = $order->get_meta( $key );
 			$is_vat_exempt = $order->get_meta( 'is_vat_exempt' );
 			if ( ! empty( $vat_value ) ) {
-				echo $vat_value;
+				echo esc_html( $vat_value );
 			}
 			if ( 'yes' === $is_vat_exempt ) {
 				echo ' &#10004;';
@@ -280,12 +295,12 @@ class Alg_WC_EU_VAT_Admin {
 	}
 
 	/**
-	 * display_admin_shop_order_by_meta_filter_HPOS.
+	 * display_admin_shop_order_by_meta_filter_hpos.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   2.11.7
 	 */
-	function display_admin_shop_order_by_meta_filter_HPOS( $post_type, $which ) {
+	function display_admin_shop_order_by_meta_filter_hpos( $post_type, $which ) {
 
 		if( 'shop_order' !== $post_type ) {
 			return;
@@ -293,16 +308,26 @@ class Alg_WC_EU_VAT_Admin {
 
 		$domain    = 'eu-vat-for-woocommerce';
 		$filter_id = 'filter_shop_order_by_meta';
-		$current   = isset($_GET[$filter_id])? $_GET[$filter_id] : '';
+		$current   = (
+			isset( $_GET[ $filter_id ] ) ?
+			sanitize_text_field( wp_unslash( $_GET[ $filter_id ] ) ) :
+			''
+		);
 
-		echo '<select name="'.$filter_id.'">
-		<option value="">' . __( 'Select Filter EU VAT...', 'eu-vat-for-woocommerce' ) . '</option>';
+		echo '<select name="' . esc_attr( $filter_id ) . '">' .
+			'<option value="">' .
+				esc_html__( 'Select Filter EU VAT...', 'eu-vat-for-woocommerce' ) .
+			'</option>';
 
 		$options = $this->get_filter_shop_order_meta( $domain );
 
 		foreach ( $options as $key => $label ) {
-			printf( '<option value="%s"%s>%s</option>', $key,
-				$key === $current ? '" selected="selected"' : '', $label );
+			printf(
+				'<option value="%s"%s>%s</option>',
+				esc_attr( $key ),
+				$key === $current ? '" selected="selected"' : '',
+				esc_html( $label )
+			);
 		}
 		echo '</select>';
 
@@ -311,7 +336,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * display_admin_shop_order_by_meta_filter.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   1.5.0
 	 */
 	function display_admin_shop_order_by_meta_filter(){
@@ -320,16 +345,26 @@ class Alg_WC_EU_VAT_Admin {
 		if( 'shop_order' === $typenow && 'edit.php' === $pagenow ) {
 			$domain    = 'eu-vat-for-woocommerce';
 			$filter_id = 'filter_shop_order_by_meta';
-			$current   = isset($_GET[$filter_id])? $_GET[$filter_id] : '';
+			$current   = (
+				isset( $_GET[ $filter_id ] ) ?
+				sanitize_text_field( wp_unslash( $_GET[ $filter_id ] ) ) :
+				''
+			);
 
-			echo '<select name="'.$filter_id.'">
-			<option value="">' . __( 'Select Filter EU VAT...', 'eu-vat-for-woocommerce' ) . '</option>';
+			echo '<select name="' . esc_attr( $filter_id ) . '">' .
+				'<option value="">' .
+					esc_html__( 'Select Filter EU VAT...', 'eu-vat-for-woocommerce' ) .
+				'</option>';
 
 			$options = $this->get_filter_shop_order_meta( $domain );
 
 			foreach ( $options as $key => $label ) {
-				printf( '<option value="%s"%s>%s</option>', $key,
-					$key === $current ? '" selected="selected"' : '', $label );
+				printf(
+					'<option value="%s"%s>%s</option>',
+					esc_attr( $key ),
+					$key === $current ? '" selected="selected"' : '',
+					esc_html( $label )
+				);
 			}
 			echo '</select>';
 		}
@@ -338,18 +373,19 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * process_admin_shop_order_marketing_by_meta.
 	 *
-	 * @version 1.5.0
+	 * @version 4.1.0
 	 * @since   1.5.0
 	 */
 	function process_admin_shop_order_marketing_by_meta( $vars ) {
 		global $pagenow, $typenow;
-
 		$filter_id = 'filter_shop_order_by_meta';
-
-		if ( $pagenow == 'edit.php' && 'shop_order' === $typenow
-		&& isset( $_GET[$filter_id] ) && ! empty($_GET[$filter_id]) ) {
-			$vars['meta_key']   = $_GET[$filter_id];
-			$vars['orderby']    = 'meta_value';
+		if (
+			'edit.php' === $pagenow &&
+			'shop_order' === $typenow &&
+			! empty( $_GET[ $filter_id ] )
+		) {
+			$vars['meta_key'] = sanitize_text_field( wp_unslash( $_GET[ $filter_id ] ) );
+			$vars['orderby']  = 'meta_value';
 		}
 		return $vars;
 	}
@@ -368,20 +404,20 @@ class Alg_WC_EU_VAT_Admin {
 	}
 
 	/**
-	 * euvat_filter_orders_HPOS.
+	 * euvat_filter_orders_hpos.
 	 *
 	 * @version 2.11.7
 	 * @since   2.11.7
 	 */
-	function euvat_filter_orders_HPOS( $query_args ) {
+	function euvat_filter_orders_hpos( $query_args ) {
 
 		$filter_id = 'filter_shop_order_by_meta';
 
 		if( isset( $_GET[ $filter_id ] ) && $_GET[ $filter_id ] ) {
-			$query_args[ 'meta_query' ] = array(
+			$query_args['meta_query'] = array(
 				array(
-					'key' => '_billing_eu_vat_number',
-					'value' => array(''),
+					'key'     => '_billing_eu_vat_number',
+					'value'   => array( '' ),
 					'compare' => 'NOT IN',
 				)
 			);
@@ -443,7 +479,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * output_eu_vat_report.
 	 *
-	 * @version 1.5.0
+	 * @version 4.1.0
 	 * @since   1.5.0
 	 */
 	function output_eu_vat_report() {
@@ -451,8 +487,8 @@ class Alg_WC_EU_VAT_Admin {
 		$report = new WC_Report_Alg_WC_EU_VAT();
 		$report->output_report();
 		echo '<p><em>' .
-				__( 'Report includes all EU VAT countries with existing sales.', 'eu-vat-for-woocommerce' ) . ' ' .
-				__( 'Table is sorted by total tax value.', 'eu-vat-for-woocommerce' ) .
+				esc_html__( 'Report includes all EU VAT countries with existing sales.', 'eu-vat-for-woocommerce' ) . ' ' .
+				esc_html__( 'Table is sorted by total tax value.', 'eu-vat-for-woocommerce' ) .
 			'</em></p>';
 	}
 
@@ -629,7 +665,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * validate_vat_and_maybe_remove_taxes.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   1.0.0
 	 */
 	function validate_vat_and_maybe_remove_taxes() {
@@ -637,7 +673,7 @@ class Alg_WC_EU_VAT_Admin {
 		$preserve_countries_condition = false;
 
 		if ( isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
-			$order_id = $_GET['validate_vat_and_maybe_remove_taxes'];
+			$order_id = sanitize_text_field( wp_unslash( $_GET['validate_vat_and_maybe_remove_taxes'] ) );
 			$order    = wc_get_order( $order_id );
 			if ( $order ) {
 
@@ -672,14 +708,14 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * Update the order vat details.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   4.0.0
 	 */
 	function get_vat_details() {
-		if ( isset( $_GET['get_vat_details'] ) ) {
+		if ( isset( $_GET['get_vat_details'], $_GET['number'], $_GET['country'] ) ) {
 			$order_id   = absint( $_GET['get_vat_details'] );
-			$vat_number = sanitize_text_field( $_GET['number'] );
-			$country    = sanitize_text_field( $_GET['country'] );
+			$vat_number = sanitize_text_field( wp_unslash( $_GET['number'] ) );
+			$country    = sanitize_text_field( wp_unslash( $_GET['country'] ) );
 			$eu_vat_number = alg_wc_eu_vat_parse_vat( $vat_number, $country );
 			$is_valid      = alg_wc_eu_vat_validate_vat( $eu_vat_number['country'], $eu_vat_number['number'] );
 			if ( $is_valid ) {
@@ -700,21 +736,21 @@ class Alg_WC_EU_VAT_Admin {
 	}
 
 	/**
-	 * Admin notice
+	 * Admin notice.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   4.0.0
 	 */
 	function admin_notice() {
 		if ( $message = get_transient( 'vat_details_success' ) ) {
 			echo '<div class="notice notice-success is-dismissible">';
-			echo '<p>' . $message . '</p>';
+			echo '<p>' . esc_html( $message ) . '</p>';
 			echo '</div>';
 			delete_transient( 'vat_details_success' );
 		}
 		if ( $message = get_transient( 'vat_details_error' ) ) {
 			echo '<div class="notice notice-error is-dismissible">';
-			echo '<p>' . $message . '</p>';
+			echo '<p>' . esc_html( $message ) . '</p>';
 			echo '</div>';
 			delete_transient( 'vat_details_error' );
 		}

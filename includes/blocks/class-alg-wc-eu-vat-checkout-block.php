@@ -178,6 +178,8 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	 *
 	 * @version 4.0.0
 	 * @since   2.10.4
+	 *
+	 * @todo    (dev) `eu-vat-for-woocommerce-block-example`: rename
 	 */
 	function alg_eu_vat_update_block_order_meta_eu_vat( $order, $request ) {
 

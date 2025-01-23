@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Advertise
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -28,7 +28,7 @@ class Alg_WC_EU_VAT_Advertise {
 	/**
 	 * add_advertisement.
 	 *
-	 * @version 4.0.0
+	 * @version 4.1.0
 	 * @since   4.0.0
 	 */
 	function add_advertisement( $settings, $current_section, $settings_page_id ) {
@@ -53,7 +53,7 @@ class Alg_WC_EU_VAT_Advertise {
 					</li>
 				</ul>
 				<p style="text-align:center">
-					<a id="alg_wc_eu_vat-premium-button" class="alg_wc_pq-button-upsell" href="https://wpfactory.com/item/eu-vat-for-woocommerce/" target="_blank">Get EU VAT for WooCommerce Pro</a>
+					<a id="alg_wc_eu_vat-premium-button" class="alg_wc_pq-button-upsell" href="https://wpfactory.com/item/eu-vat-for-woocommerce/" target="_blank">Get EU/UK VAT Validation Manager for WooCommerce Pro</a>
 				</p>
 				<br>
 			</div>
