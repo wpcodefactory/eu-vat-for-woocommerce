@@ -210,8 +210,8 @@ jQuery( function ( $ ) {
 				url: alg_wc_eu_vat_ajax_object.ajax_url,
 				data: data,
 				success: function ( resp ) {
-					var response = resp.status;
-					var err = resp.error;
+					var response     = resp.status;
+					var err          = resp.error;
 					var company_name = resp.company;
 
 					response = response.replace( "</pre>", "" );

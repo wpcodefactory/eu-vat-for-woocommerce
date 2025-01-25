@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.0.0
+ * @version 4.2.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -176,7 +176,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * alg_eu_vat_update_block_order_meta_eu_vat.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.0
 	 * @since   2.10.4
 	 *
 	 * @todo    (dev) `eu-vat-for-woocommerce-block-example`: rename
@@ -272,13 +272,17 @@ class Alg_WC_EU_VAT_Checkout_Block {
 					);
 
 					throw new Exception(
-						str_replace(
-							'%eu_vat_number%',
-							$posted_eu_vat_id,
-							do_shortcode(
-								get_option(
-									'alg_wc_eu_vat_not_valid_message',
-									__( '<strong>EU VAT Number</strong> is not valid.', 'eu-vat-for-woocommerce' )
+						esc_html(
+							wp_strip_all_tags(
+								str_replace(
+									'%eu_vat_number%',
+									$posted_eu_vat_id,
+									do_shortcode(
+										get_option(
+											'alg_wc_eu_vat_not_valid_message',
+											__( '<strong>EU VAT Number</strong> is not valid.', 'eu-vat-for-woocommerce' )
+										)
+									)
 								)
 							)
 						)
@@ -294,8 +298,19 @@ class Alg_WC_EU_VAT_Checkout_Block {
 			$order->update_meta_data( '_billing_eu_vat_number', $posted_eu_vat_id );
 			$order->delete_meta_data( $this->get_block_field_id() );
 
-			$vat_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_details' );
-			$order->update_meta_data( alg_wc_eu_vat_get_field_id() . '_details', $vat_response_data );
+			$vat_details_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_details' );
+			$order->update_meta_data( alg_wc_eu_vat_get_field_id() . '_details', $vat_details_response_data );
+
+			$vat_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_response_data' );
+			if ( isset( $vat_response_data->requestIdentifier ) ) {
+				$order->update_meta_data(
+					apply_filters(
+						'alg_wc_eu_vat_request_identifier_meta_key',
+						alg_wc_eu_vat_get_field_id() . '_request_identifier'
+					),
+					$vat_response_data->requestIdentifier
+				);
+			}
 
 		}
 

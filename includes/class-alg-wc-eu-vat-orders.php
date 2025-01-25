@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Orders
  *
- * @version 4.1.0
+ * @version 4.2.0
  * @since   4.1.0
  *
  * @author  WPFactory
@@ -17,7 +17,7 @@ class Alg_WC_EU_VAT_Orders {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.0
 	 * @since   4.1.0
 	 */
 	function __construct() {
@@ -27,6 +27,9 @@ class Alg_WC_EU_VAT_Orders {
 
 		// Save VAT details
 		add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'save_vat_details_to_order' ) );
+
+		// Save "Request Identifier"
+		add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'save_request_identifier_to_order' ) );
 
 	}
 
@@ -65,19 +68,47 @@ class Alg_WC_EU_VAT_Orders {
 	}
 
 	/**
+	 * save_request_identifier_to_order.
+	 *
+	 * @param   int  $order_id  The ID of the order being processed.
+	 *
+	 * @version 4.2.0
+	 * @since   4.2.0
+	 */
+	function save_request_identifier_to_order( int $order_id ) {
+		if ( ! ( empty( $_POST[ alg_wc_eu_vat_get_field_id() ] ) ) ) {
+			// Get response data from the session
+			$vat_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_response_data' );
+			if (
+				isset( $vat_response_data->requestIdentifier ) &&
+				$order = wc_get_order( $order_id )
+			) {
+				$order->update_meta_data(
+					apply_filters(
+						'alg_wc_eu_vat_request_identifier_meta_key',
+						alg_wc_eu_vat_get_field_id() . '_request_identifier'
+					),
+					$vat_response_data->requestIdentifier
+				);
+				$order->save();
+			}
+		}
+	}
+
+	/**
 	 * Save VAT details to the order meta during checkout.
 	 *
 	 * @param   int  $order_id  The ID of the order being processed.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.0
 	 * @since   4.0.0
 	 */
 	function save_vat_details_to_order( int $order_id ) {
 		if ( ! ( empty( $_POST[ alg_wc_eu_vat_get_field_id() ] ) ) ) {
 			// Get response data from the session
-			$vat_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_details' );
-			$order             = wc_get_order( $order_id );
-			$order->update_meta_data( alg_wc_eu_vat_get_field_id() . '_details', $vat_response_data );
+			$vat_details_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_details' );
+			$order                     = wc_get_order( $order_id );
+			$order->update_meta_data( alg_wc_eu_vat_get_field_id() . '_details', $vat_details_response_data );
 			$order->save();
 		}
 	}

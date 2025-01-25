@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.7
-Stable tag: 4.1.0
+Stable tag: 4.2.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -286,6 +286,11 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 
 == Changelog ==
 
+= 4.2.0 - 25/01/2025 =
+* Dev - Security - Output escaped.
+* Dev - Admin & Advanced - "Request identifier" options added (disabled by default).
+* Dev - Code refactoring.
+
 = 4.1.0 - 23/01/2025 =
 * Fix - Keep VAT in selected countries - Fixed.
 * Dev - Security - Output escaped.
@@ -529,30 +534,30 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 * Adjust HPOS compatibility.
 
 = 2.9.12 - 12/08/2023 =
-* HPOS compatibility
+* Dev - HPOS compatibility.
 
 = 2.9.11 - 12/08/2023 =
-* WC tested up to: 7.9
-* Add new filter "EU VAT provided" to user table
+* Dev - Add new filter "EU VAT provided" to user table.
+* WC tested up to: 7.9.
 
 = 2.9.10 - 27/06/2023 =
-* update js function alg_wc_eu_vat_validate_vat with load flag
+* Dev - Update JS function `alg_wc_eu_vat_validate_vat` with load flag.
 
 = 2.9.9 - 15/06/2023 =
-* extend validation result with new hook alg_wc_eu_vat_check_alternative
-* WC tested up to: 7.8
+* Dev - Extend validation result with new hook `alg_wc_eu_vat_check_alternative`.
+* WC tested up to: 7.8.
 
 = 2.9.8 - 30/05/2023 =
-* update with extra character trim with eu VAT validator response.
-* WC tested up to: 7.6
+* Dev - Update with extra character trim with eu VAT validator response.
+* WC tested up to: 7.6.
 
 = 2.9.7 - 11/04/2023 =
 * Update woocommerce_before_calculate_totals priority from MAX to 99, so users can run their own overwrite.
-* Compatibility with WordPress 6.2 verified
+* Compatibility with WordPress 6.2 verified.
 
 = 2.9.6 - 31/03/2023 =
 * Move to WPFactory.
-* Enhanced field validation on page load
+* Enhanced field validation on page load.
 
 = 2.9.5 - 18/03/2023 =
 * PDF invoicing compatibility is part of the free version

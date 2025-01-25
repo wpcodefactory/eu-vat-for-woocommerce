@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 4.1.0
+ * @version 4.2.0
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,10 +29,12 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.0
 	 * @since   1.5.0
 	 *
 	 * @todo    (dev) separate into "Admin" and "Advanced"?
+	 * @todo    (dev) `alg_wc_eu_vat_request_identifier`: non-SOAP?
+	 * @todo    (dev) `alg_wc_eu_vat_add_order_edit_metabox` default to `yes`?
 	 * @todo    (dev) `alg_wc_eu_vat_enable_checkout_block_field` default to `yes`?
 	 * @todo    (dev) "Sitepress" - should be "SiteGround"?
 	 */
@@ -169,10 +171,30 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'Autofill company name from VAT ID', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Please use validation method SOAP for this option to work.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Please use the SOAP validation method for this option to work.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_advance_enable_company_name_autofill',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Request identifier', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Please use the SOAP validation method for this option to work.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_request_identifier',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Requester country code', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_requester_country_code',
+				'default'  => '',
+				'type'     => 'text',
+			),
+			array(
+				'desc'     => __( 'Requester VAT number', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_requester_vat_number',
+				'default'  => '',
+				'type'     => 'text',
 			),
 			array(
 				'type'     => 'sectionend',

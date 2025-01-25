@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Compatibility Class
  *
- * @version 4.0.0
+ * @version 4.2.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -34,7 +34,7 @@ class Alg_WC_EU_VAT_Compatibility {
 	/**
 	 * wpo_wcpdf_extend_after_billing_address.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.0
 	 * @since   1.7.0
 	 *
 	 * @see     https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/
@@ -43,7 +43,7 @@ class Alg_WC_EU_VAT_Compatibility {
 		if ( function_exists( 'alg_wc_eu_vat_get_field_id' ) ) {
 			$vat_id = $pdf_order->get_meta( '_' . alg_wc_eu_vat_get_field_id() );
 			if ( $vat_id && ! empty( $vat_id ) ) {
-				?><div class="eu-vat"><?php echo $vat_id; ?></div><?php
+				?><div class="eu-vat"><?php echo esc_html( $vat_id ); ?></div><?php
 			}
 		}
 	}
@@ -51,21 +51,21 @@ class Alg_WC_EU_VAT_Compatibility {
 	/**
 	 * wpo_wcpdf_add_vat_exempt_text_pdf_footer.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.0
 	 * @since   2.9.17
 	 *
 	 * @see     https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/
 	 */
 	function wpo_wcpdf_add_vat_exempt_text_pdf_footer( $document_type, $order ) {
-		$is_vat_exempt            = $order->get_meta( 'is_vat_exempt' );
-		$is_vat_exempt_from_admin = $order->get_meta( 'exempt_vat_from_admin' );
 		if (
-			'yes' === $is_vat_exempt ||
-			'yes' === $is_vat_exempt_from_admin
+			'yes' === $order->get_meta( 'is_vat_exempt' ) ||
+			'yes' === $order->get_meta( 'exempt_vat_from_admin' )
 		) {
-			echo get_option(
-				'alg_wc_eu_vat_advanced_vat_shifted_text',
-				__( 'VAT SHIFTED', 'eu-vat-for-woocommerce' )
+			echo esc_html(
+				get_option(
+					'alg_wc_eu_vat_advanced_vat_shifted_text',
+					__( 'VAT SHIFTED', 'eu-vat-for-woocommerce' )
+				)
 			);
 		}
 	}

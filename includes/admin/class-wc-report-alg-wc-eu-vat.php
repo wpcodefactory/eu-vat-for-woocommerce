@@ -2,11 +2,11 @@
 /**
  * Taxes by EU VAT country report.
  *
- * @version 4.1.0
+ * @version 4.2.0
  * @since   1.5.0
  *
- * @package    WooCommerce/Admin/Reports
- * @see        `/woocommerce/includes/admin/reports/class-wc-report-taxes-by-code.php`
+ * @package WooCommerce/Admin/Reports
+ * @see     `/woocommerce/includes/admin/reports/class-wc-report-taxes-by-code.php`
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -97,15 +97,21 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 	 */
 	public function get_flag_img( $country ) {
 		$path   = '/assets/images/flag-icons/' . strtolower( $country ) . '.png';
-		$return = ( file_exists( alg_wc_eu_vat()->plugin_path() . $path ) ?
-			'<img title="' . alg_wc_eu_vat_get_country_name_by_code( $country ) . ' (' . strtoupper( $country ) . ')" src="' . alg_wc_eu_vat()->plugin_url() . $path . '"> ' : '' );
+		$return = (
+			file_exists( alg_wc_eu_vat()->plugin_path() . $path ) ?
+			'<img' .
+				' title="' . alg_wc_eu_vat_get_country_name_by_code( $country ) . ' (' . strtoupper( $country ) . ')"' .
+				' src="' . alg_wc_eu_vat()->plugin_url() . $path . '"' .
+			'> ' :
+			''
+		);
 		return $return . alg_wc_eu_vat_get_country_name_by_code( $country ) . ' (' . strtoupper( $country ) . ')';
 	}
 
 	/**
 	 * Get the main chart.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.0
 	 * @since   1.5.0
 	 */
 	public function get_main_chart() {
@@ -160,7 +166,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 						?>
 						<tr>
 							<th scope="row"><?php echo $this->get_flag_img( $country ); ?></th>
-							<td class="total_row"><?php echo $tax_row['count']; ?></td>
+							<td class="total_row"><?php echo (int) $tax_row['count']; ?></td>
 							<td class="total_row"><?php echo wp_kses_post( wc_price( $tax_row['sum'] ) ); ?></td>
 							<td class="total_row"><?php echo wp_kses_post( wc_price( $tax_row['sum_no_tax'] ) ); ?></td>
 							<td class="total_row"><?php echo wp_kses_post( wc_price( $tax_row['tax'] ) ); ?></td>
@@ -172,7 +178,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 				<tfoot>
 					<tr>
 						<th scope="row"><?php esc_html_e( 'Totals', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
-						<th class="total_row"><?php echo array_sum( wp_list_pluck( $tax_rows, 'count' ) ); ?></th>
+						<th class="total_row"><?php echo (int) array_sum( wp_list_pluck( $tax_rows, 'count' ) ); ?></th>
 						<th class="total_row"><?php echo wp_kses_post( wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum' ) ) ) ); ?></th>
 						<th class="total_row"><?php echo wp_kses_post( wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum_no_tax' ) ) ) ); ?></th>
 						<th class="total_row"><?php echo wp_kses_post( wc_price( array_sum( wp_list_pluck( $tax_rows, 'tax' ) ) ) ); ?></th>
