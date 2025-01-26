@@ -1,11 +1,12 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.0.0
+ * @version 4.2.1
  * @since   2.11.6
  *
  * @author  WPFactory
  */
+
 import {useEffect, useState, useCallback} from '@wordpress/element';
 import {CheckboxControl, ValidatedTextInput} from '@woocommerce/blocks-checkout';
 import {getSetting} from '@woocommerce/settings';
@@ -64,18 +65,14 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 		isSameBillingShipping = 'yes';
 	}
 
-	const store = select( CART_STORE_KEY );
+	const store    = select( CART_STORE_KEY );
 	const cartData = store.getCartData();
 
 	const billingCountry = cartData.billingAddress.country;
 	const billingCompany = cartData.billingAddress.company;
 
-	var progress = document.getElementById( 'alg_wc_eu_vat_progress' );
-	// var eu_vat_field = document.getElementById('alg_eu_vat_for_woocommerce_field');
-
-	// var eu_vat_field = document.getElementById('contact-alg_eu_vat/billing_eu_vat_number');
-	var eu_vat_field = document.getElementById( 'contact-alg_eu_vat-billing_eu_vat_number' );
-
+	var progress           = document.getElementById( 'alg_wc_eu_vat_progress' );
+	var eu_vat_field       = document.getElementById( 'contact-alg_eu_vat-billing_eu_vat_number' );
 	var place_order_button = document.getElementsByClassName( "wc-block-components-checkout-place-order-button" )[0];
 
 	const previous_country = document.getElementById( 'store_previous_country' );
@@ -131,9 +128,9 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 				vatDetailsDiv?.replaceChildren( ulElement ); // Clear and replace content
 			}
 
-			if ( data.status == '1' ) {
-				eu_vat_field.classList.add( 'woocommerce-validated' );
+			if ( alg_wc_eu_vat_ajax_object.status_codes['VAT_VALID'] === data.status ) {
 
+				eu_vat_field.classList.add( 'woocommerce-validated' );
 				if ( progress ) {
 					progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_valid;
 					progress.classList.remove( "alg-wc-eu-vat-not-valid" );
@@ -141,7 +138,7 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 					progress.classList.add( "alg-wc-eu-vat-valid" );
 				}
 
-			} else if ( data.status == '0' ) {
+			} else if ( alg_wc_eu_vat_ajax_object.status_codes['VAT_NOT_VALID'] === data.status ) {
 
 				eu_vat_field.classList.add( 'woocommerce-invalid' );
 				if ( progress ) {
@@ -150,7 +147,7 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 					progress.classList.remove( "alg-wc-eu-vat-validating" );
 					progress.classList.add( "alg-wc-eu-vat-not-valid" );
 				}
-			} else if ( data.status == '4' ) {
+			} else if ( alg_wc_eu_vat_ajax_object.status_codes['KEEP_VAT_SHIPPING_COUNTRY'] === data.status ) {
 
 				eu_vat_field.classList.add( 'woocommerce-invalid' );
 				if ( progress ) {
@@ -159,7 +156,7 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 					progress.classList.remove( "alg-wc-eu-vat-validating" );
 					progress.classList.add( "alg-wc-eu-vat-not-valid" );
 				}
-			} else if ( data.status == '5' ) {
+			} else if ( alg_wc_eu_vat_ajax_object.status_codes['COMPANY_NAME'] === data.status ) {
 
 				eu_vat_field.classList.add( 'woocommerce-invalid' );
 				eu_vat_field.classList.add( 'woocommerce-invalid-mismatch' );
@@ -169,17 +166,27 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 					progress.classList.remove( "alg-wc-eu-vat-validating" );
 					progress.classList.add( "alg-wc-eu-vat-not-valid" );
 				}
-			} else if ( data.status == '6' ) {
+			} else if ( alg_wc_eu_vat_ajax_object.status_codes['EMPTY_VAT'] === data.status ) {
 
-				eu_vat_field.classList.remove( 'woocommerce-invalid' );
-				eu_vat_field.classList.remove( 'woocommerce-validated' );
-				if ( progress ) {
-					progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_validation_failed;
-					progress.classList.remove( "alg-wc-eu-vat-valid" );
-					progress.classList.remove( "alg-wc-eu-vat-validating" );
-					progress.classList.remove( "alg-wc-eu-vat-not-valid" );
+				if ( eu_vat_field.hasAttribute( 'required' ) ) {
+					eu_vat_field.classList.add( 'woocommerce-invalid' );
+					eu_vat_field.classList.remove( 'woocommerce-validated' );
+					if ( progress ) {
+						progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_is_required;
+						progress.classList.remove( "alg-wc-eu-vat-valid" );
+						progress.classList.remove( "alg-wc-eu-vat-validating" );
+						progress.classList.remove( "alg-wc-eu-vat-not-valid" );
+					}
+				} else {
+					eu_vat_field.classList.remove( 'woocommerce-invalid' );
+					eu_vat_field.classList.remove( 'woocommerce-validated' );
+					if ( progress ) {
+						progress.innerHTML = '';
+						progress.className = '';
+					}
 				}
-			} else if ( data.status == '7' ) {
+			} else if ( alg_wc_eu_vat_ajax_object.status_codes['KEEP_VAT_COUNTRIES'] === data.status ) {
+
 				eu_vat_field.classList.remove( 'woocommerce-invalid' );
 				eu_vat_field.classList.remove( 'woocommerce-validated' );
 				if ( progress ) {
@@ -189,7 +196,8 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 					progress.classList.remove( "alg-wc-eu-vat-not-valid" );
 					progress.classList.add( "alg-wc-eu-vat-not-valid" );
 				}
-			} else if ( data.status == '8' ) {
+			} else if ( alg_wc_eu_vat_ajax_object.status_codes['VIES_UNAVAILABLE'] === data.status ) {
+
 				eu_vat_field.classList.remove( 'woocommerce-invalid' );
 				eu_vat_field.classList.remove( 'woocommerce-validated' );
 				if ( progress ) {
@@ -203,7 +211,6 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 			} else {
 
 				eu_vat_field.classList.add( 'woocommerce-invalid' );
-
 				if ( progress ) {
 					progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_validation_failed;
 					progress.classList.remove( "alg-wc-eu-vat-valid" );
@@ -215,7 +222,7 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 
 			previous_country.value = billingCountry;
 
-			// this line is to save changes in checkout customer data.
+			// This line is to save changes in checkout customer data.
 			if ( refresh ) {
 				extensionCartUpdate( {
 					namespace: 'alg-wc-eu-vat-extension-namespace',
@@ -285,7 +292,6 @@ const Block = ( {children, checkoutExtensionData} ) => {
 
 	useEffect( () => {
 
-		// var vat_number = document.getElementById('contact-alg_eu_vat/billing_eu_vat_number');
 		var vat_number = document.getElementById( 'contact-alg_eu_vat-billing_eu_vat_number' );
 
 		var verifyOnFirstLoad = function () {

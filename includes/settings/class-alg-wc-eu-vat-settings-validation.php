@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 4.1.0
+ * @version 4.2.1
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.1
 	 * @since   1.5.0
 	 *
 	 * @todo    (dev) separate into "Validation" and "Progress"?
@@ -251,10 +251,9 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'default'  => 'oninput',
 				'type'     => 'select',
 				'options'  => array(
-					'oninput'  => __( 'on Input', 'eu-vat-for-woocommerce' ),
-					'onblur' => __( 'on Blur', 'eu-vat-for-woocommerce' ),
+					'oninput' => __( 'On Input', 'eu-vat-for-woocommerce' ),
+					'onblur'  => __( 'On Blur', 'eu-vat-for-woocommerce' ),
 				),
-				'custom_attributes' => '',
 			),
 
 			array(
@@ -268,7 +267,10 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 
 			array(
 				'title'    => __( 'Accept the VAT number if VIES is not available', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enabled/disables Accept the VAT number if VIES is not available.( <code>MS_UNAVAILABLE</code>, <code>GLOBAL_MAX_CONCURRENT_REQ</code>, <code>MS_MAX_CONCURRENT_REQ</code> )', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => sprintf(
+					__( 'Enables/disables Accept the VAT number if VIES is not available %s.', 'eu-vat-for-woocommerce' ),
+					'(<code>MS_UNAVAILABLE</code>, <code>GLOBAL_MAX_CONCURRENT_REQ</code>, <code>MS_MAX_CONCURRENT_REQ</code>)'
+				),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_vies_not_available',
 				'default'  => 'no',
@@ -315,6 +317,14 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'desc_tip' => __( 'Message on invalid VAT. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-not-valid</code>', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_progress_text_not_valid',
 				'default'  => __( 'VAT is not valid.', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
+				'css'      => 'width:100%;',
+			),
+			array(
+				'title'    => __( 'Is required', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Message on empty (required) VAT.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_progress_text_is_required',
+				'default'  => __( 'VAT is required.', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
 				'css'      => 'width:100%;',
 			),
