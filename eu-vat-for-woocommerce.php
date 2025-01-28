@@ -3,7 +3,7 @@
 Plugin Name: EU/UK VAT Validation Manager for WooCommerce
 Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
 Description: Manage EU VAT in WooCommerce. Beautifully.
-Version: 4.2.1
+Version: 4.2.2
 Author: WPFactory
 Author URI: https://wpfactory.com/
 Text Domain: eu-vat-for-woocommerce
@@ -16,29 +16,11 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 defined( 'ABSPATH' ) || exit;
 
-/**
- * Declare compatibility with custom order tables for WooCommerce.
- *
- * @version 3.2.0
- * @since   2.9.12
- *
- * @see     https://github.com/woocommerce/woocommerce/wiki/High-Performance-Order-Storage-Upgrade-Recipe-Book#declaring-extension-incompatibility
- */
-add_action( 'before_woocommerce_init', function () {
-	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
-			'custom_order_tables',
-			__FILE__,
-			true
-		);
-	}
-} );
-
 if ( 'eu-vat-for-woocommerce.php' === basename( __FILE__ ) ) {
 	/**
 	 * Check if Pro plugin version is activated.
 	 *
-	 * @version 3.2.0
+	 * @version 4.2.2
 	 * @since   3.2.0
 	 */
 	$plugin = 'eu-vat-for-woocommerce-pro/eu-vat-for-woocommerce-pro.php';
@@ -49,11 +31,12 @@ if ( 'eu-vat-for-woocommerce.php' === basename( __FILE__ ) ) {
 			array_key_exists( $plugin, (array) get_site_option( 'active_sitewide_plugins', array() ) )
 		)
 	) {
+		defined( 'ALG_WC_EU_VAT_FILE_FREE' ) || define( 'ALG_WC_EU_VAT_FILE_FREE', __FILE__ );
 		return;
 	}
 }
 
-defined( 'ALG_WC_EU_VAT_VERSION' ) || define( 'ALG_WC_EU_VAT_VERSION', '4.2.1' );
+defined( 'ALG_WC_EU_VAT_VERSION' ) || define( 'ALG_WC_EU_VAT_VERSION', '4.2.2' );
 
 defined( 'ALG_WC_EU_VAT_FILE' ) || define( 'ALG_WC_EU_VAT_FILE', __FILE__ );
 

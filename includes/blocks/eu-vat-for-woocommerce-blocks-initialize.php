@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Blocks Initialize
  *
- * @version 4.0.0
+ * @version 4.2.2
  *
  * @author  WPFactory
  */
@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * woocommerce_blocks_loaded.
  *
- * @version 4.0.0
+ * @version 4.2.2
  */
 add_action( 'woocommerce_blocks_loaded', function () {
 
@@ -41,8 +41,20 @@ add_action( 'woocommerce_blocks_loaded', function () {
 			array(
 				'endpoint'        => CheckoutSchema::IDENTIFIER,
 				'namespace'       => 'eu-vat-for-woocommerce-block-example',
-				'data_callback'   => 'eu_vat_for_woocommerce_data_callback',
-				'schema_callback' => 'eu_vat_for_woocommerce_schema_callback',
+				'data_callback'   => function () {
+					return array(
+						'billing_eu_vat_number' => '',
+					);
+				},
+				'schema_callback' => function () {
+					return array(
+						'billing_eu_vat_number' => array(
+							'description' => __( 'EU VAT Number', 'eu-vat-for-woocommerce' ),
+							'type'        => array( 'string', 'null' ),
+							'readonly'    => true,
+						),
+					);
+				},
 				'schema_type'     => ARRAY_A,
 			)
 		);
@@ -50,55 +62,18 @@ add_action( 'woocommerce_blocks_loaded', function () {
 } );
 
 /**
- * Callback function to register endpoint data for blocks.
- *
- * @version 3.2.1
- *
- * @return  array
- */
-if ( ! function_exists( 'eu_vat_for_woocommerce_data_callback' ) ) {
-	function eu_vat_for_woocommerce_data_callback() {
-		return array(
-			'billing_eu_vat_number' => '',
-		);
-	}
-}
-
-/**
- * Callback function to register schema for data.
- *
- * @version 3.2.1
- *
- * @return  array
- */
-if ( ! function_exists( 'eu_vat_for_woocommerce_schema_callback' ) ) {
-	function eu_vat_for_woocommerce_schema_callback() {
-		return array(
-			'billing_eu_vat_number' => array(
-				'description' => __( 'EU VAT Number', 'eu-vat-for-woocommerce' ),
-				'type'        => array( 'string', 'null' ),
-				'readonly'    => true,
-			),
-		);
-	}
-}
-
-/**
  * Registers the slug as a block category with WordPress.
  *
- * @version 3.2.1
+ * @version 4.2.2
  */
-if ( ! function_exists( 'register_EuVatForWoocommerce_block_category' ) ) {
-	function register_EuVatForWoocommerce_block_category( $categories ) {
-		return array_merge(
-			$categories,
-			[
-				[
-					'slug'  => 'eu-vat-for-woocommerce',
-					'title' => __( 'EU VAT Number Blocks', 'eu-vat-for-woocommerce' ),
-				],
-			]
-		);
-	}
-}
-add_action( 'block_categories_all', 'register_EuVatForWoocommerce_block_category', 10, 2 );
+add_action( 'block_categories_all', function ( $categories ) {
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug'  => 'eu-vat-for-woocommerce',
+				'title' => __( 'EU VAT Number Blocks', 'eu-vat-for-woocommerce' ),
+			),
+		)
+	);
+}, 10, 2 );

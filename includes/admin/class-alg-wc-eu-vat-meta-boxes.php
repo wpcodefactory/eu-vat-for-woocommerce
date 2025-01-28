@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Meta Boxes
  *
- * @version 4.2.0
+ * @version 4.2.2
  * @since   4.2.0
  *
  * @author  WPFactory
@@ -278,11 +278,15 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * validate_vat_and_maybe_remove_taxes.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.2
 	 * @since   1.0.0
+	 *
+	 * @todo    (dev) Remove taxes: remove and instead do `$order->calculate_totals()` (after setting `is_vat_exempt` to `yes`)
+	 * @todo    (dev) Request Identifier: merge with `save_request_identifier_to_order()` (`Alg_WC_EU_VAT_Orders` class)
+	 * @todo    (dev) `alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_response_data' )`: clear after use?
 	 */
 	function validate_vat_and_maybe_remove_taxes() {
-		$preserve_countries = alg_wc_eu_vat()->core->eu_vat_ajax_instance->get_preserve_countries();
+		$preserve_countries           = alg_wc_eu_vat()->core->eu_vat_ajax_instance->get_preserve_countries();
 		$preserve_countries_condition = false;
 
 		if ( isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
@@ -291,7 +295,7 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 			if ( $order ) {
 
 				$vat_id          = $order->get_meta( '_' . alg_wc_eu_vat_get_field_id() );
-				$billing_company = $order->get_meta( '_' . 'billing_company' );
+				$billing_company = $order->get_billing_company();
 				if ( '' != $vat_id ) {
 					$eu_vat_number = alg_wc_eu_vat_parse_vat( $vat_id, $order->get_billing_country() );
 
@@ -309,6 +313,8 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 							$billing_company
 						)
 					) {
+
+						// Remove taxes
 						foreach ( $order->get_items( array( 'line_item', 'fee' ) ) as $item_id => $item ) {
 							$item->set_taxes( false );
 						}
@@ -317,6 +323,25 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 						}
 						$order->update_taxes();
 						$order->calculate_totals( false );
+
+						// "VAT exempt" meta
+						$order->update_meta_data( 'is_vat_exempt', 'yes' );
+
+						// Request Identifier
+						$vat_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_response_data' );
+						if ( isset( $vat_response_data->requestIdentifier ) ) {
+							$order->update_meta_data(
+								apply_filters(
+									'alg_wc_eu_vat_request_identifier_meta_key',
+									alg_wc_eu_vat_get_field_id() . '_request_identifier'
+								),
+								$vat_response_data->requestIdentifier
+							);
+						}
+
+						// Save updated meta
+						$order->save();
+
 					}
 				}
 			}

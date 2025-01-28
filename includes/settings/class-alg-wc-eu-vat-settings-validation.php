@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 4.2.1
+ * @version 4.2.2
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,12 +29,11 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.1
+	 * @version 4.2.2
 	 * @since   1.5.0
 	 *
 	 * @todo    (dev) separate into "Validation" and "Progress"?
 	 * @todo    (dev) set default value for "alg_wc_eu_vat_add_progress_text" to "yes"?
-	 * @todo    (feature) Message if customer is in base country and VAT is NOT exempted!
 	 * @todo    (feature) Message if customer's check for IP location country has failed!
 	 * @todo    (feature) add "Check company address" option (similar to "Check company name")
 	 * @todo    (feature) "Require Country Code in VAT Number"?
@@ -49,7 +48,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Validate', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enabled/disables EU VAT validation.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enables/disables EU VAT validation.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate',
 				'default'  => 'yes',
@@ -57,7 +56,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Validate at sign-up form', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enabled/disables EU VAT validation at sign-up page.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enables/disables EU VAT validation at sign-up page.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_sign_up_page',
 				'default'  => 'yes',
@@ -65,7 +64,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Validate in "My account"', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enabled/disables EU VAT validation in "My account".', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enables/disables EU VAT validation in "My account".', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_my_account',
 				'default'  => 'no',
@@ -258,7 +257,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 
 			array(
 				'title'    => __( 'Force validate on cart and checkout page load/reload', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enabled/disables force validate on cart/checkout page.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enables/disables force validate on cart/checkout page.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_force_page_reload',
 				'default'  => 'no',
@@ -268,6 +267,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'Accept the VAT number if VIES is not available', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => sprintf(
+					/* Translators: %s: Error codes. */
 					__( 'Enables/disables Accept the VAT number if VIES is not available %s.', 'eu-vat-for-woocommerce' ),
 					'(<code>MS_UNAVAILABLE</code>, <code>GLOBAL_MAX_CONCURRENT_REQ</code>, <code>MS_MAX_CONCURRENT_REQ</code>)'
 				),
@@ -290,7 +290,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Add progress messages', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enabled/disables progress messages on checkout.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enables/disables progress messages on checkout.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Add', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_add_progress_text',
 				'default'  => 'yes',
@@ -355,7 +355,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 
 			array(
 				'title'    => __( 'Enable country preserve message', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enabled/disables country preserve validation message.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enables/disables country preserve validation message.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_enable_preserve_message',
 				'default'  => 'no',

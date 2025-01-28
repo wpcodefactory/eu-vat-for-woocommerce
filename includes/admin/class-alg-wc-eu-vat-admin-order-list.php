@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Order List
  *
- * @version 4.2.0
+ * @version 4.2.2
  * @since   4.2.0
  *
  * @author  WPFactory
@@ -207,14 +207,14 @@ class Alg_WC_EU_VAT_Admin_Order_List {
 	/**
 	 * euvat_filter_orders_hpos.
 	 *
-	 * @version 2.11.7
+	 * @version 4.2.2
 	 * @since   2.11.7
 	 */
 	function euvat_filter_orders_hpos( $query_args ) {
 
 		$filter_id = 'filter_shop_order_by_meta';
 
-		if( isset( $_GET[ $filter_id ] ) && $_GET[ $filter_id ] ) {
+		if ( ! empty( $_GET[ $filter_id ] ) ) {
 			$query_args['meta_query'] = array(
 				array(
 					'key'     => '_billing_eu_vat_number',

@@ -20,7 +20,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	 * @version 1.0.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [dev] (maybe) add option to disable the tool
+	 * @todo    (dev) add option to disable the tool?
 	 */
 	function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_eu_countries_vat_rates_tool' ) );
@@ -66,7 +66,7 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	 * @version 1.0.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [dev] (maybe) check `MC`, `IM`
+	 * @todo    (dev) check `MC`, `IM`?
 	 */
 	function get_european_union_countries_with_vat() {
 		return array(

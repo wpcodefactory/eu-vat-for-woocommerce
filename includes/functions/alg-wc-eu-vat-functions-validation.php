@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.2.0
+ * @version 4.2.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -125,25 +125,49 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 		}
 
 		if ( false === $response ) {
-			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
-				__( 'Error: No response', 'eu-vat-for-woocommerce' ) );
+			alg_wc_eu_vat_maybe_log(
+				$country_code,
+				$vat_number,
+				$billing_company,
+				$method,
+				__( 'Error: No response', 'eu-vat-for-woocommerce' )
+			);
 
 			return null;
 		}
 
-		// New validation code with new api url
+		// New validation code with new API URL
 		$decoded_result = json_decode( $response, true );
-		if ( isset( $decoded_result['isValid'] ) && $decoded_result['isValid'] ) {
-			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
-				__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' ) );
+		if (
+			isset( $decoded_result['isValid'] ) &&
+			$decoded_result['isValid']
+		) {
+			alg_wc_eu_vat_maybe_log(
+				$country_code,
+				$vat_number,
+				$billing_company,
+				$method,
+				__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' )
+			);
 
-			// store result to session
-			alg_wc_eu_vat_store_validation_session( $country_code, $vat_number, true, $billing_company, $decoded_result );
+			// Store result to session
+			alg_wc_eu_vat_store_validation_session(
+				$country_code,
+				$vat_number,
+				true,
+				$billing_company,
+				$decoded_result
+			);
 
 			return true;
 		} else {
-			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
-				__( 'Error: VAT ID not valid', 'eu-vat-for-woocommerce' ) );
+			alg_wc_eu_vat_maybe_log(
+				$country_code,
+				$vat_number,
+				$billing_company,
+				$method,
+				__( 'Error: VAT ID not valid', 'eu-vat-for-woocommerce' )
+			);
 
 			return false;
 		}
@@ -500,8 +524,13 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 		}
 
 		if ( false === $response ) {
-			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
-				__( 'Error: No response', 'eu-vat-for-woocommerce' ) );
+			alg_wc_eu_vat_maybe_log(
+				$country_code,
+				$vat_number,
+				$billing_company,
+				$method,
+				__( 'Error: No response', 'eu-vat-for-woocommerce' )
+			);
 
 			return null;
 		}
@@ -533,7 +562,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 		}
 
 		// Company name
-		if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) && isset( $responsedecode['target'] ) ) {
+		if (
+			'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) &&
+			isset( $responsedecode['target'] )
+		) {
 			if ( isset( $responsetarget['name'] ) ) {
 				$company_name = strtolower( $responsetarget['name'] );
 			} else {
@@ -544,8 +576,13 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 		}
 
 		// Final result
-		$return = ( isset( $responsedecode['target'] ) &&
-		            ( 'no' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) || $company_name === $billing_company ) );
+		$return = (
+			isset( $responsedecode['target'] ) &&
+			(
+				'no' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) ||
+				$company_name === $billing_company
+			)
+		);
 		if ( ! $return ) {
 			if ( $responsedecode['target'] ) {
 				alg_wc_eu_vat_maybe_log(
@@ -564,16 +601,32 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company', true );
 
 			} else {
-				alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
-					__( 'Error: VAT ID not valid', 'eu-vat-for-woocommerce' ) );
+				alg_wc_eu_vat_maybe_log(
+					$country_code,
+					$vat_number,
+					$billing_company,
+					$method,
+					__( 'Error: VAT ID not valid', 'eu-vat-for-woocommerce' )
+				);
 			}
 		} else {
-			alg_wc_eu_vat_maybe_log( $country_code, $vat_number, $billing_company, $method,
-				__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' ) );
+			alg_wc_eu_vat_maybe_log(
+				$country_code,
+				$vat_number,
+				$billing_company,
+				$method,
+				__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' )
+			);
 		}
 
 		// Store result to session
-		alg_wc_eu_vat_store_validation_session( $country_code, $vat_number, $return, $billing_company, $responsedecode );
+		alg_wc_eu_vat_store_validation_session(
+			$country_code,
+			$vat_number,
+			$return,
+			$billing_company,
+			$responsedecode
+		);
 
 		return $return;
 	}
@@ -588,14 +641,14 @@ if ( ! function_exists( 'alg_wc_eu_vat_store_validation_session' ) ) {
 	 *
 	 * @return  mixed: array of stored value
 	 *
-	 * @todo    [dev] store vat number validation result to reduce request number to VIES
+	 * @todo    (dev) store VAT number validation result to reduce request number to VIES
 	 */
 	function alg_wc_eu_vat_store_validation_session( $country_code, $vat_number, $status, $billing_company = '', $api_response = array() ) {
 		$store_array_each = array(
 			'country_code'    => $country_code,
 			'vat_number'      => $vat_number,
 			'billing_company' => $billing_company,
-			'status'          => $status
+			'status'          => $status,
 		);
 
 		alg_wc_eu_vat_response( (array) $api_response, $country_code );
@@ -701,7 +754,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_get_details' ) ) {
 	/**
 	 * Retrieves and sets VAT details from the VAT response data.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.2
 	 * @since   4.0.0
 	 *
 	 * @param       $vat_response_data
@@ -711,7 +764,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_get_details' ) ) {
 	 * @return array
 	 */
 	function alg_wc_eu_vat_get_details( $vat_response_data, $details, $country_code ) {
-		if ( is_array( $vat_response_data['address'] ) ) {
+		if (
+			! empty( $vat_response_data['address'] ) &&
+			is_array( $vat_response_data['address'] )
+		) {
 			$address_lines = [];
 
 			if ( ! empty( $vat_response_data['address']['line1'] ) ) {

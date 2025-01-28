@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Main Class
  *
- * @version 4.0.0
+ * @version 4.2.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -23,7 +23,7 @@ final class Alg_WC_EU_VAT {
 	public $version = ALG_WC_EU_VAT_VERSION;
 
 	/**
-	 * core object.
+	 * Core object.
 	 *
 	 * @since 2.12.12
 	 * @var   Alg_WC_EU_VAT_Core class instance
@@ -31,7 +31,7 @@ final class Alg_WC_EU_VAT {
 	public $core = null;
 
 	/**
-	 * admin settings.
+	 * Admin settings.
 	 *
 	 * @since 2.12.12
 	 * @var   array
@@ -39,7 +39,7 @@ final class Alg_WC_EU_VAT {
 	public $settings = array();
 
 	/**
-	 * _instance.
+	 * Instance.
 	 *
 	 * @since 1.0.0
 	 * @var   Alg_WC_EU_VAT The single instance of the class
@@ -47,7 +47,7 @@ final class Alg_WC_EU_VAT {
 	protected static $_instance = null;
 
 	/**
-	 * Main Alg_WC_EU_VAT Instance
+	 * Main Alg_WC_EU_VAT Instance.
 	 *
 	 * Ensures only one instance of Alg_WC_EU_VAT is loaded or can be loaded.
 	 *
@@ -67,7 +67,7 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * Alg_WC_EU_VAT Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.2
 	 * @since   1.0.0
 	 *
 	 * @access  public
@@ -89,6 +89,9 @@ final class Alg_WC_EU_VAT {
 
 		// Set up localisation
 		add_action( 'init', array( $this, 'localize' ) );
+
+		// Declare compatibility with custom order tables for WooCommerce
+		add_action( 'before_woocommerce_init', array( $this, 'wc_declare_compatibility' ) );
 
 		if ( ! did_action( 'get_header' ) ){
 			// Define standard session type for admin
@@ -122,6 +125,31 @@ final class Alg_WC_EU_VAT {
 			false,
 			dirname( plugin_basename( ALG_WC_EU_VAT_FILE ) ) . '/langs/'
 		);
+	}
+
+	/**
+	 * wc_declare_compatibility.
+	 *
+	 * @version 4.2.2
+	 * @since   2.9.12
+	 *
+	 * @see     https://github.com/woocommerce/woocommerce/wiki/High-Performance-Order-Storage-Upgrade-Recipe-Book#declaring-extension-incompatibility
+	 */
+	function wc_declare_compatibility() {
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			$files = (
+				defined( 'ALG_WC_EU_VAT_FILE_FREE' ) ?
+				array( ALG_WC_EU_VAT_FILE, ALG_WC_EU_VAT_FILE_FREE ) :
+				array( ALG_WC_EU_VAT_FILE )
+			);
+			foreach ( $files as $file ) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+					'custom_order_tables',
+					$file,
+					true
+				);
+			}
+		}
 	}
 
 	/**
