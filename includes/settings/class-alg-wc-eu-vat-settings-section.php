@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Section Settings
  *
- * @version 3.0.0
+ * @version 4.2.3
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -50,6 +50,34 @@ class Alg_WC_EU_VAT_Settings_Section {
 	function settings_section( $sections ) {
 		$sections[ $this->id ] = $this->desc;
 		return $sections;
+	}
+
+	/**
+	 * get_all_user_roles.
+	 *
+	 * @version 1.6.0
+	 * @since   1.6.0
+	 */
+	function get_all_user_roles() {
+		global $wp_roles;
+		$guest_role = array(
+			'guest' => array(
+				'name'         => __( 'Guest', 'eu-vat-for-woocommerce' ),
+				'capabilities' => array(),
+			),
+		);
+		$all_roles = array_merge(
+			$guest_role,
+			apply_filters(
+				'editable_roles',
+				(
+					isset( $wp_roles ) && is_object( $wp_roles ) ?
+					$wp_roles->roles :
+					array()
+				)
+			)
+		);
+		return wp_list_pluck( $all_roles, 'name' );
 	}
 
 }

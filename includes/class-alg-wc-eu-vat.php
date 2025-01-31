@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Main Class
  *
- * @version 4.2.2
+ * @version 4.2.3
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -29,14 +29,6 @@ final class Alg_WC_EU_VAT {
 	 * @var   Alg_WC_EU_VAT_Core class instance
 	 */
 	public $core = null;
-
-	/**
-	 * Admin settings.
-	 *
-	 * @since 2.12.12
-	 * @var   array
-	 */
-	public $settings = array();
 
 	/**
 	 * Instance.
@@ -171,7 +163,7 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * admin.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.3
 	 * @since   1.2.0
 	 */
 	function admin() {
@@ -187,11 +179,6 @@ final class Alg_WC_EU_VAT {
 
 		// Settings
 		add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_woocommerce_settings_tab' ) );
-		require_once plugin_dir_path( __FILE__ ) . 'settings/class-alg-wc-eu-vat-settings-section.php';
-		$this->settings = array();
-		$this->settings['general']    = require_once plugin_dir_path( __FILE__ ) . 'settings/class-alg-wc-eu-vat-settings-general.php';
-		$this->settings['validation'] = require_once plugin_dir_path( __FILE__ ) . 'settings/class-alg-wc-eu-vat-settings-validation.php';
-		$this->settings['admin']      = require_once plugin_dir_path( __FILE__ ) . 'settings/class-alg-wc-eu-vat-settings-admin.php';
 
 		// Rates tool
 		require_once plugin_dir_path( __FILE__ ) . 'admin/class-alg-wc-eu-vat-country-rates.php';

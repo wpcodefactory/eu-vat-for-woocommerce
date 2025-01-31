@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.2.2
+ * @version 4.2.3
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -71,7 +71,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_no_soap.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.3
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -80,6 +80,21 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 
 		$country_code = strtoupper( $country_code );
 		$api_url      = "https://ec.europa.eu/taxation_customs/vies/rest-api/ms/" . $country_code . "/vat/" . $vat_number;
+
+		// Request identifier
+		if (
+			'yes' === get_option( 'alg_wc_eu_vat_request_identifier', 'no' ) &&
+			'' !== ( $requester_country_code = get_option( 'alg_wc_eu_vat_requester_country_code', '' ) ) &&
+			'' !== ( $requester_vat_number   = get_option( 'alg_wc_eu_vat_requester_vat_number', '' ) )
+		) {
+			$api_url = add_query_arg(
+				array(
+					'requesterMemberStateCode' => $requester_country_code,
+					'requesterNumber'          => $requester_vat_number,
+				),
+				$api_url
+			);
+		}
 
 		switch ( $method ) {
 			case 'file_get_contents':
@@ -102,11 +117,17 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 				break;
 			default: // 'curl'
 				if ( function_exists( 'curl_version' ) ) {
+					// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_init, WordPress.WP.AlternativeFunctions.curl_curl_setopt, WordPress.WP.AlternativeFunctions.curl_curl_exec, WordPress.WP.AlternativeFunctions.curl_curl_close
 					$curl = curl_init( $api_url );
 					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
 					curl_setopt( $curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+					if ( apply_filters( 'alg_wc_eu_vat_validation_curl_disable_ssl', false ) ) {
+						curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, 0 );
+						curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0 );
+					}
 					$response = curl_exec( $curl );
 					curl_close( $curl );
+					// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_init, WordPress.WP.AlternativeFunctions.curl_curl_setopt, WordPress.WP.AlternativeFunctions.curl_curl_exec, WordPress.WP.AlternativeFunctions.curl_curl_close
 				} else {
 					alg_wc_eu_vat_maybe_log(
 						$country_code,
@@ -124,6 +145,20 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 				break;
 		}
 
+		// Filter response
+		$response = apply_filters( 'alg_wc_eu_vat_validation_response', $response, $method );
+
+		// Save response to the session
+		alg_wc_eu_vat_session_set(
+			'alg_wc_eu_vat_response_data',
+			(
+				false !== $response ?
+				json_decode( $response, false ) :
+				false
+			)
+		);
+
+		// No response
 		if ( false === $response ) {
 			alg_wc_eu_vat_maybe_log(
 				$country_code,
@@ -178,7 +213,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 4.2.0
+	 * @version 4.2.3
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -219,6 +254,11 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 						'requesterVatNumber'     => $requester_vat_number,
 					) );
 				}
+
+				// Filter response
+				$result = apply_filters( 'alg_wc_eu_vat_validation_response', $result, 'soap' );
+
+				// Save response to the session
 				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_response_data', $result );
 
 				/**
@@ -235,6 +275,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 					) :
 					null
 				);
+
 				if ( ! $return ) {
 					if ( isset( $result->valid ) ) {
 						if ( $result->valid ) {

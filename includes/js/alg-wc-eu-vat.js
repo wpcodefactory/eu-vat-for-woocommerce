@@ -1,11 +1,12 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 4.2.1
+ * @version 4.2.3
  * @since   1.0.0
  *
  * @author  WPFactory
  *
+ * @todo    (dev) rename `var_belgium_compatibility` to `vat_belgium_compatibility`?
  * @todo    (dev) replace `billing_eu_vat_number` and `billing_eu_vat_number_field` with `alg_wc_eu_vat_get_field_id()`
  * @todo    (dev) customizable event for `billing_company` (currently `input`; could be e.g., `change`)
  */
@@ -18,14 +19,20 @@ jQuery( function ( $ ) {
 	var input_timer_company_load;    // timer identifier (company require)
 	var input_timer_company;         // timer identifier (company)
 	var done_input_interval = 1000;  // time in ms
-	var vat_input                       = $( 'input[name="billing_eu_vat_number"]' );
-	var billing_company                 = $( 'input[name="billing_company"]' );
-	var vat_input_customer_choice       = $( 'input[name="billing_eu_vat_number_customer_decide"]' );
-	var vat_input_belgium_compatibility = $( 'input[name="billing_eu_vat_number_belgium_compatibility"]' );
-	var vat_input_billing_country       = $( 'select[name="billing_country"]' );
-	var var_belgium_compatibility       = 'no';
-	var vat_paragraph                   = $( 'p[id="billing_eu_vat_number_field"]' );
-	var vat_input_label                 = $( 'label[for="billing_eu_vat_number"]' );
+
+	var var_belgium_compatibility = 'no';
+
+	// Elements
+	var vat_input;
+	var billing_company;
+	var vat_input_customer_choice;
+	var vat_input_belgium_compatibility;
+	var vat_input_billing_country;
+	var vat_paragraph;
+	var vat_input_label;
+
+	// Init elements
+	init_elements();
 
 	// Add progress text
 	if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
@@ -55,43 +62,138 @@ jQuery( function ( $ ) {
 	// Initial validate
 	alg_wc_eu_vat_validate_vat( true );
 
-	if ( 'onblur' === alg_wc_eu_vat_ajax_object.action_trigger ) {
-		// On blur, start the countdown
-		vat_input.on( 'blur', function () {
-			clearTimeout( input_timer );
-			input_timer = setTimeout( alg_wc_eu_vat_validate_vat, done_input_interval );
-		} );
-	} else {
-		// On input, start the countdown
-		vat_input.on( 'input', function () {
-			clearTimeout( input_timer );
-			input_timer = setTimeout( alg_wc_eu_vat_validate_vat, done_input_interval );
-		} );
+	// Attach event handlers
+	attach_event_handlers();
+
+	// "Fluid Checkout for WooCommerce" plugin compatibility
+	if ( alg_wc_eu_vat_ajax_object.do_compatibility_fluid_checkout ) {
+		compatibility_fluid_checkout();
 	}
 
-	// On country change - re-validate
-	$( '#billing_country' ).on( 'change', alg_wc_eu_vat_validate_vat );
-	$( '#shipping_country' ).on( 'change', alg_wc_eu_vat_validate_vat );
-	$( '#ship-to-different-address' ).on( 'click', alg_wc_eu_vat_validate_vat );
+	/**
+	 * compatibility_fluid_checkout.
+	 *
+	 * @version  4.2.3
+	 * @since    4.2.3
+	 */
+	function compatibility_fluid_checkout() {
 
-	// Company name - re-validate
-	if ( alg_wc_eu_vat_ajax_object.do_check_company_name ) {
-		$( '#billing_company' ).on( 'input', function () {
-			clearTimeout( input_timer_company );
-			input_timer_company = setTimeout( alg_wc_eu_vat_validate_vat, done_input_interval );
+		// Vars
+		var saved_progress_text;
+		var saved_progress_class;
+		var saved_vat_paragraph_class;
+
+		/**
+		 * fc_checkout_fragments_replace_before.
+		 */
+		$( document.body ).on( 'fc_checkout_fragments_replace_before', function () {
+			saved_progress_text       = progress_text.text();
+			saved_progress_class      = progress_text.attr( 'class' );
+			saved_vat_paragraph_class = vat_paragraph.attr( 'class' );
 		} );
+
+		/**
+		 * fc_checkout_fragments_replace_after.
+		 */
+		$( document.body ).on( 'fc_checkout_fragments_replace_after', function () {
+
+			// Re-init elements
+			init_elements();
+
+			// Re-set class
+			vat_paragraph.addClass( saved_vat_paragraph_class );
+
+			// Re-add progress div
+			if (
+				'yes' === alg_wc_eu_vat_ajax_object.add_progress_text &&
+				0 == $( '#alg_wc_eu_vat_progress' ).length
+			) {
+				vat_paragraph.append( '<div id="alg_wc_eu_vat_progress"></div>' );
+				progress_text = $( 'div[id="alg_wc_eu_vat_progress"]' );
+				// Re-set text and class
+				progress_text.text( saved_progress_text );
+				progress_text.addClass( saved_progress_class );
+			}
+
+			// Re-attach event handlers
+			attach_event_handlers();
+
+		} );
+
 	}
 
-	vat_input_customer_choice.change( function () {
-		alg_wc_eu_vat_validate_vat();
-	} );
+	/**
+	 * init_elements.
+	 *
+	 * @version  4.2.3
+	 * @since    4.2.3
+	 */
+	function init_elements() {
+		vat_input                       = $( 'input[name="billing_eu_vat_number"]' );
+		billing_company                 = $( 'input[name="billing_company"]' );
+		vat_input_customer_choice       = $( 'input[name="billing_eu_vat_number_customer_decide"]' );
+		vat_input_belgium_compatibility = $( 'input[name="billing_eu_vat_number_belgium_compatibility"]' );
+		vat_input_billing_country       = $( 'select[name="billing_country"]' );
+		vat_paragraph                   = $( 'p[id="billing_eu_vat_number_field"]' );
+		vat_input_label                 = $( 'label[for="billing_eu_vat_number"]' );
+	}
 
-	vat_input_belgium_compatibility.change( function () {
-		alg_wc_eu_vat_validate_vat();
-	} );
+	/**
+	 * attach_event_handlers.
+	 *
+	 * @version  4.2.3
+	 * @since    4.2.3
+	 */
+	function attach_event_handlers() {
+
+		// On blur/input, start the countdown
+		vat_input.on(
+			(
+				'onblur' === alg_wc_eu_vat_ajax_object.action_trigger ?
+				'blur' :
+				'input'
+			),
+			function () {
+				clearTimeout( input_timer );
+				input_timer = setTimeout(
+					alg_wc_eu_vat_validate_vat,
+					done_input_interval
+				);
+			}
+		);
+
+		// On country change - re-validate
+		$( '#billing_country' ).on( 'change', alg_wc_eu_vat_validate_vat );
+		$( '#shipping_country' ).on( 'change', alg_wc_eu_vat_validate_vat );
+		$( '#ship-to-different-address' ).on( 'click', alg_wc_eu_vat_validate_vat );
+
+		// Company name - re-validate
+		if ( alg_wc_eu_vat_ajax_object.do_check_company_name ) {
+			$( '#billing_company' ).on( 'input', function () {
+				clearTimeout( input_timer_company );
+				input_timer_company = setTimeout(
+					alg_wc_eu_vat_validate_vat,
+					done_input_interval
+				);
+			} );
+		}
+
+		// Customer choice
+		vat_input_customer_choice.change( function () {
+			alg_wc_eu_vat_validate_vat();
+		} );
+
+		// Belgium compatibility
+		vat_input_belgium_compatibility.change( function () {
+			alg_wc_eu_vat_validate_vat();
+		} );
+
+	}
 
 	/**
 	 * alg_wc_eu_vat_require_on_company_fill.
+	 *
+	 * @todo    (dev) remove this (and use `is_company_name_not_empty()` directly)?
 	 */
 	function alg_wc_eu_vat_require_on_company_fill() {
 		is_company_name_not_empty();
@@ -123,10 +225,17 @@ jQuery( function ( $ ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 4.2.1
+	 * @version 4.2.3
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_validate_vat( load = false ) {
+
+		if (
+			load &&
+			alg_wc_eu_vat_ajax_object.do_compatibility_fluid_checkout
+		) {
+			load = false;
+		}
 
 		if ( 'billing_country' === $( this ).attr( 'name' ) ) {
 			vat_input.trigger( 'input' );
