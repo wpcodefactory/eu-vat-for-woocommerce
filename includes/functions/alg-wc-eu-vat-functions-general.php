@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - General
  *
- * @version 4.0.0
+ * @version 4.2.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -36,7 +36,12 @@ if ( ! function_exists( 'alg_wc_eu_vat_get_customers_location_by_ip' ) ) {
 			$location = WC_Geolocation::geolocate_ip( $ip_address );
 			// Base fallback
 			if ( empty( $location['country'] ) ) {
-				$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+				$location = wc_format_country_state_string(
+					apply_filters(
+						'woocommerce_customer_default_location',
+						get_option( 'woocommerce_default_country' )
+					)
+				);
 			}
 			return ( isset( $location['country'] ) ? $location['country'] : '' );
 		} else {
@@ -49,7 +54,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_start' ) ) {
 	/**
 	 * alg_wc_eu_vat_session_start.
 	 *
-	 * @version 3.1.0
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_start() {
@@ -58,23 +63,26 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_start' ) ) {
 		}
 		switch ( ALG_WC_EU_VAT_SESSION_TYPE ) {
 			case 'wc':
-				if ( function_exists( 'WC' ) && WC()->session && ! WC()->session->has_session() ) {
+				if (
+					function_exists( 'WC' ) &&
+					WC()->session &&
+					! WC()->session->has_session()
+				) {
 					WC()->session->set_customer_session_cookie( true );
 				}
 				break;
 			default: // 'standard'
 				if ( ! session_id() ) {
 					if ( ! headers_sent() ) {
-						session_start([
-							'read_and_close' => true,
-						]);
+						session_start( array( 'read_and_close' => true ) );
 					} else {
-						$message = __( 'Can\'t create session (headers already sent).', 'eu-vat-for-woocommerce' ) . ' ' .
-							__( 'Try selecting "WC session (recommended)" for "Session type" in "WPFactory > EU VAT > Admin & Advanced > Advanced Options".', 'eu-vat-for-woocommerce' );
-						alg_wc_eu_vat_maybe_log( false, false, false, false, $message );
+						$message = (
+							__( 'Can\'t create session (headers already sent).', 'eu-vat-for-woocommerce' ) . ' ' .
+							__( 'Try selecting "WC session (recommended)" for "Session type" in "WPFactory > EU VAT > Admin & Advanced > Advanced Options".', 'eu-vat-for-woocommerce' )
+						);
+						alg_wc_eu_vat_log( false, false, false, false, $message );
 					}
 				}
-				break;
 		}
 	}
 }
@@ -83,7 +91,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 	/**
 	 * alg_wc_eu_vat_session_get.
 	 *
-	 * @version 1.2.1
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_get( $key, $default = null ) {
@@ -92,14 +100,23 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 		}
 		switch ( ALG_WC_EU_VAT_SESSION_TYPE ) {
 			case 'wc':
-				return ( function_exists( 'WC' ) && WC()->session ? WC()->session->get( $key, $default ) : $default );
+				return (
+					function_exists( 'WC' ) && WC()->session ?
+					WC()->session->get( $key, $default ) :
+					$default
+				);
 			default: // 'standard'
-			if ( ! session_id() ) {
-				if ( ! headers_sent() ) {
+				if (
+					! session_id() &&
+					! headers_sent()
+				) {
 					session_start();
 				}
-			}
-				return ( isset( $_SESSION[ $key ] ) ? $_SESSION[ $key ] : $default );
+				return (
+					isset( $_SESSION[ $key ] ) ?
+					sanitize_text_field( wp_unslash( $_SESSION[ $key ] ) ) :
+					$default
+				);
 		}
 	}
 }
@@ -180,12 +197,12 @@ if ( ! function_exists( 'alg_wc_eu_vat_get_country_name_by_code' ) ) {
 	/**
 	 * alg_wc_eu_vat_get_country_name_by_code.
 	 *
-	 * @version 1.0.0
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_get_country_name_by_code( $country_code ) {
 		$countries = WC()->countries->get_countries();
-		return ( isset( $countries[ $country_code ] ) ? $countries[ $country_code ] : $country_code );
+		return ( $countries[ $country_code ] ?? $country_code );
 	}
 }
 
@@ -200,6 +217,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_get_order_id' ) ) {
 		if ( ! $_order || ! is_object( $_order ) ) {
 			return 0;
 		}
-		return ( alg_wc_eu_vat()->core->is_wc_version_below_3_0_0 ? $_order->id : $_order->get_id() );
+		return (
+			alg_wc_eu_vat()->core->is_wc_version_below_3_0_0 ?
+			$_order->id :
+			$_order->get_id()
+		);
 	}
 }

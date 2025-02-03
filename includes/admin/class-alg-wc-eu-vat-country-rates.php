@@ -37,9 +37,13 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 		global $wpdb;
 
 		// Get all the rates and locations. Snagging all at once should significantly cut down on the number of queries.
-		$rates     = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rates` WHERE `tax_rate_class` = %s ORDER BY `tax_rate_order`;",
-			sanitize_title( $tax_class ) ) );
-		$locations = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rate_locations`" );
+		$rates     = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->prepare(
+				"SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rates` WHERE `tax_rate_class` = %s ORDER BY `tax_rate_order`;",
+				sanitize_title( $tax_class )
+			)
+		);
+		$locations = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rate_locations`" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		// Set the rates keys equal to their ids.
 		$rates = array_combine( wp_list_pluck( $rates, 'tax_rate_id' ), $rates );
@@ -158,7 +162,11 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	function success_notice() {
 		$class = 'notice notice-info';
 		$message = __( 'EU country VAT rates were successfully added.', 'eu-vat-for-woocommerce' );
-		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+		printf(
+			'<div class="%1$s"><p>%2$s</p></div>',
+			esc_attr( $class ),
+			esc_html( $message )
+		);
 	}
 
 	/**

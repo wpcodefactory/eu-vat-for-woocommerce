@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.2.3
+ * @version 4.2.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -372,7 +372,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 4.2.1
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `bloock_api`: rename
@@ -424,7 +424,7 @@ class Alg_WC_EU_VAT_AJAX {
 					false
 				);
 				if ( ! $is_valid && ! $is_county_valid ) {
-					alg_wc_eu_vat_maybe_log(
+					alg_wc_eu_vat_log(
 						$eu_vat_number['country'],
 						$eu_vat_number['number'],
 						$billing_company,

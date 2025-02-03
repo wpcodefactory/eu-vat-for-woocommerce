@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin User List
  *
- * @version 4.2.0
+ * @version 4.2.4
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -28,13 +28,12 @@ class Alg_WC_EU_VAT_Admin_User_List {
 	/**
 	 * get_value.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.4
 	 * @since   4.0.0
 	 */
 	function get_value() {
 		return (
 			(
-				isset( $_GET['billing_eu_vat_number'] ) &&
 				isset( $_GET['billing_eu_vat_number'][0] ) &&
 				'yes' === sanitize_text_field( wp_unslash( $_GET['billing_eu_vat_number'][0] ) )
 			) ?

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Blocks Initialize
  *
- * @version 4.2.2
+ * @version 4.2.4
  *
  * @author  WPFactory
  */
@@ -12,6 +12,32 @@ use Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema;
 use Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema;
 
 defined( 'ABSPATH' ) || exit;
+
+if ( ! function_exists( 'alg_wc_eu_vat_is_checkout_block_enabled' ) ) {
+	/**
+	 * alg_wc_eu_vat_is_checkout_block_enabled.
+	 *
+	 * @version 4.2.4
+	 * @since   4.2.4
+	 */
+	function alg_wc_eu_vat_is_checkout_block_enabled() {
+		return (
+			'yes' === get_option( 'alg_wc_eu_vat_enable_checkout_block_field', 'no' ) &&
+			'no' === get_option( 'alg_wc_eu_vat_hide_eu_vat', 'no' ) &&
+			version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' )
+		);
+	}
+}
+
+/**
+ * Check if checkout block is enabled.
+ *
+ * @version 4.2.4
+ * @since   4.2.4
+ */
+if ( ! alg_wc_eu_vat_is_checkout_block_enabled() ) {
+	return;
+}
 
 /**
  * woocommerce_blocks_loaded.

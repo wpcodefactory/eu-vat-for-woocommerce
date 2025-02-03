@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.2.3
+ * @version 4.2.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -14,10 +14,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_parse_vat.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.4
 	 * @since   1.1.0
 	 *
-	 * @todo    (dev) `alg_wc_eu_vat_maybe_log`: extract ID from `$full_vat_number`?
+	 * @todo    (dev) `alg_wc_eu_vat_log`: extract ID from `$full_vat_number`?
 	 */
 	function alg_wc_eu_vat_parse_vat( $full_vat_number, $billing_country ) {
 		if ( ! preg_match( '/^[a-zA-Z0-9]+$/', $full_vat_number ) ) {
@@ -37,7 +37,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 			) {
 				$number = substr( $full_vat_number, 2 );
 			} else {
-				alg_wc_eu_vat_maybe_log(
+				alg_wc_eu_vat_log(
 					$country,
 					$full_vat_number,
 					'',
@@ -71,7 +71,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_no_soap.
 	 *
-	 * @version 4.2.3
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -101,7 +101,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 				if ( ini_get( 'allow_url_fopen' ) ) {
 					$response = file_get_contents( $api_url );
 				} else {
-					alg_wc_eu_vat_maybe_log(
+					alg_wc_eu_vat_log(
 						$country_code,
 						$vat_number,
 						$billing_company,
@@ -129,7 +129,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 					curl_close( $curl );
 					// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_init, WordPress.WP.AlternativeFunctions.curl_curl_setopt, WordPress.WP.AlternativeFunctions.curl_curl_exec, WordPress.WP.AlternativeFunctions.curl_curl_close
 				} else {
-					alg_wc_eu_vat_maybe_log(
+					alg_wc_eu_vat_log(
 						$country_code,
 						$vat_number,
 						$billing_company,
@@ -160,7 +160,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 
 		// No response
 		if ( false === $response ) {
-			alg_wc_eu_vat_maybe_log(
+			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
 				$billing_company,
@@ -177,7 +177,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 			isset( $decoded_result['isValid'] ) &&
 			$decoded_result['isValid']
 		) {
-			alg_wc_eu_vat_maybe_log(
+			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
 				$billing_company,
@@ -196,7 +196,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 
 			return true;
 		} else {
-			alg_wc_eu_vat_maybe_log(
+			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
 				$billing_company,
@@ -213,7 +213,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 4.2.3
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -279,7 +279,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 				if ( ! $return ) {
 					if ( isset( $result->valid ) ) {
 						if ( $result->valid ) {
-							alg_wc_eu_vat_maybe_log(
+							alg_wc_eu_vat_log(
 								$country_code,
 								$vat_number,
 								$billing_company,
@@ -295,7 +295,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 							alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company', true );
 
 						} else {
-							alg_wc_eu_vat_maybe_log(
+							alg_wc_eu_vat_log(
 								$country_code,
 								$vat_number,
 								$billing_company,
@@ -304,7 +304,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 							);
 						}
 					} else {
-						alg_wc_eu_vat_maybe_log(
+						alg_wc_eu_vat_log(
 							$country_code,
 							$vat_number,
 							$billing_company,
@@ -313,7 +313,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 						);
 					}
 				} else {
-					alg_wc_eu_vat_maybe_log(
+					alg_wc_eu_vat_log(
 						$country_code,
 						$vat_number,
 						$billing_company,
@@ -331,7 +331,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 
 				return $return;
 			} else {
-				alg_wc_eu_vat_maybe_log(
+				alg_wc_eu_vat_log(
 					$country_code,
 					$vat_number,
 					$billing_company,
@@ -342,7 +342,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 				return null;
 			}
 		} catch ( Exception $exception ) {
-			alg_wc_eu_vat_maybe_log(
+			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
 				$billing_company,
@@ -368,7 +368,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 
 		} catch ( SoapFault $fault ) {
 
-			alg_wc_eu_vat_maybe_log(
+			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
 				$billing_company,
@@ -428,7 +428,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -458,7 +458,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 				$conjuncted_vat_number = $country_code . '' . $vat_number;
 				if ( isset( $sanitized_vat_numbers[0] ) ) {
 					if ( in_array( $conjuncted_vat_number, $sanitized_vat_numbers ) ) {
-						alg_wc_eu_vat_maybe_log(
+						alg_wc_eu_vat_log(
 							$country_code,
 							$vat_number,
 							$billing_company,
@@ -475,7 +475,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 		$validate_status = alg_wc_eu_vat_validate_from_session( $country_code, $vat_number, $billing_company );
 
 		if ( $validate_status ) {
-			alg_wc_eu_vat_maybe_log(
+			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
 				$billing_company,
@@ -512,7 +512,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_uk.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -527,7 +527,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 				if ( ini_get( 'allow_url_fopen' ) ) {
 					$response = file_get_contents( $api_url );
 				} else {
-					alg_wc_eu_vat_maybe_log(
+					alg_wc_eu_vat_log(
 						$country_code,
 						$vat_number,
 						$billing_company,
@@ -548,7 +548,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 					$response = curl_exec( $curl );
 					curl_close( $curl );
 				} else {
-					alg_wc_eu_vat_maybe_log(
+					alg_wc_eu_vat_log(
 						$country_code,
 						$vat_number,
 						$billing_company,
@@ -565,7 +565,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 		}
 
 		if ( false === $response ) {
-			alg_wc_eu_vat_maybe_log(
+			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
 				$billing_company,
@@ -585,7 +585,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 
 		// API error
 		if ( isset( $responsedecode['code'] ) ) {
-			alg_wc_eu_vat_maybe_log(
+			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
 				$billing_company,
@@ -626,7 +626,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 		);
 		if ( ! $return ) {
 			if ( $responsedecode['target'] ) {
-				alg_wc_eu_vat_maybe_log(
+				alg_wc_eu_vat_log(
 					$country_code,
 					$vat_number,
 					$billing_company,
@@ -642,7 +642,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company', true );
 
 			} else {
-				alg_wc_eu_vat_maybe_log(
+				alg_wc_eu_vat_log(
 					$country_code,
 					$vat_number,
 					$billing_company,
@@ -651,7 +651,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 				);
 			}
 		} else {
-			alg_wc_eu_vat_maybe_log(
+			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
 				$billing_company,

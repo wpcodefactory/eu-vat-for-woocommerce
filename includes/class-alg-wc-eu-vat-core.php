@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.1.0
+ * @version 4.2.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -43,7 +43,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) "eu vat number" to "eu vat"?
@@ -84,9 +84,10 @@ class Alg_WC_EU_VAT_Core {
 		// Default value
 		add_filter( 'default_checkout_' . alg_wc_eu_vat_get_field_id(), array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
 
-		// Frontend
+		// Frontend; Billing fields
 		if ( 'yes' !== get_option( 'alg_wc_eu_vat_hide_eu_vat', 'no' ) ) {
 			add_filter( 'woocommerce_checkout_fields', array( $this, 'add_eu_vat_checkout_field_to_frontend' ), 99 );
+			add_filter( 'woocommerce_billing_fields', array( $this, 'add_frontend_edit_billing_fields' ), 10 );
 		}
 
 		// Display
@@ -110,9 +111,6 @@ class Alg_WC_EU_VAT_Core {
 
 		// Keep VAT in selected countries; Keep VAT if shipping country is different from billing country
 		add_filter( 'alg_wc_eu_vat_maybe_exclude_vat', array( $this, 'maybe_exclude_vat_free' ) );
-
-		// Billing fields
-		add_filter( 'woocommerce_billing_fields', array( $this, 'add_frontend_edit_billing_fields' ), 10 );
 
 		// Orders
 		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-orders.php';
@@ -575,14 +573,14 @@ class Alg_WC_EU_VAT_Core {
 	 * @since   1.0.0
 	 */
 	function start_session() {
-		$curl = rtrim($this->current_url(),'/');
-		$home = rtrim(home_url(),'/');
-		if(!( $curl == $home )){
+		$curl = rtrim( $this->current_url(), '/' );
+		$home = rtrim( home_url(), '/' );
+		if ( ! ( $curl == $home ) ) {
 
-			$checkout_page_url = rtrim(wc_get_checkout_url(), '/');
-			$cart_url = rtrim(get_permalink( wc_get_page_id( 'cart' ) ), '/');
+			$checkout_page_url = rtrim( wc_get_checkout_url(), '/' );
+			$cart_url          = rtrim( get_permalink( wc_get_page_id( 'cart' ) ), '/' );
 
-			if($curl == $cart_url || $curl == $checkout_page_url){
+			if ( $curl == $cart_url || $curl == $checkout_page_url ) {
 				alg_wc_eu_vat_session_start();
 
 				$args = array();
@@ -600,17 +598,15 @@ class Alg_WC_EU_VAT_Core {
 					}
 				}
 			}
-		}else{
-			if('yes' === get_option( 'alg_wc_eu_vat_sitepress_optimizer_dynamic_caching', 'no' ))
-			{
-				if($curl == 'test-url-cache'){
+		} else {
+			if ( 'yes' === get_option( 'alg_wc_eu_vat_sitepress_optimizer_dynamic_caching', 'no' ) ) {
+				if ( 'test-url-cache' == $curl ) {
 					$return = array(
 						'status'  => 200,
 						'data'    => array(),
-						'message' => 'La URL está en la caché'
+						'message' => 'La URL está en la caché',
 					);
-
-					wp_send_json($return);
+					wp_send_json( $return );
 				}
 			}
 		}
@@ -706,7 +702,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * check_and_save_eu_vat.
 	 *
-	 * @version 1.7.1
+	 * @version 4.2.4
 	 * @since   1.7.1
 	 *
 	 * @todo    (dev) use in `Alg_WC_EU_VAT_AJAX::alg_wc_eu_vat_validate_action()`
@@ -718,7 +714,7 @@ class Alg_WC_EU_VAT_Core {
 			$is_county_valid = ( $country_by_ip === $eu_vat_number['country'] );
 			$is_valid        = $is_county_valid ? alg_wc_eu_vat_validate_vat( $eu_vat_number['country'], $eu_vat_number['number'], $billing_company ) : false;
 			if ( ! $is_county_valid ) {
-				alg_wc_eu_vat_maybe_log(
+				alg_wc_eu_vat_log(
 					$eu_vat_number['country'],
 					$eu_vat_number['number'],
 					$billing_company,
@@ -817,7 +813,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.4
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) simplify the code!
@@ -924,7 +920,7 @@ class Alg_WC_EU_VAT_Core {
 							$conjuncted_vat_number = $billing_country . $eu_vat_number['number'];
 							if ( isset( $sanitized_vat_numbers[0] ) ) {
 								if ( in_array( $conjuncted_vat_number, $sanitized_vat_numbers ) ) {
-									alg_wc_eu_vat_maybe_log(
+									alg_wc_eu_vat_log(
 										$eu_vat_number['country'],
 										$eu_vat_number['number'],
 										$billing_company,
@@ -988,7 +984,7 @@ class Alg_WC_EU_VAT_Core {
 						),
 						'error'
 					);
-					alg_wc_eu_vat_maybe_log(
+					alg_wc_eu_vat_log(
 						( isset( $_posted['billing_country'] ) ? esc_attr( $_posted['billing_country'] ) : '' ),
 						esc_attr( $_posted[ alg_wc_eu_vat_get_field_id() ] ),
 						( isset( $_posted['billing_company'] ) ? esc_attr( $_posted['billing_company'] ) : '' ),

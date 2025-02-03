@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.7
-Stable tag: 4.2.3
+Stable tag: 4.2.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -285,6 +285,13 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.2.4 - 03/02/2025 =
+* Fix - Hide EU VAT field from checkout - Fixed.
+* Dev - Security - Output escaped.
+* Dev - Security - Input sanitized.
+* Dev - Languages - POT file regenerated with WP-CLI.
+* Dev - Code refactoring.
 
 = 4.2.3 - 31/01/2025 =
 * Dev - Request identifier - "cURL" and "Simple" validation methods included.

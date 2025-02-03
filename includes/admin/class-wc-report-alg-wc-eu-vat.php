@@ -2,7 +2,7 @@
 /**
  * Taxes by EU VAT country report.
  *
- * @version 4.2.0
+ * @version 4.2.4
  * @since   1.5.0
  *
  * @package WooCommerce/Admin/Reports
@@ -111,7 +111,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 	/**
 	 * Get the main chart.
 	 *
-	 * @version 4.2.0
+	 * @version 4.2.4
 	 * @since   1.5.0
 	 */
 	public function get_main_chart() {
@@ -165,7 +165,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 					foreach ( $tax_rows as $country => $tax_row ) {
 						?>
 						<tr>
-							<th scope="row"><?php echo $this->get_flag_img( $country ); ?></th>
+							<th scope="row"><?php echo wp_kses_post( $this->get_flag_img( $country ) ); ?></th>
 							<td class="total_row"><?php echo (int) $tax_row['count']; ?></td>
 							<td class="total_row"><?php echo wp_kses_post( wc_price( $tax_row['sum'] ) ); ?></td>
 							<td class="total_row"><?php echo wp_kses_post( wc_price( $tax_row['sum_no_tax'] ) ); ?></td>

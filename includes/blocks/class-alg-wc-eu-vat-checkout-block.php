@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.2.0
+ * @version 4.2.4
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -17,12 +17,12 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.4
 	 * @since   4.0.0
 	 */
 	function __construct() {
 
-		if ( ! $this->is_enabled() ) {
+		if ( ! alg_wc_eu_vat_is_checkout_block_enabled() ) {
 			return;
 		}
 
@@ -44,19 +44,6 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	}
 
 	/**
-	 * is_enabled.
-	 *
-	 * @version 4.0.0
-	 * @since   4.0.0
-	 */
-	function is_enabled() {
-		return (
-			'yes' === get_option( 'alg_wc_eu_vat_enable_checkout_block_field', 'no' ) &&
-			version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' )
-		);
-	}
-
-	/**
 	 * get_block_field_id.
 	 *
 	 * @version 4.0.0
@@ -74,8 +61,8 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	 */
 	function save_user_meta( $user_id ) {
 		$field_id = alg_wc_eu_vat_get_field_id();
-		if ( isset( $_POST[ $field_id ] ) ) {
-			$value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
+		if ( isset( $_POST[ $field_id ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			update_user_meta( $user_id, $this->get_block_field_id(), $value );
 		}
 	}
@@ -176,7 +163,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * alg_eu_vat_update_block_order_meta_eu_vat.
 	 *
-	 * @version 4.2.0
+	 * @version 4.2.4
 	 * @since   2.10.4
 	 *
 	 * @todo    (dev) `eu-vat-for-woocommerce-block-example`: rename
@@ -237,7 +224,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 							$conjuncted_vat_number    = $billing_country . $eu_vat_number['number'];
 							if ( isset( $sanitized_vat_numbers[0] ) ) {
 								if ( in_array( $conjuncted_vat_number, $sanitized_vat_numbers ) ) {
-									alg_wc_eu_vat_maybe_log(
+									alg_wc_eu_vat_log(
 										$eu_vat_number['country'],
 										$eu_vat_number['number'],
 										$billing_company,
@@ -263,7 +250,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 				$is_valid = apply_filters( 'alg_wc_eu_vat_is_valid_vat_at_checkout', $is_valid );
 				if ( ! $is_valid ) {
 
-					alg_wc_eu_vat_maybe_log(
+					alg_wc_eu_vat_log(
 						( $posted_billing_country ?? '' ),
 						$posted_eu_vat_id,
 						( $posted_billing_company ?? '' ),
