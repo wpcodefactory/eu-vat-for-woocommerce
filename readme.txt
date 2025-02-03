@@ -289,7 +289,6 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 = 4.2.4 - 03/02/2025 =
 * Fix - Hide EU VAT field from checkout - Fixed.
 * Dev - Security - Output escaped.
-* Dev - Security - Input sanitized.
 * Dev - Languages - POT file regenerated with WP-CLI.
 * Dev - Code refactoring.
 

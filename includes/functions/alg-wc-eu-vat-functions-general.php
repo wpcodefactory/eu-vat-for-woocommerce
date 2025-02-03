@@ -91,7 +91,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 	/**
 	 * alg_wc_eu_vat_session_get.
 	 *
-	 * @version 4.2.4
+	 * @version 1.2.1
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_get( $key, $default = null ) {
@@ -114,7 +114,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 				}
 				return (
 					isset( $_SESSION[ $key ] ) ?
-					sanitize_text_field( wp_unslash( $_SESSION[ $key ] ) ) :
+					$_SESSION[ $key ] :
 					$default
 				);
 		}
