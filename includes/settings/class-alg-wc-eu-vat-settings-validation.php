@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 4.2.3
+ * @version 4.2.5
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.3
+	 * @version 4.2.5
 	 * @since   1.5.0
 	 *
 	 * @todo    (feature) Message if customer's check for IP location country has failed!
@@ -38,34 +38,36 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	 */
 	function get_settings() {
 		return array(
+
+			// Validation Options
 			array(
-				'title'    => __( 'Validation Options', 'eu-vat-for-woocommerce' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_eu_vat_validation_options',
+				'title'             => __( 'Validation Options', 'eu-vat-for-woocommerce' ),
+				'type'              => 'title',
+				'id'                => 'alg_wc_eu_vat_validation_options',
 			),
 			array(
-				'title'    => __( 'Validate', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enables/disables EU VAT validation.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_validate',
-				'default'  => 'yes',
-				'type'     => 'checkbox',
+				'title'             => __( 'Validate', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Enables/disables EU VAT validation.', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_validate',
+				'default'           => 'yes',
+				'type'              => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Validate at sign-up form', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enables/disables EU VAT validation at sign-up page.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_validate_sign_up_page',
-				'default'  => 'yes',
-				'type'     => 'checkbox',
+				'title'             => __( 'Validate at sign-up form', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Enables/disables EU VAT validation at sign-up page.', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_validate_sign_up_page',
+				'default'           => 'yes',
+				'type'              => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Validate in "My account"', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enables/disables EU VAT validation in "My account".', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_validate_my_account',
-				'default'  => 'no',
-				'type'     => 'checkbox',
+				'title'             => __( 'Validate in "My account"', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Enables/disables EU VAT validation in "My account".', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_validate_my_account',
+				'default'           => 'no',
+				'type'              => 'checkbox',
 			),
 			array(
 				'desc'              => (
@@ -83,17 +85,15 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'alg_wc_eu_vat_raw' => true,
 			),
 			array(
-				'title'    => __( 'First validation method', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Change this if you are having issues when validating VAT. This only selects first method to try - if not succeeded, remaining methods will be used for validation.', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_first_method',
-				'default'  => 'soap',
-				'type'     => 'select',
-				'class'    => 'wc-enhanced-select',
-				'options'  => array(
-					'soap'              => __( 'SOAP', 'eu-vat-for-woocommerce' ),
-					'curl'              => __( 'cURL', 'eu-vat-for-woocommerce' ),
-					'file_get_contents' => __( 'Simple', 'eu-vat-for-woocommerce' ),
-				),
+				'type'              => 'sectionend',
+				'id'                => 'alg_wc_eu_vat_validation_options',
+			),
+
+			// VAT Exemption
+			array(
+				'title'    => __( 'VAT Exemption', 'eu-vat-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_eu_vat_validation_vat_exemption_options',
 			),
 			array(
 				'title'    => __( 'Remove VAT for validated numbers', 'eu-vat-for-woocommerce' ),
@@ -105,15 +105,14 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Keep VAT if shipping country is different from billing country', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enables for keep VAT if shipping country is different from billing country.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_preserv_vat_for_different_shipping',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'             => __( 'Keep VAT in selected countries', 'eu-vat-for-woocommerce' ),
-				'desc_tip'          => (
+				'title'    => __( 'Keep VAT in selected countries', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => (
 					__( 'This will validate the VAT, but won\'t exempt VAT for selected countries.', 'eu-vat-for-woocommerce' ) . ' ' .
 					sprintf(
 						/* Translators: %s: Settings path. */
@@ -121,16 +120,14 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 						__( 'WooCommerce > Settings > General > Store Address', 'eu-vat-for-woocommerce' )
 					)
 				),
-				'desc'              => '',
-				'id'                => 'alg_wc_eu_vat_preserve_in_base_country',
-				'default'           => 'no',
-				'type'              => 'select',
-				'options'           => array(
+				'id'       => 'alg_wc_eu_vat_preserve_in_base_country',
+				'default'  => 'no',
+				'type'     => 'select',
+				'options'  => array(
 					'yes'  => __( 'Base (i.e., store) country', 'eu-vat-for-woocommerce' ),
 					'list' => __( 'Comma separated list', 'eu-vat-for-woocommerce' ),
 					'no'   => __( 'Disable', 'eu-vat-for-woocommerce' ),
 				),
-				'custom_attributes' => '',
 			),
 			array(
 				'desc_tip' => __( 'Ignored unless "Comma separated list" option is selected above.', 'eu-vat-for-woocommerce' ),
@@ -142,7 +139,17 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'id'       => 'alg_wc_eu_vat_preserve_in_base_country_locations',
 				'default'  => '',
 				'type'     => 'text',
-				'custom_attributes' => '',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_eu_vat_validation_vat_exemption_options',
+			),
+
+			// Country & Company
+			array(
+				'title'    => __( 'Country & Company', 'eu-vat-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_eu_vat_validation_country_and_company_options',
 			),
 			array(
 				'title'             => __( 'Check country by IP', 'eu-vat-for-woocommerce' ),
@@ -195,12 +202,15 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Allow VAT number input without country code', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'This will allow customers to enter VAT number without leading country code letters and still get VAT validated. In this case country will be automatically retrieved from billing country input.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_allow_without_country_code',
-				'default'  => 'no',
-				'type'     => 'checkbox',
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_eu_vat_validation_country_and_company_options',
+			),
+
+			// User Roles
+			array(
+				'title'    => __( 'User Roles', 'eu-vat-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_eu_vat_validation_user_role_options',
 			),
 			array(
 				'title'    => __( 'Always exempt VAT for selected user roles', 'eu-vat-for-woocommerce' ),
@@ -219,6 +229,38 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'multiselect',
 				'class'    => 'wc-enhanced-select',
 				'options'  => $this->get_all_user_roles(),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_eu_vat_validation_user_role_options',
+			),
+
+			// Advanced
+			array(
+				'title'    => __( 'Advanced', 'eu-vat-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_eu_vat_validation_advanced_options',
+			),
+			array(
+				'title'    => __( 'First validation method', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Change this if you are having issues when validating VAT. This only selects first method to try - if not succeeded, remaining methods will be used for validation.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_first_method',
+				'default'  => 'soap',
+				'type'     => 'select',
+				'class'    => 'wc-enhanced-select',
+				'options'  => array(
+					'soap'              => __( 'SOAP', 'eu-vat-for-woocommerce' ),
+					'curl'              => __( 'cURL', 'eu-vat-for-woocommerce' ),
+					'file_get_contents' => __( 'Simple', 'eu-vat-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'    => __( 'Allow VAT number input without country code', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'This will allow customers to enter VAT number without leading country code letters and still get VAT validated. In this case country will be automatically retrieved from billing country input.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_allow_without_country_code',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'title'    => __( 'Skip VAT validation for selected countries', 'eu-vat-for-woocommerce' ),
@@ -247,7 +289,6 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Force validate on cart and checkout page load/reload', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Enables/disables force validate on cart/checkout page.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_force_page_reload',
 				'default'  => 'no',
@@ -257,8 +298,8 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'title'    => __( 'Accept the VAT number if VIES is not available', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => sprintf(
 					/* Translators: %s: Error codes. */
-					__( 'Enables/disables Accept the VAT number if VIES is not available %s.', 'eu-vat-for-woocommerce' ),
-					'(<code>MS_UNAVAILABLE</code>, <code>GLOBAL_MAX_CONCURRENT_REQ</code>, <code>MS_MAX_CONCURRENT_REQ</code>)'
+					__( 'This will accept the VAT number if VIES is not available for error codes: %s.', 'eu-vat-for-woocommerce' ),
+					'<code>MS_UNAVAILABLE</code>, <code>GLOBAL_MAX_CONCURRENT_REQ</code>, <code>MS_MAX_CONCURRENT_REQ</code>'
 				),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_vies_not_available',
@@ -267,8 +308,9 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'type'     => 'sectionend',
-				'id'       => 'alg_wc_eu_vat_validation_options',
+				'id'       => 'alg_wc_eu_vat_validation_advanced_options',
 			),
+
 		);
 	}
 

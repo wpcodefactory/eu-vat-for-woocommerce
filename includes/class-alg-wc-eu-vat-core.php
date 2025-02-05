@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.2.4
+ * @version 4.2.5
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -39,6 +39,14 @@ class Alg_WC_EU_VAT_Core {
 	 * @since   4.0.0
 	 */
 	public $checkout_block;
+
+	/**
+	 * vat_details_data.
+	 *
+	 * @version 4.2.5
+	 * @since   4.2.5
+	 */
+	public $vat_details_data;
 
 	/**
 	 * Constructor.
@@ -285,12 +293,12 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * add_place_order_button_confirmation_script.
 	 *
-	 * @version 3.0.0
+	 * @version 4.2.5
 	 * @since   1.4.1
 	 */
 	function add_place_order_button_confirmation_script() {
 
-		if ( function_exists( 'is_checkout' ) && is_checkout() ) {
+		if ( alg_wc_eu_vat_is_checkout() ) {
 
 			wp_enqueue_script(
 				'alg-wc-eu-vat-place-order',
@@ -338,13 +346,16 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * always_show_zero_vat.
 	 *
-	 * @version 1.4.0
+	 * @version 4.2.5
 	 * @since   1.4.0
 	 *
 	 * @todo    (dev) remove `$zero_tax->amount`, `$zero_tax->tax_rate_id`, `$zero_tax->is_compound` (as they are not really used in `review-order` template)?
 	 */
 	function always_show_zero_vat( $tax_totals, $cart ) {
-		if ( empty( $tax_totals ) && is_checkout() ) {
+		if (
+			empty( $tax_totals ) &&
+			alg_wc_eu_vat_is_checkout()
+		) {
 			$zero_tax = new stdClass();
 			$zero_tax->amount           = 0.00;
 			$zero_tax->tax_rate_id      = 0;
@@ -652,12 +663,12 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * is_cart_or_checkout_or_ajax.
 	 *
-	 * @version 1.7.0
+	 * @version 4.2.5
 	 * @since   1.7.0
 	 */
 	function is_cart_or_checkout_or_ajax() {
 		return (
-			is_checkout() ||
+			alg_wc_eu_vat_is_checkout() ||
 			is_cart() ||
 			defined( 'WOOCOMMERCE_CHECKOUT' ) ||
 			defined( 'WOOCOMMERCE_CART' ) ||
@@ -759,25 +770,41 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * maybe_exclude_vat.
 	 *
-	 * @version 3.0.0
+	 * @version 4.2.5
 	 * @since   1.0.0
 	 *
+	 * @todo    (dev) remove `alg_wc_eu_vat_is_checkout()` check?
 	 * @todo    (fix) mini cart!
 	 */
 	function maybe_exclude_vat() {
-		if ( empty( WC()->customer ) || ! $this->is_cart_or_checkout_or_ajax() ) {
+
+		if (
+			empty( WC()->customer ) ||
+			! $this->is_cart_or_checkout_or_ajax()
+		) {
 			return;
 		}
 
-		if ( $this->check_current_user_roles( get_option( 'alg_wc_eu_vat_exempt_for_user_roles', array() ) ) ) {
+		if (
+			$this->check_current_user_roles(
+				get_option( 'alg_wc_eu_vat_exempt_for_user_roles', array() )
+			)
+		) {
 
 			$is_exempt = true;
 
-		} elseif ( $this->check_current_user_roles( get_option( 'alg_wc_eu_vat_not_exempt_for_user_roles', array() ) ) ) {
+		} elseif (
+			$this->check_current_user_roles(
+				get_option( 'alg_wc_eu_vat_not_exempt_for_user_roles', array() )
+			)
+		) {
 
 			$is_exempt = false;
 
-		} elseif ( $this->is_validate_and_exempt() && $this->is_valid_and_exists() ) {
+		} elseif (
+			$this->is_validate_and_exempt() &&
+			$this->is_valid_and_exists()
+		) {
 
 			$is_exempt = apply_filters( 'alg_wc_eu_vat_maybe_exclude_vat', true );
 
@@ -788,12 +815,22 @@ class Alg_WC_EU_VAT_Core {
 		}
 
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_validate_force_page_reload', 'no' ) ) {
-			if ( ( is_checkout() || is_cart() ) && ! $is_exempt ) {
+			if (
+				(
+					alg_wc_eu_vat_is_checkout() ||
+					is_cart()
+				) &&
+				! $is_exempt
+			) {
 				$billing_eu_vat_number = WC()->customer->get_meta( 'billing_eu_vat_number' );
 				$billing_country       = WC()->customer->get_meta( 'billing_country' );
 				$billing_company       = WC()->customer->get_meta( 'billing_company' );
 				if ( ! empty( $billing_eu_vat_number ) ) {
-					$is_valid = $this->check_and_save_eu_vat( $billing_eu_vat_number, $billing_country, $billing_company );
+					$is_valid = $this->check_and_save_eu_vat(
+						$billing_eu_vat_number,
+						$billing_country,
+						$billing_company
+					);
 					if ( $is_valid ) {
 						$is_exempt = apply_filters( 'alg_wc_eu_vat_maybe_exclude_vat', true );
 					}
@@ -808,6 +845,7 @@ class Alg_WC_EU_VAT_Core {
 		WC()->customer->set_is_vat_exempt( $is_exempt );
 
 		do_action( 'alg_wc_eu_vat_exempt_applied', $is_exempt );
+
 	}
 
 	/**

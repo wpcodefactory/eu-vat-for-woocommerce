@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.2.4
+ * @version 4.2.5
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -82,13 +82,13 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * deregister_field_if_not_checkout.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.5
 	 * @since   4.0.0
 	 */
 	function deregister_field_if_not_checkout() {
 		if (
 			function_exists( '__internal_woocommerce_blocks_deregister_checkout_field' ) &&
-			! is_checkout()
+			! alg_wc_eu_vat_is_checkout()
 		) {
 			__internal_woocommerce_blocks_deregister_checkout_field( 'alg_eu_vat' . '/' . alg_wc_eu_vat_get_field_id() );
 		}

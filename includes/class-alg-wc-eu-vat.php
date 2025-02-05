@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Main Class
  *
- * @version 4.2.3
+ * @version 4.2.5
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -59,7 +59,7 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * Alg_WC_EU_VAT Constructor.
 	 *
-	 * @version 4.2.2
+	 * @version 4.2.5
 	 * @since   1.0.0
 	 *
 	 * @access  public
@@ -84,11 +84,6 @@ final class Alg_WC_EU_VAT {
 
 		// Declare compatibility with custom order tables for WooCommerce
 		add_action( 'before_woocommerce_init', array( $this, 'wc_declare_compatibility' ) );
-
-		if ( ! did_action( 'get_header' ) ){
-			// Define standard session type for admin
-			define( 'ALG_WC_EU_VAT_SESSION_TYPE', 'standard' );
-		}
 
 		// Pro
 		if ( 'eu-vat-for-woocommerce-pro.php' === basename( ALG_WC_EU_VAT_FILE ) ) {

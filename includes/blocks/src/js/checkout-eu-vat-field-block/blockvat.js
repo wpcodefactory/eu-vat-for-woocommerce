@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.2.1
+ * @version 4.2.5
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -84,7 +84,8 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 		'channel': 'bloock_api',
 		'alg_wc_eu_vat_to_check': vat_number,
 		'billing_country': billingCountry,
-		'billing_company': billingCompany
+		'billing_company': billingCompany,
+		'shipping_country': cartData.shippingAddress.country,
 	} );
 
 	if ( progress ) {

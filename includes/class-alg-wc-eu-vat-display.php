@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Display
  *
- * @version 4.1.0
+ * @version 4.2.5
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -109,11 +109,11 @@ class Alg_WC_EU_VAT_Display {
 	/**
 	 * add_eu_vat_number_to_address_formats.
 	 *
-	 * @version 3.0.1
+	 * @version 4.2.5
 	 * @since   1.0.0
 	 */
 	function add_eu_vat_number_to_address_formats( $address_formats ) {
-		if ( is_checkout() ) {
+		if ( alg_wc_eu_vat_is_checkout() ) {
 			return $address_formats;
 		}
 

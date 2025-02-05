@@ -1,0 +1,609 @@
+== Changelog ==
+
+= 4.2.5 - 05/02/2025 =
+* Fix - Checkout block field - "Keep VAT if shipping country is different from billing country" option fixed.
+* Fix - Do not use session in the "Get VAT details" in admin.
+* Fix - Do not use transients in the "Get VAT details" admin notices.
+* Dev - VIES error - "cURL" and "Simple" validation methods included.
+* Dev - Admin settings - Validation - Descriptions updated.
+* Dev - Developers - Validation - `alg_wc_eu_vat_validation_methods` filter added.
+* Dev - Developers - `alg_wc_eu_vat_is_checkout` filter added.
+* Dev - Code refactoring.
+* Readme - Changelog cleanup.
+
+= 4.2.4 - 03/02/2025 =
+* Fix - Hide EU VAT field from checkout - Fixed.
+* Dev - Security - Output escaped.
+* Dev - Languages - POT file regenerated with WP-CLI.
+* Dev - Code refactoring.
+
+= 4.2.3 - 31/01/2025 =
+* Dev - Request identifier - "cURL" and "Simple" validation methods included.
+* Dev - Compatibility - "Fluid Checkout for WooCommerce" plugin option added (defaults to `no`).
+* Dev - Admin settings sections rearranged ("Validation & Progress" and "Admin & Advanced" split).
+* Dev - Code refactoring.
+* Dev - Developers - Validation - `alg_wc_eu_vat_validation_curl_disable_ssl` filter added.
+* Dev - Developers - Validation - `alg_wc_eu_vat_validation_response` filter added.
+
+= 4.2.2 - 28/01/2025 =
+* Dev - Admin - Validate VAT and remove taxes - Update the `is_vat_exempt` meta.
+* Dev - Admin - Validate VAT and remove taxes - Update the "Request Identifier" meta.
+* Dev - PHP notices fixed.
+* Dev - Admin settings descriptions updated.
+* Dev - Code refactoring.
+* Dev - Coding standards improved.
+
+= 4.2.1 - 26/01/2025 =
+* Fix - Empty EU VAT field - Do not validate when optional; correct message when required ("Progress Messages > Is required" option added).
+* Dev - Admin settings descriptions updated.
+* Dev - Code refactoring and cleanup.
+
+= 4.2.0 - 25/01/2025 =
+* Dev - Security - Output escaped.
+* Dev - Admin & Advanced - "Request identifier" options added (disabled by default).
+* Dev - Code refactoring.
+
+= 4.1.0 - 23/01/2025 =
+* Fix - Keep VAT in selected countries - Fixed.
+* Dev - Security - Output escaped.
+* Dev - Security - Input sanitized.
+* Dev - Admin settings descriptions updated.
+* Dev - Code refactoring and cleanup.
+* Dev - Coding standards improved.
+* WC tested up to: 9.6.
+
+= 4.0.0 - 19/01/2025 =
+* Fix - Sessions - Session status check added.
+* Fix - Keep VAT for specific products - "get_cart was called incorrectly" PHP notice fixed (`did_action( 'wp_loaded' )` check added).
+* Fix - Exempt VAT - Fixed.
+* Fix - Required / Optional in countries - Fixed.
+* Fix - Checkout block field - "Keep VAT in selected countries" option fixed.
+* Fix - Checkout block field - User meta copied (on `woocommerce_customer_save_address` and `woocommerce_created_customer`).
+* Fix - Checkout block field - The duplicated EU VAT field removed from the admin order edit page.
+* Fix - Checkout block field - The EU VAT field removed from the "My account > Account details".
+* Dev - Security - Output escaped.
+* Dev - Validation Options - 'Validate in "My account"' option added (defaults to `no`).
+* Dev - General - "Show VAT details in checkout" option added (defaults to `no`).
+* Dev - "Get VAT details" link added in order for retrieving VAT details.
+* Dev - VAT IDs with non-alphanumeric symbols are not allowed now.
+* Dev - Checkout block field - Block-related JavaScript code moved to a dedicated block file.
+* Dev - Admin settings descriptions updated.
+* Dev - Major code refactoring and cleanup.
+* Dev - Coding standards improved.
+
+= 3.2.4 - 10/01/2025 =
+* Fix - Checkout block field - Default value fixed.
+
+= 3.2.3 - 07/01/2025 =
+* Fix - When the "Admin > Checkout block field" option was enabled, the EU VAT field was hidden on the admin order edit page.
+
+= 3.2.2 - 31/12/2024 =
+* Fix - Show field for selected user roles only.
+
+= 3.2.1 - 29/12/2024 =
+* Dev - Code refactoring and cleanup.
+
+= 3.2.0 - 28/12/2024 =
+* Fix - "High-Performance Order Storage (HPOS)" compatibility.
+* Dev - Code refactoring.
+
+= 3.1.6 - 27/12/2024 =
+* Dev - Compatibility - WPML/Polylang - `wpml-config.xml` file added.
+* Dev - Composer - `autoloader-suffix` param added.
+* Dev - Key Manager - Library updated.
+* WC tested up to: 9.5.
+
+= 3.1.5 - 26/11/2024 =
+* Fix - VAT validation issue on block checkout.
+* Fix - Enable/disable progress messages.
+
+= 3.1.4 - 16/11/2024 =
+* Fix - VAT error message not disappearing after company name update.
+* Dev - Code refactoring and cleanup.
+
+= 3.1.3 - 15/11/2024 =
+* Plugin name updated (was "EU/UK VAT Manager for WooCommerce").
+
+= 3.1.2 - 14/11/2024 =
+* Fix - Missing library files uploaded.
+* Tested up to: 6.7.
+* WC tested up to: 9.4.
+
+= 3.1.1 - 09/11/2024 =
+* Dev - Initializing the plugin on the `plugins_loaded` action.
+* Dev - Code refactoring.
+
+= 3.1.0 - 08/11/2024 =
+* Dev - Plugin settings moved to the "WPFactory" menu.
+* Dev - "Recommendations" added.
+* Dev - "Key Manager" added.
+* Dev - Code refactoring and cleanup.
+
+= 3.0.1 - 30/10/2024 =
+* Fix - Adjusted the VAT validation message location during account creation.
+* Fix - Resolved localization shortcode {billing_eu_vat_number} issue in the block checkout.
+* Fix - Resolved error "Function get_cart was called incorrectly".
+* Dev - Code cleanup.
+
+= 3.0.0 - 23/10/2024 =
+* Fix - Localization issue.
+* Fix - Tax calculation on country change.
+* Fix - Cross-Site Request Forgery vulnerability.
+* Dev - Keep VAT for specific products.
+* Dev - General - "Enable plugin" option removed.
+* Dev - Admin settings descriptions updated.
+* Dev - Code refactoring and cleanup.
+* WC tested up to: 9.3.
+* WooCommerce added to the "Requires Plugins" (plugin header).
+
+= 2.12.14 - 26/09/2024 =
+* Fix - Cross-Site Scripting vulnerability.
+* Add - EU VAT filed to "My Account" - "Edit Address".
+
+= 2.12.13 - 23/09/2024 =
+* Fix - Cross-Site Scripting vulnerability.
+
+= 2.12.12 - 12/09/2024 =
+* Fix - HPOS error issue.
+
+= 2.12.11 - 06/09/2024 =
+* Add - Validation & Progress - Remove validation color.
+* WC tested up to: 9.2.
+
+= 2.12.10 - 30/08/2024 =
+* Fix - Skip validation when create user through API.
+
+= 2.12.9 - 28/08/2024 =
+* Fix - Order metabox HPOS function support.
+* Fix - Added a condition for the EU VAT field on the checkout and cart pages, restricting it from appearing on other pages where the object is not available.
+* Fix - Skip validation when create user through API.
+
+= 2.12.8 - 01/08/2024 =
+* Fix - `alg_wc_eu_vat_parse_vat()` - Trim VAT number with `['-', '.', ' ']`.
+* Tested up to: 6.6.
+
+= 2.12.7 - 30/07/2024 =
+* Fix - Accept VAT when VIES is down (extra catch soapFault).
+
+= 2.12.6 - 29/07/2024 =
+* Accept VAT when VIES is down (extra catch soapFault).
+* WC tested up to: 9.1.
+
+= 2.12.5 - 18/07/2024 =
+* Add - Admin & Advanced > VAT Validation for Orders Created Manually from the Admin Side.
+* WC tested up to: 9.0.
+
+= 2.12.4 - 17/07/2024 =
+* Fix - Added condition for filter_available_payment_gateways_allowed() for preserved countries.
+* Add - YITH invoice EU VAT field.
+
+= 2.12.3 - 02/07/2024 =
+* Fix - `eu_vat_admin_footer()` for admin order creation.
+
+= 2.12.2 - 01/07/2024 =
+* Fix - `admin_inline_js()` for admin order creation.
+
+= 2.12.1 - 30/06/2024 =
+* Fix - Deployment.
+
+= 2.12.0 - 30/06/2024 =
+* Fix - Checkout block compatibility.
+
+= 2.11.12 - 29/06/2024 =
+* Add - Autofill company name from VAT ID.
+
+= 2.11.11 - 28/06/2024 =
+* Add - Accept the VAT number if VIES is not available.
+
+= 2.11.10 - 27/06/2024 =
+* Add - Checkout block field.
+
+= 2.11.9 - 27/06/2024 =
+* Add - Force validate on cart and checkout page load/reload.
+
+= 2.11.8 - 26/06/2024 =
+* Fix - React constant error.
+
+= 2.11.7 - 26/06/2024 =
+* Update - WC Order HPOS EU VAT filter.
+
+= 2.11.6 - 25/06/2024 =
+* Fix - Checkout block VAT validation.
+
+= 2.11.5 - 18/06/2024 =
+* Fix - "Required if customer fills the company field" and "Show field for selected countries only" cross logic check and fixed.
+* Fix - Checkout block move EU VAT field to customer info section.
+* Fix - Some error notice.
+* Fix - Issue with "Keep VAT in selected countries".
+
+= 2.11.4 - 13/06/2024 =
+* Fix - "Allow VAT number input without country code" for Greek VATs.
+
+= 2.11.3 - 13/06/2024 =
+* Dev - HPOS - Admin orders list for EU VAT.
+
+= 2.11.2 - 09/06/2024 =
+* Fix - Checkout block error.
+
+= 2.11.1 - 05/06/2024 =
+* Dev - Update condition in `alg_eu_vat_update_block_order_meta_eu_vat()`.
+
+= 2.11.0 - 28/05/2024 =
+* Checkout block support.
+* WC tested up to: 8.9.
+
+= 2.10.3 - 04/04/2024 =
+* Fix - Error in `alg_wc_eu_vat_validate_vat_no_soap()` function.
+* Tested up to: 6.5.
+* WC tested up to: 8.7.
+
+= 2.10.2 - 26/03/2024 =
+* Fix - Optional text translation support.
+* Fix - Remove woocommerce-validated class on first load.
+
+= 2.10.1 - 26/03/2024 =
+* Add - Admin & Advance > Reduce concurrent request to VIES.
+* Fix - Code check for manual validation at checkout.
+
+= 2.10.0 - 21/03/2024 =
+* Add - Filter alg_wc_eu_vat_get_field_id, alg_wc_eu_vat_confirmation_bg_yes, alg_wc_eu_vat_confirmation_bg_no.
+* Fix - $ is undefined in alg-wc-eu-vat-place-order.js
+* Fix - Translation of yes / no button.
+
+= 2.9.21 - 20/03/2024 =
+* Add - Admin & Advance > Remove country from VAT number in REST API.
+
+= 2.9.20 - 19/03/2024 =
+* Fix - The "wpo_wcpdf_after_order_details" filter requires an additional condition to retrieve values from "exempt_vat_from_admin = yes".
+
+= 2.9.19 - 29/02/2024 =
+* Add - General - Remove the VAT field if the tax status is "none".
+
+= 2.9.18 - 04/12/2023 =
+* Add - Admin & Advanced > Enable manual validation of VAT numbers.
+* Add - Admin & Advanced > VAT numbers to pass validation.
+
+= 2.9.17 - 01/12/2023 =
+* Add - Admin & Advanced > VAT shifted text.
+
+= 2.9.16 - 29/11/2023 =
+* Fix - Update API url of VIES curl validation.
+* Fix - Update "Add progress messages" to default "yes".
+* Add - Validation & Progress > Validate action trigger.
+* Tested up to: 6.4.
+* WC tested up to: 8.3.
+
+= 2.9.15 - 15/11/2023 =
+* Fix - Company name match in lowercase.
+
+= 2.9.14 - 09/11/2023 =
+* Add: Validation & Progress > Validate at signup form.
+* WC tested up to: 8.2.
+
+= 2.9.13 - 21/09/2023 =
+* Update filter text "EU VAT not provided".
+* Adjust HPOS compatibility.
+* Tested up to: 6.3.
+* WC tested up to: 8.1.
+
+= 2.9.12 - 12/08/2023 =
+* Dev - HPOS compatibility.
+
+= 2.9.11 - 12/08/2023 =
+* Dev - Add new filter "EU VAT provided" to user table.
+* WC tested up to: 7.9.
+
+= 2.9.10 - 27/06/2023 =
+* Dev - Update JS function `alg_wc_eu_vat_validate_vat` with load flag.
+
+= 2.9.9 - 15/06/2023 =
+* Dev - Extend validation result with new hook `alg_wc_eu_vat_check_alternative`.
+* WC tested up to: 7.8.
+
+= 2.9.8 - 30/05/2023 =
+* Dev - Update with extra character trim with eu VAT validator response.
+* WC tested up to: 7.6.
+
+= 2.9.7 - 11/04/2023 =
+* Update woocommerce_before_calculate_totals priority from MAX to 99, so users can run their own overwrite.
+* Tested up to: 6.2.
+
+= 2.9.6 - 31/03/2023 =
+* Move to WPFactory.
+* Enhanced field validation on page load.
+
+= 2.9.5 - 18/03/2023 =
+* PDF invoicing compatibility is part of the free version.
+* Fixed a bug in field starting validation on checkout page load.
+* Altered classname to allow more control on the field.
+* WC tested up to: 7.5.
+
+= 2.9.4 - 08/03/2023 =
+* Enhanced field border color for validation (before & after entering values).
+
+= 2.9.3 - 21/02/2023 =
+* Fixed a bug to make VAT field mandatory if a company field is not empty.
+* Enhanced checkout VAT recalculations once VAT number changed/removed.
+* More compatibility with PHP 8.2 introduced by addressing deprecated methods.
+* WC tested up to: 7.4.
+
+= 2.9.2 - 06/02/2023 =
+* Fixed a bug in free version regarding "Preserve VAT in selected countries".
+* Enhanced handling for "Undefined_constant" errors.
+
+= 2.9.1 - 30/01/2023 =
+* Fixed warning message for Taxes group.
+* Enhanced VAT handling when manually editing an order for a preserved country.
+* Error messages in PHP 8.2 (creation of dynamic property).
+* Reverted options to select validation methods.
+
+= 2.9.0 - 14/01/2023 =
+* Improved session handling.
+* Fixed a bug showing PHP warning (title not defined).
+* WC tested up to: 7.3.
+
+= 2.8.5 - 06/12/2022 =
+* Removed cURL & Simple validation methods as they are no longer used on VIES.
+* Added new shortcodes to translate EU VAT field in WPML & Polylang.
+* Enhancement to UK validation method.
+
+= 2.8.4 - 29/11/2022 =
+* Enhanced session validation on checkout & cart pages, leading to better performance.
+* Added validation messages class names to tooltips.
+
+= 2.8.3 - 23/11/2022 =
+* Enhanced validation checks when using PHP sessions, making more compatibility with stores using multisites plugins.
+* New option to completely remove the field from checkout so you can control it using field ID with checkout page builders.
+* Progress messages got class names, allowing customizing them using CSS.
+
+= 2.8.2 - 18/11/2022 =
+* The plugin will automatically add VAT number to invoices in the popular plugin (PDF Invoices & Packing Slips).
+* Bug fixes in cache handling.
+
+= 2.8.1 - 13/11/2022 =
+* New feature: You can now show a custom message when VAT is valid but not matching company name (probably a minor typo).
+* Fixed a bug in show/hide field for countries.
+* Enhancements on registration values passed to VAT validation.
+* Tested up to: 6.1.
+* WC tested up to: 7.1.
+
+= 2.8.0 - 20/09/2022 =
+* Fixed a bug blocking checkout on valid numbers.
+* Allowed checking out if billing & shipping countries are different.
+* Enhanced VAT calculation when "Shipping to a different address" is unchecked without a refresh.
+* WC tested up to: 6.9.
+
+= 2.7.4 - 02/09/2022 =
+* Hotfix for a bug caused by SiteGround optimizer plugin and add related setting under Advanced tab.
+
+= 2.7.3 - 01/09/2022 =
+* Fixed several bugs when field is required/optional.
+* Fixed bug allowing checkout on black VAT even field is required.
+* Fixed a bug on option "Show field in these countries".
+* Enhanced caching mechanism on SiteGround hosting.
+* New feature: You can now verify if shipping country is same as billing country and preserve VAT if so.
+
+= 2.7.2 - 10/08/2022 =
+* Added a new option to make field required in all countries except selected.
+* WC tested up to: 6.8.
+
+= 2.7.1 - 04/07/2022 =
+* WC tested up to: 6.6.
+
+= 2.7.0 - 11/06/2022 =
+* Update: Preserve VAT in shop base country/specific countries is now in FREE version.
+* Tested up to: 6.0.
+* WC tested up to: 6.5.
+
+= 2.6.3 - 15/04/2022 =
+* Fixed an issue in validating VAT on signup if field was empty.
+* Fixed a PHP Deprecated warning message & PHP Uncaught TypeError: explode().
+* WC tested up to: 6.4.
+
+= 2.6.2 - 26/03/2022 =
+* Added dependency to the wp_enqueue_script function related to Ajax handling.
+* Fixed an issue when EU VAT field is optional while creating new users using REST-API.
+
+= 2.6.1 - 19/03/2022 =
+* Added a new option in the revamped "Required" section to make the VAT field required if company field is filled.
+* WC tested up to: 6.3.
+
+= 2.6.0 - 27/02/2022 =
+* Added a new option to make the field required on selected countries only.
+* Enhanced how coupons tax should be handled on checkout.
+* Changed PHP_MAX_INT priority from server max. to 99 to allow more control for admins.
+* Fixed Uncaught Error: Call to undefined function message.
+
+= 2.5.4 - 18/02/2022 =
+* Added an option to allow checkout even if VAT is not registered in VIES.
+* Added a new option to filter orders with VAT numbers in order admin page.
+* WC tested up to: 6.2.
+
+= 2.5.3 - 28/01/2022 =
+* Added an option to remove tax if customer is out of EU (Belgium regulations).
+* Added an option to collect & validate VAT numbers in signup forms.
+* Tested up to: 5.9.
+* WC tested up to: 6.1.
+
+= 2.5.2 - 11/12/2021 =
+* Compatibility issue with Wholesale plugin user roles.
+
+= 2.5.1 - 10/12/2021 =
+* New feature added: Allow specific payment gateway if VAT is valid (i.e. for B2B to allow wire transfers).
+* WC tested up to: 5.9.
+
+= 2.5.0 - 06/11/2021 =
+* Fixed a bug in showing EU VAT label if not filled.
+* WC tested up to: 5.8.
+
+= 2.4.5 - 10/10/2021 =
+* Enhanced EU VAT appearance in billing section so it's easily identified.
+* UK VAT numbers are space-tolerated so plugin will read VAT numbers with/without spaces.
+* WC tested up to: 5.7.
+
+= 2.4.4 - 20/09/2021 =
+* NEW: The plugin now validates UK VAT numbers as well.
+* WC tested up to: 5.6.
+
+= 2.4.3 - 06/08/2021 =
+* Fixed a warning message regarding AJAX being broken.
+
+= 2.4.2 - 26/07/2021 =
+* Added an option to hide validation messages in preserved countries.
+* Fixed a bug in removing VAT if shipping address is a forwarding address.
+* Tested up to: 5.8.
+
+= 2.4.1 - 13/07/2021 =
+* Added an option to validate VAT based on final destination (if order is sent to a forwarding address).
+* Fixed undefined index & order ID warning messages.
+* WC tested up to: 5.5.
+
+= 2.4.0 - 24/06/2021 =
+* Added a popup section to open official VIES website in orders backend (to verify VAT info on order).
+* WC tested up to: 5.4.
+
+= 2.3.3 - 16/05/2021 =
+* Fixed a bug was showing "Undefined index" errors when connecting through SSH.
+* WC tested up to: 5.3.
+
+= 2.3.2 - 03/05/2021 =
+* Fixed a bug in session not firing in store.
+* Added tolerance for dash (-) in case VAT number was entered with a dash.
+
+= 2.3.1 - 30/04/2021 =
+* Enhanced session configuration.
+* Added a feature to preserve tax if valid VAT number holders are not exempted (useful in Belgium).
+* WC tested up to: 5.2.
+
+= 2.3.0 - 20/04/2021 =
+* Added new option to allow user to select VAT option.
+* Added banners on the sidebar.
+* Added a filter to control changes updates.
+* Tested up to: 5.7.
+* WC tested up to: 5.1.
+
+= 2.2.5 - 28/02/2021 =
+* WC tested up to: 5.0.
+
+= 2.2.4 - 27/01/2020 =
+* WC tested up to: 4.9.
+
+= 2.2.3 - 30/12/2020 =
+* Changed default session type to WooCommerce session.
+* Tested up to: 5.6.
+* WC tested up to: 4.8.
+
+= 2.2.2 - 21/11/2020 =
+* WC tested up to: 4.7.
+* Plugin name updated.
+
+= 2.2.1 - 14/10/2020 =
+* Fixed a warning message that was appearing the Site Health Check.
+
+= 2.2.0 - 02/10/2020 =
+* Added more strings to be translatable using multi-language sites.
+* WC tested up to: 4.5.
+
+= 2.1.0 - 20/08/2020 =
+* Fixed a bug that wasn't exempting VAT on manual orders (WP backend).
+
+= 2.0.1 - 15/08/2020 =
+* Tested up to: 5.5.
+* WC tested up to: 4.3.
+
+= 2.0.0 - 25/06/2020 =
+* Fixed a bug that prevented showing the correct message (valid successful) for compatibility with some themes JS.
+* Enhanced the SOAP method via using better communication method with EU VAT servers.
+
+= 1.9.0 - 17/06/2020 =
+* Stopped calling the main JS file on all pages and keep it only on checkout for better performance.
+* Removed the string from a deprecated argument to get list of countries.
+* Fixed a minor issue that was causing error (failed to load external entity) in communicating with VIES servers in some cases.
+
+= 1.8.1 - 25/03/2020 =
+* WC tested up to: 4.0.
+
+= 1.8.0 - 23/12/2019 =
+* Dev - Plugin author updated.
+
+= 1.7.2 - 12/12/2019 =
+* Dev - General - Frontend Options - "Max length" option added.
+* Dev - Validation - "Skip VAT validation for selected countries" option moved from to "Advanced" section.
+* Dev - Code refactoring.
+
+= 1.7.1 - 05/12/2019 =
+* Fix - Validation - Check for matching billing country code - Fixed for Greece (`EL` is replaced with `GR` when comparing country codes).
+* Dev - Admin & Advanced - "Force VAT recheck on checkout" option added.
+* Dev - Debug - "Error: VAT is not valid" message added to the log.
+* Dev - Code refactoring.
+* Tested up to: 5.3.
+
+= 1.7.0 - 08/11/2019 =
+* Dev - Validation - "Always exempt VAT for selected user roles" and "Always not exempt VAT for selected user roles" options added.
+* Dev - Admin & Advanced - Debug - "Country code does not match" message added to the log.
+* Dev - Admin & Advanced - Session type - "WC session" option marked as "recommended".
+* Dev - Code refactoring.
+* WC tested up to: 3.8.
+
+= 1.6.1 - 16/10/2019 =
+* Dev - Validation - Check company name - Now converting all values to uppercase before comparing.
+* Dev - JavaScript - Better event for company validation.
+
+= 1.6.0 - 15/10/2019 =
+* Dev - General - Frontend Options - "Show field for selected user roles only" option added.
+* Dev - Validation - "Check company name" option added.
+* Dev - Admin & Advanced - Advanced Options - "Debug" option added.
+* Dev - Code refactoring.
+
+= 1.5.0 - 13/08/2019 =
+* Dev - Admin - Order List - "EU VAT" column added.
+* Dev - Admin - Reports - Taxes - "EU VAT" report added.
+* Dev - Admin - EU country VAT Rates Tool - Duplicates are no longer added for the country.
+* Dev - Admin settings split into sections.
+* Dev - Allow VAT number input without country code - Additional country fallback added.
+* Dev - Functions - General - `alg_wc_eu_vat_session_start()` - Additional `headers_sent()` check added.
+* WC tested up to: 3.7.
+* Tested up to: 5.2.
+
+= 1.4.1 - 04/05/2019 =
+* Fix - Preserve VAT in selected countries - Bug (when "Allow VAT number input without country code" is enabled) fixed.
+* Fix - Show field for selected countries only - Bug (when "Required" is enabled) fixed.
+* Dev - Frontend Options - "Confirmation notice" options added.
+* Dev - Code refactoring.
+* Dev - "WC tested up to" updated.
+
+= 1.4.0 - 06/03/2019 =
+* Fix - "Preserve VAT in selected countries" fixed when "Allow VAT number input without country code" is enabled.
+* Dev - Frontend Options - "Always show zero VAT" option added.
+* Dev - `[alg_wc_eu_vat_translate]` shortcode added.
+* Dev - Shortcodes are now also processed in field label, placeholder, description and validation message options.
+* Dev - Validation - Preserve VAT in selected countries - "Comma separated list" option added.
+* Dev - Frontend Options - "Show field for selected countries only" option added.
+
+= 1.3.0 - 31/01/2019 =
+* Fix - Default field value on the checkout fixed.
+* Dev - Display Options - Display - Multiple positions are now allowed (i.e. multiselect).
+* Dev - Display Options - Display - In billing address - Field is now editable ("My Account > Addresses").
+* Dev - Frontend Options - "Label CSS class" option added.
+* Dev - Code refactoring.
+
+= 1.2.1 - 30/01/2019 =
+* Dev - Advanced Options - "Session type" option added.
+* Dev - Admin settings - "Your settings have been reset" notice added.
+
+= 1.2.0 - 12/11/2018 =
+* Fix - AJAX - Possible "undefined index" PHP notice fixed.
+* Dev - General - "Priority (i.e. position)" option added.
+* Dev - General - "Raw" input is now allowed in textarea admin settings.
+* Dev - Code refactoring.
+* Dev - Plugin URI updated.
+
+= 1.1.0 - 07/06/2018 =
+* Dev - General - "Check for matching billing country code" option added.
+* Dev - General - "Allow VAT number input without country code" option added.
+
+= 1.0.1 - 05/06/2018 =
+* Dev - `%eu_vat_number%` replaced value added to "Message on not valid" option. "Message on not valid" now doesn't check for required (i.e. empty) field.
+
+= 1.0.0 - 24/05/2018 =
+* Initial Release.

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Meta Boxes
  *
- * @version 4.2.2
+ * @version 4.2.5
  * @since   4.2.0
  *
  * @author  WPFactory
@@ -44,7 +44,7 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * Update the order vat details.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.5
 	 * @since   4.0.0
 	 */
 	function get_vat_details() {
@@ -55,18 +55,20 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 			$eu_vat_number = alg_wc_eu_vat_parse_vat( $vat_number, $country );
 			$is_valid      = alg_wc_eu_vat_validate_vat( $eu_vat_number['country'], $eu_vat_number['number'] );
 			if ( $is_valid ) {
-				$vat_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_details' );
+				$vat_response_data = alg_wc_eu_vat()->core->vat_details_data;
 				$order = wc_get_order( $order_id );
 				if ( $order ) {
 					$order->update_meta_data( alg_wc_eu_vat_get_field_id() . '_details', $vat_response_data );
 					$order->save();
-					// Store success message in a transient
-					set_transient( 'vat_details_success', __( 'VAT details have been updated successfully.', 'eu-vat-for-woocommerce' ) );
 				}
-			} else {
-				set_transient( 'vat_details_error', __( 'VAT details update failed. Please update the valid VAT number.', 'eu-vat-for-woocommerce' ) );
 			}
-			wp_safe_redirect( remove_query_arg( array( 'get_vat_details', 'country', 'number' ) ) );
+			wp_safe_redirect(
+				add_query_arg(
+					'alg_wc_eu_vat_details_result',
+					( $is_valid ? 'success' : 'error' ),
+					remove_query_arg( array( 'get_vat_details', 'country', 'number' ) )
+				)
+			);
 			exit;
 		}
 	}
@@ -74,22 +76,24 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * Admin notice.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.5
 	 * @since   4.0.0
 	 */
 	function admin_notice() {
-		if ( $message = get_transient( 'vat_details_success' ) ) {
-			echo '<div class="notice notice-success is-dismissible">';
-			echo '<p>' . esc_html( $message ) . '</p>';
-			echo '</div>';
-			delete_transient( 'vat_details_success' );
+		if ( ! isset( $_GET['alg_wc_eu_vat_details_result'] ) ) {
+			return;
 		}
-		if ( $message = get_transient( 'vat_details_error' ) ) {
-			echo '<div class="notice notice-error is-dismissible">';
-			echo '<p>' . esc_html( $message ) . '</p>';
-			echo '</div>';
-			delete_transient( 'vat_details_error' );
-		}
+		$result  = sanitize_text_field( wp_unslash( $_GET['alg_wc_eu_vat_details_result'] ) );
+		$message = (
+			( 'success' === $result ) ?
+			__( 'VAT details have been updated successfully.', 'eu-vat-for-woocommerce' ) :
+			__( 'VAT details update failed. Please set a valid valid VAT number.', 'eu-vat-for-woocommerce' )
+		);
+		?>
+		<div class="notice notice-<?php echo esc_attr( $result ); ?> is-dismissible">
+			<p><?php echo esc_html( $message ); ?></p>
+		</div>
+		<?php
 	}
 
 	/**
