@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.2.5
+ * @version 4.2.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -14,7 +14,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_parse_vat.
 	 *
-	 * @version 4.2.4
+	 * @version 4.2.6
 	 * @since   1.1.0
 	 *
 	 * @todo    (dev) `alg_wc_eu_vat_log`: extract ID from `$full_vat_number`?
@@ -23,6 +23,8 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 		if ( ! preg_match( '/^[a-zA-Z0-9]+$/', $full_vat_number ) ) {
 			return false;
 		}
+
+		$error_msg = '';
 
 		$full_vat_number = strtoupper( $full_vat_number );
 		$billing_country = strtoupper( $billing_country );
@@ -48,8 +50,9 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 						$billing_country
 					)
 				);
-				$country = '';
-				$number  = '';
+				$country   = '';
+				$number    = '';
+				$error_msg = 'WRONG_BILLING_COUNTRY';
 			}
 		} elseif ( 'yes' === get_option( 'alg_wc_eu_vat_allow_without_country_code', 'no' ) ) {
 			$country = $billing_country;
@@ -61,7 +64,12 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 			$country = '';
 			$number  = $full_vat_number;
 		}
-		$eu_vat_number = array( 'country' => $country, 'number' => $number );
+
+		$eu_vat_number = array(
+			'country'   => $country,
+			'number'    => $number,
+			'error_msg' => $error_msg,
+		);
 
 		return $eu_vat_number;
 	}

@@ -1,7 +1,7 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 4.2.3
+ * @version 4.2.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -341,6 +341,13 @@ jQuery( function ( $ ) {
 							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_not_valid );
 							progress_text.removeClass();
 							progress_text.addClass( 'alg-wc-eu-vat-not-valid alg-wc-eu-vat-error-color' );
+						}
+					} else if ( alg_wc_eu_vat_ajax_object.status_codes['WRONG_BILLING_COUNTRY'] === response ) {
+						vat_paragraph.addClass( 'woocommerce-invalid' );
+						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
+							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_wrong_billing_country );
+							progress_text.removeClass();
+							progress_text.addClass( 'alg-wc-eu-vat-not-valid-billing-country alg-wc-eu-vat-error-color' );
 						}
 					} else if ( alg_wc_eu_vat_ajax_object.status_codes['KEEP_VAT_SHIPPING_COUNTRY'] === response ) {
 						vat_paragraph.addClass( 'woocommerce-invalid' );

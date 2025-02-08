@@ -147,9 +147,9 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 
 			// Country & Company
 			array(
-				'title'    => __( 'Country & Company', 'eu-vat-for-woocommerce' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_eu_vat_validation_country_and_company_options',
+				'title'             => __( 'Country & Company', 'eu-vat-for-woocommerce' ),
+				'type'              => 'title',
+				'id'                => 'alg_wc_eu_vat_validation_country_and_company_options',
 			),
 			array(
 				'title'             => __( 'Check country by IP', 'eu-vat-for-woocommerce' ),
@@ -194,16 +194,16 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
 			),
 			array(
-				'title'    => __( 'Check for matching billing country code', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'This will check if country code in VAT number matches billing country code.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_check_billing_country_code',
-				'default'  => 'no',
-				'type'     => 'checkbox',
+				'title'             => __( 'Check for matching billing country code', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'This will check if country code in VAT number matches billing country code.', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_check_billing_country_code',
+				'default'           => 'no',
+				'type'              => 'checkbox',
 			),
 			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_eu_vat_validation_country_and_company_options',
+				'type'              => 'sectionend',
+				'id'                => 'alg_wc_eu_vat_validation_country_and_company_options',
 			),
 
 			// User Roles

@@ -773,6 +773,7 @@ class Alg_WC_EU_VAT_Core {
 	 * @version 4.2.5
 	 * @since   1.0.0
 	 *
+	 * @todo    (dev) remove `alg_wc_eu_vat_i_am_company`?
 	 * @todo    (dev) remove `alg_wc_eu_vat_is_checkout()` check?
 	 * @todo    (fix) mini cart!
 	 */
@@ -785,6 +786,7 @@ class Alg_WC_EU_VAT_Core {
 			return;
 		}
 
+		// Is exempt
 		if (
 			$this->check_current_user_roles(
 				get_option( 'alg_wc_eu_vat_exempt_for_user_roles', array() )
@@ -814,6 +816,7 @@ class Alg_WC_EU_VAT_Core {
 
 		}
 
+		// Force validate on cart and checkout page load/reload
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_validate_force_page_reload', 'no' ) ) {
 			if (
 				(
@@ -838,12 +841,15 @@ class Alg_WC_EU_VAT_Core {
 			}
 		}
 
+		// `alg_wc_eu_vat_i_am_company`
 		if ( true === alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_i_am_company' ) ) {
 			$is_exempt = true;
 		}
 
+		// Set customer "is vat exempt"
 		WC()->customer->set_is_vat_exempt( $is_exempt );
 
+		// `alg_wc_eu_vat_exempt_applied` action
 		do_action( 'alg_wc_eu_vat_exempt_applied', $is_exempt );
 
 	}

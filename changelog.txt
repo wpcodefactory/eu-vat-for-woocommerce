@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.2.6 - 08/02/2025 =
+* Dev - Messages - "Wrong billing country" option added.
+* Dev - Admin settings - Messages - Section renamed (was "Progress"); descriptions updated.
+
 = 4.2.5 - 05/02/2025 =
 * Fix - Checkout block field - "Keep VAT if shipping country is different from billing country" option fixed.
 * Fix - Do not use session in the "Get VAT details" in admin.

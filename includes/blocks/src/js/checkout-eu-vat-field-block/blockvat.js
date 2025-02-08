@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.2.5
+ * @version 4.2.6
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -144,6 +144,15 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 				eu_vat_field.classList.add( 'woocommerce-invalid' );
 				if ( progress ) {
 					progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_not_valid;
+					progress.classList.remove( "alg-wc-eu-vat-valid" );
+					progress.classList.remove( "alg-wc-eu-vat-validating" );
+					progress.classList.add( "alg-wc-eu-vat-not-valid" );
+				}
+			} else if ( alg_wc_eu_vat_ajax_object.status_codes['WRONG_BILLING_COUNTRY'] === data.status ) {
+
+				eu_vat_field.classList.add( 'woocommerce-invalid' );
+				if ( progress ) {
+					progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_wrong_billing_country;
 					progress.classList.remove( "alg-wc-eu-vat-valid" );
 					progress.classList.remove( "alg-wc-eu-vat-validating" );
 					progress.classList.add( "alg-wc-eu-vat-not-valid" );

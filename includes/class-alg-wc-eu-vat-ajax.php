@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.2.5
+ * @version 4.2.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -35,7 +35,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 4.2.5
+	 * @version 4.2.6
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `... && function_exists( 'is_checkout' ) && is_checkout()`
@@ -126,10 +126,16 @@ class Alg_WC_EU_VAT_AJAX {
 						__( 'Different shipping & billing countries.', 'eu-vat-for-woocommerce' )
 					)
 				),
+				'progress_text_wrong_billing_country' => do_shortcode(
+					get_option(
+						'alg_wc_eu_vat_wrong_billing_country',
+						__( 'Wrong billing country.', 'eu-vat-for-woocommerce' )
+					)
+				),
 				'company_name_mismatch'               => do_shortcode(
 					get_option(
 						'alg_wc_eu_vat_company_name_mismatch',
-						__( ' VAT is valid, but registered to %company_name%.', 'eu-vat-for-woocommerce' ) // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+						__( 'VAT is valid, but registered to %company_name%.', 'eu-vat-for-woocommerce' ) // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 					)
 				),
 				'vies_not_available'                  => do_shortcode(
@@ -281,7 +287,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * get_return_status_codes.
 	 *
-	 * @version 4.2.1
+	 * @version 4.2.6
 	 * @since   4.2.1
 	 */
 	function get_return_status_codes() {
@@ -297,6 +303,7 @@ class Alg_WC_EU_VAT_AJAX {
 				'EMPTY_VAT'                 => 6,
 				'KEEP_VAT_COUNTRIES'        => 7,
 				'VIES_UNAVAILABLE'          => 8,
+				'WRONG_BILLING_COUNTRY'     => 9,
 			)
 		);
 	}
@@ -304,14 +311,22 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * get_return_status.
 	 *
-	 * @version 4.2.1
+	 * @version 4.2.6
 	 * @since   4.1.0
 	 */
 	function get_return_status( $args ) {
 
 		$status_codes = $this->get_return_status_codes();
 
-		if ( empty( $args['eu_vat_number']['number'] ) ) {
+		if (
+			! empty( $args['eu_vat_number']['error_msg'] ) &&
+			isset( $status_codes[ $args['eu_vat_number']['error_msg'] ] )
+		) {
+
+			// Error, e.g., `WRONG_BILLING_COUNTRY`
+			$status = $status_codes[ $args['eu_vat_number']['error_msg'] ];
+
+		} elseif ( empty( $args['eu_vat_number']['number'] ) ) {
 
 			// Empty EU VAT
 			$status = $status_codes['EMPTY_VAT'];

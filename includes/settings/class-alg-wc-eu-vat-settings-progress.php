@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Progress Section Settings
  *
- * @version 4.2.3
+ * @version 4.2.6
  * @since   4.2.3
  *
  * @author  WPFactory
@@ -17,19 +17,19 @@ class Alg_WC_EU_VAT_Settings_Progress extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.3
+	 * @version 4.2.6
 	 * @since   4.2.3
 	 */
 	function __construct() {
 		$this->id   = 'progress';
-		$this->desc = __( 'Progress', 'eu-vat-for-woocommerce' );
+		$this->desc = __( 'Messages', 'eu-vat-for-woocommerce' );
 		parent::__construct();
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.3
+	 * @version 4.2.6
 	 * @since   4.2.3
 	 */
 	function get_settings() {
@@ -88,6 +88,17 @@ class Alg_WC_EU_VAT_Settings_Progress extends Alg_WC_EU_VAT_Settings_Section {
 				'css'      => 'width:100%;',
 			),
 			array(
+				'title'    => __( 'Wrong billing country', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => (
+					__( '"Check for matching billing country code" message.', 'eu-vat-for-woocommerce' ) . ' ' .
+					__( 'If you want to customize the message using CSS, please use the <code>alg-wc-eu-vat-not-valid-billing-country</code> class.', 'eu-vat-for-woocommerce' )
+				),
+				'id'       => 'alg_wc_eu_vat_wrong_billing_country',
+				'default'  => __( 'Wrong billing country.', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
+				'css'      => 'width:100%;',
+			),
+			array(
 				'title'    => __( 'Different shipping & billing countries', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Message on Different shipping & billing countries. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-not-valid-billing-country</code>', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_shipping_billing_countries',
@@ -136,7 +147,7 @@ class Alg_WC_EU_VAT_Settings_Progress extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Remove validation color', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Remove the validation color from the VAT field (this may depend on the theme)', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Remove the validation color from the VAT field (this may depend on the theme).', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_remove_validation_color',
 				'default'  => 'no',
