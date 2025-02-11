@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Advanced Section Settings
  *
- * @version 4.2.3
+ * @version 4.2.7
  * @since   4.2.3
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.3
+	 * @version 4.2.7
 	 * @since   4.2.3
 	 *
 	 * @todo    (dev) separate into "Advanced" and "Compatibility"?
@@ -134,6 +134,14 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Please use the SOAP validation method for this option to work.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_advance_enable_company_name_autofill',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Force price display including tax', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Display prices with taxes on single product pages, etc., even if the customer is VAT-exempt.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_force_price_display_incl_tax',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

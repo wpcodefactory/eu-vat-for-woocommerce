@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.7
-Stable tag: 4.2.6
+Stable tag: 4.2.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -285,6 +285,15 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.2.7 - 11/02/2025 =
+* Fix - Admin - Validate VAT and remove taxes - "Request Identifier" fixed.
+* Fix - SOAP - "Get VAT details" + "Request Identifier" fixed.
+* Fix - EU VAT report fixed.
+* Dev - Advanced - "Force price display including tax" option added (defaults to `no`).
+* Dev - Admin settings - General - Descriptions updated.
+* Dev - Developers - EU VAT report - `alg_wc_eu_vat_report_order_statuses` filter added.
+* Dev - Code refactoring.
 
 = 4.2.6 - 08/02/2025 =
 * Dev - Messages - "Wrong billing country" option added.

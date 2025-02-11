@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 4.2.3
+ * @version 4.2.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.7
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) Belgium Compatibility: rename?
@@ -372,7 +372,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'Hide EU VAT field from checkout', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'This option might be needed when you\'re customizing your checkout page using a page builder plugin and want to fully-control field visibility', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'This option might be needed when you\'re customizing your checkout page using a page builder plugin and want to fully-control field visibility.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_hide_eu_vat',
 				'default'  => 'no',
 				'type'     => 'checkbox',
@@ -380,7 +380,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'Show VAT details in checkout', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Retrieves and shows business name, address, etc. in checkout', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Retrieves and shows business name, address, etc. in checkout.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_show_vat_details',
 				'default'  => 'no',
 				'type'     => 'checkbox',

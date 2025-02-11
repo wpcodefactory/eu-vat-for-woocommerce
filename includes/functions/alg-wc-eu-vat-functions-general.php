@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - General
  *
- * @version 4.2.5
+ * @version 4.2.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -72,7 +72,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_start' ) ) {
 	/**
 	 * alg_wc_eu_vat_session_start.
 	 *
-	 * @version 4.2.4
+	 * @version 4.2.7
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_start() {
@@ -82,7 +82,6 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_start' ) ) {
 		switch ( ALG_WC_EU_VAT_SESSION_TYPE ) {
 			case 'wc':
 				if (
-					function_exists( 'WC' ) &&
 					WC()->session &&
 					! WC()->session->has_session()
 				) {
@@ -109,7 +108,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 	/**
 	 * alg_wc_eu_vat_session_get.
 	 *
-	 * @version 1.2.1
+	 * @version 4.2.7
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_get( $key, $default = null ) {
@@ -119,7 +118,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 		switch ( ALG_WC_EU_VAT_SESSION_TYPE ) {
 			case 'wc':
 				return (
-					function_exists( 'WC' ) && WC()->session ?
+					WC()->session ?
 					WC()->session->get( $key, $default ) :
 					$default
 				);
@@ -143,7 +142,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_set' ) ) {
 	/**
 	 * alg_wc_eu_vat_session_set.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.7
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_set( $key, $value ) {
@@ -152,7 +151,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_set' ) ) {
 		}
 		switch ( ALG_WC_EU_VAT_SESSION_TYPE ) {
 			case 'wc':
-				if ( function_exists( 'WC' ) && WC()->session ) {
+				if ( WC()->session ) {
 					WC()->session->set( $key, $value );
 				}
 				break;

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Meta Boxes
  *
- * @version 4.2.5
+ * @version 4.2.7
  * @since   4.2.0
  *
  * @author  WPFactory
@@ -282,12 +282,12 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * validate_vat_and_maybe_remove_taxes.
 	 *
-	 * @version 4.2.2
+	 * @version 4.2.7
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) Remove taxes: remove and instead do `$order->calculate_totals()` (after setting `is_vat_exempt` to `yes`)
 	 * @todo    (dev) Request Identifier: merge with `save_request_identifier_to_order()` (`Alg_WC_EU_VAT_Orders` class)
-	 * @todo    (dev) `alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_response_data' )`: clear after use?
+	 * @todo    (dev) `alg_wc_eu_vat()->core->eu_vat_response_data`: clear after use?
 	 */
 	function validate_vat_and_maybe_remove_taxes() {
 		$preserve_countries           = alg_wc_eu_vat()->core->eu_vat_ajax_instance->get_preserve_countries();
@@ -332,7 +332,7 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 						$order->update_meta_data( 'is_vat_exempt', 'yes' );
 
 						// Request Identifier
-						$vat_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_response_data' );
+						$vat_response_data = alg_wc_eu_vat()->core->eu_vat_response_data;
 						if ( isset( $vat_response_data->requestIdentifier ) ) {
 							$order->update_meta_data(
 								apply_filters(

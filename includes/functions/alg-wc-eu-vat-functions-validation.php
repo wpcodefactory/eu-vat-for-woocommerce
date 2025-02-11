@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.2.6
+ * @version 4.2.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -79,7 +79,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_no_soap.
 	 *
-	 * @version 4.2.5
+	 * @version 4.2.7
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -156,14 +156,17 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 		// Filter response
 		$response = apply_filters( 'alg_wc_eu_vat_validation_response', $response, $method );
 
+		// Save response to the variable
+		alg_wc_eu_vat()->core->eu_vat_response_data = (
+			false !== $response ?
+			json_decode( $response, false ) :
+			false
+		);
+
 		// Save response to the session
 		alg_wc_eu_vat_session_set(
 			'alg_wc_eu_vat_response_data',
-			(
-				false !== $response ?
-				json_decode( $response, false ) :
-				false
-			)
+			alg_wc_eu_vat()->core->eu_vat_response_data
 		);
 
 		// No response
@@ -256,7 +259,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 4.2.4
+	 * @version 4.2.7
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -296,10 +299,26 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 						'requesterCountryCode'   => $requester_country_code,
 						'requesterVatNumber'     => $requester_vat_number,
 					) );
+					// Copy VAT details
+					if (
+						isset( $result->traderName ) &&
+						! isset( $result->name )
+					) {
+						$result->name = $result->traderName;
+					}
+					if (
+						isset( $result->traderAddress ) &&
+						! isset( $result->address )
+					) {
+						$result->address = $result->traderAddress;
+					}
 				}
 
 				// Filter response
 				$result = apply_filters( 'alg_wc_eu_vat_validation_response', $result, 'soap' );
+
+				// Save response to the variable
+				alg_wc_eu_vat()->core->eu_vat_response_data = $result;
 
 				// Save response to the session
 				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_response_data', $result );
@@ -370,7 +389,13 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 				}
 
 				// Store result to session
-				alg_wc_eu_vat_store_validation_session( $country_code, $vat_number, $return, $billing_company, $result );
+				alg_wc_eu_vat_store_validation_session(
+					$country_code,
+					$vat_number,
+					$return,
+					$billing_company,
+					$result
+				);
 
 				return $return;
 			} else {
@@ -441,7 +466,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_with_method' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_with_method.
 	 *
-	 * @version 4.2.5
+	 * @version 4.2.7
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -455,6 +480,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_with_method' ) ) {
 		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_response_data', null );
 
 		alg_wc_eu_vat()->core->vat_details_data = null;
+		alg_wc_eu_vat()->core->eu_vat_response_data = null;
 
 		if ( $country_code == 'GB' ) {
 			return alg_wc_eu_vat_validate_vat_uk( $country_code, $vat_number, $billing_company, $method );

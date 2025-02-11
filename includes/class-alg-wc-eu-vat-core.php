@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.2.5
+ * @version 4.2.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -49,9 +49,17 @@ class Alg_WC_EU_VAT_Core {
 	public $vat_details_data;
 
 	/**
+	 * eu_vat_response_data.
+	 *
+	 * @version 4.2.7
+	 * @since   4.2.7
+	 */
+	public $eu_vat_response_data;
+
+	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.4
+	 * @version 4.2.7
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) "eu vat number" to "eu vat"?
@@ -135,6 +143,33 @@ class Alg_WC_EU_VAT_Core {
 		// Compatibility
 		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-compatibility.php';
 
+		// Force price display including tax
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_force_price_display_incl_tax', 'no' ) ) {
+			add_filter( 'woocommerce_get_price_html', array( $this, 'force_price_display_incl_tax' ), PHP_INT_MAX, 2 );
+		}
+
+	}
+
+	/**
+	 * force_price_display_incl_tax.
+	 *
+	 * @version 4.2.7
+	 * @since   4.2.7
+	 *
+	 * @todo    (dev) limit to certain pages only, e.g., `is_product()`?
+	 */
+	function force_price_display_incl_tax( $price_html, $product ) {
+		if (
+			! empty( WC()->customer ) &&
+			WC()->customer->get_is_vat_exempt()
+		) {
+			WC()->customer->set_is_vat_exempt( false );
+			remove_filter( 'woocommerce_get_price_html', array( $this, 'force_price_display_incl_tax' ), PHP_INT_MAX );
+			$price_html = $product->get_price_html();
+			add_filter( 'woocommerce_get_price_html', array( $this, 'force_price_display_incl_tax' ), PHP_INT_MAX, 2 );
+			WC()->customer->set_is_vat_exempt( true );
+		}
+		return $price_html;
 	}
 
 	/**
@@ -487,22 +522,20 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * is_tax_status_none.
 	 *
-	 * @version 2.11.5
+	 * @version 4.2.7
 	 * @since   2.9.18
 	 */
 	function is_tax_status_none(){
-		if ( function_exists( 'WC' ) ) {
-			if ( isset( WC()->cart ) ) {
-				foreach( WC()->cart->get_cart() as $cart_item ) {
+		if ( isset( WC()->cart ) ) {
+			foreach( WC()->cart->get_cart() as $cart_item ) {
 
-					$product_in_cart = $cart_item['product_id'];
-					$product_info    = wc_get_product( $product_in_cart );
-					$tax_status      = $product_info->get_tax_status();
-					if ( 'none' == $tax_status ) {
-						return true;
-					}
-
+				$product_in_cart = $cart_item['product_id'];
+				$product_info    = wc_get_product( $product_in_cart );
+				$tax_status      = $product_info->get_tax_status();
+				if ( 'none' == $tax_status ) {
+					return true;
 				}
+
 			}
 		}
 		return false;

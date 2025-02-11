@@ -2,7 +2,7 @@
 /**
  * Taxes by EU VAT country report.
  *
- * @version 4.2.4
+ * @version 4.2.7
  * @since   1.5.0
  *
  * @package WooCommerce/Admin/Reports
@@ -111,23 +111,28 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 	/**
 	 * Get the main chart.
 	 *
-	 * @version 4.2.4
+	 * @version 4.2.7
 	 * @since   1.5.0
 	 */
 	public function get_main_chart() {
-		$tax_rows = array();
-		$orders   = wc_get_orders( array(
-			'limit'      => -1,
-			'type'       => 'shop_order',
-			'status'     => array_map( 'wc_get_order_status_name', wc_get_is_paid_statuses() ),
-			'date_query' => array(
+
+		// Get orders
+		$orders = wc_get_orders( array(
+			'limit'           => -1,
+			'type'            => 'shop_order',
+			'billing_country' => WC()->countries->get_european_union_countries( 'eu_vat' ),
+			'status'          => apply_filters(
+				'alg_wc_eu_vat_report_order_statuses',
+				wc_get_is_paid_statuses()
+			),
+			'date_query'      => array(
 				'after'  => date( 'Y-m-d H:i:s', $this->start_date ),
 				'before' => date( 'Y-m-d H:i:s', $this->end_date ),
 			),
-			'meta_key'     => '_billing_country',
-			'meta_value'   => WC()->countries->get_european_union_countries( 'eu_vat' ),
-			'meta_compare' => 'IN',
 		) );
+
+		// Tax rows
+		$tax_rows = array();
 		foreach ( $orders as $order ) {
 			$country = $order->get_billing_country();
 			$total   = $order->get_total();
@@ -148,6 +153,8 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 			}
 		}
 		uasort( $tax_rows, array( $this, 'sort_by_tax' ) );
+
+		// Output
 		?>
 		<table class="widefat">
 			<thead>
@@ -193,5 +200,6 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 			<?php endif; ?>
 		</table>
 		<?php
+
 	}
 }
