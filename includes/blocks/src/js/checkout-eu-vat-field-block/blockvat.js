@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.2.6
+ * @version 4.2.8
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -397,3 +397,45 @@ const Block = ( {children, checkoutExtensionData} ) => {
 };
 
 export default Block;
+
+/**
+ * Always show zero VAT.
+ *
+ * @version 4.2.8
+ * @since   4.2.8
+ *
+ * @see     https://developer.woocommerce.com/docs/cart-and-checkout-available-slots/#0-experimentalordermeta
+ *
+ * @todo    (dev) "VAT $0.00" instead of "VAT 0%"?
+ * @todo    (dev) better styling?
+ */
+if ( alg_wc_eu_vat_ajax_object.do_always_show_zero_vat ) {
+
+	const { registerPlugin } = wp.plugins;
+	const { ExperimentalOrderMeta } = wc.blocksCheckout;
+
+	const AlgWCEUVATZeroVATComponent = ( { cart, extensions } ) => {
+		if ( 0 == cart.cartTotals.total_tax ) {
+			return <div class="wc-block-components-totals-item wc-block-components-totals-footer-item">
+				<span class="wc-block-components-totals-item__label">VAT</span>
+				<div class="wc-block-components-totals-item__value">
+					<span class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-totals-footer-item-tax-value">0%</span>
+				</div>
+			</div>;
+		}
+	};
+
+	const render = () => {
+		return (
+			<ExperimentalOrderMeta>
+				<AlgWCEUVATZeroVATComponent />
+			</ExperimentalOrderMeta>
+		);
+	};
+
+	registerPlugin( 'alg-wc-eu-vat-show-zero-vat', {
+		render,
+		scope: 'woocommerce-checkout',
+	} );
+
+}

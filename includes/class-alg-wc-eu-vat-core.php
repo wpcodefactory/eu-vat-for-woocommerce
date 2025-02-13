@@ -441,7 +441,12 @@ class Alg_WC_EU_VAT_Core {
 	function belgium_compatibility_field_data() {
 		return array(
 			'type'      => 'checkbox',
-			'label'     => do_shortcode( get_option( 'alg_wc_eu_vat_belgium_compatibility_label', __( 'I have a valid VAT but not exempted', 'eu-vat-for-woocommerce' ) ) ),
+			'label'     => do_shortcode(
+				get_option(
+					'alg_wc_eu_vat_belgium_compatibility_label',
+					__( 'I have a valid VAT but not exempted', 'eu-vat-for-woocommerce' )
+				)
+			),
 			'class'     => array( 'form-row-wide' ),
 			'priority'  => get_option( 'alg_wc_eu_vat_field_priority', 200 ),
 		);
@@ -903,13 +908,19 @@ class Alg_WC_EU_VAT_Core {
 		$field_id = alg_wc_eu_vat_get_field_id();
 
 		if ( $is_required && 'yes' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' ) ) {
-			if ( isset( $_posted[ $field_id . '_customer_decide' ] ) && 1 == $_posted[ $field_id . '_customer_decide' ] ) {
+			if (
+				isset( $_posted[ $field_id . '_customer_decide' ] ) &&
+				1 == $_posted[ $field_id . '_customer_decide' ]
+			) {
 				return;
 			}
 		}
 
 		if( 'yes' === get_option( 'alg_wc_eu_vat_belgium_compatibility', 'no' ) ){
-			if ( isset( $_posted[ $field_id . '_belgium_compatibility'] ) && 1 == $_posted[ $field_id . '_belgium_compatibility' ] ) {
+			if (
+				isset( $_posted[ $field_id . '_belgium_compatibility'] ) &&
+				1 == $_posted[ $field_id . '_belgium_compatibility' ]
+			) {
 				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid', false );
 				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', null );
 				return;

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 4.2.7
+ * @version 4.2.8
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.7
+	 * @version 4.2.8
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) Belgium Compatibility: rename?
@@ -41,11 +41,12 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	 */
 	function get_settings() {
 
-		$frontend_settings = array(
+		// Field Options
+		$field_settings = array(
 			array(
-				'title'    => __( 'Frontend Options', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Field Options', 'eu-vat-for-woocommerce' ),
 				'type'     => 'title',
-				'id'       => 'alg_wc_eu_vat_frontend_options',
+				'id'       => 'alg_wc_eu_vat_field_options',
 			),
 			array(
 				'title'    => __( 'Field label', 'eu-vat-for-woocommerce' ),
@@ -84,8 +85,8 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				),
 			),
 			array(
-				'title'    => __( 'Required / Optional in countries', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Only works for ( Required in the following countries / Required in all countries except following countries ) for above settings.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Required / Optional in countries', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Only works for "Required in the following countries" and "Required in all countries except following countries" for above settings.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_field_required_countries',
 				'default'  => '',
 				'type'     => 'multiselect',
@@ -93,143 +94,12 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'options'  => $this->get_all_countries()
 			),
 			array(
-				'title'    => __( 'Remove the VAT field if the tax status is "none"', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Remove VAT from the checkout if any product in the cart has a tax status of "none".', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_field_hide_tax_status_none',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Confirmation notice', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Will add an additional confirmation notice on the checkout on <strong>empty VAT ID</strong>. <br> For example you can enable this if EU VAT field is not required, but you still want to display a confirmation notice to the customer when no VAT ID was entered.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_field_confirmation',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'desc'     => __( 'Confirmation notice text', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_field_confirmation_text',
-				'default'  => __( 'You didn\'t set your VAT ID. Are you sure you want to continue?', 'eu-vat-for-woocommerce' ),
-				'type'     => 'text',
-				'css'      => 'width:100%;',
-			),
-			array(
-				'title'    => __( 'Add EU VAT field to sign-up form', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Add EU VAT field to sign-up form.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_field_signup_form',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'             => __( 'Allow checkout on unregistered VAT numbers', 'eu-vat-for-woocommerce' ),
-				'desc_tip'          => __( 'Allow checkout on unregistered VAT numbers.', 'eu-vat-for-woocommerce' ),
-				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'                => 'alg_wc_eu_vat_field_allow_unregistered_vat_no',
-				'default'           => 'no',
-				'type'              => 'checkbox',
-				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_eu_vat_frontend_options',
-			),
-
-			array(
-				'title'    => __( 'Payment Methods Control', 'eu-vat-for-woocommerce' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_eu_vat_pay_control_title',
-			),
-			array(
-				'title'             => __( 'Show specific payment method ONLY if VAT is valid', 'eu-vat-for-woocommerce' ),
-				'desc_tip'          => (
-					__( 'Choose selected payment method from following field.', 'eu-vat-for-woocommerce' ) .
-					apply_filters(
-						'alg_wc_eu_vat_settings',
-						'<br>' . sprintf(
-							/* Translators: %s: Plugin link. */
-							__( 'You will need %s plugin to enable this option.', 'eu-vat-for-woocommerce' ),
-							'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' .
-								__( 'EU/UK VAT Validation Manager for WooCommerce Pro', 'eu-vat-for-woocommerce' ) .
-							'</a>'
-						)
-					)
-				),
-				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'                => 'alg_wc_eu_vat_allow_specific_payment',
-				'default'           => 'no',
-				'type'              => 'checkbox',
-				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
-			),
-			array(
-				'title'             => __( 'Method to show for valid VAT only', 'eu-vat-for-woocommerce' ),
-				'desc_tip'          => __( 'Allow specific payment methods if VAT is valid.', 'eu-vat-for-woocommerce' ),
-				'id'                => 'alg_wc_eu_vat_allowed_payment_gateway',
-				'default'           => '',
-				'type'              => 'multiselect',
-				'class'             => 'wc-enhanced-select',
-				'options'           => $this->get_all_payment_gateways(),
-				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_eu_vat_pay_control_title',
-			),
-
-			array(
-				'title'    => __( 'Belgium Compatibility', 'eu-vat-for-woocommerce' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_eu_vat_belgium_compatibility_title',
-			),
-			array(
-				'title'    => __( 'Let customer decide', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'This option will allow customer to select if they are individual or business, <br> which makes the option mandatory or optional based on selection, this option might be needed in Belgium.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_field_let_customer_decide',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Let customer decide field label', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Label visible to the customer.', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_field_let_customer_decide_label',
-				'default'  => __( 'I don\'t have a VAT ID', 'eu-vat-for-woocommerce' ),
-				'type'     => 'text',
-			),
-			array(
-				'title'    => __( 'Valid VAT but still paying ?', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Valid VAT but still paying, Belgium Compatibility.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_belgium_compatibility',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Valid VAT but still paying field label', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Label visible to the customer.', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_belgium_compatibility_label',
-				'default'  => __( 'I have a valid VAT but not exempted', 'eu-vat-for-woocommerce' ),
-				'type'     => 'text',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_eu_vat_belgium_compatibility_title',
-			),
-
-			array(
-				'title'    => __( 'Field Option', 'eu-vat-for-woocommerce' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_eu_vat_frontend_two_options',
-			),
-			array(
 				'title'    => __( 'Priority (i.e., position)', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => (
 					__( 'Sets EU VAT field\'s position in the billing section of the checkout page.', 'eu-vat-for-woocommerce' ) . ' ' .
 					sprintf(
 						/* Translators: %s: Priority list. */
-						__( 'Here are the default fields priorities: %s.', 'eu-vat-for-woocommerce' ),
+						__( 'Here are the default fields priorities: %s', 'eu-vat-for-woocommerce' ),
 						'<br>' . implode( '<br>', array(
 							__( 'First name', 'eu-vat-for-woocommerce' )  . ' - 10',
 							__( 'Last name', 'eu-vat-for-woocommerce' )   . ' - 20',
@@ -288,12 +158,168 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'css'      => 'width:100%;',
 			),
 			array(
-				'title'    => __( 'Always show zero VAT', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Will always show zero VAT amount in order review on checkout.', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_always_show_zero_vat',
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_eu_vat_field_options',
+			),
+		);
+
+		// General Options
+		$general_settings = array(
+			array(
+				'title'             => __( 'General Options', 'eu-vat-for-woocommerce' ),
+				'type'              => 'title',
+				'id'                => 'alg_wc_eu_vat_general_options',
+			),
+			array(
+				'title'             => __( 'Show zero VAT', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Always show the VAT amount in order review on checkout, even if it\'s zero.', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_always_show_zero_vat',
+				'default'           => 'no',
+				'type'              => 'checkbox',
+			),
+			array(
+				'title'             => __( 'Remove the VAT field if the tax status is "none"', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Remove VAT from the checkout if any product in the cart has a tax status of "none".', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_field_hide_tax_status_none',
+				'default'           => 'no',
+				'type'              => 'checkbox',
+			),
+			array(
+				'title'             => __( 'Confirmation notice', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Will add an additional confirmation notice on the checkout on <strong>empty VAT ID</strong>. <br> For example you can enable this if EU VAT field is not required, but you still want to display a confirmation notice to the customer when no VAT ID was entered.', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_field_confirmation',
+				'default'           => 'no',
+				'type'              => 'checkbox',
+			),
+			array(
+				'desc'              => __( 'Confirmation notice text', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_field_confirmation_text',
+				'default'           => __( 'You didn\'t set your VAT ID. Are you sure you want to continue?', 'eu-vat-for-woocommerce' ),
+				'type'              => 'text',
+				'css'               => 'width:100%;',
+			),
+			array(
+				'title'             => __( 'Add EU VAT field to sign-up form', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Add EU VAT field to sign-up form.', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_field_signup_form',
+				'default'           => 'no',
+				'type'              => 'checkbox',
+			),
+			array(
+				'title'             => __( 'Allow checkout on unregistered VAT numbers', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Allow checkout on unregistered VAT numbers.', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_field_allow_unregistered_vat_no',
+				'default'           => 'no',
+				'type'              => 'checkbox',
+				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
+			),
+			array(
+				'type'              => 'sectionend',
+				'id'                => 'alg_wc_eu_vat_general_options',
+			),
+		);
+
+		// Payment Methods
+		$payment_methods_settings = array(
+			array(
+				'title'             => __( 'Payment Methods', 'eu-vat-for-woocommerce' ),
+				'type'              => 'title',
+				'id'                => 'alg_wc_eu_vat_pay_control_title',
+			),
+			array(
+				'title'             => __( 'Show specific payment method only if VAT is valid', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => (
+					__( 'Choose selected payment method from following field.', 'eu-vat-for-woocommerce' ) .
+					apply_filters(
+						'alg_wc_eu_vat_settings',
+						'<br>' . sprintf(
+							/* Translators: %s: Plugin link. */
+							__( 'You will need %s plugin to enable this option.', 'eu-vat-for-woocommerce' ),
+							'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' .
+								__( 'EU/UK VAT Validation Manager for WooCommerce Pro', 'eu-vat-for-woocommerce' ) .
+							'</a>'
+						)
+					)
+				),
+				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_allow_specific_payment',
+				'default'           => 'no',
+				'type'              => 'checkbox',
+				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
+			),
+			array(
+				'desc'              => __( 'Method to show for valid VAT only', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Allow specific payment methods if VAT is valid.', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_allowed_payment_gateway',
+				'default'           => '',
+				'type'              => 'multiselect',
+				'class'             => 'wc-enhanced-select',
+				'options'           => $this->get_all_payment_gateways(),
+				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
+			),
+			array(
+				'type'              => 'sectionend',
+				'id'                => 'alg_wc_eu_vat_pay_control_title',
+			),
+		);
+
+		// Belgium Compatibility
+		$belgium_compatibility_settings = array(
+			array(
+				'title'    => __( 'Belgium Compatibility', 'eu-vat-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_eu_vat_belgium_compatibility_title',
+			),
+			array(
+				'title'    => __( 'Let customer decide', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => (
+					__( 'This option will allow customer to select if they are individual or business, which makes the option mandatory or optional based on selection.', 'eu-vat-for-woocommerce' ) . ' ' .
+					__( 'This option might be needed in Belgium.', 'eu-vat-for-woocommerce' )
+				),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_field_let_customer_decide',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Field label', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Label visible to the customer.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_field_let_customer_decide_label',
+				'default'  => __( 'I don\'t have a VAT ID', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
+			),
+			array(
+				'title'    => __( 'Valid VAT but still paying?', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Valid VAT but still paying.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_belgium_compatibility',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Field label', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Label visible to the customer.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_belgium_compatibility_label',
+				'default'  => __( 'I have a valid VAT but not exempted', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_eu_vat_belgium_compatibility_title',
+			),
+		);
+
+		// Visibility Options
+		$visibility_settings = array(
+			array(
+				'title'             => __( 'Visibility Options', 'eu-vat-for-woocommerce' ),
+				'type'              => 'title',
+				'id'                => 'alg_wc_eu_vat_visibility_options',
 			),
 			array(
 				'title'             => __( 'Show field for selected countries only', 'eu-vat-for-woocommerce' ),
@@ -346,11 +372,20 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
 			),
 			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_eu_vat_frontend_two_options',
+				'title'             => __( 'Hide EU VAT field from checkout', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'This option might be needed when you\'re customizing your checkout page using a page builder plugin and want to fully-control field visibility.', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_hide_eu_vat',
+				'default'           => 'no',
+				'type'              => 'checkbox',
+			),
+			array(
+				'type'              => 'sectionend',
+				'id'                => 'alg_wc_eu_vat_visibility_options',
 			),
 		);
 
+		// Display Options
 		$display_settings = array(
 			array(
 				'title'    => __( 'Display Options', 'eu-vat-for-woocommerce' ),
@@ -370,14 +405,6 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				),
 			),
 			array(
-				'title'    => __( 'Hide EU VAT field from checkout', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'This option might be needed when you\'re customizing your checkout page using a page builder plugin and want to fully-control field visibility.', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_hide_eu_vat',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
 				'title'    => __( 'Show VAT details in checkout', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Retrieves and shows business name, address, etc. in checkout.', 'eu-vat-for-woocommerce' ),
@@ -391,7 +418,14 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			),
 		);
 
-		return array_merge( $frontend_settings, $display_settings );
+		return array_merge(
+			$field_settings,
+			$general_settings,
+			$payment_methods_settings,
+			$belgium_compatibility_settings,
+			$visibility_settings,
+			$display_settings
+		);
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.2.6
+ * @version 4.2.8
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -35,7 +35,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 4.2.6
+	 * @version 4.2.8
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `... && function_exists( 'is_checkout' ) && is_checkout()`
@@ -150,6 +150,7 @@ class Alg_WC_EU_VAT_AJAX {
 				'show_vat_details'                    => get_option( 'alg_wc_eu_vat_show_vat_details', 'no' ),
 				'status_codes'                        => $this->get_return_status_codes(),
 				'do_compatibility_fluid_checkout'     => ( 'yes' === get_option( 'alg_wc_eu_vat_compatibility_fluid_checkout', 'no' ) ),
+				'do_always_show_zero_vat'             => ( 'yes' === get_option( 'alg_wc_eu_vat_always_show_zero_vat', 'no' ) ),
 			)
 		);
 
@@ -384,7 +385,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 4.2.4
+	 * @version 4.2.8
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `bloock_api`: rename
@@ -490,13 +491,13 @@ class Alg_WC_EU_VAT_AJAX {
 			);
 		}
 
-		$alg_wc_eu_vat_belgium_compatibility = (
+		$belgium_compatibility = (
 			isset( $_POST['alg_wc_eu_vat_belgium_compatibility'] ) ?
 			sanitize_text_field( wp_unslash( $_POST['alg_wc_eu_vat_belgium_compatibility'] ) ) :
 			''
 		);
 
-		if ( 'yes' == $alg_wc_eu_vat_belgium_compatibility ){
+		if ( 'yes' == $belgium_compatibility ) {
 			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid', $is_valid );
 			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', null );
 		}
