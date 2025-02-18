@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.2.7
+ * @version 4.2.9
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -14,14 +14,20 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_parse_vat.
 	 *
-	 * @version 4.2.6
+	 * @version 4.2.9
 	 * @since   1.1.0
 	 *
+	 * @todo    (v4.2.9) `VAT_NOT_VALID`: better `country` and `number`?
 	 * @todo    (dev) `alg_wc_eu_vat_log`: extract ID from `$full_vat_number`?
 	 */
 	function alg_wc_eu_vat_parse_vat( $full_vat_number, $billing_country ) {
+
 		if ( ! preg_match( '/^[a-zA-Z0-9]+$/', $full_vat_number ) ) {
-			return false;
+			return array(
+				'country'   => '',
+				'number'    => '',
+				'error_msg' => 'VAT_NOT_VALID',
+			);
 		}
 
 		$error_msg = '';

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 4.2.5
+ * @version 4.2.9
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.5
+	 * @version 4.2.9
 	 * @since   1.5.0
 	 *
 	 * @todo    (feature) Message if customer's check for IP location country has failed!
@@ -264,7 +264,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Skip VAT validation for selected countries', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'List all countries you want VAT validation to be skipped for (i.e. VAT always valid). Ignored if empty.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'List all countries you want VAT validation to be skipped for (i.e., VAT always valid). Ignored if empty.', 'eu-vat-for-woocommerce' ),
 				'desc'     => sprintf(
 					/* Translators: %s: Country code list example. */
 					__( 'Enter country codes as comma separated list, e.g., %s.', 'eu-vat-for-woocommerce' ),
@@ -277,8 +277,11 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Validate action trigger', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Validate action will trigger based on your choice. Default: onInput', 'eu-vat-for-woocommerce' ),
-				'desc'     => '',
+				'desc_tip' => (
+					__( 'Validate action will trigger based on your choice.', 'eu-vat-for-woocommerce' ) . ' ' .
+					__( 'Default: "On Input".', 'eu-vat-for-woocommerce' )
+
+				),
 				'id'       => 'alg_wc_eu_vat_validate_action_trigger',
 				'default'  => 'oninput',
 				'type'     => 'select',

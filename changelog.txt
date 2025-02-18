@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.2.9 - 18/02/2025 =
+* Fix - VAT parsing - Possible "PHP Warning: Trying to access array offset on false" fixed.
+* Fix - Compatibility - "PDF Invoices & Packing Slips for WooCommerce" by "WP Overnight" - EU VAT doubling when the "Display" option is set to "In billing address" fixed.
+* Dev - Admin settings - Descriptions updated.
+
 = 4.2.8 - 13/02/2025 =
 * Fix - Block-based checkout compatibility - "Show zero VAT" option fixed.
 * Dev - Admin settings - General - Descriptions updated; settings rearranged; subsections added.

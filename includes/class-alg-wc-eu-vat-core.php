@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.2.7
+ * @version 4.2.9
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -57,9 +57,17 @@ class Alg_WC_EU_VAT_Core {
 	public $eu_vat_response_data;
 
 	/**
+	 * display.
+	 *
+	 * @version 4.2.9
+	 * @since   4.2.9
+	 */
+	public $display;
+
+	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.7
+	 * @version 4.2.9
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) "eu vat number" to "eu vat"?
@@ -107,7 +115,7 @@ class Alg_WC_EU_VAT_Core {
 		}
 
 		// Display
-		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-display.php';
+		$this->display = require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-display.php';
 
 		// Show zero VAT
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_always_show_zero_vat', 'no' ) ) {

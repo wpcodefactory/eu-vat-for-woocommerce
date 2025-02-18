@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Advanced Section Settings
  *
- * @version 4.2.7
+ * @version 4.2.9
  * @since   4.2.3
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.7
+	 * @version 4.2.9
 	 * @since   4.2.3
 	 *
 	 * @todo    (dev) separate into "Advanced" and "Compatibility"?
@@ -78,8 +78,9 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Enable if Sitepress optimizer dynamic caching plugin does not work', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Sitepress optimizer dynamic caching plugin', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enable if Sitepress optimizer dynamic caching plugin does not work.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_sitepress_optimizer_dynamic_caching',
 				'default'  => 'no',
 				'type'     => 'checkbox',
@@ -87,22 +88,20 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'VAT shifted text', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Please use text for 3rd party PDF invoice plugin.', 'eu-vat-for-woocommerce' ),
-				'desc'     => '',
 				'id'       => 'alg_wc_eu_vat_advanced_vat_shifted_text',
 				'default'  => __( 'VAT Shifted', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
 			),
 			array(
-				'title'    => __( 'Enable manual validation of VAT numbers', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Manual validation of VAT numbers', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_manual_validation_enable',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'VAT numbers to pass validation', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'VAT numbers to pass validation', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Enter multiple VAT numbers that have been manually validated, separated by commas.', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Enter multiple VAT numbers that have been manually validated, separated by commas.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_manual_validation_vat_numbers',
 				'default'  => '',
 				'type'     => 'textarea',
@@ -170,6 +169,7 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Requester VAT number', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Without the country code.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_requester_vat_number',
 				'default'  => '',
 				'type'     => 'text',

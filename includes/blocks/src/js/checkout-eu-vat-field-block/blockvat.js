@@ -406,8 +406,8 @@ export default Block;
  *
  * @see     https://developer.woocommerce.com/docs/cart-and-checkout-available-slots/#0-experimentalordermeta
  *
- * @todo    (dev) "VAT $0.00" instead of "VAT 0%"?
- * @todo    (dev) better styling?
+ * @todo    (v4.2.8) "VAT $0.00" instead of "VAT 0%"?
+ * @todo    (v4.2.8) better styling?
  */
 if ( alg_wc_eu_vat_ajax_object.do_always_show_zero_vat ) {
 

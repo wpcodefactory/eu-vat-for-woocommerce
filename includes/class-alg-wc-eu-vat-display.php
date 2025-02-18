@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Display
  *
- * @version 4.2.5
+ * @version 4.2.9
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -17,19 +17,13 @@ class Alg_WC_EU_VAT_Display {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.9
 	 * @since   4.0.0
 	 */
 	function __construct() {
 
 		// Get positions
-		$positions = get_option( 'alg_wc_eu_vat_display_position', array( 'after_order_table' ) );
-		if ( empty( $positions ) ) {
-			$positions = array( 'after_order_table' );
-		}
-		if ( ! is_array( $positions ) ) {
-			$positions = array( $positions );
-		}
+		$positions = $this->get_positions();
 
 		// After order table
 		if ( in_array( 'after_order_table', $positions ) ) {
@@ -48,6 +42,24 @@ class Alg_WC_EU_VAT_Display {
 			add_action( 'woocommerce_customer_save_address', array( $this, 'save_eu_vat_number_from_editable_fields' ), PHP_INT_MAX, 2 );
 		}
 
+	}
+
+	/**
+	 * get_positions.
+	 *
+	 * @version 4.2.9
+	 * @since   4.2.9
+	 */
+	function get_positions() {
+		$positions = get_option( 'alg_wc_eu_vat_display_position', array( 'after_order_table' ) );
+		if ( empty( $positions ) ) {
+			$positions = array( 'after_order_table' );
+		}
+		return (
+			is_array( $positions ) ?
+			$positions :
+			array( $positions )
+		);
 	}
 
 	/**
