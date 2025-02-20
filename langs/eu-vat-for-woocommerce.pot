@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.2.9\n"
+"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-18T19:15:55+00:00\n"
+"POT-Creation-Date: 2025-02-20T18:46:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
@@ -52,7 +52,9 @@ msgid "Something went wrong."
 msgstr ""
 
 #: includes/admin/class-alg-wc-eu-vat-admin-order-list.php:59
-#: includes/admin/class-alg-wc-eu-vat-admin.php:189
+#: includes/admin/class-alg-wc-eu-vat-admin.php:113
+#: includes/admin/class-alg-wc-eu-vat-admin.php:122
+#: includes/admin/class-alg-wc-eu-vat-admin.php:264
 #: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:144
 #: includes/class-alg-wc-eu-vat.php:251
 #: includes/class-alg-wc-eu-vat.php:252
@@ -81,11 +83,11 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:172
+#: includes/admin/class-alg-wc-eu-vat-admin.php:247
 msgid "Let Customer Decide:"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:172
+#: includes/admin/class-alg-wc-eu-vat-admin.php:247
 #: includes/class-alg-wc-eu-vat-core.php:363
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:134
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:207
@@ -109,15 +111,15 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:208
+#: includes/admin/class-alg-wc-eu-vat-admin.php:283
 msgid "Report includes all EU VAT countries with existing sales."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:209
+#: includes/admin/class-alg-wc-eu-vat-admin.php:284
 msgid "Table is sorted by total tax value."
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-admin.php:227
+#: includes/admin/class-alg-wc-eu-vat-admin.php:302
 #: includes/blocks/eu-vat-for-woocommerce-blocks-initialize.php:78
 #: includes/class-alg-wc-eu-vat-core.php:202
 #: includes/class-alg-wc-eu-vat-core.php:203
@@ -203,52 +205,52 @@ msgstr ""
 msgid "Open VIES"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:190
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:200
 msgid "Customer IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:194
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:204
 msgid "Country by IP"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:198
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:208
 msgid "Customer EU VAT Number"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:202
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:212
 msgid "Taxes"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:214
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:224
 #: includes/functions/alg-wc-eu-vat-functions-validation.php:867
 msgid "Business Name"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:218
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:228
 #: includes/functions/alg-wc-eu-vat-functions-validation.php:870
 msgid "Business Address"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:222
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:232
 #: includes/functions/alg-wc-eu-vat-functions-validation.php:873
 msgid "Country Code"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:226
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:236
 #: includes/functions/alg-wc-eu-vat-functions-validation.php:876
 msgid "VAT Number"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:245
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:255
 #: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:152
 msgid "Request Identifier"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:265
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:282
 msgid "Validate VAT and remove taxes"
 msgstr ""
 
-#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:276
+#: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:293
 msgid "Get VAT details"
 msgstr ""
 
@@ -509,6 +511,7 @@ msgid "Validate VAT when an order is created manually from the admin side."
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-admin.php:65
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:73
 #: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:50
 #: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:75
 #: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:82
@@ -529,62 +532,70 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:79
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:71
+msgid "Admin new order email"
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:72
+msgid "Adds EU VAT number summary to the admin new order emails."
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:87
 msgid "Additional Info"
 msgstr ""
 
 #. Translators: %s: Field ID.
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:86
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:94
 msgid "Field ID used for EU VAT: %s."
 msgstr ""
 
 #. Translators: %s: Tool link.
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:93
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:101
 msgid "Tool for adding EU country standard VAT rates: %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:95
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:103
 msgid "Tools > EU country VAT Rates"
 msgstr ""
 
 #. Translators: %s: Report link.
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:102
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:110
 msgid "EU VAT report: %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:104
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:112
 msgid "WooCommerce > Reports > Taxes > EU VAT"
 msgstr ""
 
 #. Translators: %s: Site link.
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:111
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:119
 msgid "You can use shortcodes in field label, placeholder, description and all messages options, e.g.: %s."
 msgstr ""
 
 #. Translators: %s: Site link.
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:118
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:126
 msgid "Plugin description on %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:133
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:141
 msgid "Language Guide"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:138
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:146
 msgid "If you have multi-language store with WPML or Polylang, you can use shortcodes to show different languages."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:140
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:148
 msgid "For example:"
 msgstr ""
 
 #. Translators: %s: Shortcode example.
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:145
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:153
 msgid "%s can be used to show English messages, similar to other languages you have."
 msgstr ""
 
 #. Translators: %s: Shortcode example.
-#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:152
+#: includes/settings/class-alg-wc-eu-vat-settings-admin.php:160
 msgid "%s can be used as a fallback for non-defined languages."
 msgstr ""
 

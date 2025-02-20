@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 4.2.3
+ * @version 4.3.0
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.3
+	 * @version 4.3.0
 	 * @since   1.5.0
 	 *
 	 * @todo    (dev) `alg_wc_eu_vat_add_order_edit_metabox` default to `yes`?
@@ -64,6 +64,14 @@ class Alg_WC_EU_VAT_Settings_Admin extends Alg_WC_EU_VAT_Settings_Section {
 				'desc_tip' => __( 'Validate VAT when an order is created manually from the admin side.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_validate_vat_admin_side',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Admin new order email', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Adds EU VAT number summary to the admin new order emails.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_admin_new_order_email',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

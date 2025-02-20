@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 4.3.0 - 20/02/2025 =
+* Dev - Admin - "Admin new order email" option added (defaults to `no`).
+
 = 4.2.9 - 18/02/2025 =
 * Fix - VAT parsing - Possible "PHP Warning: Trying to access array offset on false" fixed.
 * Fix - Compatibility - "PDF Invoices & Packing Slips for WooCommerce" by "WP Overnight" - EU VAT doubling when the "Display" option is set to "In billing address" fixed.

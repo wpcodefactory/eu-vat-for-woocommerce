@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Meta Boxes
  *
- * @version 4.2.7
+ * @version 4.3.0
  * @since   4.2.0
  *
  * @author  WPFactory
@@ -153,13 +153,23 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 4.2.0
+	 * @version 4.3.0
 	 * @since   1.0.0
-	 *
-	 * @todo    (dev) save actual EU VAT number used on checkout (instead of `$_order->get_meta( '_' . alg_wc_eu_vat_get_field_id() )`)
-	 * @todo    (dev) add country flag?
 	 */
 	function create_meta_box( $object ) {
+		$this->output_meta_box_data( $object );
+	}
+
+	/**
+	 * output_meta_box_data.
+	 *
+	 * @version 4.3.0
+	 * @since   4.3.0
+	 *
+	 * @todo    (dev) save actual EU VAT number used on checkout (instead of `$_order->get_meta( '_' . alg_wc_eu_vat_get_field_id() )`)?
+	 * @todo    (dev) add country flag?
+	 */
+	function output_meta_box_data( $object, $do_return_table_data = false ) {
 
 		$_order = is_a( $object, 'WP_Post' ) ? wc_get_order( $object->ID ) : $object;
 
@@ -249,8 +259,12 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 			);
 		}
 
+		// Return table data?
+		if ( $do_return_table_data ) {
+			return $table_data;
+		}
+
 		// Output
-		$order_id = $_order->get_id();
 		echo alg_wc_eu_vat_get_table_html(
 			$table_data,
 			array(
@@ -258,6 +272,9 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 				'table_heading_type' => 'vertical',
 			)
 		);
+
+		// Order ID
+		$order_id = $_order->get_id();
 
 		// Validate VAT and remove taxes
 		echo '<p>' .

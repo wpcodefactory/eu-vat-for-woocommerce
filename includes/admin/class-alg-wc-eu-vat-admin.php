@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 4.2.0
+ * @version 4.3.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -15,9 +15,17 @@ if ( ! class_exists( 'Alg_WC_EU_VAT_Admin' ) ) :
 class Alg_WC_EU_VAT_Admin {
 
 	/**
+	 * meta_boxes.
+	 *
+	 * @version 4.3.0
+	 * @since   4.3.0
+	 */
+	public $meta_boxes;
+
+	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.0
+	 * @version 4.3.0
 	 * @since   1.0.0
 	 */
 	function __construct() {
@@ -39,14 +47,29 @@ class Alg_WC_EU_VAT_Admin {
 			'yes' === get_option( 'alg_wc_eu_vat_validate_vat_admin_side', 'no' ) &&
 			is_admin()
 		) {
-			add_filter( 'woocommerce_order_is_vat_exempt', array( $this, 'admin_order_is_vat_exempt' ), PHP_INT_MAX, 2 );
+			add_filter(
+				'woocommerce_order_is_vat_exempt',
+				array( $this, 'admin_order_is_vat_exempt' ),
+				PHP_INT_MAX,
+				2
+			);
 		}
 
 		// Reports
 		add_filter( 'woocommerce_admin_reports', array( $this, 'add_eu_vat_reports' ), PHP_INT_MAX );
 
+		// Admin new order email
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_admin_new_order_email', 'no' ) ) {
+			add_action(
+				'woocommerce_email_customer_details',
+				array( $this, 'add_eu_vat_data_to_admin_new_order_email' ),
+				100,
+				4
+			);
+		}
+
 		// Meta boxes
-		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-meta-boxes.php';
+		$this->meta_boxes = require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-meta-boxes.php';
 
 		// Admin order list
 		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-admin-order-list.php';
@@ -59,6 +82,58 @@ class Alg_WC_EU_VAT_Admin {
 
 		// Advertise
 		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-advertise.php';
+
+	}
+
+	/**
+	 * add_eu_vat_data_to_admin_new_order_email.
+	 *
+	 * @version 4.3.0
+	 * @since   4.3.0
+	 *
+	 * @see     https://github.com/woocommerce/woocommerce/blob/9.6.2/plugins/woocommerce/templates/emails/admin-new-order.php#L46
+	 * @see     https://github.com/woocommerce/woocommerce/blob/9.6.2/plugins/woocommerce/templates/emails/email-customer-details.php
+	 * @see     https://github.com/woocommerce/woocommerce/blob/9.6.2/plugins/woocommerce/templates/emails/plain/email-customer-details.php
+	 *
+	 * @todo    (v4.3.0) do not add the summary if customer EU VAT number is empty?
+	 */
+	function add_eu_vat_data_to_admin_new_order_email( $order, $sent_to_admin, $plain_text, $email ) {
+
+		if (
+			! $sent_to_admin ||
+			'new_order' !== $email->id
+		) {
+			return;
+		}
+
+		$table_data = $this->meta_boxes->output_meta_box_data( $order, true );
+
+		if ( $plain_text ) {
+
+			echo "\n" . esc_html( wc_strtoupper( esc_html__( 'EU VAT', 'eu-vat-for-woocommerce' ) ) ) . "\n\n";
+			foreach ( $table_data as $row ) {
+				echo wp_kses_post( $row[0] ?? '' ) . ': ' . wp_kses_post( $row[1] ?? '' ) . "\n";
+			}
+
+		} else {
+
+			?>
+			<div style="font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; margin-bottom: 40px;">
+				<h2><?php esc_html_e( 'EU VAT', 'eu-vat-for-woocommerce' ); ?></h2>
+				<?php
+				echo alg_wc_eu_vat_get_table_html(
+					$table_data,
+					array(
+						'table_heading_type' => 'vertical',
+						'table_style'        => 'border-collapse: collapse;',
+						'row_styles'         => 'border: 1px solid #e5e5e5;',
+					)
+				);
+				?>
+			</div>
+			<?php
+
+		}
 
 	}
 
