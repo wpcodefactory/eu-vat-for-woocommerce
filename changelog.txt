@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 4.3.1 - 25/02/2025 =
+* Dev - Checkout block field - Code refactoring.
+* Dev - Validation - Minor code refactoring.
+* Dev - Admin settings - Descriptions updated.
+* Dev - Developers - Validation - `alg_wc_eu_vat_validation_no_soap_api_url` filter added.
+* Dev - Developers - Validation - `alg_wc_eu_vat_validation_curl_disable_ssl` - Apply everywhere.
+* Dev - Developers - Validation - `alg_wc_eu_vat_validation_response` - More arguments added.
+
 = 4.3.0 - 20/02/2025 =
 * Dev - Admin - "Admin new order email" option added (defaults to `no`).
 
@@ -252,7 +260,7 @@
 * Fix - Checkout block error.
 
 = 2.11.1 - 05/06/2024 =
-* Dev - Update condition in `alg_eu_vat_update_block_order_meta_eu_vat()`.
+* Dev - Update condition in `update_block_order_meta_eu_vat()`.
 
 = 2.11.0 - 28/05/2024 =
 * Checkout block support.

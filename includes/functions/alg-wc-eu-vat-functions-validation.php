@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.2.9
+ * @version 4.3.1
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -85,7 +85,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_no_soap.
 	 *
-	 * @version 4.2.7
+	 * @version 4.3.1
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -93,7 +93,14 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	function alg_wc_eu_vat_validate_vat_no_soap( $country_code, $vat_number, $billing_company, $method ) {
 
 		$country_code = strtoupper( $country_code );
-		$api_url      = "https://ec.europa.eu/taxation_customs/vies/rest-api/ms/" . $country_code . "/vat/" . $vat_number;
+
+		$api_url = apply_filters(
+			'alg_wc_eu_vat_validation_no_soap_api_url',
+			"https://ec.europa.eu/taxation_customs/vies/rest-api/ms/{$country_code}/vat/{$vat_number}",
+			$country_code,
+			$vat_number,
+			$method
+		);
 
 		// Request identifier
 		if (
@@ -160,7 +167,13 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 		}
 
 		// Filter response
-		$response = apply_filters( 'alg_wc_eu_vat_validation_response', $response, $method );
+		$response = apply_filters(
+			'alg_wc_eu_vat_validation_response',
+			$response,
+			$method,
+			$country_code,
+			$vat_number
+		);
 
 		// Save response to the variable
 		alg_wc_eu_vat()->core->eu_vat_response_data = (
@@ -265,7 +278,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 4.2.7
+	 * @version 4.3.1
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -273,22 +286,24 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	function alg_wc_eu_vat_validate_vat_soap( $country_code, $vat_number, $billing_company ) {
 		try {
 			if ( class_exists( 'SoapClient' ) ) {
-				$contextOptions = array(
+
+				$context_options = array(
 					'ssl' => array(
 						'verify_peer'       => false,
 						'verify_peer_name'  => false,
 						'allow_self_signed' => true,
 					)
 				);
-				$sslContext     = stream_context_create( $contextOptions );
+				$ssl_context = stream_context_create( $context_options );
 
 				$client = new SoapClient(
 					'https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl',
 					array(
 						'exceptions'     => true,
-						'stream_context' => $sslContext,
+						'stream_context' => $ssl_context,
 					)
 				);
+
 				if (
 					'no' === get_option( 'alg_wc_eu_vat_request_identifier', 'no' ) ||
 					'' === ( $requester_country_code = get_option( 'alg_wc_eu_vat_requester_country_code', '' ) ) ||
@@ -321,7 +336,13 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 				}
 
 				// Filter response
-				$result = apply_filters( 'alg_wc_eu_vat_validation_response', $result, 'soap' );
+				$result = apply_filters(
+					'alg_wc_eu_vat_validation_response',
+					$result,
+					'soap',
+					$country_code,
+					$vat_number
+				);
 
 				// Save response to the variable
 				alg_wc_eu_vat()->core->eu_vat_response_data = $result;
@@ -615,7 +636,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_uk.
 	 *
-	 * @version 4.2.4
+	 * @version 4.3.1
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -646,10 +667,16 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 				break;
 			default: // 'curl'
 				if ( function_exists( 'curl_version' ) ) {
+					// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_init, WordPress.WP.AlternativeFunctions.curl_curl_setopt, WordPress.WP.AlternativeFunctions.curl_curl_exec, WordPress.WP.AlternativeFunctions.curl_curl_close
 					$curl = curl_init( $api_url );
 					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+					if ( apply_filters( 'alg_wc_eu_vat_validation_curl_disable_ssl', false ) ) {
+						curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, 0 );
+						curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0 );
+					}
 					$response = curl_exec( $curl );
 					curl_close( $curl );
+					// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_init, WordPress.WP.AlternativeFunctions.curl_curl_setopt, WordPress.WP.AlternativeFunctions.curl_curl_exec, WordPress.WP.AlternativeFunctions.curl_curl_close
 				} else {
 					alg_wc_eu_vat_log(
 						$country_code,

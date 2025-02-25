@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Main Class
  *
- * @version 4.2.5
+ * @version 4.3.1
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -188,7 +188,7 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * Show action links on the plugin screen.
 	 *
-	 * @version 4.0.0
+	 * @version 4.3.1
 	 * @since   1.0.0
 	 *
 	 * @param   mixed $links
@@ -202,8 +202,8 @@ final class Alg_WC_EU_VAT {
 		'</a>';
 
 		if ( 'eu-vat-for-woocommerce.php' === basename( ALG_WC_EU_VAT_FILE ) ) {
-			$custom_links[] = '<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' .
-				__( 'Unlock All', 'eu-vat-for-woocommerce' ) .
+			$custom_links[] = '<a target="_blank" style="font-weight: bold; color: green;" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' .
+				__( 'Go Pro', 'eu-vat-for-woocommerce' ) .
 			'</a>';
 		}
 

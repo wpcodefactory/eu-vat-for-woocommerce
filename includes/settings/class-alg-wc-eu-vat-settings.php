@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Settings
  *
- * @version 4.2.3
+ * @version 4.3.1
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -85,29 +85,33 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.0.0
+	 * @version 4.3.1
 	 * @since   1.0.0
 	 */
 	function get_settings() {
 		global $current_section;
-		$settings = array_merge( apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ), array(
+		$settings = array_merge(
+			apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ),
 			array(
-				'title'     => __( 'Reset Settings', 'eu-vat-for-woocommerce' ),
-				'type'      => 'title',
-				'id'        => $this->id . '_' . $current_section . '_reset_options',
-			),
-			array(
-				'title'     => __( 'Reset section settings', 'eu-vat-for-woocommerce' ),
-				'desc'      => '<strong>' . __( 'Reset', 'eu-vat-for-woocommerce' ) . '</strong>',
-				'id'        => $this->id . '_' . $current_section . '_reset',
-				'default'   => 'no',
-				'type'      => 'checkbox',
-			),
-			array(
-				'type'      => 'sectionend',
-				'id'        => $this->id . '_' . $current_section . '_reset_options',
-			),
-		) );
+				array(
+					'title'     => __( 'Reset Settings', 'eu-vat-for-woocommerce' ),
+					'type'      => 'title',
+					'id'        => $this->id . '_' . $current_section . '_reset_options',
+				),
+				array(
+					'title'     => __( 'Reset section settings', 'eu-vat-for-woocommerce' ),
+					'desc'      => '<strong>' . __( 'Reset', 'eu-vat-for-woocommerce' ) . '</strong>',
+					'desc_tip'  => __( 'Check the box and save changes to reset.', 'eu-vat-for-woocommerce' ),
+					'id'        => $this->id . '_' . $current_section . '_reset',
+					'default'   => 'no',
+					'type'      => 'checkbox',
+				),
+				array(
+					'type'      => 'sectionend',
+					'id'        => $this->id . '_' . $current_section . '_reset_options',
+				),
+			)
+		);
 		return apply_filters( 'alg_wc_eu_vat_get_settings', $settings, $current_section, $this->id, $this );
 	}
 
