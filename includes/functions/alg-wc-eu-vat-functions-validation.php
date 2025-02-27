@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.3.1
+ * @version 4.3.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -493,10 +493,12 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_with_method' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_with_method.
 	 *
-	 * @version 4.2.7
+	 * @version 4.3.2
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
+	 *
+	 * @todo    (v4.3.2) `alg_wc_eu_vat_validate_vat_uk_vatsense()`: move it outside of the `alg_wc_eu_vat_validate_vat_with_method()`
 	 */
 	function alg_wc_eu_vat_validate_vat_with_method( $country_code, $vat_number, $billing_company, $method ) {
 
@@ -510,7 +512,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_with_method' ) ) {
 		alg_wc_eu_vat()->core->eu_vat_response_data = null;
 
 		if ( $country_code == 'GB' ) {
-			return alg_wc_eu_vat_validate_vat_uk( $country_code, $vat_number, $billing_company, $method );
+			return alg_wc_eu_vat_validate_vat_uk_vatsense( $country_code, $vat_number, $billing_company );
 		}
 
 		switch ( $method ) {
@@ -632,6 +634,180 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	}
 }
 
+if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk_vatsense' ) ) {
+	/**
+	 * alg_wc_eu_vat_validate_vat_uk_vatsense.
+	 *
+	 * E.g.: GB333289454 (BBC Studios)
+	 *
+	 * @version 4.3.2
+	 * @since   4.3.2
+	 *
+	 * @return  mixed: bool on successful checking, null otherwise
+	 *
+	 * @see     https://vatsense.com/documentation#validate_number
+	 *
+	 * @todo    (v4.3.2) `alg_wc_eu_vat_store_validation_session()`: `$api_response`!
+	 * @todo    (v4.3.2) test: `alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company_name', $company_name )`
+	 * @todo    (v4.3.2) better log messages
+	 */
+	function alg_wc_eu_vat_validate_vat_uk_vatsense( $country_code, $vat_number, $billing_company = '' ) {
+
+		$key = apply_filters(
+			'alg_wc_eu_vat_vatsense_key',
+			get_option( 'alg_wc_eu_vat_vatsense_key', '' )
+		);
+		if ( ! $key ) {
+			alg_wc_eu_vat_debug_log(
+				__( 'Error: "VAT Sense" key not set', 'eu-vat-for-woocommerce' ),
+				array(
+					'Country' => $country_code,
+					'VAT ID'  => $vat_number,
+				)
+			);
+			return null;
+		}
+
+		$country_code = strtoupper( $country_code );
+
+		$res = wp_remote_get(
+			"https://api.vatsense.com/1.0/validate?vat_number={$country_code}{$vat_number}",
+			array(
+				'headers' => array(
+					'Authorization' => 'Basic ' . base64_encode( "user:{$key}" ),
+				),
+			)
+		);
+
+		if ( ! empty( $res['response']['code'] ) ) {
+			switch ( $res['response']['code'] ) {
+
+				case 200:
+					if ( ! empty( $res['body'] ) ) {
+						$res_body = json_decode( $res['body'], true );
+						if ( isset( $res_body['data']['valid'] ) ) {
+
+							if ( empty( $res_body['data']['valid'] ) ) {
+
+								alg_wc_eu_vat_debug_log(
+									__( 'Error: VAT ID not valid', 'eu-vat-for-woocommerce' ),
+									array(
+										'Country' => $country_code,
+										'VAT ID'  => $vat_number,
+									)
+								);
+								return false;
+
+							} else {
+
+								$is_valid = true;
+
+								// Check company name
+								$company_name = ( $res_body['data']['company']['company_name'] ?? false );
+								if (
+									'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) &&
+									strtolower( $company_name ) !== strtolower( $billing_company )
+								) {
+									$is_valid = false;
+									alg_wc_eu_vat_debug_log(
+										sprintf(
+											/* Translators: %s: Company name. */
+											__( 'Error: Company name does not match (%s)', 'eu-vat-for-woocommerce' ),
+											$company_name
+										),
+										array(
+											'Country' => $country_code,
+											'VAT ID'  => $vat_number,
+										)
+									);
+
+									alg_wc_eu_vat_session_set(
+										'alg_wc_eu_vat_to_check_company_name',
+										$company_name
+									);
+									alg_wc_eu_vat_session_set(
+										'alg_wc_eu_vat_to_check_company',
+										true
+									);
+
+								}
+
+								// Store result to session
+								alg_wc_eu_vat_store_validation_session(
+									$country_code,
+									$vat_number,
+									$is_valid,
+									$billing_company,
+									array()
+								);
+
+								if ( $is_valid ) {
+									alg_wc_eu_vat_debug_log(
+										__( 'Success: VAT ID valid', 'eu-vat-for-woocommerce' ),
+										array(
+											'Country' => $country_code,
+											'VAT ID'  => $vat_number,
+										)
+									);
+								}
+
+								return $is_valid;
+
+							}
+
+						}
+					}
+					break;
+
+				case 400:
+					alg_wc_eu_vat_debug_log(
+						sprintf(
+							/* Translators: %s: Error message or code. */
+							__( 'Error: VAT ID not valid (%s)', 'eu-vat-for-woocommerce' ),
+							(
+								! empty( $res['response']['message'] ) ?
+								$res['response']['message'] :
+								'#' . $res['response']['code']
+							)
+						),
+						array(
+							'Country' => $country_code,
+							'VAT ID'  => $vat_number,
+						)
+					);
+					return false;
+
+				/**
+				 * All responses.
+				 *
+				 * @see https://vatsense.com/documentation#responses
+				 *
+				 * 200 - OK - Everything worked as expected.
+				 * 400 - Bad Request - The request was unacceptable, often due to missing a required parameter.
+				 * 401 - Unauthorized - No valid API key provided.
+				 * 402 - Request Failed - The parameters were valid but the request failed.
+				 * 404 - Not Found - The requested resource doesn't exist.
+				 * 409 - Conflict - The request conflicts with another request (perhaps due to using the same idempotent key).
+				 * 412 - VIES Service Unavailable - The EU VIES service is temporarily unavailable. Please try again later.
+				 * 429 - Too Many Requests - Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+				 * 500, 502, 503, 504 - Server Errors - Something went wrong on our end. (These are rare.)
+				 */
+
+			}
+		}
+
+		alg_wc_eu_vat_debug_log(
+			__( 'Error: Something went wrong', 'eu-vat-for-woocommerce' ),
+			array(
+				'Country' => $country_code,
+				'VAT ID'  => $vat_number,
+			)
+		);
+		return null;
+
+	}
+}
+
 if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_uk.
@@ -641,6 +817,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk' ) ) {
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
 	 *
+	 * @todo    (v4.3.2) fix (HMRC v2)!
 	 * @todo    (dev) check for minimal length?
 	 */
 	function alg_wc_eu_vat_validate_vat_uk( $country_code, $vat_number, $billing_company = '', $method = '' ) {

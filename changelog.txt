@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 4.3.2 - 27/02/2025 =
+* Fix - Switch the UK VAT validation to VATSense.com API.
+
 = 4.3.1 - 25/02/2025 =
 * Dev - Checkout block field - Code refactoring.
 * Dev - Validation - Minor code refactoring.
