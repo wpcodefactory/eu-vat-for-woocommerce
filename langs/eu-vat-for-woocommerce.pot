@@ -2,40 +2,43 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.3.2\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
+"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce Pro 4.3.3-dev\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce-pro\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-27T22:40:39+00:00\n"
+"POT-Creation-Date: 2025-03-11T10:40:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
 
 #. Plugin Name of the plugin
-#: eu-vat-for-woocommerce.php
-msgid "EU/UK VAT Validation Manager for WooCommerce"
+#: eu-vat-for-woocommerce-pro.php
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:244
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:164
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:185
+msgid "EU/UK VAT Validation Manager for WooCommerce Pro"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: eu-vat-for-woocommerce.php
+#: eu-vat-for-woocommerce-pro.php
 msgid "https://wpfactory.com/item/eu-vat-for-woocommerce/"
 msgstr ""
 
 #. Description of the plugin
-#: eu-vat-for-woocommerce.php
+#: eu-vat-for-woocommerce-pro.php
 msgid "Manage EU VAT in WooCommerce. Beautifully."
 msgstr ""
 
 #. Author of the plugin
-#: eu-vat-for-woocommerce.php
+#: eu-vat-for-woocommerce-pro.php
 msgid "WPFactory"
 msgstr ""
 
 #. Author URI of the plugin
-#: eu-vat-for-woocommerce.php
+#: eu-vat-for-woocommerce-pro.php
 msgid "https://wpfactory.com/"
 msgstr ""
 
@@ -992,12 +995,6 @@ msgstr ""
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:162
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:183
 msgid "You will need %s plugin to enable this option."
-msgstr ""
-
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:244
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:164
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:185
-msgid "EU/UK VAT Validation Manager for WooCommerce Pro"
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:256

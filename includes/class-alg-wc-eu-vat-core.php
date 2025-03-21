@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.2.9
+ * @version 4.3.3
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -463,7 +463,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * get_field_data.
 	 *
-	 * @version 4.1.0
+	 * @version 4.3.3
 	 * @since   1.3.0
 	 *
 	 * @todo    (dev) rethink `$is_required` (check filters: `woocommerce_default_address_fields`, `woocommerce_billing_fields`)
@@ -517,7 +517,7 @@ class Alg_WC_EU_VAT_Core {
 
 		}
 
-		return array(
+		return apply_filters( 'alg_wc_eu_vat_get_field_data', array(
 			'type'              => 'text',
 			'label'             => do_shortcode( get_option( 'alg_wc_eu_vat_field_label', __( 'EU VAT Number', 'eu-vat-for-woocommerce' ) ) ),
 			'description'       => do_shortcode( get_option( 'alg_wc_eu_vat_field_description', '' ) ),
@@ -529,7 +529,7 @@ class Alg_WC_EU_VAT_Core {
 			'label_class'       => array( get_option( 'alg_wc_eu_vat_field_label_class', '' ) ),
 			'validate'          => ( 'yes' === get_option( 'alg_wc_eu_vat_validate', 'yes' ) ? array( 'eu-vat-number' ) : array() ),
 			'priority'          => get_option( 'alg_wc_eu_vat_field_priority', 200 ),
-		);
+		) );
 	}
 
 	/**

@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.3.3 - 21/03/2025 =
+* Fix - Admin - Fix the EU VAT field doubling on the admin order edit page when the "Display" option is set to "In billing address".
+* Dev - Developers - `alg_wc_eu_vat_get_field_data` filter added.
+* WC tested up to: 9.7.
+
 = 4.3.2 - 27/02/2025 =
 * Fix - Switch the UK VAT validation to VATSense.com API.
 

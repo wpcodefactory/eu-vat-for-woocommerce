@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 4.3.0
+ * @version 4.3.3
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -288,7 +288,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * add_to_admin_order_display.
 	 *
-	 * @version 1.4.0
+	 * @version 4.3.3
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) make full row?
@@ -302,7 +302,10 @@ class Alg_WC_EU_VAT_Admin {
 					__( 'EU VAT Number', 'eu-vat-for-woocommerce' )
 				)
 			),
-			'show'  => true,
+			'show'  => ( ! in_array(
+				'in_billing_address',
+				alg_wc_eu_vat()->core->display->get_positions()
+			) ),
 		);
 		return $fields;
 	}
