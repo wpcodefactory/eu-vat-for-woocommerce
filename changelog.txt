@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.3.4 - 23/03/2025 =
+* Fix - Display - In billing address - "Is checkout" check removed.
+* Dev - Checkout block field - Update script dependencies.
+
 = 4.3.3 - 21/03/2025 =
 * Fix - Admin - Fix the EU VAT field doubling on the admin order edit page when the "Display" option is set to "In billing address".
 * Dev - Developers - `alg_wc_eu_vat_get_field_data` filter added.

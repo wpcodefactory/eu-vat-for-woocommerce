@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Display
  *
- * @version 4.2.9
+ * @version 4.3.4
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -121,20 +121,15 @@ class Alg_WC_EU_VAT_Display {
 	/**
 	 * add_eu_vat_number_to_address_formats.
 	 *
-	 * @version 4.2.5
+	 * @version 4.3.4
 	 * @since   1.0.0
 	 */
 	function add_eu_vat_number_to_address_formats( $address_formats ) {
-		if ( alg_wc_eu_vat_is_checkout() ) {
-			return $address_formats;
+		$field_id = alg_wc_eu_vat_get_field_id();
+		foreach ( $address_formats as &$address_format ) {
+			$address_format .= "\n{{$field_id}}";
 		}
-
-		$field_name = alg_wc_eu_vat_get_field_id();
-		$modified_address_formats = array();
-		foreach ( $address_formats as $country => $address_format ) {
-			$modified_address_formats[ $country ] = $address_format . "\n{" . $field_name . '}';
-		}
-		return $modified_address_formats;
+		return $address_formats;
 	}
 
 	/**

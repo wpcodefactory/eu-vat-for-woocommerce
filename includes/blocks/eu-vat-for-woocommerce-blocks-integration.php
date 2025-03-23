@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Class for Integrating with WooCommerce Blocks
  *
- * @version 4.0.0
+ * @version 4.3.4
  * @since   2.11.0
  *
  * @author  WPFactory
@@ -186,9 +186,10 @@ class EuVatForWoocommerce_Blocks_Integration implements IntegrationInterface {
 	/**
 	 * register_euvat_block_frontend_scripts.
 	 *
-	 * @version 4.0.0
+	 * @version 4.3.4
 	 */
 	public function register_euvat_block_frontend_scripts() {
+
 		$script_path       = '/build/eu-vat-for-woocommerce-checkout-eu-vat-field-block-frontend.js';
 		$script_url        = plugins_url( $script_path, __FILE__ );
 		$script_asset_path = dirname( __FILE__ ) . '/build/eu-vat-field-block-frontend.asset.php';
@@ -204,15 +205,17 @@ class EuVatForWoocommerce_Blocks_Integration implements IntegrationInterface {
 		wp_register_script(
 			'eu-vat-for-woocommerce-checkout-eu-vat-field-block-frontend',
 			$script_url,
-			$script_asset['dependencies'],
+			array_merge( $script_asset['dependencies'], array( 'alg-wc-eu-vat' ) ),
 			$script_asset['version'],
 			true
 		);
+
 		wp_set_script_translations(
 			'eu-vat-for-woocommerce-checkout-eu-vat-field-block-frontend', // script handle
 			'eu-vat-for-woocommerce', // text domain
 			dirname( __FILE__ ) . '/languages'
 		);
+
 	}
 
 }
