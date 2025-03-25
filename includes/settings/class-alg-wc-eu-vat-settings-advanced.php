@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Advanced Section Settings
  *
- * @version 4.2.9
+ * @version 4.3.5
  * @since   4.2.3
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.9
+	 * @version 4.3.5
 	 * @since   4.2.3
 	 *
 	 * @todo    (dev) separate into "Advanced" and "Compatibility"?
@@ -125,6 +125,13 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 				'title'    => __( 'Checkout block field', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_enable_checkout_block_field',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Add script dependency', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Enable this if there is an "Uncaught ReferenceError: alg_wc_eu_vat_ajax_object is not defined" error on the checkout page.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_checkout_block_field_dependencies',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

@@ -2,43 +2,40 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce Pro 4.3.3-dev\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce-pro\n"
+"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.3.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-11T10:40:21+00:00\n"
+"POT-Creation-Date: 2025-03-25T13:58:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
 
 #. Plugin Name of the plugin
-#: eu-vat-for-woocommerce-pro.php
-#: includes/settings/class-alg-wc-eu-vat-settings-general.php:244
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:164
-#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:185
-msgid "EU/UK VAT Validation Manager for WooCommerce Pro"
+#: eu-vat-for-woocommerce.php
+msgid "EU/UK VAT Validation Manager for WooCommerce"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: eu-vat-for-woocommerce-pro.php
+#: eu-vat-for-woocommerce.php
 msgid "https://wpfactory.com/item/eu-vat-for-woocommerce/"
 msgstr ""
 
 #. Description of the plugin
-#: eu-vat-for-woocommerce-pro.php
+#: eu-vat-for-woocommerce.php
 msgid "Manage EU VAT in WooCommerce. Beautifully."
 msgstr ""
 
 #. Author of the plugin
-#: eu-vat-for-woocommerce-pro.php
+#: eu-vat-for-woocommerce.php
 msgid "WPFactory"
 msgstr ""
 
 #. Author URI of the plugin
-#: eu-vat-for-woocommerce-pro.php
+#: eu-vat-for-woocommerce.php
 msgid "https://wpfactory.com/"
 msgstr ""
 
@@ -130,7 +127,7 @@ msgstr ""
 #: includes/class-alg-wc-eu-vat-core.php:524
 #: includes/class-alg-wc-eu-vat-core.php:619
 #: includes/class-alg-wc-eu-vat-display.php:86
-#: includes/class-alg-wc-eu-vat-display.php:148
+#: includes/class-alg-wc-eu-vat-display.php:143
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:55
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:62
 #: includes/blocks/build/eu-vat-for-woocommerce-checkout-eu-vat-field-block.js:1
@@ -245,7 +242,7 @@ msgid "VAT Number"
 msgstr ""
 
 #: includes/admin/class-alg-wc-eu-vat-meta-boxes.php:255
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:152
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:159
 msgid "Request Identifier"
 msgstr ""
 
@@ -541,10 +538,10 @@ msgstr ""
 #: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:111
 #: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:118
 #: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:126
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:133
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:141
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:159
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:192
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:140
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:148
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:166
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:199
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:175
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:184
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:192
@@ -708,52 +705,60 @@ msgid "Checkout block field"
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:132
+msgid "Add script dependency"
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:133
+msgid "Enable this if there is an \"Uncaught ReferenceError: alg_wc_eu_vat_ajax_object is not defined\" error on the checkout page."
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:139
 msgid "Autofill company name from VAT ID"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:134
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:141
 msgid "Please use the SOAP validation method for this option to work."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:140
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:147
 msgid "Force price display including tax"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:142
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:149
 msgid "Display prices with taxes on single product pages, etc., even if the customer is VAT-exempt."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:153
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:160
 msgid "Gets and stores the \"request identifier\" code."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:158
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:165
 msgid "Request identifier"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:165
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:172
 msgid "Requester country code"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:171
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:178
 msgid "Requester VAT number"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:172
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:179
 msgid "Without the country code."
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:186
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:193
 msgid "Compatibility Options"
 msgstr ""
 
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:191
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:197
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:198
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:204
 msgid "Fluid Checkout for WooCommerce"
 msgstr ""
 
 #. Translators: %s: Plugin link.
-#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:195
+#: includes/settings/class-alg-wc-eu-vat-settings-advanced.php:202
 msgid "Enables compatibility with the %s plugin."
 msgstr ""
 
@@ -995,6 +1000,12 @@ msgstr ""
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:162
 #: includes/settings/class-alg-wc-eu-vat-settings-validation.php:183
 msgid "You will need %s plugin to enable this option."
+msgstr ""
+
+#: includes/settings/class-alg-wc-eu-vat-settings-general.php:244
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:164
+#: includes/settings/class-alg-wc-eu-vat-settings-validation.php:185
+msgid "EU/UK VAT Validation Manager for WooCommerce Pro"
 msgstr ""
 
 #: includes/settings/class-alg-wc-eu-vat-settings-general.php:256

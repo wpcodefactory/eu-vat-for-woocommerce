@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 4.3.5 - 25/03/2025 =
+* Fix - Checkout block field - Reverse updated script dependencies. Instead add "Advanced > Checkout block field > Add script dependency" option (defaults to `no`).
+
 = 4.3.4 - 23/03/2025 =
 * Fix - Display - In billing address - "Is checkout" check removed.
 * Dev - Checkout block field - Update script dependencies.
