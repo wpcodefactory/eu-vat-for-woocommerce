@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - General
  *
- * @version 4.2.7
+ * @version 4.3.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -24,6 +24,21 @@ if ( ! function_exists( 'alg_wc_eu_vat_is_checkout' ) ) {
 				function_exists( 'is_checkout' ) &&
 				is_checkout()
 			)
+		);
+	}
+}
+
+if ( ! function_exists( 'alg_wc_eu_vat_is_block_checkout' ) ) {
+	/**
+	 * alg_wc_eu_vat_is_block_checkout.
+	 *
+	 * @version 4.3.6
+	 * @since   4.3.6
+	 */
+	function alg_wc_eu_vat_is_block_checkout() {
+		return (
+			alg_wc_eu_vat_is_checkout() &&
+			has_block( 'woocommerce/checkout' )
 		);
 	}
 }

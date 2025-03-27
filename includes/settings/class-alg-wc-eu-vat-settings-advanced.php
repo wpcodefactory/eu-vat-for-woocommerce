@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Advanced Section Settings
  *
- * @version 4.3.5
+ * @version 4.3.6
  * @since   4.2.3
  *
  * @author  WPFactory
@@ -29,17 +29,14 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.3.5
+	 * @version 4.3.6
 	 * @since   4.2.3
 	 *
-	 * @todo    (dev) separate into "Advanced" and "Compatibility"?
 	 * @todo    (dev) `alg_wc_eu_vat_enable_checkout_block_field` default to `yes`?
 	 * @todo    (dev) "Sitepress" - should be "SiteGround"?
 	 */
 	function get_settings() {
-
-		// Advanced Options
-		$advanced_settings = array(
+		return array(
 			array(
 				'title'    => __( 'Advanced Options', 'eu-vat-for-woocommerce' ),
 				'type'     => 'title',
@@ -84,13 +81,6 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 				'id'       => 'alg_wc_eu_vat_sitepress_optimizer_dynamic_caching',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'VAT shifted text', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Please use text for 3rd party PDF invoice plugin.', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_advanced_vat_shifted_text',
-				'default'  => __( 'VAT Shifted', 'eu-vat-for-woocommerce' ),
-				'type'     => 'text',
 			),
 			array(
 				'title'    => __( 'Manual validation of VAT numbers', 'eu-vat-for-woocommerce' ),
@@ -186,40 +176,6 @@ class Alg_WC_EU_VAT_Settings_Advanced extends Alg_WC_EU_VAT_Settings_Section {
 				'id'       => 'alg_wc_eu_vat_request_identifier_options',
 			),
 		);
-
-		// Compatibility Options
-		$compatibility_settings = array(
-			array(
-				'title'    => __( 'Compatibility Options', 'eu-vat-for-woocommerce' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_eu_vat_compatibility_options',
-			),
-			array(
-				'title'    => __( 'Fluid Checkout for WooCommerce', 'eu-vat-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => sprintf(
-					/* Translators: %s: Plugin link. */
-					__( 'Enables compatibility with the %s plugin.', 'eu-vat-for-woocommerce' ),
-					'<a target="_blank" href="https://wordpress.org/plugins/fluid-checkout/">' .
-						__( 'Fluid Checkout for WooCommerce', 'eu-vat-for-woocommerce' ) .
-					'</a>'
-				),
-				'id'       => 'alg_wc_eu_vat_compatibility_fluid_checkout',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_eu_vat_compatibility_options',
-			),
-		);
-
-		// Result
-		return array_merge(
-			$advanced_settings,
-			$compatibility_settings
-		);
-
 	}
 
 }

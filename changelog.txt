@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.3.6 - 27/03/2025 =
+* Fix - Display - In billing address - "Is checkout" check reversed for the block-based checkout.
+* Dev - "Compatibility" section added.
+* Dev - Compatibility - PDF Invoices & Packing Slips for WooCommerce - "Prefix" option added (defaults to an empty string).
+
 = 4.3.5 - 25/03/2025 =
 * Fix - Checkout block field - Reverse updated script dependencies. Instead add "Advanced > Checkout block field > Add script dependency" option (defaults to `no`).
 

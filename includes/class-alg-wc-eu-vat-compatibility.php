@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Compatibility Class
  *
- * @version 4.2.9
+ * @version 4.3.6
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -17,24 +17,28 @@ class Alg_WC_EU_VAT_Compatibility {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.3.6
 	 * @since   4.0.0
 	 */
 	function __construct() {
 
 		// "PDF Invoices & Packing Slips for WooCommerce" by "WP Overnight"
-		add_filter( 'wpo_wcpdf_after_billing_address', array( $this, 'wpo_wcpdf_extend_after_billing_address' ), 10, 2  );
-		add_action( 'wpo_wcpdf_after_order_details', array( $this, 'wpo_wcpdf_add_vat_exempt_text_pdf_footer'), 10, 2 );
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_compatibility_wpo_wcpdf', 'yes' ) ) {
+			add_filter( 'wpo_wcpdf_after_billing_address', array( $this, 'wpo_wcpdf_extend_after_billing_address' ), 10, 2  );
+			add_action( 'wpo_wcpdf_after_order_details', array( $this, 'wpo_wcpdf_add_vat_exempt_text_pdf_footer'), 10, 2 );
+		}
 
 		// YITH WooCommerce PDF Invoices & Packing Slips
-		add_filter( 'yith_ywpi_template_editor_customer_info_placeholders', array( $this, 'yith_support_invoice' ), PHP_INT_MAX, 1 );
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_compatibility_yith_ywpi', 'yes' ) ) {
+			add_filter( 'yith_ywpi_template_editor_customer_info_placeholders', array( $this, 'yith_support_invoice' ), PHP_INT_MAX, 1 );
+		}
 
 	}
 
 	/**
 	 * wpo_wcpdf_extend_after_billing_address.
 	 *
-	 * @version 4.2.9
+	 * @version 4.3.6
 	 * @since   1.7.0
 	 *
 	 * @see     https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/
@@ -49,7 +53,13 @@ class Alg_WC_EU_VAT_Compatibility {
 		) {
 			$vat_id = $pdf_order->get_meta( '_' . alg_wc_eu_vat_get_field_id() );
 			if ( $vat_id && ! empty( $vat_id ) ) {
-				?><div class="eu-vat"><?php echo esc_html( $vat_id ); ?></div><?php
+				$prefix = get_option( 'alg_wc_eu_vat_compatibility_wpo_wcpdf_prefix', '' );
+				if ( '' !== $prefix ) {
+					$prefix .= ' ';
+				}
+				?><div class="eu-vat"><?php
+					echo wp_kses_post( $prefix ) . esc_html( $vat_id );
+				?></div><?php
 			}
 		}
 	}

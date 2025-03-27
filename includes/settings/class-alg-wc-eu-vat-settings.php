@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Settings
  *
- * @version 4.3.1
+ * @version 4.3.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -17,7 +17,7 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.3
+	 * @version 4.3.6
 	 * @since   1.0.0
 	 */
 	function __construct() {
@@ -33,6 +33,7 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-settings-progress.php';
 		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-settings-admin.php';
 		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-settings-advanced.php';
+		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-settings-compatibility.php';
 
 		add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'maybe_unsanitize_option' ), PHP_INT_MAX, 3 );
 
