@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.3.7 - 02/04/2025 =
+* Fix - Block Checkout - `VIES_UNAVAILABLE` - `%vies_error%` placeholder fixed.
+* Dev - Validation - Check company name - "Accept empty responses" option added (defaults to `no`).
+
 = 4.3.6 - 27/03/2025 =
 * Fix - Display - In billing address - "Is checkout" check reversed for the block-based checkout.
 * Dev - "Compatibility" section added.

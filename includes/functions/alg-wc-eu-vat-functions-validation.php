@@ -2,13 +2,31 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.3.2
+ * @version 4.3.7
  * @since   1.0.0
  *
  * @author  WPFactory
  */
 
 defined( 'ABSPATH' ) || exit;
+
+if ( ! function_exists( 'alg_wc_eu_vat_accept_empty_company_response' ) ) {
+	/**
+	 * alg_wc_eu_vat_accept_empty_company_response.
+	 *
+	 * @version 4.3.7
+	 * @since   4.3.7
+	 *
+	 * @todo    (v4.3.7) accept empty values (`false` and empty string)?
+	 * @todo    (v4.3.7) use for UK VAT (`alg_wc_eu_vat_validate_vat_uk` and `alg_wc_eu_vat_validate_vat_uk_vatsense`)?
+	 */
+	function alg_wc_eu_vat_accept_empty_company_response( $company ) {
+		return (
+			'yes' === get_option( 'alg_wc_eu_vat_check_company_name_accept_empty_response', 'no' ) &&
+			'---' === $company
+		);
+	}
+}
 
 if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	/**
@@ -278,7 +296,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 4.3.1
+	 * @version 4.3.7
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -359,7 +377,8 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 						$result->valid &&
 						(
 							'no' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) ||
-							strtolower( $result->name ) === $billing_company
+							strtolower( $result->name ) === $billing_company ||
+							alg_wc_eu_vat_accept_empty_company_response( $result->name )
 						)
 					) :
 					null

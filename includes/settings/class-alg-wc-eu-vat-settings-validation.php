@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 4.3.2
+ * @version 4.3.7
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.3.2
+	 * @version 4.3.7
 	 * @since   1.5.0
 	 *
 	 * @todo    (feature) Message if customer's check for IP location country has failed!
@@ -191,6 +191,16 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'id'                => 'alg_wc_eu_vat_check_company_name',
 				'default'           => 'no',
 				'type'              => 'checkbox',
+				'checkboxgroup'     => 'start',
+				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
+			),
+			array(
+				'desc'              => __( 'Accept empty responses', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Skips name check if the company name is not provided in the VIES server response.', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_check_company_name_accept_empty_response',
+				'default'           => 'no',
+				'type'              => 'checkbox',
+				'checkboxgroup'     => 'end',
 				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
 			),
 			array(
