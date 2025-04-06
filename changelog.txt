@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.3.8 - 06/04/2025 =
+* Dev - Validation - Australia, Norway, and Switzerland support added (via VATSense.com API).
+* Dev - Validation - "Allow VAT number input with non-alphanumeric symbols" option added (defaults to `no`).
+* Dev - Validation - Code refactoring.
+
 = 4.3.7 - 02/04/2025 =
 * Fix - Block Checkout - `VIES_UNAVAILABLE` - `%vies_error%` placeholder fixed.
 * Dev - Validation - Check company name - "Accept empty responses" option added (defaults to `no`).

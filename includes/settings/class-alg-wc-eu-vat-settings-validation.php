@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 4.3.7
+ * @version 4.3.8
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.3.7
+	 * @version 4.3.8
 	 * @since   1.5.0
 	 *
 	 * @todo    (feature) Message if customer's check for IP location country has failed!
@@ -196,7 +196,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Accept empty responses', 'eu-vat-for-woocommerce' ),
-				'desc_tip'          => __( 'Skips name check if the company name is not provided in the VIES server response.', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Skips the name check if the company name is not provided in the VIES server response.', 'eu-vat-for-woocommerce' ),
 				'id'                => 'alg_wc_eu_vat_check_company_name_accept_empty_response',
 				'default'           => 'no',
 				'type'              => 'checkbox',
@@ -267,12 +267,13 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			array(
 				'title'    => __( 'VATSense.com API key', 'eu-vat-for-woocommerce' ),
 				'desc'     => (
-					__( 'For the UK VAT validation.', 'eu-vat-for-woocommerce' ) . ' ' .
+					__( 'For the UK, Australia, Norway, and Switzerland VAT validation.', 'eu-vat-for-woocommerce' ) . ' ' .
 					sprintf(
 						/* Translators: %s: Site link. */
 						__( 'Get your key at %s.', 'eu-vat-for-woocommerce' ),
 						'<a target="_blank" href="https://vatsense.com/">vatsense.com</a>'
-					)
+					) . ' ' .
+					__( 'Note: Enable the "Allow VAT number input without country code" option for Australian VAT validation.', 'eu-vat-for-woocommerce' )
 				),
 				'id'       => 'alg_wc_eu_vat_vatsense_key',
 				'default'  => '',
@@ -280,9 +281,17 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Allow VAT number input without country code', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'This will allow customers to enter VAT number without leading country code letters and still get VAT validated. In this case country will be automatically retrieved from billing country input.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'This will allow customers to enter VAT numbers without leading country code letters and still get VAT validated. In this case, the country will be automatically retrieved from the billing country input.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_allow_without_country_code',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Allow VAT number input with non-alphanumeric symbols', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'This will allow customers to enter VAT numbers with spaces, dots, and hyphens and still get VAT validated.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_allow_non_alphanumeric',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.3.7
+ * @version 4.3.8
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -18,7 +18,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_accept_empty_company_response' ) ) {
 	 * @since   4.3.7
 	 *
 	 * @todo    (v4.3.7) accept empty values (`false` and empty string)?
-	 * @todo    (v4.3.7) use for UK VAT (`alg_wc_eu_vat_validate_vat_uk` and `alg_wc_eu_vat_validate_vat_uk_vatsense`)?
+	 * @todo    (v4.3.7) use for `alg_wc_eu_vat_validate_vat_uk()` and `alg_wc_eu_vat_validate_vat_vatsense()`?
 	 */
 	function alg_wc_eu_vat_accept_empty_company_response( $company ) {
 		return (
@@ -28,11 +28,76 @@ if ( ! function_exists( 'alg_wc_eu_vat_accept_empty_company_response' ) ) {
 	}
 }
 
+if ( ! function_exists( 'alg_wc_eu_vat_extract_country' ) ) {
+	/**
+	 * alg_wc_eu_vat_extract_country.
+	 *
+	 * @version 4.3.8
+	 * @since   4.3.8
+	 */
+	function alg_wc_eu_vat_extract_country( $full_vat_number ) {
+		return (
+			(
+				(
+					strlen( $full_vat_number ) > 3 &&
+					( $country = substr( $full_vat_number, 0, 3 ) ) &&
+					'CHE' === $country // Switzerland
+				) ||
+				(
+					strlen( $full_vat_number ) > 2 &&
+					( $country = substr( $full_vat_number, 0, 2 ) ) &&
+					ctype_alpha( $country )
+				)
+			) ?
+			$country :
+			false
+		);
+	}
+}
+
+if ( ! function_exists( 'alg_wc_eu_vat_match_billing_country' ) ) {
+	/**
+	 * Match billing country by VAT ID country.
+	 *
+	 * @version 4.3.8
+	 * @since   4.3.8
+	 */
+	function alg_wc_eu_vat_match_billing_country( $vat_id_country ) {
+		switch ( $vat_id_country ) {
+			case 'EL':
+				return 'GR';
+			case 'CHE':
+				return 'CH';
+			default:
+				return $vat_id_country;
+		}
+	}
+}
+
+if ( ! function_exists( 'alg_wc_eu_vat_match_vat_id_country' ) ) {
+	/**
+	 * Match VAT ID country by billing country.
+	 *
+	 * @version 4.3.8
+	 * @since   4.3.8
+	 */
+	function alg_wc_eu_vat_match_vat_id_country( $billing_country ) {
+		switch ( $billing_country ) {
+			case 'GR':
+				return 'EL';
+			case 'CH':
+				return 'CHE';
+			default:
+				return $billing_country;
+		}
+	}
+}
+
 if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_parse_vat.
 	 *
-	 * @version 4.2.9
+	 * @version 4.3.8
 	 * @since   1.1.0
 	 *
 	 * @todo    (v4.2.9) `VAT_NOT_VALID`: better `country` and `number`?
@@ -40,6 +105,16 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 	 */
 	function alg_wc_eu_vat_parse_vat( $full_vat_number, $billing_country ) {
 
+		// Remove non-alphanumeric (spaces, dots and hyphens) symbols
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_allow_non_alphanumeric', 'no' ) ) {
+			$full_vat_number = str_replace(
+				array( '-', '.', ' ' ),
+				'',
+				$full_vat_number
+			);
+		}
+
+		// Only letters and digits
 		if ( ! preg_match( '/^[a-zA-Z0-9]+$/', $full_vat_number ) ) {
 			return array(
 				'country'   => '',
@@ -48,21 +123,27 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 			);
 		}
 
+		// Error msg
 		$error_msg = '';
 
+		// To uppercase
 		$full_vat_number = strtoupper( $full_vat_number );
 		$billing_country = strtoupper( $billing_country );
-		if (
-			strlen( $full_vat_number ) > 2 &&
-			( $country = substr( $full_vat_number, 0, 2 ) ) &&
-			ctype_alpha( $country )
-		) {
+
+		// Check
+		if ( false !== ( $country = alg_wc_eu_vat_extract_country( $full_vat_number ) ) ) {
+
 			if (
 				'no' === get_option( 'alg_wc_eu_vat_check_billing_country_code', 'no' ) ||
-				( 'EL' === $country ? 'GR' : $country ) == $billing_country
+				alg_wc_eu_vat_match_billing_country( $country ) == $billing_country
 			) {
-				$number = substr( $full_vat_number, 2 );
+
+				// Success
+				$number = substr( $full_vat_number, strlen( $country ) );
+
 			} else {
+
+				// Wrong billing country
 				alg_wc_eu_vat_log(
 					$country,
 					$full_vat_number,
@@ -77,25 +158,30 @@ if ( ! function_exists( 'alg_wc_eu_vat_parse_vat' ) ) {
 				$country   = '';
 				$number    = '';
 				$error_msg = 'WRONG_BILLING_COUNTRY';
+
 			}
+
 		} elseif ( 'yes' === get_option( 'alg_wc_eu_vat_allow_without_country_code', 'no' ) ) {
-			$country = $billing_country;
-			if ( 'GR' === $billing_country ) {
-				$country = 'EL';
-			}
-			$number = $full_vat_number;
+
+			// Success (without country code)
+			$country = alg_wc_eu_vat_match_vat_id_country( $billing_country );
+			$number  = $full_vat_number;
+
 		} else {
+
+			// Error
 			$country = '';
 			$number  = $full_vat_number;
+
 		}
 
-		$eu_vat_number = array(
+		// Result
+		return array(
 			'country'   => $country,
 			'number'    => $number,
 			'error_msg' => $error_msg,
 		);
 
-		return $eu_vat_number;
 	}
 }
 
@@ -512,12 +598,12 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_with_method' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_with_method.
 	 *
-	 * @version 4.3.2
+	 * @version 4.3.8
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
 	 *
-	 * @todo    (v4.3.2) `alg_wc_eu_vat_validate_vat_uk_vatsense()`: move it outside of the `alg_wc_eu_vat_validate_vat_with_method()`
+	 * @todo    (v4.3.2) `alg_wc_eu_vat_validate_vat_vatsense()`: move it outside of the `alg_wc_eu_vat_validate_vat_with_method()`
 	 */
 	function alg_wc_eu_vat_validate_vat_with_method( $country_code, $vat_number, $billing_company, $method ) {
 
@@ -527,11 +613,11 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_with_method' ) ) {
 		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_details', null );
 		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_response_data', null );
 
-		alg_wc_eu_vat()->core->vat_details_data = null;
+		alg_wc_eu_vat()->core->vat_details_data     = null;
 		alg_wc_eu_vat()->core->eu_vat_response_data = null;
 
-		if ( $country_code == 'GB' ) {
-			return alg_wc_eu_vat_validate_vat_uk_vatsense( $country_code, $vat_number, $billing_company );
+		if ( in_array( $country_code, array( 'GB', 'AU', 'NO', 'CHE' ) ) ) { // UK, Australia, Norway, Switzerland
+			return alg_wc_eu_vat_validate_vat_vatsense( $country_code, $vat_number, $billing_company );
 		}
 
 		switch ( $method ) {
@@ -574,7 +660,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 				$prevalidated_VAT_numbers = explode( ',', $manual_validation_vat_numbers );
 				$sanitized_vat_numbers    = array_map( 'trim', $prevalidated_VAT_numbers );
 
-				$conjuncted_vat_number = $country_code . '' . $vat_number;
+				$conjuncted_vat_number = $country_code . $vat_number;
 				if ( isset( $sanitized_vat_numbers[0] ) ) {
 					if ( in_array( $conjuncted_vat_number, $sanitized_vat_numbers ) ) {
 						alg_wc_eu_vat_log(
@@ -653,13 +739,16 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	}
 }
 
-if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk_vatsense' ) ) {
+if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_vatsense' ) ) {
 	/**
-	 * alg_wc_eu_vat_validate_vat_uk_vatsense.
+	 * alg_wc_eu_vat_validate_vat_vatsense.
 	 *
-	 * E.g.: GB333289454 (BBC Studios)
+	 * E.g.: UK: GB333289454 (BBC STUDIOS PRODUCTIONS LIMITED) (https://www.tax.service.gov.uk/check-vat-number/enter-vat-details)
+	 * E.g.: CH: CHE104793742 (CHE-104.793.742) (Microsoft Global Resources GmbH) (https://www.zefix.ch/en/search/entity/welcome)
+	 * E.g.: AU: 69074966466 (69 074 966 466) (SUNCORP CORPORATE SERVICES PTY LTD) (https://abr.business.gov.au/)
+	 * E.g.: NO: NO975534707 (ROLLS-ROYCE AB) (https://www.brreg.no/en/)
 	 *
-	 * @version 4.3.2
+	 * @version 4.3.8
 	 * @since   4.3.2
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -670,7 +759,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_uk_vatsense' ) ) {
 	 * @todo    (v4.3.2) test: `alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_company_name', $company_name )`
 	 * @todo    (v4.3.2) better log messages
 	 */
-	function alg_wc_eu_vat_validate_vat_uk_vatsense( $country_code, $vat_number, $billing_company = '' ) {
+	function alg_wc_eu_vat_validate_vat_vatsense( $country_code, $vat_number, $billing_company = '' ) {
 
 		$key = apply_filters(
 			'alg_wc_eu_vat_vatsense_key',

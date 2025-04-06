@@ -49,9 +49,9 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	 */
 	function get_vat_details() {
 		if ( isset( $_GET['get_vat_details'], $_GET['number'], $_GET['country'] ) ) {
-			$order_id   = absint( $_GET['get_vat_details'] );
-			$vat_number = sanitize_text_field( wp_unslash( $_GET['number'] ) );
-			$country    = sanitize_text_field( wp_unslash( $_GET['country'] ) );
+			$order_id      = absint( $_GET['get_vat_details'] );
+			$vat_number    = sanitize_text_field( wp_unslash( $_GET['number'] ) );
+			$country       = sanitize_text_field( wp_unslash( $_GET['country'] ) );
 			$eu_vat_number = alg_wc_eu_vat_parse_vat( $vat_number, $country );
 			$is_valid      = alg_wc_eu_vat_validate_vat( $eu_vat_number['country'], $eu_vat_number['number'] );
 			if ( $is_valid ) {
