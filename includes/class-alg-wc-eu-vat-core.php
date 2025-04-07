@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.3.3
+ * @version 4.3.9
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -67,7 +67,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.9
+	 * @version 4.3.9
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) "eu vat number" to "eu vat"?
@@ -136,6 +136,9 @@ class Alg_WC_EU_VAT_Core {
 		// Keep VAT in selected countries; Keep VAT if shipping country is different from billing country
 		add_filter( 'alg_wc_eu_vat_maybe_exclude_vat', array( $this, 'maybe_exclude_vat_free' ) );
 
+		// Keep shipping VAT
+		add_action( 'alg_wc_eu_vat_exempt_applied', array( $this, 'keep_shipping_vat' ) );
+
 		// Orders
 		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-orders.php';
 
@@ -154,6 +157,39 @@ class Alg_WC_EU_VAT_Core {
 		// Force price display including tax
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_force_price_display_incl_tax', 'no' ) ) {
 			add_filter( 'woocommerce_get_price_html', array( $this, 'force_price_display_incl_tax' ), PHP_INT_MAX, 2 );
+		}
+
+	}
+
+	/**
+	 * keep_shipping_vat.
+	 *
+	 * @version 4.3.9
+	 * @since   4.3.9
+	 */
+	function keep_shipping_vat( $is_exempt ) {
+
+		if ( ! $is_exempt ) {
+			return;
+		}
+
+		if ( 'no' === get_option( 'alg_wc_eu_vat_keep_shipping_vat', 'no' ) ) {
+			return;
+		}
+
+		if ( ! did_action( 'wp_loaded' ) ) {
+			return;
+		}
+
+		// Disable VAT exemption for the customer
+		WC()->customer->set_is_vat_exempt( false );
+
+		// Set all cart product tax statuses to "None"
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			$product             = $cart_item['data'];
+			$price_excluding_tax = wc_get_price_excluding_tax( $product );
+			$product->set_price( $price_excluding_tax );
+			$product->set_tax_status( 'none' );
 		}
 
 	}
