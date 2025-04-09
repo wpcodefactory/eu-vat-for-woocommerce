@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.7
-Stable tag: 4.3.9
+Stable tag: 4.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -285,6 +285,13 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.4.0 - 09/04/2025 =
+* Dev - General - Display Options - "Display template" option added (defaults to `EU VAT Number: %eu_vat_number%`).
+* Dev - EU country VAT Rates Tool - Updated the standard VAT rate for EU countries.
+* Dev - Admin settings - Descriptions updated.
+* Dev - Key Manager - Library updated.
+* Dev - Code refactoring.
 
 = 4.3.9 - 07/04/2025 =
 * Dev - Validation - VAT Exemption - "Keep shipping VAT" option added (defaults to `no`).

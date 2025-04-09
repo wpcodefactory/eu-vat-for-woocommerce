@@ -1,12 +1,11 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 4.2.6
+ * @version 4.4.0
  * @since   1.0.0
  *
  * @author  WPFactory
  *
- * @todo    (dev) rename `var_belgium_compatibility` to `vat_belgium_compatibility`?
  * @todo    (dev) replace `billing_eu_vat_number` and `billing_eu_vat_number_field` with `alg_wc_eu_vat_get_field_id()`
  * @todo    (dev) customizable event for `billing_company` (currently `input`; could be e.g., `change`)
  */
@@ -20,13 +19,13 @@ jQuery( function ( $ ) {
 	var input_timer_company;         // timer identifier (company)
 	var done_input_interval = 1000;  // time in ms
 
-	var var_belgium_compatibility = 'no';
+	var valid_vat_but_not_exempted = 'no';
 
 	// Elements
 	var vat_input;
 	var billing_company;
 	var vat_input_customer_choice;
-	var vat_input_belgium_compatibility;
+	var valid_vat_but_not_exempted_input;
 	var vat_input_billing_country;
 	var vat_paragraph;
 	var vat_input_label;
@@ -125,23 +124,23 @@ jQuery( function ( $ ) {
 	/**
 	 * init_elements.
 	 *
-	 * @version  4.2.3
+	 * @version  4.4.0
 	 * @since    4.2.3
 	 */
 	function init_elements() {
-		vat_input                       = $( 'input[name="billing_eu_vat_number"]' );
-		billing_company                 = $( 'input[name="billing_company"]' );
-		vat_input_customer_choice       = $( 'input[name="billing_eu_vat_number_customer_decide"]' );
-		vat_input_belgium_compatibility = $( 'input[name="billing_eu_vat_number_belgium_compatibility"]' );
-		vat_input_billing_country       = $( 'select[name="billing_country"]' );
-		vat_paragraph                   = $( 'p[id="billing_eu_vat_number_field"]' );
-		vat_input_label                 = $( 'label[for="billing_eu_vat_number"]' );
+		vat_input                        = $( 'input[name="billing_eu_vat_number"]' );
+		billing_company                  = $( 'input[name="billing_company"]' );
+		vat_input_customer_choice        = $( 'input[name="billing_eu_vat_number_customer_decide"]' );
+		valid_vat_but_not_exempted_input = $( 'input[name="billing_eu_vat_number_valid_vat_but_not_exempted"]' );
+		vat_input_billing_country        = $( 'select[name="billing_country"]' );
+		vat_paragraph                    = $( 'p[id="billing_eu_vat_number_field"]' );
+		vat_input_label                  = $( 'label[for="billing_eu_vat_number"]' );
 	}
 
 	/**
 	 * attach_event_handlers.
 	 *
-	 * @version  4.2.3
+	 * @version  4.4.0
 	 * @since    4.2.3
 	 */
 	function attach_event_handlers() {
@@ -183,8 +182,8 @@ jQuery( function ( $ ) {
 			alg_wc_eu_vat_validate_vat();
 		} );
 
-		// Belgium compatibility
-		vat_input_belgium_compatibility.change( function () {
+		// Valid VAT but not exempted
+		valid_vat_but_not_exempted_input.change( function () {
 			alg_wc_eu_vat_validate_vat();
 		} );
 
@@ -225,7 +224,7 @@ jQuery( function ( $ ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 4.2.3
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_validate_vat( load = false ) {
@@ -275,11 +274,11 @@ jQuery( function ( $ ) {
 			}
 		}
 
-		if ( vat_input_belgium_compatibility.length > 0 ) {
-			if ( vat_input_belgium_compatibility.is( ':checked' ) ) {
-				var_belgium_compatibility = 'yes';
+		if ( valid_vat_but_not_exempted_input.length > 0 ) {
+			if ( valid_vat_but_not_exempted_input.is( ':checked' ) ) {
+				valid_vat_but_not_exempted = 'yes';
 			} else {
-				var_belgium_compatibility = 'no';
+				valid_vat_but_not_exempted = 'no';
 			}
 		}
 
@@ -307,12 +306,12 @@ jQuery( function ( $ ) {
 			}
 
 			var data = {
-				'action'                             : 'alg_wc_eu_vat_validate_action',
-				'alg_wc_eu_vat_to_check'             : vat_number_to_check,
-				'alg_wc_eu_vat_belgium_compatibility': var_belgium_compatibility,
-				'billing_country'                    : $( '#billing_country' ).val(),
-				'shipping_country'                   : $( '#shipping_country' ).val(),
-				'billing_company'                    : $( '#billing_company' ).val(),
+				'action'                                  : 'alg_wc_eu_vat_validate_action',
+				'alg_wc_eu_vat_to_check'                  : vat_number_to_check,
+				'alg_wc_eu_vat_valid_vat_but_not_exempted': valid_vat_but_not_exempted,
+				'billing_country'                         : $( '#billing_country' ).val(),
+				'shipping_country'                        : $( '#shipping_country' ).val(),
+				'billing_company'                         : $( '#billing_company' ).val(),
 			};
 			$.ajax( {
 				type: "POST",

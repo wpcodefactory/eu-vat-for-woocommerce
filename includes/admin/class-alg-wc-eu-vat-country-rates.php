@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Tool - EU country VAT Rates
  *
- * @version 4.1.0
+ * @version 4.4.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -67,41 +67,42 @@ class Alg_WC_EU_VAT_Countries_VAT_Rates_Tool {
 	/**
 	 * get_european_union_countries_with_vat.
 	 *
-	 * @version 1.0.0
+	 * @version 4.4.0
 	 * @since   1.0.0
+	 *
+	 * @see     https://taxfoundation.org/data/all/eu/value-added-tax-vat-rates-europe/
 	 *
 	 * @todo    (dev) check `MC`, `IM`?
 	 */
 	function get_european_union_countries_with_vat() {
 		return array(
-			'AT' => 20,
-			'BE' => 21,
-			'BG' => 20,
-			'CY' => 19,
-			'CZ' => 21,
-			'DE' => 19,
-			'DK' => 25,
-			'EE' => 20,
-			'ES' => 21,
-			'FI' => 24,
-			'FR' => 20,
-			'GB' => 20,
-			'GR' => 24,
-			'HU' => 27,
-			'HR' => 25,
-			'IE' => 23,
-			'IT' => 22,
-			'LT' => 21,
-			'LU' => 17,
-			'LV' => 21,
-			'MT' => 18,
-			'NL' => 21,
-			'PL' => 23,
-			'PT' => 23,
-			'RO' => 19,
-			'SE' => 25,
-			'SI' => 22,
-			'SK' => 20,
+			'AT' => 20,		// Austria (AT)
+			'BE' => 21,		// Belgium (BE)
+			'BG' => 20,		// Bulgaria (BG)
+			'CY' => 19,		// Republic of Cyprus (CY)
+			'CZ' => 21,		// Czech Republic (CZ)
+			'DE' => 19,		// Germany (DE)
+			'DK' => 25,		// Denmark (DK)
+			'EE' => 22,		// Estonia (EE)
+			'ES' => 21,		// Spain (ES)
+			'FI' => 25.5,	// Finland (FI)
+			'FR' => 20,		// France (FR)
+			'GR' => 24,		// Greece (GR)
+			'HR' => 25,		// Croatia (HR)
+			'HU' => 27,		// Hungary (HU)
+			'IE' => 23,		// Ireland (IE)
+			'IT' => 22,		// Italy (IT)
+			'LT' => 21,		// Lithuania (LT)
+			'LU' => 17,		// Luxembourg (LU)
+			'LV' => 21,		// Latvia (LV)
+			'MT' => 18,		// Malta (MT)
+			'NL' => 21,		// Netherlands (NL)
+			'PL' => 23,		// Poland (PL)
+			'PT' => 23,		// Portugal (PT)
+			'RO' => 19,		// Romania (RO)
+			'SE' => 25,		// Sweden (SE)
+			'SI' => 22,		// Slovenia (SI)
+			'SK' => 23,		// Slovakia (SK)
 		);
 	}
 

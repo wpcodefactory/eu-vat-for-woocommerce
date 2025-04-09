@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.3.9
+ * @version 4.4.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -472,9 +472,9 @@ class Alg_WC_EU_VAT_Core {
 	}
 
 	/**
-	 * belgium_compatibility_field_data.
+	 * get_valid_vat_but_not_exempted_field_data.
 	 *
-	 * @version 1.7.2
+	 * @version 4.4.0
 	 * @since   1.3.0
 	 *
 	 * @todo    (dev) rethink `$is_required` (check filters: `woocommerce_default_address_fields`, `woocommerce_billing_fields`)
@@ -482,7 +482,7 @@ class Alg_WC_EU_VAT_Core {
 	 * @todo    (dev) `autocomplete`?
 	 * @todo    (dev) `value`?
 	 */
-	function belgium_compatibility_field_data() {
+	function get_valid_vat_but_not_exempted_field_data() {
 		return array(
 			'type'      => 'checkbox',
 			'label'     => do_shortcode(
@@ -499,7 +499,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * get_field_data.
 	 *
-	 * @version 4.3.3
+	 * @version 4.4.0
 	 * @since   1.3.0
 	 *
 	 * @todo    (dev) rethink `$is_required` (check filters: `woocommerce_default_address_fields`, `woocommerce_billing_fields`)
@@ -534,6 +534,7 @@ class Alg_WC_EU_VAT_Core {
 				}
 			}
 
+			// Required if customer fills the company field
 			if ( 'yes_for_company' === $eu_vat_required ) {
 				if ( ! empty( WC()->checkout()->get_value( 'billing_company' ) ) ) {
 					$is_required = true;
@@ -541,7 +542,8 @@ class Alg_WC_EU_VAT_Core {
 				$is_required = false;
 			}
 
-			if ( 'yes' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' ) ) {
+			// Let Customer Decide
+			if ( $is_required && 'yes' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' ) ) {
 				$field_id = alg_wc_eu_vat_get_field_id();
 				if (
 					isset( $_POST[ $field_id . '_customer_decide' ] ) &&
@@ -593,7 +595,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * add_eu_vat_checkout_field_to_frontend.
 	 *
-	 * @version 2.9.19
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 */
 	function add_eu_vat_checkout_field_to_frontend( $fields ) {
@@ -620,7 +622,7 @@ class Alg_WC_EU_VAT_Core {
 		$fields['billing'][ alg_wc_eu_vat_get_field_id() ] = $this->get_field_data();
 
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_belgium_compatibility', 'no' ) ) {
-			$fields['billing'][ alg_wc_eu_vat_get_field_id() . '_belgium_compatibility' ] = $this->belgium_compatibility_field_data();
+			$fields['billing'][ alg_wc_eu_vat_get_field_id() . '_valid_vat_but_not_exempted' ] = $this->get_valid_vat_but_not_exempted_field_data();
 		}
 
 		return $fields;
@@ -939,7 +941,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 4.2.4
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) simplify the code!
@@ -962,8 +964,8 @@ class Alg_WC_EU_VAT_Core {
 
 		if( 'yes' === get_option( 'alg_wc_eu_vat_belgium_compatibility', 'no' ) ){
 			if (
-				isset( $_posted[ $field_id . '_belgium_compatibility'] ) &&
-				1 == $_posted[ $field_id . '_belgium_compatibility' ]
+				isset( $_posted[ $field_id . '_valid_vat_but_not_exempted'] ) &&
+				1 == $_posted[ $field_id . '_valid_vat_but_not_exempted' ]
 			) {
 				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid', false );
 				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', null );

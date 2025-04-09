@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.4.0 - 09/04/2025 =
+* Dev - General - Display Options - "Display template" option added (defaults to `EU VAT Number: %eu_vat_number%`).
+* Dev - EU country VAT Rates Tool - Updated the standard VAT rate for EU countries.
+* Dev - Admin settings - Descriptions updated.
+* Dev - Key Manager - Library updated.
+* Dev - Code refactoring.
+
 = 4.3.9 - 07/04/2025 =
 * Dev - Validation - VAT Exemption - "Keep shipping VAT" option added (defaults to `no`).
 

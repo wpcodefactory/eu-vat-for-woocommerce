@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Display
  *
- * @version 4.3.6
+ * @version 4.4.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -138,22 +138,32 @@ class Alg_WC_EU_VAT_Display {
 	/**
 	 * replace_eu_vat_number_in_address_formats.
 	 *
-	 * @version 1.0.0
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 */
 	function replace_eu_vat_number_in_address_formats( $replacements, $args ) {
-		$field_name    = alg_wc_eu_vat_get_field_id();
-		$the_label     = do_shortcode( get_option( 'alg_wc_eu_vat_field_label', __( 'EU VAT Number', 'eu-vat-for-woocommerce' ) ) );
-		$field_name_cd = alg_wc_eu_vat_get_field_id() . '_customer_decide';
+		$field_id = alg_wc_eu_vat_get_field_id();
+		$template = do_shortcode(
+			get_option(
+				'alg_wc_eu_vat_field_display_template',
+				sprintf(
+					'%1$s: %2$s',
+					get_option(
+						'alg_wc_eu_vat_field_label',
+						__( 'EU VAT Number', 'eu-vat-for-woocommerce' )
+					),
+					'%eu_vat_number%'
+				)
+			)
+		);
 
-		if ( isset( $args[ $field_name ] ) && ! empty( $args[ $field_name ] ) ) {
-			$replacements[ '{' . $field_name . '}' ] = ( isset( $args[ $field_name ] ) ) ? $the_label . ': ' . $args[ $field_name ] : '';
-		}else{
-			$replacements[ '{' . $field_name . '}' ] = ( isset( $args[ $field_name ] ) ) ? $args[ $field_name ] : '';
-		}
+		$replacements[ '{' . $field_id . '}' ] = (
+			! empty( $args[ $field_id ] ) ?
+			str_replace( '%eu_vat_number%', $args[ $field_id ], $template ) :
+			''
+		);
 
 		return $replacements;
-
 	}
 
 	/**

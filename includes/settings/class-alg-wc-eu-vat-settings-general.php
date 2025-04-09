@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 4.2.8
+ * @version 4.4.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -29,10 +29,10 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.8
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 *
-	 * @todo    (dev) Belgium Compatibility: rename?
+	 * @todo    (v4.4.0) `alg_wc_eu_vat_field_display_template`: use for the "After order table" option as well?
 	 * @todo    (dev) check if `clear` is still working (and if yes - change desc)
 	 * @todo    (dev) add link to plugin site `'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' . __( 'Visit plugin site', 'eu-vat-for-woocommerce' ) . '</a>'`?
 	 * @todo    (dev) set `alg_wc_eu_vat_display_position` default to `in_billing_address` (instead of `after_order_table`)?
@@ -268,18 +268,18 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			),
 		);
 
-		// Belgium Compatibility
-		$belgium_compatibility_settings = array(
+		// Let Customer Decide
+		$let_customer_decide_settings = array(
 			array(
-				'title'    => __( 'Belgium Compatibility', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Let Customer Decide', 'eu-vat-for-woocommerce' ),
 				'type'     => 'title',
-				'id'       => 'alg_wc_eu_vat_belgium_compatibility_title',
+				'id'       => 'alg_wc_eu_vat_field_let_customer_decide_options',
 			),
 			array(
 				'title'    => __( 'Let customer decide', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => (
 					__( 'This option will allow customer to select if they are individual or business, which makes the option mandatory or optional based on selection.', 'eu-vat-for-woocommerce' ) . ' ' .
-					__( 'This option might be needed in Belgium.', 'eu-vat-for-woocommerce' )
+					__( 'Please note that the VAT field must be set to required.', 'eu-vat-for-woocommerce' )
 				),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_field_let_customer_decide',
@@ -287,22 +287,38 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'desc'     => __( 'Field label', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Field label', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Label visible to the customer.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_field_let_customer_decide_label',
 				'default'  => __( 'I don\'t have a VAT ID', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
 			),
 			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_eu_vat_field_let_customer_decide_options',
+			),
+		);
+
+		// Valid VAT but not Exempted
+		$valid_vat_but_not_exempted_settings = array(
+			array(
+				'title'    => __( 'Valid VAT but not Exempted', 'eu-vat-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_eu_vat_valid_vat_but_not_exempted_options',
+			),
+			array(
 				'title'    => __( 'Valid VAT but still paying?', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'Valid VAT but still paying.', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => (
+					__( 'Valid VAT but still paying.', 'eu-vat-for-woocommerce' ) . ' ' .
+					__( 'This option might be needed in Belgium.', 'eu-vat-for-woocommerce' )
+				),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
-				'id'       => 'alg_wc_eu_vat_belgium_compatibility',
+				'id'       => 'alg_wc_eu_vat_belgium_compatibility', // mislabeled, should be `alg_wc_eu_vat_valid_vat_but_not_exempted`
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
 			array(
-				'desc'     => __( 'Field label', 'eu-vat-for-woocommerce' ),
+				'title'    => __( 'Field label', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Label visible to the customer.', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_belgium_compatibility_label',
 				'default'  => __( 'I have a valid VAT but not exempted', 'eu-vat-for-woocommerce' ),
@@ -310,7 +326,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'type'     => 'sectionend',
-				'id'       => 'alg_wc_eu_vat_belgium_compatibility_title',
+				'id'       => 'alg_wc_eu_vat_valid_vat_but_not_exempted_options',
 			),
 		);
 
@@ -332,11 +348,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 							/* Translators: %s: Country list. */
 							__( 'to show field for EU VAT countries only enter: %s', 'eu-vat-for-woocommerce' ),
 							'<code>' .
-								(
-									version_compare( $this->eu_get_woo_version_number(), '4.0.0', '<=' ) ?
-									implode( ',', WC()->countries->get_european_union_countries() ) :
-									implode( ',', WC()->countries->get_european_union_countries( 'eu_vat' ) )
-								) .
+								implode( ',', WC()->countries->get_european_union_countries() ) .
 							'</code>'
 						)
 					) .
@@ -405,6 +417,27 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				),
 			),
 			array(
+				'desc'     => (
+					__( 'Display template', 'eu-vat-for-woocommerce' ) . '. ' .
+					sprintf(
+						/* Translators: %s: Placeholder name. */
+						__( 'Placeholder: %s.', 'eu-vat-for-woocommerce' ),
+						'<code>%eu_vat_number%</code>'
+					)
+				),
+				'desc_tip' => __( 'Used for the "In billing address" option.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_field_display_template',
+				'default'  => sprintf(
+					'%1$s: %2$s',
+					get_option(
+						'alg_wc_eu_vat_field_label',
+						__( 'EU VAT Number', 'eu-vat-for-woocommerce' )
+					),
+					'%eu_vat_number%'
+				),
+				'type'     => 'text',
+			),
+			array(
 				'title'    => __( 'Show VAT details in checkout', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => __( 'Retrieves and shows business name, address, etc. in checkout.', 'eu-vat-for-woocommerce' ),
@@ -422,7 +455,8 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			$field_settings,
 			$general_settings,
 			$payment_methods_settings,
-			$belgium_compatibility_settings,
+			$let_customer_decide_settings,
+			$valid_vat_but_not_exempted_settings,
 			$visibility_settings,
 			$display_settings
 		);

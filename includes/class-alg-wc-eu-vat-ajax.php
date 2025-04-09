@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.2.8
+ * @version 4.4.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -385,7 +385,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 4.2.8
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `bloock_api`: rename
@@ -491,13 +491,11 @@ class Alg_WC_EU_VAT_AJAX {
 			);
 		}
 
-		$belgium_compatibility = (
-			isset( $_POST['alg_wc_eu_vat_belgium_compatibility'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['alg_wc_eu_vat_belgium_compatibility'] ) ) :
-			''
-		);
-
-		if ( 'yes' == $belgium_compatibility ) {
+		// Valid VAT but not Exempted
+		if (
+			isset( $_POST['alg_wc_eu_vat_valid_vat_but_not_exempted'] ) &&
+			'yes' === sanitize_text_field( wp_unslash( $_POST['alg_wc_eu_vat_valid_vat_but_not_exempted'] ) )
+		) {
 			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid', $is_valid );
 			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', null );
 		}
