@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Meta Boxes
  *
- * @version 4.3.0
+ * @version 4.4.1
  * @since   4.2.0
  *
  * @author  WPFactory
@@ -299,7 +299,7 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * validate_vat_and_maybe_remove_taxes.
 	 *
-	 * @version 4.2.7
+	 * @version 4.4.1
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) Remove taxes: remove and instead do `$order->calculate_totals()` (after setting `is_vat_exempt` to `yes`)
@@ -307,68 +307,79 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	 * @todo    (dev) `alg_wc_eu_vat()->core->eu_vat_response_data`: clear after use?
 	 */
 	function validate_vat_and_maybe_remove_taxes() {
+
+		if ( ! isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
+			return;
+		}
+
 		$preserve_countries           = alg_wc_eu_vat()->core->eu_vat_ajax_instance->get_preserve_countries();
 		$preserve_countries_condition = false;
 
-		if ( isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
-			$order_id = sanitize_text_field( wp_unslash( $_GET['validate_vat_and_maybe_remove_taxes'] ) );
-			$order    = wc_get_order( $order_id );
-			if ( $order ) {
+		$order_id = sanitize_text_field( wp_unslash( $_GET['validate_vat_and_maybe_remove_taxes'] ) );
+		$order    = wc_get_order( $order_id );
 
-				$vat_id          = $order->get_meta( '_' . alg_wc_eu_vat_get_field_id() );
-				$billing_company = $order->get_billing_company();
-				if ( '' != $vat_id ) {
-					$eu_vat_number = alg_wc_eu_vat_parse_vat( $vat_id, $order->get_billing_country() );
+		if ( $order ) {
 
-					if ( ! empty( $preserve_countries ) ) {
-						if ( in_array( $eu_vat_number['country'], $preserve_countries ) ) {
-							$preserve_countries_condition = true;
-						}
-					}
+			$vat_id          = $order->get_meta( '_' . alg_wc_eu_vat_get_field_id() );
+			$billing_company = $order->get_billing_company();
 
-					if (
-						! $preserve_countries_condition &&
-						alg_wc_eu_vat_validate_vat(
-							$eu_vat_number['country'],
-							$eu_vat_number['number'],
-							$billing_company
-						)
-					) {
+			if ( '' != $vat_id ) {
 
-						// Remove taxes
-						foreach ( $order->get_items( array( 'line_item', 'fee' ) ) as $item_id => $item ) {
-							$item->set_taxes( false );
-						}
-						foreach ( $order->get_shipping_methods() as $item_id => $item ) {
-							$item->set_taxes( false );
-						}
-						$order->update_taxes();
-						$order->calculate_totals( false );
+				$eu_vat_number = alg_wc_eu_vat_parse_vat( $vat_id, $order->get_billing_country() );
 
-						// "VAT exempt" meta
-						$order->update_meta_data( 'is_vat_exempt', 'yes' );
-
-						// Request Identifier
-						$vat_response_data = alg_wc_eu_vat()->core->eu_vat_response_data;
-						if ( isset( $vat_response_data->requestIdentifier ) ) {
-							$order->update_meta_data(
-								apply_filters(
-									'alg_wc_eu_vat_request_identifier_meta_key',
-									alg_wc_eu_vat_get_field_id() . '_request_identifier'
-								),
-								$vat_response_data->requestIdentifier
-							);
-						}
-
-						// Save updated meta
-						$order->save();
-
+				if ( ! empty( $preserve_countries ) ) {
+					if ( in_array( $eu_vat_number['country'], $preserve_countries ) ) {
+						$preserve_countries_condition = true;
 					}
 				}
+
+				if (
+					! $preserve_countries_condition &&
+					alg_wc_eu_vat_validate_vat(
+						$eu_vat_number['country'],
+						$eu_vat_number['number'],
+						$billing_company
+					)
+				) {
+
+					// Remove taxes
+					foreach ( $order->get_items( array( 'line_item', 'fee' ) ) as $item_id => $item ) {
+						$item->set_taxes( false );
+					}
+					foreach ( $order->get_shipping_methods() as $item_id => $item ) {
+						$item->set_taxes( false );
+					}
+					$order->update_taxes();
+					$order->calculate_totals( false );
+
+					// "VAT exempt" meta
+					$order->update_meta_data( 'is_vat_exempt', 'yes' );
+
+					// Request Identifier
+					$vat_response_data = alg_wc_eu_vat()->core->eu_vat_response_data;
+					if ( isset( $vat_response_data->requestIdentifier ) ) {
+						$order->update_meta_data(
+							apply_filters(
+								'alg_wc_eu_vat_request_identifier_meta_key',
+								alg_wc_eu_vat_get_field_id() . '_request_identifier'
+							),
+							$vat_response_data->requestIdentifier
+						);
+					}
+
+					// Save updated meta
+					$order->save();
+
+				}
+
 			}
-			wp_safe_redirect( remove_query_arg( 'validate_vat_and_maybe_remove_taxes' ) );
-			exit;
+
 		}
+
+		// Redirect
+		wp_safe_redirect( remove_query_arg( 'validate_vat_and_maybe_remove_taxes' ) );
+		exit;
+
 	}
 
 }

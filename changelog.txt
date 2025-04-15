@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.4.1 - 15/04/2025 =
+* Dev - User profile - Validation link added.
+* Dev - Code refactoring.
+* WC tested up to: 9.8.
+
 = 4.4.0 - 09/04/2025 =
 * Dev - General - Display Options - "Display template" option added (defaults to `EU VAT Number: %eu_vat_number%`).
 * Dev - EU country VAT Rates Tool - Updated the standard VAT rate for EU countries.

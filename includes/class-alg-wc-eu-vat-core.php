@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.4.0
+ * @version 4.4.1
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -67,7 +67,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.9
+	 * @version 4.4.1
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) "eu vat number" to "eu vat"?
@@ -102,9 +102,6 @@ class Alg_WC_EU_VAT_Core {
 		// Validation
 		add_action( 'woocommerce_after_checkout_validation', array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
 
-		// Customer meta
-		add_filter( 'woocommerce_customer_meta_fields', array( $this, 'add_eu_vat_number_customer_meta_field' ) );
-
 		// Default value
 		add_filter( 'default_checkout_' . alg_wc_eu_vat_get_field_id(), array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
 
@@ -138,6 +135,9 @@ class Alg_WC_EU_VAT_Core {
 
 		// Keep shipping VAT
 		add_action( 'alg_wc_eu_vat_exempt_applied', array( $this, 'keep_shipping_vat' ) );
+
+		// Customer meta field
+		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-customer-meta-field.php';
 
 		// Orders
 		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-orders.php';
@@ -644,21 +644,6 @@ class Alg_WC_EU_VAT_Core {
 			}
 		}
 		return $default_value;
-	}
-
-	/**
-	 * add_eu_vat_number_customer_meta_field.
-	 *
-	 * @version 1.4.0
-	 * @since   1.0.0
-	 */
-	function add_eu_vat_number_customer_meta_field( $fields ) {
-		$fields['billing']['fields'][ alg_wc_eu_vat_get_field_id() ] = array(
-			'label'       => do_shortcode( get_option( 'alg_wc_eu_vat_field_label', __( 'EU VAT Number', 'eu-vat-for-woocommerce' ) ) ),
-			'description' => ''
-		);
-
-		return $fields;
 	}
 
 	/**
