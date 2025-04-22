@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Main Class
  *
- * @version 4.3.1
+ * @version 4.4.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -158,7 +158,7 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * admin.
 	 *
-	 * @version 4.2.3
+	 * @version 4.4.2
 	 * @since   1.2.0
 	 */
 	function admin() {
@@ -170,7 +170,7 @@ final class Alg_WC_EU_VAT {
 		$this->add_cross_selling_library();
 
 		// WC Settings tab as WPFactory submenu item
-		$this->move_wc_settings_tab_to_wpfactory_menu();
+		add_action( 'init', array( $this, 'move_wc_settings_tab_to_wpfactory_menu' ) );
 
 		// Settings
 		add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_woocommerce_settings_tab' ) );
