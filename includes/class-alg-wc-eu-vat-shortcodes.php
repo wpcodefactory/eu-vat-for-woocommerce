@@ -2,7 +2,7 @@
 /**
  * Product Quantity for WooCommerce - Shortcodes Class
  *
- * @version 4.0.0
+ * @version 4.4.3
  * @since   1.6.0
  *
  * @author  WPFactory
@@ -27,7 +27,7 @@ class Alg_WC_EU_VAT_Shortcodes {
 	/**
 	 * language_shortcode.
 	 *
-	 * @version 1.4.0
+	 * @version 4.4.3
 	 * @since   1.4.0
 	 *
 	 * @todo    (dev) `pll_current_language()`?
@@ -37,14 +37,14 @@ class Alg_WC_EU_VAT_Shortcodes {
 		// E.g.: `[alg_wc_eu_vat_translate lang="DE,NL" lang_text="EU-Steuernummer" not_lang_text="EU VAT Number"]`
 		if ( isset( $atts['lang_text'] ) && isset( $atts['not_lang_text'] ) && ! empty( $atts['lang'] ) ) {
 			return ( ! defined( 'ICL_LANGUAGE_CODE' ) || ! in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['lang'] ) ) ) ) ) ?
-				$atts['not_lang_text'] : $atts['lang_text'];
+				wp_kses_post( $atts['not_lang_text'] ) : wp_kses_post( $atts['lang_text'] );
 		}
 
 		// E.g.: `[alg_wc_eu_vat_translate lang="DE"]EU-Steuernummer[/alg_wc_eu_vat_translate][alg_wc_eu_vat_translate lang="NL"]BTW nummer van de EU[/alg_wc_eu_vat_translate][alg_wc_eu_vat_translate not_lang="DE,NL"]EU VAT Number[/alg_wc_eu_vat_translate]`
 		return (
 			( ! empty( $atts['lang'] )     && ( ! defined( 'ICL_LANGUAGE_CODE' ) || ! in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['lang'] ) ) ) ) ) ) ||
 			( ! empty( $atts['not_lang'] ) &&     defined( 'ICL_LANGUAGE_CODE' ) &&   in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['not_lang'] ) ) ) ) )
-		) ? '' : $content;
+		) ? '' : wp_kses_post( $content );
 
 	}
 

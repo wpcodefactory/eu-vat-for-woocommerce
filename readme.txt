@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.8
-Stable tag: 4.4.2
+Stable tag: 4.4.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -285,6 +285,9 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.4.3 - 26/04/2025 =
+* Dev - Security - Shortcodes - `[alg_wc_eu_vat_translate]` - Escape output.
 
 = 4.4.2 - 22/04/2025 =
 * Fix - Translation loading for domain was triggered too early.
