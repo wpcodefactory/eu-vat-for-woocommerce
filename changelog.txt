@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.4.4 - 28/04/2025 =
+* Dev - Exempt VAT from Admin - User capability check updated (to `manage_woocommerce`, i.e., Shop Manager role).
+* Dev - Admin settings - Descriptions updated.
+
 = 4.4.3 - 26/04/2025 =
 * Dev - Security - Shortcodes - `[alg_wc_eu_vat_translate]` - Escape output.
 

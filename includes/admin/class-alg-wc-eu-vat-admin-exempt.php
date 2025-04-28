@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Exempt VAT from Admin
  *
- * @version 4.1.0
+ * @version 4.4.4
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -123,7 +123,7 @@ class Alg_WC_EU_VAT_Admin_Exempt {
 	/**
 	 * ajax.
 	 *
-	 * @version 4.1.0
+	 * @version 4.4.4
 	 * @since   2.12.13
 	 *
 	 * @todo    (dev) reload page?
@@ -131,7 +131,7 @@ class Alg_WC_EU_VAT_Admin_Exempt {
 	function ajax( $param ) {
 
 		if (
-			! current_user_can( 'manage_options' ) ||
+			! current_user_can( 'manage_woocommerce' ) ||
 			! isset( $_POST['nonce'] ) ||
 			! wp_verify_nonce(
 				sanitize_text_field( wp_unslash( $_POST['nonce'] ) ),

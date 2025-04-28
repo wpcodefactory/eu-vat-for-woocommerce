@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 4.4.0
+ * @version 4.4.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.4.0
+	 * @version 4.4.4
 	 * @since   1.0.0
 	 *
 	 * @todo    (v4.4.0) `alg_wc_eu_vat_field_display_template`: use for the "After order table" option as well?
@@ -211,7 +211,19 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'             => __( 'Allow checkout on unregistered VAT numbers', 'eu-vat-for-woocommerce' ),
-				'desc_tip'          => __( 'Allow checkout on unregistered VAT numbers.', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => (
+					__( 'Allow checkout on unregistered VAT numbers.', 'eu-vat-for-woocommerce' ) .
+					apply_filters(
+						'alg_wc_eu_vat_settings',
+						'<br>' . sprintf(
+							/* Translators: %s: Plugin link. */
+							__( 'You will need %s plugin to enable this option.', 'eu-vat-for-woocommerce' ),
+							'<a target="_blank" href="https://wpfactory.com/item/eu-vat-for-woocommerce/">' .
+								__( 'EU/UK VAT Validation Manager for WooCommerce Pro', 'eu-vat-for-woocommerce' ) .
+							'</a>'
+						)
+					)
+				),
 				'desc'              => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'                => 'alg_wc_eu_vat_field_allow_unregistered_vat_no',
 				'default'           => 'no',
