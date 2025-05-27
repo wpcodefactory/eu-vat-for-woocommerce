@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Main Class
  *
- * @version 4.4.2
+ * @version 4.4.5
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -158,7 +158,7 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * admin.
 	 *
-	 * @version 4.4.2
+	 * @version 4.4.5
 	 * @since   1.2.0
 	 */
 	function admin() {
@@ -167,7 +167,7 @@ final class Alg_WC_EU_VAT {
 		add_filter( 'plugin_action_links_' . plugin_basename( ALG_WC_EU_VAT_FILE ), array( $this, 'action_links' ) );
 
 		// "Recommendations" page
-		$this->add_cross_selling_library();
+		add_action( 'init', array( $this, 'add_cross_selling_library' ) );
 
 		// WC Settings tab as WPFactory submenu item
 		add_action( 'init', array( $this, 'move_wc_settings_tab_to_wpfactory_menu' ) );

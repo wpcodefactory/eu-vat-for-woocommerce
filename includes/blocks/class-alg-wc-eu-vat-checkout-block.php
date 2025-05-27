@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.3.1
+ * @version 4.4.5
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -211,7 +211,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * update_block_order_meta_eu_vat.
 	 *
-	 * @version 4.3.1
+	 * @version 4.4.5
 	 * @since   2.10.4
 	 *
 	 * @todo    (dev) `eu-vat-for-woocommerce-block-example`: rename
@@ -236,22 +236,22 @@ class Alg_WC_EU_VAT_Checkout_Block {
 
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_validate', 'yes' ) ) {
 			if (
-				( '' != $posted_eu_vat_id  ) &&
+				( '' != $posted_eu_vat_id ) &&
 				(
 					null === alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_valid' ) ||
 					false == alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_valid' ) ||
 					null === alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' ) ||
-					$posted_eu_vat_id  != alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' )
+					$posted_eu_vat_id != alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' )
 				)
 			) {
 
 				$is_valid = false;
 				if (
 					'yes' === get_option( 'alg_wc_eu_vat_force_checkout_recheck', 'no' ) &&
-					$posted_eu_vat_id  != alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' )
+					$posted_eu_vat_id != alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' )
 				) {
 					$is_valid = alg_wc_eu_vat()->core->check_and_save_eu_vat(
-						$posted_eu_vat_id ,
+						$posted_eu_vat_id,
 						( $posted_billing_country ?? '' ),
 						( $posted_billing_company ?? '' )
 					);
@@ -307,22 +307,24 @@ class Alg_WC_EU_VAT_Checkout_Block {
 						__( 'Error: VAT is not valid (checkout)', 'eu-vat-for-woocommerce' )
 					);
 
-					throw new Exception(
-						esc_html(
-							wp_strip_all_tags(
-								str_replace(
-									'%eu_vat_number%',
-									$posted_eu_vat_id,
-									do_shortcode(
-										get_option(
-											'alg_wc_eu_vat_not_valid_message',
-											__( '<strong>EU VAT Number</strong> is not valid.', 'eu-vat-for-woocommerce' )
+					if ( ! $request->get_param( '__experimental_calc_totals' ) ) {
+						throw new Exception(
+							esc_html(
+								wp_strip_all_tags(
+									str_replace(
+										'%eu_vat_number%',
+										$posted_eu_vat_id,
+										do_shortcode(
+											get_option(
+												'alg_wc_eu_vat_not_valid_message',
+												__( '<strong>EU VAT Number</strong> is not valid.', 'eu-vat-for-woocommerce' )
+											)
 										)
 									)
 								)
 							)
-						)
-					);
+						);
+					}
 
 				}
 

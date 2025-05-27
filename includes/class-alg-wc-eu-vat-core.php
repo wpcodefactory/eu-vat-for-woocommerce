@@ -435,13 +435,16 @@ class Alg_WC_EU_VAT_Core {
 			empty( $tax_totals ) &&
 			alg_wc_eu_vat_is_checkout()
 		) {
+
 			$zero_tax = new stdClass();
 			$zero_tax->amount           = 0.00;
 			$zero_tax->tax_rate_id      = 0;
 			$zero_tax->is_compound      = false;
 			$zero_tax->label            = esc_html( WC()->countries->tax_or_vat() );
 			$zero_tax->formatted_amount = wc_price( 0.00 );
+
 			$tax_totals['TAX-1'] = $zero_tax;
+
 		}
 		return $tax_totals;
 	}
@@ -789,6 +792,7 @@ class Alg_WC_EU_VAT_Core {
 	 */
 	function check_and_save_eu_vat( $eu_vat_to_check, $billing_country, $billing_company ) {
 		$eu_vat_number = alg_wc_eu_vat_parse_vat( $eu_vat_to_check, $billing_country );
+
 		if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_ip_location_country', 'no' ) ) {
 			$country_by_ip   = alg_wc_eu_vat_get_customers_location_by_ip();
 			$is_county_valid = ( $country_by_ip === $eu_vat_number['country'] );
@@ -819,6 +823,7 @@ class Alg_WC_EU_VAT_Core {
 
 		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid',    $is_valid );
 		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', $eu_vat_to_check );
+
 		return $is_valid;
 	}
 
