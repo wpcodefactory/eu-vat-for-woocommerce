@@ -1,7 +1,7 @@
 /**
  * alg-wc-eu-vat.js
  *
- * @version 4.4.0
+ * @version 4.4.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -58,6 +58,12 @@ jQuery( function ( $ ) {
 		input_timer_company_load = setTimeout( alg_wc_eu_vat_require_on_company_fill, done_input_interval );
 	}
 
+	// Show/hide by billing company
+	if ( alg_wc_eu_vat_ajax_object.do_show_hide_by_billing_company ) {
+		show_hide_by_billing_company();
+		jQuery( '#billing_company' ).on( 'change keyup paste', show_hide_by_billing_company );
+	}
+
 	// Initial validate
 	alg_wc_eu_vat_validate_vat( true );
 
@@ -67,6 +73,28 @@ jQuery( function ( $ ) {
 	// "Fluid Checkout for WooCommerce" plugin compatibility
 	if ( alg_wc_eu_vat_ajax_object.do_compatibility_fluid_checkout ) {
 		compatibility_fluid_checkout();
+	}
+
+	/**
+	 * show_hide_by_billing_company.
+	 *
+	 * @version  4.4.6
+	 * @since    4.4.6
+	 */
+	function show_hide_by_billing_company() {
+
+		if ( '' === jQuery( '#billing_company' ).val() ) {
+
+			jQuery( '#billing_eu_vat_number_field' ).hide();
+			jQuery( '#billing_eu_vat_number' ).val( '' );
+			alg_wc_eu_vat_validate_vat();
+
+		} else {
+
+			jQuery( '#billing_eu_vat_number_field' ).show();
+
+		}
+
 	}
 
 	/**

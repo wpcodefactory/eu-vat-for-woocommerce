@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.4.0
+ * @version 4.4.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -35,7 +35,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 4.2.8
+	 * @version 4.4.6
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `... && function_exists( 'is_checkout' ) && is_checkout()`
@@ -151,6 +151,7 @@ class Alg_WC_EU_VAT_AJAX {
 				'status_codes'                        => $this->get_return_status_codes(),
 				'do_compatibility_fluid_checkout'     => ( 'yes' === get_option( 'alg_wc_eu_vat_compatibility_fluid_checkout', 'no' ) ),
 				'do_always_show_zero_vat'             => ( 'yes' === get_option( 'alg_wc_eu_vat_always_show_zero_vat', 'no' ) ),
+				'do_show_hide_by_billing_company'     => ( 'yes' === get_option( 'alg_wc_eu_vat_show_hide_by_billing_company', 'no' ) ),
 			)
 		);
 

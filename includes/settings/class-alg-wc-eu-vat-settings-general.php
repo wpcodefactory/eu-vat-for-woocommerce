@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 4.4.4
+ * @version 4.4.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.4.4
+	 * @version 4.4.6
 	 * @since   1.0.0
 	 *
 	 * @todo    (v4.4.0) `alg_wc_eu_vat_field_display_template`: use for the "After order table" option as well?
@@ -394,6 +394,14 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'class'             => 'wc-enhanced-select',
 				'options'           => $this->get_all_user_roles(),
 				'custom_attributes' => apply_filters( 'alg_wc_eu_vat_settings', array( 'disabled' => 'disabled' ) ),
+			),
+			array(
+				'title'             => __( 'Show/hide by billing company', 'eu-vat-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'eu-vat-for-woocommerce' ),
+				'desc_tip'          => __( 'Show the EU VAT field only if the billing company field is not empty.', 'eu-vat-for-woocommerce' ),
+				'id'                => 'alg_wc_eu_vat_show_hide_by_billing_company',
+				'default'           => 'no',
+				'type'              => 'checkbox',
 			),
 			array(
 				'title'             => __( 'Hide EU VAT field from checkout', 'eu-vat-for-woocommerce' ),

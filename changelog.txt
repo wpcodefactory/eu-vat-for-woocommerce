@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 4.4.6 - 30/05/2025 =
+* Dev - General - Visibility Options - "Show/hide by billing company" option added (defaults to `no`).
+
 = 4.4.5 - 27/05/2025 =
 * Fix - Block Checkout - Checkout error notice fixed.
 * Fix - Translation loading for domain was triggered too early.
