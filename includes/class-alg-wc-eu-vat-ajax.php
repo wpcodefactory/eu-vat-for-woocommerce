@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.4.6
+ * @version 4.4.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -386,9 +386,10 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 4.4.0
+	 * @version 4.4.7
 	 * @since   1.0.0
 	 *
+	 * @todo    (v4.4.7) `empty( $eu_vat_number['number'] )`: clear all other session variables, e.g., `alg_wc_eu_vat_response_data`
 	 * @todo    (dev) `bloock_api`: rename
 	 * @todo    (dev) `checkout_block_first_load`?
 	 * @todo    (dev) `if ( ! isset( $_POST['alg_wc_eu_vat_validate_action'] ) ) return;`?
@@ -536,6 +537,10 @@ class Alg_WC_EU_VAT_AJAX {
 				! $do_preserve_countries
 			);
 			WC()->customer->set_is_vat_exempt( $is_exempt );
+		}
+
+		if ( empty( $eu_vat_number['number'] ) ) {
+			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_details', null );
 		}
 
 		$return_data = array(

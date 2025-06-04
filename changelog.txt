@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.4.7 - 04/06/2025 =
+* Fix - Block Checkout - Default value - Using session value.
+* Fix - VAT details - Clearing the details session variable on the empty VAT field.
+
 = 4.4.6 - 30/05/2025 =
 * Dev - General - Visibility Options - "Show/hide by billing company" option added (defaults to `no`).
 

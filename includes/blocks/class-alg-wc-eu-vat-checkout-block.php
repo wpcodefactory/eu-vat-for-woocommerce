@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.4.5
+ * @version 4.4.7
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -404,14 +404,18 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * update_default_value_for_eu_vat_field.
 	 *
-	 * @version 4.3.1
+	 * @version 4.4.7
 	 * @since   2.11.6
 	 */
 	function update_default_value_for_eu_vat_field( $value, $group, $wc_object ) {
 		return (
-			is_a( $wc_object, 'WC_Customer' ) ?
-			$wc_object->get_meta( 'billing_eu_vat_number' ) :
-			$value
+			null !== ( $session_value = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' ) ) ?
+			$session_value :
+			(
+				is_a( $wc_object, 'WC_Customer' ) ?
+				$wc_object->get_meta( 'billing_eu_vat_number' ) :
+				$value
+			)
 		);
 	}
 
