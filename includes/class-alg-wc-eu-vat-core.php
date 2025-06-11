@@ -937,13 +937,15 @@ class Alg_WC_EU_VAT_Core {
 	 * @todo    (dev) simplify the code!
 	 */
 	function checkout_validate_vat( $_posted ) {
-		$is_required = ( 'yes' === get_option( 'alg_wc_eu_vat_field_required', 'no' ) );
 
+		$is_required     = ( 'yes' === get_option( 'alg_wc_eu_vat_field_required', 'no' ) );
 		$eu_vat_required = get_option( 'alg_wc_eu_vat_field_required', 'no' );
+		$field_id        = alg_wc_eu_vat_get_field_id();
 
-		$field_id = alg_wc_eu_vat_get_field_id();
-
-		if ( $is_required && 'yes' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' ) ) {
+		if (
+			$is_required &&
+			'yes' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' )
+		) {
 			if (
 				isset( $_posted[ $field_id . '_customer_decide' ] ) &&
 				1 == $_posted[ $field_id . '_customer_decide' ]
@@ -1116,8 +1118,10 @@ class Alg_WC_EU_VAT_Core {
 						__( 'Error: VAT is not valid (checkout)', 'eu-vat-for-woocommerce' )
 					);
 				}
+
 			}
 		}
+
 	}
 
 	/**

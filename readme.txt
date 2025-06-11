@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.8
-Stable tag: 4.4.7
+Stable tag: 4.4.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -286,9 +286,14 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 
 == Changelog ==
 
+= 4.4.8 - 11/06/2025 =
+* Fix - Block Cart - "alg_wc_eu_vat_ajax_object is not defined" JS error fixed.
+* Fix - Block Checkout - "Validation > Validate action trigger" option fixed.
+* WC tested up to: 9.9.
+
 = 4.4.7 - 04/06/2025 =
 * Fix - Block Checkout - Default value - Using session value.
-* Fix - VAT details - Clearing the details session variable on the empty VAT field.
+* Fix - VAT details - Clearing the details session variable on an empty VAT field.
 
 = 4.4.6 - 30/05/2025 =
 * Dev - General - Visibility Options - "Show/hide by billing company" option added (defaults to `no`).

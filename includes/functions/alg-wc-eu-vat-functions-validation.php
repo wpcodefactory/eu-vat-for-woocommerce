@@ -517,7 +517,10 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 				}
 
 				if ( isset( $result->name ) ) {
-					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_return_company_name', strtolower( $result->name ) );
+					alg_wc_eu_vat_session_set(
+						'alg_wc_eu_vat_to_return_company_name',
+						strtolower( $result->name )
+					);
 				}
 
 				// Store result to session
@@ -555,11 +558,16 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_soap' ) ) {
 			);
 
 			if ( 'yes' === get_option( 'alg_wc_eu_vat_validate_vies_not_available', 'no' ) ) {
-
-				$accepted_exception = array( 'MS_UNAVAILABLE', 'GLOBAL_MAX_CONCURRENT_REQ', 'MS_MAX_CONCURRENT_REQ' );
+				$accepted_exception = array(
+					'MS_UNAVAILABLE',
+					'GLOBAL_MAX_CONCURRENT_REQ',
+					'MS_MAX_CONCURRENT_REQ',
+				);
 				if ( in_array( $exception->getMessage(), $accepted_exception ) ) {
-					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_vies_error_message', $exception->getMessage() );
-
+					alg_wc_eu_vat_session_set(
+						'alg_wc_eu_vat_vies_error_message',
+						$exception->getMessage()
+					);
 					return false;
 				}
 			}
@@ -659,8 +667,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 			if ( '' != ( $manual_validation_vat_numbers = get_option( 'alg_wc_eu_vat_manual_validation_vat_numbers', '' ) ) ) {
 				$prevalidated_VAT_numbers = explode( ',', $manual_validation_vat_numbers );
 				$sanitized_vat_numbers    = array_map( 'trim', $prevalidated_VAT_numbers );
-
-				$conjuncted_vat_number = $country_code . $vat_number;
+				$conjuncted_vat_number    = $country_code . $vat_number;
 				if ( isset( $sanitized_vat_numbers[0] ) ) {
 					if ( in_array( $conjuncted_vat_number, $sanitized_vat_numbers ) ) {
 						alg_wc_eu_vat_log(
@@ -677,7 +684,11 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 		}
 
 		// First validate from session value
-		$validate_status = alg_wc_eu_vat_validate_from_session( $country_code, $vat_number, $billing_company );
+		$validate_status = alg_wc_eu_vat_validate_from_session(
+			$country_code,
+			$vat_number,
+			$billing_company
+		);
 
 		if ( $validate_status ) {
 			alg_wc_eu_vat_log(
