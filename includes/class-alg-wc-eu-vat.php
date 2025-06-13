@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Main Class
  *
- * @version 4.4.5
+ * @version 4.4.9
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -231,7 +231,7 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * move_wc_settings_tab_to_wpfactory_menu.
 	 *
-	 * @version 3.1.0
+	 * @version 4.4.9
 	 * @since   3.1.0
 	 */
 	function move_wc_settings_tab_to_wpfactory_menu() {
@@ -249,7 +249,10 @@ final class Alg_WC_EU_VAT {
 		$wpfactory_admin_menu->move_wc_settings_tab_to_wpfactory_menu( array(
 			'wc_settings_tab_id' => 'alg_wc_eu_vat',
 			'menu_title'         => __( 'EU VAT', 'eu-vat-for-woocommerce' ),
-			'page_title'         => __( 'EU VAT', 'eu-vat-for-woocommerce' ),
+			'page_title'         => __( 'EU/UK VAT Validation Manager', 'eu-vat-for-woocommerce' ),
+			'plugin_icon'        => array(
+				'url' => 'https://ps.w.org/eu-vat-for-woocommerce/assets/icon.svg?rev=2969433',
+			),
 		) );
 
 	}

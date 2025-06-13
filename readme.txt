@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.8
-Stable tag: 4.4.8
+Stable tag: 4.4.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -285,6 +285,10 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.4.9 - 13/06/2025 =
+* Dev - WPFactory Admin Menu - Plugin icon added.
+* Dev - WPFactory Admin Menu - Library updated.
 
 = 4.4.8 - 11/06/2025 =
 * Fix - Block Cart - "alg_wc_eu_vat_ajax_object is not defined" JS error fixed.

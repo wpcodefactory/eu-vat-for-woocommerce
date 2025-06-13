@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.4.9 - 13/06/2025 =
+* Dev - WPFactory Admin Menu - Plugin icon added.
+* Dev - WPFactory Admin Menu - Library updated.
+
 = 4.4.8 - 11/06/2025 =
 * Fix - Block Cart - "alg_wc_eu_vat_ajax_object is not defined" JS error fixed.
 * Fix - Block Checkout - "Validation > Validate action trigger" option fixed.
