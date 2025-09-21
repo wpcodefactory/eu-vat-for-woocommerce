@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Progress Section Settings
  *
- * @version 4.2.6
+ * @version 4.5.0
  * @since   4.2.3
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Progress extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.6
+	 * @version 4.5.0
 	 * @since   4.2.3
 	 */
 	function get_settings() {
@@ -103,6 +103,18 @@ class Alg_WC_EU_VAT_Settings_Progress extends Alg_WC_EU_VAT_Settings_Section {
 				'desc_tip' => __( 'Message on Different shipping & billing countries. If you want to customize the message using CSS, please use class <code>alg-wc-eu-vat-not-valid-billing-country</code>', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_shipping_billing_countries',
 				'default'  => __( 'Different shipping & billing countries.', 'eu-vat-for-woocommerce' ),
+				'type'     => 'text',
+				'css'      => 'width:100%;',
+			),
+			array(
+				'title'    => __( 'Shipping country matches store base country', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => sprintf(
+					/* Translators: %s: Class name. */
+					__( 'Message on Shipping country matches store base country. If you want to customize the message using CSS, please use class %s', 'eu-vat-for-woocommerce' ),
+					'<code>alg-wc-eu-vat-not-valid-base-country-shipping</code>'
+				),
+				'id'       => 'alg_wc_eu_vat_shipping_matches_base_country',
+				'default'  => __( 'Shipping country matches store base country.', 'eu-vat-for-woocommerce' ),
 				'type'     => 'text',
 				'css'      => 'width:100%;',
 			),

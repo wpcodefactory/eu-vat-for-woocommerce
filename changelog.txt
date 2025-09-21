@@ -1,5 +1,17 @@
 == Changelog ==
 
+= 4.5.0 - 21/09/2025 =
+* Fix - Prevent VAT exemption if VAT number is removed via browser tools after validation.
+* Fix - Prevent order submission before VAT number validation completes to avoid incorrect VAT charges.
+* Fix - Corrected checkout behavior for "Keep VAT if shipping country is different from billing country" option.
+* Fix - Re-trigger VAT validation when "Ship to a different address?" checkbox is toggled.
+* Fix - Company VAT validation check improved for cURL and Simple methods.
+* Dev - Validation - VAT Exemption - Keep VAT in selected countries - "Country type" option added (defaults to "Customer billing country").
+* Dev - Validation - VAT Exemption - "Keep VAT if shipping country matches store base country" option added (defaults to `no`).
+* Dev - Messages - "Shipping country matches store base country" option added.
+* Dev - Code refactoring.
+* WC tested up to: 10.1.
+
 = 4.4.9 - 13/06/2025 =
 * Dev - WPFactory Admin Menu - Plugin icon added.
 * Dev - WPFactory Admin Menu - Library updated.

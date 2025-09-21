@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 4.3.9
+ * @version 4.5.0
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.3.9
+	 * @version 4.5.0
 	 * @since   1.5.0
 	 *
 	 * @todo    (feature) Message if customer's check for IP location country has failed!
@@ -111,6 +111,14 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
+				'title'    => __( 'Keep VAT if shipping country matches store base country', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'This will keep VAT if the shipping country is different from the billing country but matches your store\'s base country. Note: Disable the "Keep VAT if shipping country is different from billing country" option for this to work correctly.' ),
+				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_preserve_vat_for_base_country_shipping',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
 				'title'    => __( 'Keep VAT in selected countries', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => (
 					__( 'This will validate the VAT, but won\'t exempt VAT for selected countries.', 'eu-vat-for-woocommerce' ) . ' ' .
@@ -127,6 +135,17 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 					'yes'  => __( 'Base (i.e., store) country', 'eu-vat-for-woocommerce' ),
 					'list' => __( 'Comma separated list', 'eu-vat-for-woocommerce' ),
 					'no'   => __( 'Disable', 'eu-vat-for-woocommerce' ),
+				),
+			),
+			array(
+				'desc_tip' => __( 'Sets which country (billing or shipping) to use. Ignored if "Disable" is selected above.', 'eu-vat-for-woocommerce' ),
+				'desc'     => __( 'Country type', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_preserve_country_type',
+				'default'  => 'billing_country',
+				'type'     => 'select',
+				'options'  => array(
+					'shipping_country' => __( 'Customer shipping country', 'eu-vat-for-woocommerce' ),
+					'billing_country'  => __( 'Customer billing country', 'eu-vat-for-woocommerce' )
 				),
 			),
 			array(

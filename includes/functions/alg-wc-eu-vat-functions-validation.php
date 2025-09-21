@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.3.8
+ * @version 4.5.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -189,7 +189,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat_no_soap.
 	 *
-	 * @version 4.3.1
+	 * @version 4.5.0
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -314,26 +314,61 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_no_soap' ) ) {
 			$decoded_result['isValid']
 		) {
 
-			// Log
-			alg_wc_eu_vat_log(
-				$country_code,
-				$vat_number,
-				$billing_company,
-				$method,
-				__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' )
-			);
+			$is_valid = true;
+
+			// Check company name
+			$company_name = ( $decoded_result['name'] ?? '' );
+			if (
+				'yes' === apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) &&
+				strtolower( $company_name ) !== strtolower( $billing_company )
+			) {
+
+				$is_valid = false;
+
+				alg_wc_eu_vat_debug_log(
+					sprintf(
+						/* Translators: %1$s: Company name, %2$s: Billing company. */
+						__( 'Error: Company name does not match (%1$s vs %2$s)', 'eu-vat-for-woocommerce' ),
+						strtolower( $company_name ),
+						strtolower( $billing_company )
+					),
+					array(
+						'Country' => $country_code,
+						'VAT ID'  => $vat_number,
+					)
+				);
+
+				alg_wc_eu_vat_session_set(
+					'alg_wc_eu_vat_to_check_company_name',
+					$company_name
+				);
+				alg_wc_eu_vat_session_set(
+					'alg_wc_eu_vat_to_check_company',
+					true
+				);
+
+			}
 
 			// Store result to session
 			alg_wc_eu_vat_store_validation_session(
 				$country_code,
 				$vat_number,
-				true,
+				$is_valid,
 				$billing_company,
 				$decoded_result
 			);
 
-			// Valid
-			return true;
+			if ( $is_valid ) {
+				alg_wc_eu_vat_debug_log(
+					__( 'Success: VAT ID valid', 'eu-vat-for-woocommerce' ),
+					array(
+						'Country' => $country_code,
+						'VAT ID'  => $vat_number,
+					)
+				);
+			}
+
+			return $is_valid;
 
 		} else {
 
@@ -641,7 +676,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 4.2.5
+	 * @version 4.5.0
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -651,46 +686,47 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	function alg_wc_eu_vat_validate_vat( $country_code, $vat_number, $billing_company = '' ) {
 		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_vies_error_message', null );
 
-		if ( '' != ( $skip_countries = get_option( 'alg_wc_eu_vat_advanced_skip_countries', array() ) ) ) {
-			if ( ! empty( $skip_countries ) ) {
-				$skip_countries = array_map( 'strtoupper', array_map( 'trim', explode( ',', $skip_countries ) ) );
-				if ( in_array( strtoupper( $country_code ), $skip_countries ) ) {
+		$country_code = strtoupper( trim( $country_code ) );
+		$vat_number   = preg_replace( '/\s+/', '', $vat_number );
+
+		// Skip validation for specified countries
+		$skip_countries = get_option( 'alg_wc_eu_vat_advanced_skip_countries', array() );
+		if ( ! empty( $skip_countries ) ) {
+			$skip_countries = array_map(
+				'strtoupper',
+				array_map( 'trim', explode( ',', $skip_countries ) )
+			);
+			if ( in_array( $country_code, $skip_countries, true ) ) {
+				return true;
+			}
+		}
+
+		// VAT validate manually pre-saved number
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_manual_validation_enable', 'no' ) ) {
+			$manual_validation_vat_numbers = get_option( 'alg_wc_eu_vat_manual_validation_vat_numbers', '' );
+			if ( ! empty( $manual_vats ) ) {
+				$sanitized_vat_numbers = array_map(
+					'strtoupper',
+					array_map( 'trim', explode( ',', $manual_validation_vat_numbers ) )
+				);
+				$conjuncted_vat_number    = $country_code . $vat_number;
+
+				if ( in_array( $conjuncted_vat_number, $sanitized_vat_numbers ) ) {
+					alg_wc_eu_vat_log(
+						$country_code,
+						$vat_number,
+						$billing_company,
+						'',
+						__( 'Success: VAT ID valid. Matched with prevalidated VAT numbers.', 'eu-vat-for-woocommerce' )
+					);
+
 					return true;
 				}
 			}
 		}
 
-		$vat_number = preg_replace( '/\s+/', '', $vat_number );
-
-		// VAT validate manually pre-saved number
-		if ( 'yes' === get_option( 'alg_wc_eu_vat_manual_validation_enable', 'no' ) ) {
-			if ( '' != ( $manual_validation_vat_numbers = get_option( 'alg_wc_eu_vat_manual_validation_vat_numbers', '' ) ) ) {
-				$prevalidated_VAT_numbers = explode( ',', $manual_validation_vat_numbers );
-				$sanitized_vat_numbers    = array_map( 'trim', $prevalidated_VAT_numbers );
-				$conjuncted_vat_number    = $country_code . $vat_number;
-				if ( isset( $sanitized_vat_numbers[0] ) ) {
-					if ( in_array( $conjuncted_vat_number, $sanitized_vat_numbers ) ) {
-						alg_wc_eu_vat_log(
-							$country_code,
-							$vat_number,
-							$billing_company,
-							'',
-							__( 'Success: VAT ID valid. Matched with prevalidated VAT numbers.', 'eu-vat-for-woocommerce' )
-						);
-						return true;
-					}
-				}
-			}
-		}
-
 		// First validate from session value
-		$validate_status = alg_wc_eu_vat_validate_from_session(
-			$country_code,
-			$vat_number,
-			$billing_company
-		);
-
-		if ( $validate_status ) {
+		if ( alg_wc_eu_vat_validate_from_session( $country_code, $vat_number, $billing_company ) ) {
 			alg_wc_eu_vat_log(
 				$country_code,
 				$vat_number,
@@ -714,9 +750,8 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 				$methods = array( 'soap', 'curl', 'file_get_contents' );
 				break;
 		}
-		$methods = apply_filters( 'alg_wc_eu_vat_validation_methods', $methods );
 
-		// Billing company
+		$methods = apply_filters( 'alg_wc_eu_vat_validation_methods', $methods );
 		$billing_company = strtolower( $billing_company );
 
 		// Validate
@@ -759,7 +794,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_vatsense' ) ) {
 	 * E.g.: AU: 69074966466 (69 074 966 466) (SUNCORP CORPORATE SERVICES PTY LTD) (https://abr.business.gov.au/)
 	 * E.g.: NO: NO975534707 (ROLLS-ROYCE AB) (https://www.brreg.no/en/)
 	 *
-	 * @version 4.3.8
+	 * @version 4.5.0
 	 * @since   4.3.2
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -857,7 +892,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat_vatsense' ) ) {
 									$vat_number,
 									$is_valid,
 									$billing_company,
-									array()
+									$res_body['data']
 								);
 
 								if ( $is_valid ) {
@@ -1223,7 +1258,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_get_details' ) ) {
 	/**
 	 * Retrieves and sets VAT details from the VAT response data.
 	 *
-	 * @version 4.2.2
+	 * @version 4.5.0
 	 * @since   4.0.0
 	 *
 	 * @param       $vat_response_data
@@ -1233,36 +1268,62 @@ if ( ! function_exists( 'alg_wc_eu_vat_get_details' ) ) {
 	 * @return array
 	 */
 	function alg_wc_eu_vat_get_details( $vat_response_data, $details, $country_code ) {
+
+		$business_name    = '';
+		$business_address = '';
+		$vat_number       = '';
+
+		// New VIES REST API format
 		if (
-			! empty( $vat_response_data['address'] ) &&
+			isset( $vat_response_data['address'] ) &&
 			is_array( $vat_response_data['address'] )
 		) {
-			$address_lines = [];
+			$address_parts = array();
 
-			if ( ! empty( $vat_response_data['address']['line1'] ) ) {
-				$address_lines[] = $vat_response_data['address']['line1'];
-			}
-			if ( ! empty( $vat_response_data['address']['line2'] ) ) {
-				$address_lines[] = $vat_response_data['address']['line2'];
-			}
-			if ( ! empty( $vat_response_data['address']['line3'] ) ) {
-				$address_lines[] = $vat_response_data['address']['line3'];
-			}
-			if ( ! empty( $vat_response_data['address']['postcode'] ) ) {
-				$address_lines[] = $vat_response_data['address']['postcode'];
+			foreach ( array( 'line1', 'line2', 'line3', 'postcode' ) as $key ) {
+				if ( ! empty( $vat_response_data['address'][ $key ] ) ) {
+					$address_parts[] = $vat_response_data['address'][ $key ];
+				}
 			}
 
-			// If any address lines are available, join them into a single address string
-			if ( ! empty( $address_lines ) ) {
-				$vat_response_data['address'] = implode( ', ', $address_lines );
-			} else {
-				$vat_response_data['address'] = '';
-			}
+			$business_address = implode( ', ', $address_parts );
 		}
 
-		$details['vat_number']['data']       = ! empty( $vat_response_data['vatNumber'] ) ? $vat_response_data['vatNumber'] : '';
-		$details['business_name']['data']    = ! empty( $vat_response_data['name'] )      ? $vat_response_data['name']      : '';
-		$details['business_address']['data'] = ! empty( $vat_response_data['address'] )   ? $vat_response_data['address']   : '';
+		// Legacy or fallback format
+		if (
+			isset( $vat_response_data['company'] ) &&
+			is_array( $vat_response_data['company'] )
+		) {
+			$vat_number       = $vat_response_data['company']['vat_number'] ?? '';
+			$business_name    = $vat_response_data['company']['company_name'] ?? '';
+			$business_address = $vat_response_data['company']['company_address'] ?? $business_address;
+		}
+
+		// Use direct fields if not set from 'company'
+		if (
+			empty( $vat_number ) &&
+			isset( $vat_response_data['vatNumber'] )
+		) {
+			$vat_number = $vat_response_data['vatNumber'];
+		}
+		if (
+			empty( $business_name ) &&
+			isset( $vat_response_data['name'] )
+		) {
+			$business_name = $vat_response_data['name'];
+		}
+		if (
+			empty( $business_address ) &&
+			isset( $vat_response_data['address'] ) &&
+			is_string( $vat_response_data['address'] )
+		) {
+			$business_address = $vat_response_data['address'];
+		}
+
+		// Assign to return array
+		$details['vat_number']['data']       = $vat_number;
+		$details['business_name']['data']    = $business_name;
+		$details['business_address']['data'] = $business_address;
 		$details['country_code']['data']     = $country_code;
 
 		return $details;
