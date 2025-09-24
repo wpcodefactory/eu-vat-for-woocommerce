@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.5.1 - 24/09/2025 =
+* Dev - WPFactory Admin Menu - Library updated.
+* Dev - WPFactory Recommendations - Library updated.
+* WC tested up to: 10.2.
+
 = 4.5.0 - 21/09/2025 =
 * Fix - Prevent VAT exemption if VAT number is removed via browser tools after validation.
 * Fix - Prevent order submission before VAT number validation completes to avoid incorrect VAT charges.
