@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 4.5.2 - 14/10/2025 =
+* Fix - Manual VAT number validation.
+
 = 4.5.1 - 24/09/2025 =
 * Dev - WPFactory Admin Menu - Library updated.
 * Dev - WPFactory Recommendations - Library updated.

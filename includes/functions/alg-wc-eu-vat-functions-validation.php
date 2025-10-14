@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.5.0
+ * @version 4.5.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -676,7 +676,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 4.5.0
+	 * @version 4.5.2
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -704,7 +704,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_validate_vat' ) ) {
 		// VAT validate manually pre-saved number
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_manual_validation_enable', 'no' ) ) {
 			$manual_validation_vat_numbers = get_option( 'alg_wc_eu_vat_manual_validation_vat_numbers', '' );
-			if ( ! empty( $manual_vats ) ) {
+			if ( ! empty( $manual_validation_vat_numbers ) ) {
 				$sanitized_vat_numbers = array_map(
 					'strtoupper',
 					array_map( 'trim', explode( ',', $manual_validation_vat_numbers ) )
