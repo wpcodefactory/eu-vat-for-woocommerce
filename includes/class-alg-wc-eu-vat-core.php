@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.5.0
+ * @version 4.5.3
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -974,7 +974,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 4.5.0
+	 * @version 4.5.3
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) simplify the code!
@@ -1056,6 +1056,7 @@ class Alg_WC_EU_VAT_Core {
 				$this->add_vat_error_notice( $vat_number );
 			}
 
+			return;
 		}
 
 		// 4. Validate VAT number

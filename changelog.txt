@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.5.3 - 11/11/2025 =
+* Fix - "On input" validates only the VAT field.
+* Fix - Removed required asterisk from VAT field when it changes to optional.
+* WC tested up to: 10.3.
+
 = 4.5.2 - 14/10/2025 =
 * Fix - Manual VAT number validation.
 
