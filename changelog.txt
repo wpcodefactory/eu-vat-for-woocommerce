@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.5.4 - 20/11/2025 =
+* Fix - Resolved infinite loading issue on Cart block when "Add script dependency" option is enabled.
+* Fix - Ensured VAT field remains hidden on initial load when Company field is empty.
+
 = 4.5.3 - 11/11/2025 =
 * Fix - "On input" validates only the VAT field.
 * Fix - Removed required asterisk from VAT field when it changes to optional.

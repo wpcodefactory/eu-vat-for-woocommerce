@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - JS
  *
- * @version 4.5.3
+ * @version 4.5.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -47,15 +47,18 @@ jQuery( function ( $ ) {
 
 	// Show/hide by billing company
 	if ( alg_wc_eu_vat_ajax_object.do_show_hide_by_billing_company ) {
-		show_hide_by_billing_company();
 		billing_company.on( 'input', show_hide_by_billing_company );
+		$( document.body ).one( 'updated_checkout', function () {
+			show_hide_by_billing_company();
+		} );
 	}
 
 	if ( 'yes_for_company' === alg_wc_eu_vat_ajax_object.is_required ) {
 		billing_company.on( 'input', function () {
 			is_company_name_not_empty();
 		} );
-		$( document.body ).on( 'updated_checkout', function() {
+
+		$( document.body ).one( 'updated_checkout', function () {
 			is_company_name_not_empty();
 		} );
 	}
@@ -80,15 +83,11 @@ jQuery( function ( $ ) {
 	function show_hide_by_billing_company() {
 
 		if ( '' === $( '#billing_company' ).val() ) {
-
 			$( '#billing_eu_vat_number_field' ).hide();
 			$( '#billing_eu_vat_number' ).val( '' );
 			alg_wc_eu_vat_validate_vat();
-
 		} else {
-
 			$( '#billing_eu_vat_number_field' ).show();
-
 		}
 
 	}

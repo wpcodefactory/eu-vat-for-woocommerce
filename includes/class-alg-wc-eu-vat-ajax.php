@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.5.0
+ * @version 4.5.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -35,7 +35,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 4.5.0
+	 * @version 4.5.4
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `... && function_exists( 'is_checkout' ) && is_checkout()`
@@ -48,6 +48,7 @@ class Alg_WC_EU_VAT_AJAX {
 
 		if (
 			! alg_wc_eu_vat_is_checkout() &&
+			! alg_wc_eu_vat_is_cart() &&
 			(
 				! is_account_page() ||
 				(

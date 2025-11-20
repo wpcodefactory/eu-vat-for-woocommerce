@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.4.8
+ * @version 4.5.4
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -409,7 +409,7 @@ export default Block;
 /**
  * Always show zero VAT.
  *
- * @version 4.4.8
+ * @version 4.5.4
  * @since   4.2.8
  *
  * @see     https://developer.woocommerce.com/docs/cart-and-checkout-available-slots/#0-experimentalordermeta
@@ -426,11 +426,13 @@ if (
 	const { ExperimentalOrderMeta } = wc.blocksCheckout;
 
 	const AlgWCEUVATZeroVATComponent = ( { cart, extensions } ) => {
-		if ( 0 == cart.cartTotals.total_tax ) {
-			return <div class="wc-block-components-totals-item wc-block-components-totals-footer-item">
-				<span class="wc-block-components-totals-item__label">VAT</span>
-				<div class="wc-block-components-totals-item__value">
-					<span class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-totals-footer-item-tax-value">0%</span>
+		if ( '0' === cart.cartTotals.total_tax ) {
+			return <div className="wc-block-components-totals-item wc-block-components-totals-footer-item">
+				<span className="wc-block-components-totals-item__label">
+					{ __('VAT', 'eu-vat-for-woocommerce') }
+				</span>
+				<div className="wc-block-components-totals-item__value">
+					<span className="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-totals-footer-item-tax-value">0%</span>
 				</div>
 			</div>;
 		}
