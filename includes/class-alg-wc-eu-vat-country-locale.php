@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Country Locale
  *
- * @version 4.1.0
+ * @version 4.5.5
  * @since   4.1.0
  *
  * @author  WPFactory
@@ -45,9 +45,21 @@ class Alg_WC_EU_VAT_Country_Locale {
 			'' != $this->required_in_countries ||
 			'yes_for_company' === get_option( 'alg_wc_eu_vat_field_required', 'no' )
 		) {
-			add_filter( 'woocommerce_get_country_locale',             array( $this, 'set_eu_vat_country_locale' ), PHP_INT_MAX );
-			add_filter( 'woocommerce_get_country_locale_default',     array( $this, 'set_eu_vat_country_locale_default' ), PHP_INT_MAX );
-			add_filter( 'woocommerce_country_locale_field_selectors', array( $this, 'set_eu_vat_country_locale_field_selectors' ), PHP_INT_MAX );
+			add_filter(
+				'woocommerce_get_country_locale',
+				array( $this, 'set_eu_vat_country_locale' ),
+				PHP_INT_MAX
+			);
+			add_filter(
+				'woocommerce_get_country_locale_default',
+				array( $this, 'set_eu_vat_country_locale_default' ),
+				PHP_INT_MAX
+			);
+			add_filter(
+				'woocommerce_country_locale_field_selectors',
+				array( $this, 'set_eu_vat_country_locale_field_selectors' ),
+				PHP_INT_MAX
+			);
 		}
 
 	}
@@ -55,7 +67,7 @@ class Alg_WC_EU_VAT_Country_Locale {
 	/**
 	 * set_eu_vat_country_locale.
 	 *
-	 * @version 4.1.0
+	 * @version 4.5.5
 	 * @since   1.7.0
 	 */
 	function set_eu_vat_country_locale( $country_locales ) {
@@ -64,12 +76,16 @@ class Alg_WC_EU_VAT_Country_Locale {
 			return $country_locales;
 		}
 
-		$show_eu_vat_field_countries     = array_map( 'strtoupper', array_map( 'trim', explode( ',', $this->show_in_countries ) ) );
-		$required_eu_vat_field_countries = array_map( 'strtoupper', array_map( 'trim', explode( ',', $this->required_in_countries ) ) );
+		$show_eu_vat_field_countries = array_map(
+			'strtoupper',
+			array_map( 'trim', explode( ',', $this->show_in_countries ) )
+		);
+		$required_eu_vat_field_countries = array_map(
+			'strtoupper',
+			array_map( 'trim', explode( ',', $this->required_in_countries ) )
+		);
 
 		$eu_vat_required = get_option( 'alg_wc_eu_vat_field_required', 'no' );
-
-		$original_hidden = false;
 
 		// Enable field in selected locales
 		$original_required = ( 'yes' === $eu_vat_required );
@@ -89,15 +105,10 @@ class Alg_WC_EU_VAT_Country_Locale {
 			'no_for_countries'  === $eu_vat_required ||
 			! empty( $show_eu_vat_field_countries )
 		) {
-			if ( 'yes_for_company' === $eu_vat_required ) {
-				if ( ! empty( WC()->checkout()->get_value( 'billing_company' ) ) ) {
-					$is_required = true;
-				}
-			}
-			foreach ( $country_locales as $country_code => &$country_locale ) {
 
-				$is_required = $original_required;
-				$hidden      = $original_hidden;
+			$is_required = $original_required;
+
+			foreach ( $country_locales as $country_code => &$country_locale ) {
 
 				if ( 'yes_for_countries' ===  $eu_vat_required ) {
 					if ( in_array( $country_code, $required_eu_vat_field_countries ) ) {
@@ -139,8 +150,6 @@ class Alg_WC_EU_VAT_Country_Locale {
 				}
 			}
 
-			$hidden = $original_hidden;
-
 			if ( ! empty( $arr_dif ) ) {
 				foreach ( $arr_dif as $con ) {
 					if ( ! empty( $show_eu_vat_field_countries[0] ) ) {
@@ -158,8 +167,6 @@ class Alg_WC_EU_VAT_Country_Locale {
 					);
 				}
 			}
-
-			$hidden = $original_hidden;
 
 			if ( ! empty( $required_eu_vat_field_countries ) ) {
 				foreach ( $required_eu_vat_field_countries as $country_code_re ) {

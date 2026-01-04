@@ -1,5 +1,14 @@
 == Changelog ==
 
+= 4.5.5 - 04/01/2026 =
+* Fix - Fixed checkout country selection when "Keep VAT in selected/base country" is set to "Base (i.e., store) country".
+* Fix - Fixed PHP memory error in "woocommerce_get_country_locale" by removing an unnecessary "billing_company" check.
+* Dev - Added VAT validation when the "Ship to a different address" checkbox is toggled.
+* Dev - Code refactoring.
+* Dev - Coding standards improved.
+* Tested up to: 6.9.
+* WC tested up to: 10.4.
+
 = 4.5.4 - 20/11/2025 =
 * Fix - Resolved infinite loading issue on Cart block when "Add script dependency" option is enabled.
 * Fix - Ensured VAT field remains hidden on initial load when Company field is empty.

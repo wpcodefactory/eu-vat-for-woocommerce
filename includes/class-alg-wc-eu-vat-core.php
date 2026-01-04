@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.5.3
+ * @version 4.5.5
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -250,16 +250,20 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * maybe_exclude_vat_free.
 	 *
-	 * @version 4.5.0
+	 * @version 4.5.5
 	 * @since   1.7.0
 	 */
 	function maybe_exclude_vat_free( $value ) {
 		$preserve_base_country_check_passed = true;
 
 		// Keep VAT in selected countries
-		$selected_country_at_checkout = '';
-		if ( 'no' != ( $preserve_option_value = get_option( 'alg_wc_eu_vat_preserve_in_base_country', 'no' ) ) ) {
-			$selected_country = substr( alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' ), 0, 2 );
+		$preserve_option_value = get_option( 'alg_wc_eu_vat_preserve_in_base_country', 'no' );
+		if ( 'no' !== $preserve_option_value ) {
+			$selected_country = substr(
+				alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' ),
+				0,
+				2
+			);
 
 			if ( ! ctype_alpha( $selected_country ) ) {
 				$selected_country = '';
@@ -273,7 +277,7 @@ class Alg_WC_EU_VAT_Core {
 						! ctype_alpha( $selected_country ) &&
 						! empty( $_REQUEST['post_data'] )
 					) {
-						parse_str( sanitize_text_field( wp_unslash( $_REQUEST['post_data'] ) ), $post_data_args );
+						parse_str( wp_unslash( $_REQUEST['post_data'] ), $post_data_args );
 						if ( ! empty( $post_data_args['billing_country'] ) ) {
 							$selected_country = sanitize_text_field( $post_data_args['billing_country'] );
 						}
@@ -297,13 +301,18 @@ class Alg_WC_EU_VAT_Core {
 					return false;
 				}
 			}
-			$selected_country = strtoupper( $selected_country );
-			if ( 'EL' === $selected_country ) {
-				$selected_country = 'GR';
-			}
 
-			$country_type                 = get_option( 'alg_wc_eu_vat_preserve_country_type', 'billing_country' );
+			$country_type = get_option( 'alg_wc_eu_vat_preserve_country_type', 'billing_country' );
 			$selected_country_at_checkout = WC()->checkout()->get_value( $country_type );
+
+			// AJAX checkout update fallback
+			if ( ! empty( $_REQUEST['post_data'] ) ) {
+				parse_str( wp_unslash( $_REQUEST['post_data'] ), $post_data_args );
+
+				if ( ! empty( $post_data_args[ $country_type ] ) ) {
+					$selected_country_at_checkout = sanitize_text_field( $post_data_args[ $country_type ] );
+				}
+			}
 
 			if ( 'yes' === $preserve_option_value ) {
 				$location = wc_get_base_location();
@@ -331,7 +340,7 @@ class Alg_WC_EU_VAT_Core {
 		// Keep VAT if shipping country is different from billing country
 		if (
 			! $preserve_base_country_check_passed &&
-			'no' != ( $preserve_option_value = get_option( 'alg_wc_eu_vat_preserv_vat_for_different_shipping', 'no' ) )
+			'no' !== get_option( 'alg_wc_eu_vat_preserv_vat_for_different_shipping', 'no' )
 		) {
 
 			$billing_country  = (

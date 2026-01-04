@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 4.5.0
+ * @version 4.5.5
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.5.0
+	 * @version 4.5.5
 	 * @since   1.5.0
 	 *
 	 * @todo    (feature) Message if customer's check for IP location country has failed!
@@ -112,7 +112,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Keep VAT if shipping country matches store base country', 'eu-vat-for-woocommerce' ),
-				'desc_tip' => __( 'This will keep VAT if the shipping country is different from the billing country but matches your store\'s base country. Note: Disable the "Keep VAT if shipping country is different from billing country" option for this to work correctly.' ),
+				'desc_tip' => __( 'This will keep VAT if the shipping country is different from the billing country but matches your store\'s base country. Note: Disable the "Keep VAT if shipping country is different from billing country" option for this to work correctly.', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Yes', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_preserve_vat_for_base_country_shipping',
 				'default'  => 'no',

@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - JS
  *
- * @version 4.5.4
+ * @version 4.5.5
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -195,7 +195,7 @@ jQuery( function ( $ ) {
 	/**
 	 * attach_event_handlers.
 	 *
-	 * @version 4.5.3
+	 * @version 4.5.5
 	 * @since   4.2.3
 	 */
 	function attach_event_handlers() {
@@ -216,6 +216,11 @@ jQuery( function ( $ ) {
 
 		// On country change - re-validate
 		$( document.body ).on( 'change', '#billing_country, #shipping_country', function () {
+			alg_wc_eu_vat_validate_vat();
+		} );
+
+		// Ship to different address
+		$( document.body ).on( 'input', '#ship-to-different-address-checkbox', function () {
 			alg_wc_eu_vat_validate_vat();
 		} );
 
