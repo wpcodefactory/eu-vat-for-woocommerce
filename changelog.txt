@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.5.6 - 19/01/2026 =
+* Fix - Fixed VAT validation on country change in block-based checkout.
+* Dev - Checkout block field - Code refactoring, cleanup, and removing unused files.
+* Dev - Added `alg_wc_eu_vat_field_position_block_checkout` filter for VAT field positioning.
+
 = 4.5.5 - 04/01/2026 =
 * Fix - Fixed checkout country selection when "Keep VAT in selected/base country" is set to "Base (i.e., store) country".
 * Fix - Fixed PHP memory error in "woocommerce_get_country_locale" by removing an unnecessary "billing_company" check.

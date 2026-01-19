@@ -10,24 +10,6 @@ const defaultRules = defaultConfig.module.rules.filter((rule) => {
 
 module.exports = {
 	...defaultConfig,
-	entry: {
-		index: path.resolve(process.cwd(), 'src', 'js', 'index.js'),
-		'eu-vat-for-woocommerce-checkout-eu-vat-field-block': path.resolve(
-			process.cwd(),
-			'src',
-			'js',
-			'checkout-eu-vat-field-block',
-			'index.js'
-		),
-		'eu-vat-for-woocommerce-checkout-eu-vat-field-block-frontend':
-			path.resolve(
-				process.cwd(),
-				'src',
-				'js',
-				'checkout-eu-vat-field-block',
-				'frontend.js'
-			),
-	},
 	module: {
 		...defaultConfig.module,
 		rules: [
@@ -57,7 +39,7 @@ module.exports = {
 								}
 
 								// Add code here to prepend to all .scss/.sass files.
-								return '@import "colors"; ' + content;
+								return content;
 							},
 						},
 					},

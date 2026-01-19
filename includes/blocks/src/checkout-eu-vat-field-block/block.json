@@ -1,7 +1,8 @@
 {
-	"apiVersion": 2,
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
 	"name": "eu-vat-for-woocommerce/checkout-eu-vat-field",
-	"version": "2.11.8",
+	"version": "4.5.6",
 	"title": "EU VAT Field",
 	"category": "woocommerce",
 	"description": "Adds a EU VAT Field checkbox to the checkout.",
@@ -28,5 +29,6 @@
 		}
 	},
 	"textdomain": "eu-vat-for-woocommerce",
-	"editorStyle": "file:../../../build/style-eu-vat-for-woocommerce-checkout-eu-vat-field-block.css"
+	"editorScript": "file:./index.js",
+	"viewScript": [ "file:./frontend.js", "alg-wc-eu-vat" ]
 }

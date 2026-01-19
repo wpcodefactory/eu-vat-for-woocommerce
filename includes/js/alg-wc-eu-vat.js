@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - JS
  *
- * @version 4.5.5
+ * @version 4.5.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -530,26 +530,3 @@ jQuery( function ( $ ) {
 	}
 
 } );
-
-/**
- * For VAT Blocks.
- *
- * Move VAT validation process message section into `wc-block-components-address-form__alg_eu_vat-billing_eu_vat_number`.
- *
- * @version 4.0.0
- * @since   3.0.1
- */
-// Wait for all resources to load
-window.onload = () => {
-	const sourceDiv = document.getElementById( 'alg_eu_vat_for_woocommerce_field' );
-	const targetDiv = document.querySelector( '.wc-block-components-address-form__alg_eu_vat-billing_eu_vat_number' );
-
-	// Check if both elements exist
-	if ( sourceDiv && targetDiv ) {
-		// Set margin-top style
-		sourceDiv.style.marginTop = '16px';
-
-		// Move the sourceDiv into the targetDiv
-		targetDiv.appendChild( sourceDiv ); // Append sourceDiv as a child of targetDiv
-	}
-};
