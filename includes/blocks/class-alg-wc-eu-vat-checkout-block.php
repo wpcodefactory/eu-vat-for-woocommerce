@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.4.7
+ * @version 4.5.7
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -211,7 +211,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * update_block_order_meta_eu_vat.
 	 *
-	 * @version 4.4.5
+	 * @version 4.5.7
 	 * @since   2.10.4
 	 *
 	 * @todo    (dev) `eu-vat-for-woocommerce-block-example`: rename
@@ -232,7 +232,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 
 		$posted_eu_vat_id = $order->get_meta( $this->get_block_field_id() );
 
-		$is_valid = false;
+		$is_valid = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_valid' ) ?? false;
 
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_validate', 'yes' ) ) {
 			if (
@@ -354,6 +354,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 
 		if ( $is_valid ) {
 			$order->update_meta_data( 'is_vat_exempt', 'yes' );
+			$order->calculate_totals();
 		}
 
 		if ( ( $user_id = $order->get_user_id() ) ) {

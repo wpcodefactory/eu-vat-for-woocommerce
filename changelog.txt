@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.5.7 - 28/01/2026 =
+* Fix - Resolved VAT calculation issues in Block Checkout during only VAT number updates.
+* Fix - Corrected payment method visibility to appear only for valid VAT numbers.
+
 = 4.5.6 - 19/01/2026 =
 * Fix - Fixed VAT validation on country change in block-based checkout.
 * Dev - Checkout block field - Code refactoring, cleanup, and removing unused files.
