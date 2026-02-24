@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Country Locale
  *
- * @version 4.5.5
+ * @version 4.5.8
  * @since   4.1.0
  *
  * @author  WPFactory
@@ -67,7 +67,7 @@ class Alg_WC_EU_VAT_Country_Locale {
 	/**
 	 * set_eu_vat_country_locale.
 	 *
-	 * @version 4.5.5
+	 * @version 4.5.8
 	 * @since   1.7.0
 	 */
 	function set_eu_vat_country_locale( $country_locales ) {
@@ -110,9 +110,11 @@ class Alg_WC_EU_VAT_Country_Locale {
 
 			foreach ( $country_locales as $country_code => &$country_locale ) {
 
-				if ( 'yes_for_countries' ===  $eu_vat_required ) {
+				if ( 'yes_for_countries' === $eu_vat_required ) {
 					if ( in_array( $country_code, $required_eu_vat_field_countries ) ) {
 						$is_required = true;
+					} else {
+						$is_required = false;
 					}
 				} elseif ( 'no_for_countries' === $eu_vat_required ) {
 					if ( in_array( $country_code, $required_eu_vat_field_countries ) ) {
@@ -218,12 +220,17 @@ class Alg_WC_EU_VAT_Country_Locale {
 	/**
 	 * set_eu_vat_country_locale_default.
 	 *
-	 * @version 4.1.0
+	 * @version 4.5.8
 	 * @since   1.4.0
 	 */
 	function set_eu_vat_country_locale_default( $default_locale ) {
 
 		if ( has_block( 'woocommerce/checkout' ) ) {
+			return $default_locale;
+		}
+
+		// Use REST_REQUEST for block checkout since has_block( 'woocommerce/checkout' ) not work here (Block checkout uses REST API).
+		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
 			return $default_locale;
 		}
 

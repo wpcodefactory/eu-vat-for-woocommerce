@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.5.7
+ * @version 4.5.8
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -142,7 +142,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * register_additional_checkout_block_field.
 	 *
-	 * @version 4.0.0
+	 * @version 4.5.8
 	 * @since   2.11.6
 	 */
 	function register_additional_checkout_block_field() {
@@ -158,6 +158,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 			array(
 				'id'            => 'alg_eu_vat' . '/' . $field_id,
 				'label'         => $field_attr['label'],
+				'optionalLabel' => $field_attr['label'],
 				'location'      => 'contact',
 				'required'      => $field_attr['required'],
 				'attributes'    => array(
@@ -172,13 +173,13 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * store_api_register_update_callback.
 	 *
-	 * @version 4.3.1
+	 * @version 4.5.8
 	 * @since   2.10.4
 	 */
 	 function store_api_register_update_callback() {
 
 		woocommerce_store_api_register_update_callback(
-			[
+			array(
 				'namespace' => 'alg-wc-eu-vat-extension-namespace',
 				'callback'  => function ( $data ) {
 					$country               = $data['eu_country'];
@@ -192,9 +193,21 @@ class Alg_WC_EU_VAT_Checkout_Block {
 							WC()->customer->set_shipping_country( wc_clean( $country ) );
 						}
 					}
-					return;
+
+					// Update billing company
+					if ( isset( $data['billing_company'] ) ) {
+						WC()->customer->set_billing_company( wc_clean( $data['billing_company'] ) );
+						if (
+							isset( $same_billing_shipping ) &&
+							'yes' === $same_billing_shipping
+						) {
+							WC()->customer->set_shipping_company( wc_clean( $data['billing_company'] ) );
+						}
+					}
+
+					return true;
 				}
-			]
+			)
 		);
 
 		woocommerce_store_api_register_update_callback(
@@ -211,7 +224,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * update_block_order_meta_eu_vat.
 	 *
-	 * @version 4.5.7
+	 * @version 4.5.8
 	 * @since   2.10.4
 	 *
 	 * @todo    (dev) `eu-vat-for-woocommerce-block-example`: rename
@@ -232,7 +245,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 
 		$posted_eu_vat_id = $order->get_meta( $this->get_block_field_id() );
 
-		$is_valid = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_valid' ) ?? false;
+		$is_valid = false;
 
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_validate', 'yes' ) ) {
 			if (

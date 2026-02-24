@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 4.5.8 - 24/02/2026 =
+* Fix - Fixed initial show/hide behavior of the VAT field when the company name is checked.
+* Fix - Corrected the `progress_text_validation_preserv` message.
+* Fix - Resolved VAT number field visibility issues in Block-based Checkout.
+* Fix - Fixed VAT number required-field handling in Block-based Checkout.
+* Fix - Corrected VAT number validation in Block-based Checkout.
+* WC tested up to: 10.5.
+
 = 4.5.7 - 28/01/2026 =
 * Fix - Resolved VAT calculation issues in Block Checkout during only VAT number updates.
 * Fix - Corrected payment method visibility to appear only for valid VAT numbers.

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Class for Integrating with WooCommerce Blocks
  *
- * @version 4.5.6
+ * @version 4.5.8
  * @since   2.11.0
  *
  * @author  WPFactory
@@ -76,7 +76,7 @@ class EuVatForWoocommerce_Blocks_Integration implements IntegrationInterface {
 	/**
 	 * An array of key, value pairs of data made available to the block on the client side.
 	 *
-	 * @version 4.5.6
+	 * @version 4.5.8
 	 */
 	public function get_script_data() {
 		return array(
@@ -86,6 +86,7 @@ class EuVatForWoocommerce_Blocks_Integration implements IntegrationInterface {
 				'alg_wc_eu_vat_field_position_block_checkout',
 				''
 			),
+			'get_show_in_countries'           => alg_wc_eu_vat()->core->country_locale->show_in_countries,
 			'optInDefaultText'                => __( 'I want to receive updates about products and promotions.', 'eu-vat-for-woocommerce' ),
 		);
 	}
