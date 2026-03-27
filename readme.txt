@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli, ae
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 6.9
-Stable tag: 4.5.8
+Stable tag: 4.5.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -286,9 +286,14 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 
 == Changelog ==
 
+= 4.5.9 - 27/03/2026 =
+* Fix - Resolved issue with "Keep VAT for this product" in Block-based Checkout.
+* Dev - Improvement Block-based VAT validation.
+* WC tested up to: 10.6.
+
 = 4.5.8 - 24/02/2026 =
 * Fix - Fixed initial show/hide behavior of the VAT field when the company name is checked.
-* Fix - Corrected the `progress_text_validation_preserv` message.
+* Fix - Corrected the "Country preserved" message.
 * Fix - Resolved VAT number field visibility issues in Block-based Checkout.
 * Fix - Fixed VAT number required-field handling in Block-based Checkout.
 * Fix - Corrected VAT number validation in Block-based Checkout.

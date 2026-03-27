@@ -2,14 +2,12 @@
 /**
  * EU VAT for WooCommerce - Blocks Initialize
  *
- * @version 4.2.4
+ * @version 4.5.9
  *
  * @author  WPFactory
  */
 
-use Automattic\WooCommerce\StoreApi\StoreApi;
-use Automattic\WooCommerce\StoreApi\Schemas\ExtendSchema;
-use Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema;
+use \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -42,7 +40,7 @@ if ( ! alg_wc_eu_vat_is_checkout_block_enabled() ) {
 /**
  * woocommerce_blocks_loaded.
  *
- * @version 4.2.2
+ * @version 4.5.9
  */
 add_action( 'woocommerce_blocks_loaded', function () {
 
@@ -65,11 +63,12 @@ add_action( 'woocommerce_blocks_loaded', function () {
 	if ( function_exists( 'woocommerce_store_api_register_endpoint_data' ) ) {
 		woocommerce_store_api_register_endpoint_data(
 			array(
-				'endpoint'        => CheckoutSchema::IDENTIFIER,
+				'endpoint'        => CartSchema::IDENTIFIER,
 				'namespace'       => 'eu-vat-for-woocommerce-block-example',
 				'data_callback'   => function () {
 					return array(
 						'billing_eu_vat_number' => '',
+						'alg_eu_vat_validation' => alg_wc_eu_vat_session_get( 'alg_eu_vat_validation' ),
 					);
 				},
 				'schema_callback' => function () {
@@ -78,6 +77,10 @@ add_action( 'woocommerce_blocks_loaded', function () {
 							'description' => __( 'EU VAT Number', 'eu-vat-for-woocommerce' ),
 							'type'        => array( 'string', 'null' ),
 							'readonly'    => true,
+						),
+						'alg_eu_vat_validation' => array(
+							'type'       => 'object',
+							'properties' => array(),
 						),
 					);
 				},

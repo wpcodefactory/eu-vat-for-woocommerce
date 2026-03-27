@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.5.5
+ * @version 4.5.9
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -67,7 +67,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.4.1
+	 * @version 4.5.9
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) "eu vat number" to "eu vat"?
@@ -98,6 +98,9 @@ class Alg_WC_EU_VAT_Core {
 		add_action( 'woocommerce_checkout_update_order_review', array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
 		add_action( 'woocommerce_before_calculate_totals',      array( $this, 'maybe_exclude_vat' ), 99 );
 		add_action( 'woocommerce_before_checkout_billing_form', array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
+
+		// Block
+		add_action( 'woocommerce_before_calculate_totals', array( $this, 'maybe_vat_validation' ), 99 );
 
 		// Validation
 		add_action( 'woocommerce_after_checkout_validation', array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
@@ -1242,6 +1245,537 @@ class Alg_WC_EU_VAT_Core {
 		</style>
 		<?php
 
+	}
+
+	/**
+	 * vat_required
+	 *
+	 * @version 4.5.9
+	 * @since   4.5.9
+	 */
+	function vat_required( $billing_country = '', $billing_company = '' ) {
+
+		$setting = get_option( 'alg_wc_eu_vat_field_required', 'no' );
+
+		switch ( $setting ) {
+
+			case 'yes':
+				return true;
+
+			case 'yes_for_company':
+				return ! empty( $billing_company );
+
+			case 'yes_for_countries':
+			case 'no_for_countries':
+
+				$countries = get_option( 'alg_wc_eu_vat_field_required_countries', array() );
+
+				$in_list = in_array( $billing_country, $countries, true );
+
+				return (
+					( 'yes_for_countries' === $setting && $in_list ) ||
+					( 'no_for_countries' === $setting && ! $in_list )
+				);
+
+			case 'no':
+			default:
+				return false;
+		}
+	}
+
+	/**
+	 * parse_vat.
+	 *
+	 * @version 4.5.9
+	 * @since   4.5.9
+	 */
+	function parse_vat( $vat_number, $billing_country ) {
+
+		// Remove non-alphanumeric (spaces, dots and hyphens) symbols
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_allow_non_alphanumeric', 'no' ) ) {
+			$vat_number = str_replace( [ '-', '.', ' ' ], '', $vat_number );
+		}
+
+		// Only letters and digits
+		if ( ! preg_match( '/^[a-zA-Z0-9]+$/', $vat_number ) ) {
+			return array(
+				'country' => '',
+				'number'  => $vat_number
+			);
+		}
+
+		$vat_number        = strtoupper( $vat_number );
+		$billing_country   = strtoupper( $billing_country );
+		$extracted_country = alg_wc_eu_vat_extract_country( $vat_number );
+		$country           = '';
+		if ( false !== $extracted_country ) {
+			$country = $extracted_country;
+			$number  = substr( $vat_number, strlen( $country ) );
+		} elseif ( 'yes' === get_option( 'alg_wc_eu_vat_allow_without_country_code', 'no' ) ) {
+			$country = alg_wc_eu_vat_match_vat_id_country( $billing_country );
+			$number  = $vat_number;
+		} else {
+			$number = $vat_number;
+		}
+
+		return array(
+			'country' => $country,
+			'number'  => $number
+		);
+	}
+
+	/**
+	 * vat_validation.
+	 *
+	 * @version 4.5.9
+	 * @since   4.5.9
+	 */
+	function vat_validation( $data ) {
+
+		if ( ! $this->is_validate_and_exempt() ) {
+			return false;
+		}
+
+		$data = wp_unslash( $data );
+
+		$vat_number       = sanitize_text_field( $data['vat_number'] ?? '' );
+		$billing_country  = strtoupper( sanitize_text_field( $data['billing_country'] ?? '' ) );
+		$shipping_country = strtoupper( sanitize_text_field( $data['shipping_country'] ?? '' ) );
+		$billing_company  = strtolower( sanitize_text_field( $data['billing_company'] ?? '' ) );
+
+		$store_base_country = strtoupper( wc_get_base_location()['country'] );
+
+		// Check if VAT is required
+		$is_required = $this->vat_required( $billing_country, $billing_company );
+		if ( ! $is_required && empty( $vat_number ) ) {
+			return array(
+				'is_validate' => true
+			);
+		}
+
+		$messages      = '';
+		$is_validate   = false;
+		$is_vat_exempt = false;
+		$css_class     = '';
+
+		// Basic VAT number format check
+		$vat_length = strlen( $vat_number );
+		if ( ! empty( $vat_number ) && ( $vat_length < 4 || $vat_length > 20 ) ) {
+			$css_class = 'alg-wc-vat-invalid-format';
+			$messages  = __( 'Invalid VAT format.', 'eu-vat-for-woocommerce' );
+		}
+
+		// VAT is required
+		if ( $is_required && empty( $vat_number ) ) {
+			$css_class = 'alg-wc-vat-required';
+			$messages  = do_shortcode( get_option(
+				'alg_wc_eu_vat_progress_text_is_required',
+				__( 'VAT is required.', 'eu-vat-for-woocommerce' )
+			) );
+		}
+
+		// Parse VAT number
+		$parse_vat_number = $this->parse_vat( $vat_number, $billing_country );
+		$parse_country    = sanitize_text_field( $parse_vat_number['country'] );
+		$parse_number     = sanitize_text_field( $parse_vat_number['number'] );
+
+
+		// Skip VAT validation for selected countries
+		$skip_countries = get_option( 'alg_wc_eu_vat_advanced_skip_countries', '' );
+		if ( ! empty( $skip_countries ) ) {
+			$skip_countries = array_map(
+				'strtoupper',
+				array_map( 'trim', explode( ',', $skip_countries ) )
+			);
+			if ( in_array( $parse_country, $skip_countries, true ) ) {
+				$is_validate   = true;
+				$is_vat_exempt = true;
+			}
+		}
+
+		// VAT validate manually pre-saved number
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_manual_validation_enable', 'no' ) ) {
+			$manual_validation_vat_numbers = get_option( 'alg_wc_eu_vat_manual_validation_vat_numbers', '' );
+			if ( ! empty( $manual_validation_vat_numbers ) ) {
+				$sanitized_vat_numbers = array_map(
+					'strtoupper',
+					array_map( 'trim', explode( ',', $manual_validation_vat_numbers ) )
+				);
+				$concatenated_vat_number = $parse_country . $parse_number;
+
+				if ( in_array( $concatenated_vat_number, $sanitized_vat_numbers ) ) {
+					alg_wc_eu_vat_log(
+						$parse_country,
+						$parse_number,
+						$billing_company,
+						'',
+						__(
+							'Success: VAT ID valid. Matched with prevalidated VAT numbers.',
+							'eu-vat-for-woocommerce'
+						)
+					);
+					$css_class     = 'alg-wc-vat-prevalidate';
+					$is_validate   = true;
+					$is_vat_exempt = true;
+				}
+			}
+		}
+
+		$is_vat_valid = false;
+		if ( ! $is_validate && empty( $messages) ):
+			// Validate VAT
+			$cached_is_valid   = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_valid' );
+			$cached_vat_number = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' );
+			$cached_country    = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check_country' );
+
+			$cache_is_fresh = (
+				true === $cached_is_valid &&
+				$cached_vat_number === $vat_number &&
+				$cached_country === $billing_country
+			);
+
+			if ( $cache_is_fresh ) {
+				$is_vat_valid = $cached_is_valid;
+			} else {
+
+				// Vat validating
+				$is_vat_valid = alg_wc_eu_vat_validate_vat(
+					$parse_country,
+					$parse_number,
+					$billing_company
+				);
+
+				$is_vat_valid = apply_filters( 'alg_wc_eu_vat_is_valid_vat_at_checkout', $is_vat_valid );
+
+				// Update cache
+				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid', $is_vat_valid );
+				alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_country', $billing_country );
+			}
+
+			$is_validate   = $is_vat_valid;
+			$is_vat_exempt = $is_vat_valid;
+
+			// VIES not available
+			if (
+				! $is_validate &&
+				null !== alg_wc_eu_vat()->core->get_error_vies_unavailable()
+			) {
+				$is_validate   = false;
+				$is_vat_exempt = true;
+				$css_class     = 'alg-wc-eu-vat-validation-failed';
+
+				$vies_error = esc_html( alg_wc_eu_vat()->core->get_error_vies_unavailable() );
+
+				$messages = str_replace(
+					'%vies_error%',
+					$vies_error,
+					do_shortcode(
+						get_option(
+							'alg_wc_eu_vat_progress_text_validation_vies_error',
+							__( 'VAT accepted due to VIES error: %vies_error%. The admin will check the VAT validation again and proceed accordingly.', 'eu-vat-for-woocommerce' )
+						)
+					)
+				);
+			}
+
+			if ( $is_validate ):
+
+				// Check country by IP
+				if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_ip_location_country', 'no' ) ) {
+					$country_by_ip = alg_wc_eu_vat_get_customers_location_by_ip();
+
+					if ( $country_by_ip !== $parse_country ) {
+						$is_validate   = false;
+						$is_vat_exempt = false;
+						$css_class     = 'alg-wc-vat-ip-not-match';
+						alg_wc_eu_vat_log(
+							$parse_country,
+							$parse_number,
+							$billing_company,
+							'',
+							sprintf(
+								/* Translators: %s: Country code. */
+								__( 'Error: Country by IP does not match (%s)', 'eu-vat-for-woocommerce' ),
+								$country_by_ip
+							)
+						);
+					}
+				}
+
+				// Check for matching billing country code
+				if (
+					'no' !== get_option( 'alg_wc_eu_vat_check_billing_country_code', 'no' ) &&
+					alg_wc_eu_vat_match_billing_country( $parse_country ) !== $billing_country
+				) {
+					$is_validate   = false;
+					$is_vat_exempt = false;
+					$css_class     = 'alg-wc-eu-vat-not-valid-billing-country';
+					$messages      = do_shortcode(
+						get_option(
+							'alg_wc_eu_vat_wrong_billing_country',
+							__( 'Wrong billing country.', 'eu-vat-for-woocommerce' )
+						)
+					);
+
+					// Wrong billing country
+					alg_wc_eu_vat_log(
+						$parse_country,
+						$vat_number,
+						$billing_country,
+						'',
+						sprintf(
+							/* Translators: %s: Billing country. */
+							__( 'Error: Country code does not match (%s)', 'eu-vat-for-woocommerce' ),
+							$billing_country
+						)
+					);
+				}
+
+				// Keep VAT if shipping country is different from billing country
+				if (
+					'no' != get_option( 'alg_wc_eu_vat_preserv_vat_for_different_shipping', 'no' ) &&
+					! empty( $shipping_country ) &&
+					$shipping_country !== $billing_country
+				) {
+					$is_validate   = true;
+					$is_vat_exempt = false;
+					$css_class     = 'alg-wc-eu-vat-not-valid-billing-country';
+					$messages      = do_shortcode(
+						get_option(
+							'alg_wc_eu_vat_shipping_billing_countries',
+							__( 'Different shipping & billing countries.', 'eu-vat-for-woocommerce' )
+						)
+					);
+				}
+
+				// Keep VAT if shipping country matches store base country
+				if (
+					'no' != get_option( 'alg_wc_eu_vat_preserve_vat_for_base_country_shipping', 'no' ) &&
+					$shipping_country !== $billing_country &&
+					$store_base_country === $shipping_country
+				) {
+					$is_validate   = true;
+					$is_vat_exempt = false;
+					$css_class     = 'alg-wc-eu-vat-not-valid-base-country-shipping';
+					$messages      = do_shortcode(
+						get_option(
+							'alg_wc_eu_vat_shipping_matches_base_country',
+							__( 'Shipping country matches store base country.', 'eu-vat-for-woocommerce' )
+						)
+					);
+				}
+
+				// Keep VAT in selected countries
+				$keep_vat_selected_countries = get_option( 'alg_wc_eu_vat_preserve_in_base_country', 'no' );
+				if ( 'no' !== $keep_vat_selected_countries ) {
+
+					$allowed_country_types = array( 'billing_country', 'shipping_country' );
+					$country_type_option   = get_option( 'alg_wc_eu_vat_preserve_country_type', 'billing_country' );
+					$country_type          = in_array( $country_type_option, $allowed_country_types, true ) ?
+						$country_type_option :
+						'billing_country';
+					$country_to_check      = ( $country_type === 'shipping_country' ) ?
+						$shipping_country :
+						$billing_country;
+
+					$preserve_message = do_shortcode(
+						(
+						'yes' === get_option( 'alg_wc_eu_vat_validate_enable_preserve_message', 'no' ) ?
+							get_option(
+								'alg_wc_eu_vat_progress_text_validation_preserv',
+								__( 'VAT preserved for this billing country', 'eu-vat-for-woocommerce' )
+							) :
+							get_option(
+								'alg_wc_eu_vat_progress_text_valid',
+								__( 'VAT is valid.', 'eu-vat-for-woocommerce' )
+							)
+						)
+					);
+
+					// Base (i.e., store) country (yes)
+					if (
+						'yes' === $keep_vat_selected_countries &&
+						$country_to_check === $store_base_country
+					) {
+						$is_validate   = true;
+						$is_vat_exempt = false;
+						$css_class     = 'alg-wc-eu-vat-not-valid-keep-base-country';
+						$messages      = $preserve_message;
+					}
+
+					// Comma separated list (list)
+					if ( 'list' === $keep_vat_selected_countries ) {
+						$locations_raw = get_option( 'alg_wc_eu_vat_preserve_in_base_country_locations', '' );
+						if ( ! empty( $locations_raw ) ) {
+							$locations = array_map( 'strtoupper', wp_parse_list( $locations_raw ) );
+							if ( in_array( $country_to_check, $locations, true ) ) {
+								$is_validate   = true;
+								$is_vat_exempt = false;
+								$css_class     = 'alg-wc-eu-vat-not-valid-keep-selected-country';
+								$messages      = $preserve_message;
+							}
+						}
+					}
+				}
+
+				// User Roles
+				if (
+					$this->check_current_user_roles(
+						get_option( 'alg_wc_eu_vat_exempt_for_user_roles', array() ) // Always exempt VAT for selected user roles
+					)
+				) {
+					$is_validate   = true;
+					$is_vat_exempt = true;
+					$css_class     = 'alg-wc-vat-selected-user-roles alg-wc-vat-always-vat';
+				} elseif (
+					$this->check_current_user_roles(
+						get_option( 'alg_wc_eu_vat_not_exempt_for_user_roles', array() ) // Always not exempt VAT for selected user roles
+					)
+				) {
+					$is_validate   = true;
+					$is_vat_exempt = false;
+					$css_class     = 'alg-wc-vat-selected-user-roles alg-wc-vat-always-not-vat';
+					$messages      = do_shortcode( get_option(
+						'alg_wc_eu_vat_progress_text_valid',
+						__( 'VAT is valid.', 'eu-vat-for-woocommerce' )
+					) );
+				}
+
+				// Company name mismatch check
+				$valid_company_name = sanitize_text_field(
+					alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check_company_name' )
+				);
+				if ( 'no' !== apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) ) {
+					$skip_empty_response =
+						'no' !== get_option( 'alg_wc_eu_vat_check_company_name_accept_empty_response', 'no' ) &&
+						'---' === $valid_company_name;
+
+					if (
+						! $skip_empty_response &&
+						$this->normalize_string( $billing_company ) !== $this->normalize_string( $valid_company_name )
+					) {
+						$css_class = 'alg-wc-eu-vat-not-valid-company-mismatch';
+						$messages  = str_replace(
+							'%company_name%',
+							esc_html( $valid_company_name ),
+							do_shortcode( get_option(
+								'alg_wc_eu_vat_company_name_mismatch',
+								__( 'VAT is valid, but registered to %company_name%.', 'eu-vat-for-woocommerce' )
+							) )
+						);
+					}
+				}
+			endif;
+		endif;
+
+		// Set WooCommerce tax exemption
+		$wc_customer = WC()->customer;
+		if ( $is_vat_exempt ) {
+			$wc_customer->set_is_vat_exempt( true );
+		} else {
+			$wc_customer->set_is_vat_exempt( false );
+		}
+
+		// `alg_wc_eu_vat_exempt_applied` action
+		do_action( 'alg_wc_eu_vat_exempt_applied', $is_vat_exempt );
+
+
+		if ( $is_validate && empty( $messages ) ) {
+			$css_class = 'alg-wc-eu-vat-valid';
+			$messages  = do_shortcode( get_option(
+				'alg_wc_eu_vat_progress_text_valid',
+				__( 'VAT is valid.', 'eu-vat-for-woocommerce' )
+			) );
+		} else if( ! $is_validate && empty( $messages ) ){
+			$css_class = 'alg-wc-eu-vat-not-valid';
+			$messages  = do_shortcode( get_option(
+				'alg_wc_eu_vat_progress_text_not_valid',
+				__( 'VAT is not valid.', 'eu-vat-for-woocommerce' )
+			) );
+		}
+
+		return array(
+			'messages'      => $messages,
+			'is_validate'   => $is_validate,
+			'css_class'     => $css_class,
+			'is_vat_valid'  => $is_vat_valid ?? '',
+			'is_vat_exempt' => $is_vat_exempt,
+			'company'       => $is_vat_valid ?
+				alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_return_company_name' ) :
+				'',
+			'vat_details'   => $is_vat_valid ?
+				alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_details' ) :
+				"",
+		);
+	}
+
+	/**
+	 * maybe_vat_validation.
+	 *
+	 * @version 4.5.9
+	 * @since   4.5.9
+	 */
+	function maybe_vat_validation( ) {
+
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) return;
+
+		$is_block = defined( 'REST_REQUEST' ) && REST_REQUEST;
+
+		if ( ! $is_block ) {
+			return;
+		}
+
+		if ( empty( WC()->customer ) ) return;
+
+		$customer         = WC()->customer;
+		$field_id         = alg_wc_eu_vat_get_field_id();
+		$vat_number       = $customer->get_meta( $field_id );
+		$billing_country  = WC()->customer->get_meta( 'billing_country' );
+		$billing_company  = WC()->customer->get_meta( 'billing_company' );
+		$shipping_country = $customer->get_shipping_country();
+
+		$data = array(
+			'vat_number'       => $vat_number,
+			'billing_country'  => $billing_country,
+			'shipping_country' => $shipping_country,
+			'billing_company'  => $billing_company,
+		);
+
+		alg_wc_eu_vat()->core->vat_validation( $data );
+	}
+
+
+	/**
+	 * normalize_string.
+	 *
+	 * @version 4.5.9
+	 * @since   4.5.9
+	 */
+	private function normalize_string( $value ) {
+		$value = wp_specialchars_decode( $value, ENT_QUOTES );
+		$value = strtolower( $value );
+		$value = preg_replace( '/[^a-z0-9\-_]/', '', $value );
+
+		return trim( $value );
+	}
+
+	/**
+	 * vat_error_message.
+	 *
+	 * @version 4.5.9
+	 * @since   4.5.9
+	 */
+	function vat_error_message( $vat_number, $message = '' ) {
+		return str_replace(
+			'%eu_vat_number%',
+			esc_attr( $vat_number ),
+			do_shortcode(
+				get_option(
+					'alg_wc_eu_vat_not_valid_message',
+					__( "<strong>EU VAT Number</strong> is not valid.", 'eu-vat-for-woocommerce' )
+				) . esc_html( $message )
+			)
+		);
 	}
 
 }

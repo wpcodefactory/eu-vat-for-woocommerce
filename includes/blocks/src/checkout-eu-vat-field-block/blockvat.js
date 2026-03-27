@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.5.8
+ * @version 4.5.9
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -100,12 +100,12 @@ const createVatInformationContainer = ( vatNumber, billingCountry ) => {
 		alg_wc_eu_vat_ajax_object.add_progress_text === 'yes' ?
 			'<div id="alg_wc_eu_vat_progress"></div>' :
 			''
-	}
+		}
 		${
 		alg_wc_eu_vat_ajax_object.show_vat_details === 'yes' ?
 			'<div id="alg_wc_eu_vat_details"></div>' :
 			''
-	}
+		}
 		<div id="custom-checkout"></div>
 		<input
 			type="hidden"
@@ -122,31 +122,30 @@ const createVatInformationContainer = ( vatNumber, billingCountry ) => {
 /**
  * createVatInformationContainer.
  *
- * @version 4.5.8
+ * @version 4.5.9
  */
-const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
+const algWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 
-	let isSameBillingShipping = 'no';
-	if ( DOMUtils.isUseBillingChecked() ) {
-		isSameBillingShipping = 'yes';
-	}
+	const isSameBillingShipping = DOMUtils.isUseBillingChecked() ? 'yes' : 'no';
 
-	const store    = select( CART_STORE_KEY );
-	const cartData = store.getCartData();
-
+	const cartData = select( CART_STORE_KEY ).getCartData();
 	const billingCountry = cartData.billingAddress.country;
+	const shippingCountry = cartData.shippingAddress.country;
 	const billingCompany = cartData.billingAddress.company;
 
-	var progress           = document.getElementById( 'alg_wc_eu_vat_progress' );
-	var eu_vat_field       = document.getElementById( 'contact-alg_eu_vat-billing_eu_vat_number' );
-	var place_order_button = document.getElementsByClassName( "wc-block-components-checkout-place-order-button" )[0];
-
+	const progress = document.getElementById( 'alg_wc_eu_vat_progress' );
+	const eu_vat_field = DOMUtils.getVatField();
+	const place_order_button = document.querySelector( '.wc-block-components-checkout-place-order-button' );
 	const previous_country = document.getElementById( 'store_previous_country' );
+	const vatDetailsDiv = document.getElementById( 'alg_wc_eu_vat_details' );
 
+	if ( ! place_order_button ) {
+		return;
+	}
 	place_order_button.disabled = true;
 
-	var payLoad = new URLSearchParams( {
-		'action': 'alg_wc_eu_vat_validate_action',
+	let payLoad = new URLSearchParams( {
+		'action': '',
 		'channel': 'bloock_api',
 		'alg_wc_eu_vat_to_check': vat_number,
 		'billing_country': billingCountry,
@@ -154,174 +153,76 @@ const algWcBlockEuVatValidateVat = ( vat_number, refresh ) => {
 		'shipping_country': cartData.shippingAddress.country,
 	} );
 
+	if ( eu_vat_field ) {
+		eu_vat_field.className = '';
+	}
+	if ( vatDetailsDiv ) {
+		vatDetailsDiv.innerHTML = '';
+	}
+
 	if ( progress ) {
 		progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_validating;
-		progress.classList.remove( "alg-wc-eu-vat-not-valid" );
-		progress.classList.remove( "alg-wc-eu-vat-validating" );
-		progress.classList.remove( "alg-wc-eu-vat-valid" );
-		progress.classList.add( "alg-wc-eu-vat-validating" );
+		progress.className = 'alg-wc-eu-vat-validating';
 	}
 
-	const vatDetailsDiv = document.getElementById( 'alg_wc_eu_vat_details' );
-	if ( vatDetailsDiv ) {
-		vatDetailsDiv.innerHTML = ''; // Clear the content
-	}
+	try {
+		const cart = await extensionCartUpdate( {
+			namespace: 'alg-wc-eu-vat-extension-namespace',
+			data: {
+				vat_number: vat_number,
+				billing_country: billingCountry,
+				shipping_country: shippingCountry,
+				same_billing_shipping: isSameBillingShipping,
+				billing_company: billingCompany,
+				block_checkout: true
+			},
+		} );
 
-	eu_vat_field.classList.remove( 'woocommerce-invalid' );
-	eu_vat_field.classList.remove( 'woocommerce-validated' );
-	eu_vat_field.classList.remove( 'woocommerce-invalid-mismatch' );
+		const data = cart?.extensions?.['eu-vat-for-woocommerce-block-example']?.alg_eu_vat_validation;
 
-	fetch( alg_wc_eu_vat_ajax_object.ajax_url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-		},
-		body: payLoad,
-	} )
-	.then( ( response ) => response.json() )
-	 .then( ( data ) => {
-
-		if ( data.vat_details && vatDetailsDiv ) {
-			let vat_details = data.vat_details;
-			let ulElement = document.createElement( 'ul' );
-
-			for ( let key in vat_details ) {
-				if ( vat_details.hasOwnProperty( key ) ) {
-					let liElement = document.createElement( 'li' );
-					liElement.textContent = `${vat_details[key].label}: ${vat_details[key].data}`;
-					ulElement.appendChild( liElement );
-				}
+		if ( ! data ) {
+			if ( progress ) {
+				progress.innerHTML = '';
 			}
-			vatDetailsDiv?.replaceChildren( ulElement ); // Clear and replace content
+			return;
 		}
 
-		if ( alg_wc_eu_vat_ajax_object.status_codes['VAT_VALID'] === data.status ) {
-
+		const isValidation = data.is_validate;
+		const cssClasses = data.css_class ? data.css_class.trim().split( /\s+/ ) : [];
+		if ( isValidation ) {
 			eu_vat_field.classList.add( 'woocommerce-validated' );
-			if ( progress ) {
-				progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_valid;
-				progress.classList.remove( "alg-wc-eu-vat-not-valid" );
-				progress.classList.remove( "alg-wc-eu-vat-validating" );
-				progress.classList.add( "alg-wc-eu-vat-valid" );
-			}
-
-		} else if ( alg_wc_eu_vat_ajax_object.status_codes['VAT_NOT_VALID'] === data.status ) {
-
-			eu_vat_field.classList.add( 'woocommerce-invalid' );
-			if ( progress ) {
-				progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_not_valid;
-				progress.classList.remove( "alg-wc-eu-vat-valid" );
-				progress.classList.remove( "alg-wc-eu-vat-validating" );
-				progress.classList.add( "alg-wc-eu-vat-not-valid" );
-			}
-		} else if ( alg_wc_eu_vat_ajax_object.status_codes['WRONG_BILLING_COUNTRY'] === data.status ) {
-
-			eu_vat_field.classList.add( 'woocommerce-invalid' );
-			if ( progress ) {
-				progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_wrong_billing_country;
-				progress.classList.remove( "alg-wc-eu-vat-valid" );
-				progress.classList.remove( "alg-wc-eu-vat-validating" );
-				progress.classList.add( "alg-wc-eu-vat-not-valid" );
-			}
-		} else if ( alg_wc_eu_vat_ajax_object.status_codes['KEEP_VAT_SHIPPING_COUNTRY'] === data.status ) {
-
-			eu_vat_field.classList.add( 'woocommerce-invalid' );
-			if ( progress ) {
-				progress.innerHTML = alg_wc_eu_vat_ajax_object.text_shipping_billing_countries;
-				progress.classList.remove( "alg-wc-eu-vat-valid" );
-				progress.classList.remove( "alg-wc-eu-vat-validating" );
-				progress.classList.add( "alg-wc-eu-vat-not-valid" );
-			}
-		} else if ( alg_wc_eu_vat_ajax_object.status_codes['KEEP_VAT_BASE_COUNTRY_SHIPPING'] === data.status ) {
-			eu_vat_field.classList.add( 'woocommerce-invalid' );
-			if ( progress ) {
-				progress.innerHTML = alg_wc_eu_vat_ajax_object.text_base_country_shipping_countries;
-				progress.classList.remove( "alg-wc-eu-vat-valid" );
-				progress.classList.remove( "alg-wc-eu-vat-validating" );
-				progress.classList.add( "alg-wc-eu-vat-not-valid" );
-			}
-		} else if ( alg_wc_eu_vat_ajax_object.status_codes['COMPANY_NAME'] === data.status ) {
-
-			eu_vat_field.classList.add( 'woocommerce-invalid' );
-			eu_vat_field.classList.add( 'woocommerce-invalid-mismatch' );
-			if ( progress ) {
-				progress.innerHTML = alg_wc_eu_vat_ajax_object.company_name_mismatch;
-				progress.classList.remove( "alg-wc-eu-vat-valid" );
-				progress.classList.remove( "alg-wc-eu-vat-validating" );
-				progress.classList.add( "alg-wc-eu-vat-not-valid" );
-			}
-		} else if ( alg_wc_eu_vat_ajax_object.status_codes['EMPTY_VAT'] === data.status ) {
-
-			if ( eu_vat_field.hasAttribute( 'required' ) ) {
-				eu_vat_field.classList.add( 'woocommerce-invalid' );
-				eu_vat_field.classList.remove( 'woocommerce-validated' );
-				if ( progress ) {
-					progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_is_required;
-					progress.classList.remove( "alg-wc-eu-vat-valid" );
-					progress.classList.remove( "alg-wc-eu-vat-validating" );
-					progress.classList.remove( "alg-wc-eu-vat-not-valid" );
-				}
-			} else {
-				eu_vat_field.classList.remove( 'woocommerce-invalid' );
-				eu_vat_field.classList.remove( 'woocommerce-validated' );
-				if ( progress ) {
-					progress.innerHTML = '';
-					progress.className = '';
-				}
-			}
-		} else if ( alg_wc_eu_vat_ajax_object.status_codes['KEEP_VAT_COUNTRIES'] === data.status ) {
-
-			eu_vat_field.classList.remove( 'woocommerce-invalid' );
-			eu_vat_field.classList.remove( 'woocommerce-validated' );
-			if ( progress ) {
-				progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_validation_preserv;
-				progress.classList.remove( "alg-wc-eu-vat-valid" );
-				progress.classList.remove( "alg-wc-eu-vat-validating" );
-				progress.classList.remove( "alg-wc-eu-vat-not-valid" );
-				progress.classList.add( "alg-wc-eu-vat-not-valid" );
-			}
-		} else if ( alg_wc_eu_vat_ajax_object.status_codes['VIES_UNAVAILABLE'] === data.status ) {
-
-			eu_vat_field.classList.remove( 'woocommerce-invalid' );
-			eu_vat_field.classList.remove( 'woocommerce-validated' );
-			if ( progress ) {
-				progress.innerHTML = alg_wc_eu_vat_ajax_object.vies_not_available.replace( "%vies_error%", data.error );
-				progress.classList.remove( "alg-wc-eu-vat-valid" );
-				progress.classList.remove( "alg-wc-eu-vat-validating" );
-				progress.classList.remove( "alg-wc-eu-vat-not-valid" );
-
-				progress.classList.add( "alg-wc-eu-vat-not-valid" );
-			}
+			eu_vat_field.closest( 'div' ).classList.remove( 'has-error' );
+			cssClasses.push( 'alg-wc-eu-vat-valid', 'alg-wc-eu-vat-valid-color' );
 		} else {
-
 			eu_vat_field.classList.add( 'woocommerce-invalid' );
-			if ( progress ) {
-				progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_validation_failed;
-				progress.classList.remove( "alg-wc-eu-vat-valid" );
-				progress.classList.remove( "alg-wc-eu-vat-validating" );
-				progress.classList.remove( "alg-wc-eu-vat-not-valid" );
-				progress.classList.add( "alg-wc-eu-vat-not-valid" );
-			}
+			eu_vat_field.closest( 'div' ).classList.add( 'has-error' );
+			cssClasses.push( 'alg-wc-eu-vat-not-valid', 'alg-wc-eu-vat-error-color' );
+		}
+		if ( progress ) {
+			progress.textContent = data.messages;
+			progress.className = '';
+			progress.className = cssClasses.join( ' ' );
+		}
+
+		if ( data.vat_details && vatDetailsDiv ) {
+			const ul = document.createElement( 'ul' );
+			Object.values( data.vat_details ).forEach( ( {label, data: value} ) => {
+				const li = document.createElement( 'li' );
+				li.textContent = `${label}: ${value}`;
+				ul.appendChild( li );
+			} );
+			vatDetailsDiv.replaceChildren( ul );
 		}
 
 		previous_country.value = billingCountry;
-
-		// This line is to save changes in checkout customer data.
-		if ( refresh ) {
-			extensionCartUpdate( {
-				namespace: 'alg-wc-eu-vat-extension-namespace',
-				data: {
-					eu_vat_number: vat_number,
-					eu_country: billingCountry,
-					same_billing_shipping: isSameBillingShipping,
-					billing_company: billingCompany,
-				},
-			} );
+	} catch ( error ) {
+		if ( progress ) {
+			progress.textContent = alg_wc_eu_vat_ajax_object.progress_text_error ?? 'Validation error.';
+			progress.className = 'alg-wc-eu-vat-error-color';
 		}
-
+	} finally {
 		place_order_button.disabled = false;
-
-	} );
+	}
 };
 export {algWcBlockEuVatValidateVat};
 
@@ -330,7 +231,7 @@ export {algWcBlockEuVatValidateVat};
  *
  * @version 4.5.8
  */
-const Block = (  { checkoutExtensionData, extensions } ) => {
+const Block = ( { checkoutExtensionData, extensions } ) => {
 
 	const { setExtensionData } = checkoutExtensionData;
 
@@ -342,7 +243,6 @@ const Block = (  { checkoutExtensionData, extensions } ) => {
 	const [hideVat, setHideVat] = useState(false);
 	const [requiredVat, setRequiredVat] = useState(false);
 	const [ euVatValue, setEuVatNumber ] = useState( '' );
-
 
 	/**
 	 * Actual validation logic (non-debounced)

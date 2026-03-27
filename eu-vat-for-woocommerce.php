@@ -3,12 +3,12 @@
 Plugin Name: EU/UK VAT Validation Manager for WooCommerce
 Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
 Description: Manage EU VAT in WooCommerce. Beautifully.
-Version: 4.5.8
+Version: 4.5.9
 Author: WPFactory
 Author URI: https://wpfactory.com/
 Text Domain: eu-vat-for-woocommerce
 Domain Path: /langs
-WC tested up to: 10.5
+WC tested up to: 10.6
 Requires Plugins: woocommerce
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,7 +36,7 @@ if ( 'eu-vat-for-woocommerce.php' === basename( __FILE__ ) ) {
 	}
 }
 
-defined( 'ALG_WC_EU_VAT_VERSION' ) || define( 'ALG_WC_EU_VAT_VERSION', '4.5.8' );
+defined( 'ALG_WC_EU_VAT_VERSION' ) || define( 'ALG_WC_EU_VAT_VERSION', '4.5.9' );
 
 defined( 'ALG_WC_EU_VAT_FILE' ) || define( 'ALG_WC_EU_VAT_FILE', __FILE__ );
 
