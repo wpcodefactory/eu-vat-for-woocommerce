@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.5.9
+ * @version 4.6.0
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -173,7 +173,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * store_api_register_update_callback.
 	 *
-	 * @version 4.5.9
+	 * @version 4.6.0
 	 * @since   2.10.4
 	 */
 	 function store_api_register_update_callback() {
@@ -182,31 +182,38 @@ class Alg_WC_EU_VAT_Checkout_Block {
 			array(
 				'namespace' => 'alg-wc-eu-vat-extension-namespace',
 				'callback'  => function ( $data ) {
+
 					$country               = $data['billing_country'];
 					$same_billing_shipping = $data['same_billing_shipping'];
+
+					$customer = WC()->customer;
+
 					if ( ! empty( $country ) ) {
-						WC()->customer->set_billing_country( wc_clean( $country ) );
+						$customer->set_billing_country( wc_clean( $country ) );
 						if (
 							isset( $same_billing_shipping ) &&
 							'yes' == $same_billing_shipping
 						) {
-							WC()->customer->set_shipping_country( wc_clean( $country ) );
+							$customer->set_shipping_country( wc_clean( $country ) );
 						}
 					}
 
 					// Update billing company
 					if ( isset( $data['billing_company'] ) ) {
-						WC()->customer->set_billing_company( wc_clean( $data['billing_company'] ) );
+						$customer->set_billing_company( wc_clean( $data['billing_company'] ) );
 						if (
 							isset( $same_billing_shipping ) &&
 							'yes' === $same_billing_shipping
 						) {
-							WC()->customer->set_shipping_company( wc_clean( $data['billing_company'] ) );
+							$customer->set_shipping_company( wc_clean( $data['billing_company'] ) );
 						}
 					}
 
-					$result = alg_wc_eu_vat()->core->vat_validation( $data );
-					alg_wc_eu_vat_session_set( 'alg_eu_vat_validation', $result );
+					$field_id = alg_wc_eu_vat_get_field_id();
+					WC()->customer->update_meta_data( $field_id, wc_clean( $data['vat_number'] ) );
+					WC()->session->set( 'alg_wc_eu_vat', wc_clean( $data['vat_number'] ) );
+
+					alg_wc_eu_vat()->core->vat_validation( $data );
 
 					return true;
 				}
@@ -227,7 +234,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * update_block_order_meta_eu_vat.
 	 *
-	 * @version 4.5.9
+	 * @version 4.6.0
 	 * @since   2.10.4
 	 *
 	 * @todo    (dev) `eu-vat-for-woocommerce-block-example`: rename
@@ -267,7 +274,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 			$vat_required_products = array();
 			// Check if any products have the "Keep VAT" option enabled
 			foreach ( $order->get_items() as $item ) {
-				$product_id  = $item->get_variation_id() ?: $item->get_product_id();
+				$product_id  = $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id();
 				$do_keep_vat = get_post_meta( $product_id, '_alg_wc_eu_vat_keep_vat', true );
 
 				if ( 'yes' === $do_keep_vat ) {
@@ -282,13 +289,19 @@ class Alg_WC_EU_VAT_Checkout_Block {
 
 					if ( ! in_array( $product_id, $vat_required_products, true ) ) {
 						$item->set_tax_class( 0 );
-						$item->set_taxes( [] );
+						$item->set_taxes( array() );
 						$item->save();
 					}
 				}
-				$order->calculate_totals();
+			}
+		} else {
+			foreach ( $order->get_items() as $item_id => $item ) {
+				$item->set_tax_class( '' );
+				$item->set_taxes( array() );
+				$item->save();
 			}
 		}
+		$order->calculate_totals( true );
 
 		if ( ! empty( $posted_eu_vat_id ) ) {
 

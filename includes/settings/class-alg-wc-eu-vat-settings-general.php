@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 4.4.6
+ * @version 4.6.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.4.6
+	 * @version 4.6.0
 	 * @since   1.0.0
 	 *
 	 * @todo    (v4.4.0) `alg_wc_eu_vat_field_display_template`: use for the "After order table" option as well?
@@ -193,6 +193,18 @@ class Alg_WC_EU_VAT_Settings_General extends Alg_WC_EU_VAT_Settings_Section {
 				'id'                => 'alg_wc_eu_vat_field_confirmation',
 				'default'           => 'no',
 				'type'              => 'checkbox',
+			),
+			array(
+				'id'                => 'alg_wc_eu_vat_field_confirmation_extra_buttons',
+				'desc'              => sprintf(
+					/* translators: %s is example CSS selectors */
+					__( 'Add CSS selector(s) for extra payment buttons (e.g., PayPal, Apple Pay). Separate multiple selectors with commas, e.g.: %s', 'eu-vat-for-woocommerce' ),
+					'<code>#ppc-button-ppcp-gateway, .wc-ppcp-checkout-container</code>'
+				),
+				'desc_tip'          => __( 'Note: These buttons will not auto-submit the order like the default checkout button - the payment button should be clicked again after the VAT confirmation notice.', 'eu-vat-for-woocommerce' ),
+				'default'           => '',
+				'type'              => 'text',
+				'css'               => 'width:100%;',
 			),
 			array(
 				'desc'              => __( 'Confirmation notice text', 'eu-vat-for-woocommerce' ),
