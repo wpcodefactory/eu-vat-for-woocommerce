@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Country Locale
  *
- * @version 4.5.8
+ * @version 4.6.1
  * @since   4.1.0
  *
  * @author  WPFactory
@@ -67,7 +67,7 @@ class Alg_WC_EU_VAT_Country_Locale {
 	/**
 	 * set_eu_vat_country_locale.
 	 *
-	 * @version 4.5.8
+	 * @version 4.6.1
 	 * @since   1.7.0
 	 */
 	function set_eu_vat_country_locale( $country_locales ) {
@@ -142,11 +142,19 @@ class Alg_WC_EU_VAT_Country_Locale {
 					'required' => $is_required,
 					'hidden'   => $hidden,
 				);
+
+				$country_locale[ alg_wc_eu_vat_get_field_id( true ) . '_valid_vat_but_not_exempted' ] = array(
+					'hidden' => $hidden,
+				);
 			}
 
 			if ( ! empty( $show_eu_vat_field_countries[0] ) ) {
 				foreach ( $show_eu_vat_field_countries as $count_code ) {
 					$country_locales[ $count_code ][ alg_wc_eu_vat_get_field_id( true ) ] = array(
+						'hidden' => false,
+					);
+
+					$country_locales[ $count_code ][ alg_wc_eu_vat_get_field_id( true ) . '_valid_vat_but_not_exempted' ] = array(
 						'hidden' => false,
 					);
 				}
@@ -166,6 +174,10 @@ class Alg_WC_EU_VAT_Country_Locale {
 					$country_locales[ $con ][ alg_wc_eu_vat_get_field_id( true ) ] = array(
 						'hidden'   => $hidden,
 						'required' => $is_required,
+					);
+
+					$country_locales[ $con ][ alg_wc_eu_vat_get_field_id( true ) . '_valid_vat_but_not_exempted' ] = array(
+						'hidden' => $hidden,
 					);
 				}
 			}
@@ -199,28 +211,32 @@ class Alg_WC_EU_VAT_Country_Locale {
 						'required' => $is_required,
 						'hidden'   => $hidden,
 					);
+
+					$country_locales[ $country_code_re ][ alg_wc_eu_vat_get_field_id( true ) . '_valid_vat_but_not_exempted' ] = array(
+						'hidden' => $hidden,
+					);
 				}
 			}
 		}
-
 		return $country_locales;
 	}
 
 	/**
 	 * set_eu_vat_country_locale_field_selectors.
 	 *
-	 * @version 1.4.1
+	 * @version 4.6.1
 	 * @since   1.4.0
 	 */
 	function set_eu_vat_country_locale_field_selectors( $locale_fields ) {
 		$locale_fields[ alg_wc_eu_vat_get_field_id( true ) ] = '#' . alg_wc_eu_vat_get_field_id() . '_field';
+		$locale_fields[ alg_wc_eu_vat_get_field_id( true ) . '_valid_vat_but_not_exempted' ] = '#' . alg_wc_eu_vat_get_field_id() . '_valid_vat_but_not_exempted_field';
 		return $locale_fields;
 	}
 
 	/**
 	 * set_eu_vat_country_locale_default.
 	 *
-	 * @version 4.5.8
+	 * @version 4.6.1
 	 * @since   1.4.0
 	 */
 	function set_eu_vat_country_locale_default( $default_locale ) {
@@ -246,6 +262,10 @@ class Alg_WC_EU_VAT_Country_Locale {
 		$default_locale[ alg_wc_eu_vat_get_field_id( true ) ] = array(
 			'required' => $required,
 			'hidden'   => false,
+		);
+
+		$default_locale[ alg_wc_eu_vat_get_field_id( true ) . '_valid_vat_but_not_exempted' ] = array(
+			'hidden' => false,
 		);
 
 		return $default_locale;

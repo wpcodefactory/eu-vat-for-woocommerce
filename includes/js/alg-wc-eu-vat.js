@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - JS
  *
- * @version 4.5.8
+ * @version 4.6.1
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -78,17 +78,19 @@ jQuery( function ( $ ) {
 	/**
 	 * show_hide_by_billing_company.
 	 *
-	 * @version 4.5.0
+	 * @version 4.6.1
 	 * @since   4.4.6
 	 */
 	function show_hide_by_billing_company() {
 
 		if ( '' === $( '#billing_company' ).val() ) {
 			$( '#billing_eu_vat_number_field' ).hide();
+			$( '#billing_eu_vat_number_valid_vat_but_not_exempted_field' ).hide()
 			$( '#billing_eu_vat_number' ).val( '' );
 			alg_wc_eu_vat_validate_vat();
 		} else {
 			$( '#billing_eu_vat_number_field' ).show();
+			$( '#billing_eu_vat_number_valid_vat_but_not_exempted_field' ).show()
 		}
 
 	}
