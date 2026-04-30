@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Class for Integrating with WooCommerce Blocks
  *
- * @version 4.5.8
+ * @version 4.6.2
  * @since   2.11.0
  *
  * @author  WPFactory
@@ -76,18 +76,20 @@ class EuVatForWoocommerce_Blocks_Integration implements IntegrationInterface {
 	/**
 	 * An array of key, value pairs of data made available to the block on the client side.
 	 *
-	 * @version 4.5.8
+	 * @version 4.6.2
 	 */
 	public function get_script_data() {
 		return array(
-			'eu-vat-for-woocommerce-active'   => true,
-			'alg_wc_eu_vat_field_id'          => '#contact-alg_eu_vat-billing_eu_vat_number',
-			'alg_wc_eu_vat_field_position_id' => apply_filters(
+			'eu-vat-for-woocommerce-active'                 => true,
+			'alg_wc_eu_vat_field_id'                        => '#contact-alg_eu_vat-' . alg_wc_eu_vat_get_field_id(),
+			'alg_wc_eu_customer_decide_field_id'            => '#contact-alg_eu_vat-' . alg_wc_eu_vat_get_field_id() . '_customer_decide',
+			'alg_wc_eu_valid_vat_but_not_exempted_field_id' => '#contact-alg_eu_vat-' . alg_wc_eu_vat_get_field_id() . '_valid_vat_but_not_exempted',
+			'alg_wc_eu_vat_field_position_id'               => apply_filters(
 				'alg_wc_eu_vat_field_position_block_checkout',
 				''
 			),
-			'get_show_in_countries'           => alg_wc_eu_vat()->core->country_locale->show_in_countries,
-			'optInDefaultText'                => __( 'I want to receive updates about products and promotions.', 'eu-vat-for-woocommerce' ),
+			'get_show_in_countries'                         => alg_wc_eu_vat()->core->country_locale->show_in_countries,
+			'optInDefaultText'                              => __( 'I want to receive updates about products and promotions.', 'eu-vat-for-woocommerce' ),
 		);
 	}
 

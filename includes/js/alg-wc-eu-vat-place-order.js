@@ -1,7 +1,7 @@
 /**
  * alg-wc-eu-vat-place-order.js
  *
- * @version 4.6.0
+ * @version 4.6.2
  * @since   1.4.1
  *
  * @author  WPFactory
@@ -20,29 +20,45 @@ jQuery( function ( $ ) {
 
 	const $checkoutForm = $( 'form.checkout' );
 	const $vatField = $( `#${VAT_FIELD}` );
+	const $vatFieldBlock = $( `#contact-alg_eu_vat-${VAT_FIELD}` );
+
 	let yn_status = false;
+	let observer = null;
+	let debounceTimer = null;
+
+	const isBlockCheckout =
+		document.querySelector( '.wc-block-checkout' ) !== null;
 
 	const algVatConfirmModal = {
 
 		init() {
-			this.handleCheckoutPlaceOrderClick();
-
+			if ( isBlockCheckout ) {
+				this.handleBlocksPlaceOrderClick();
+			} else {
+				this.handleCheckoutPlaceOrderClick();
+			}
+			this.handleOverlayClicks();
 			if ( BUTTON_SELECTOR !== '' ) {
-				this.addOverlays();
-				this.handleOverlayClicks();
 
-				$( document.body ).on( 'updated_checkout', () => {
+				if ( isBlockCheckout ) {
+					this.addOverlaysBlockCheckout();
+				} else{
 					this.addOverlays();
-				} );
+					$( document.body ).on( 'updated_checkout', () => {
+						this.addOverlays();
+					} );
+				}
 			}
 		},
-
+		needsVat() {
+			const classic = $vatField.is( ':visible' ) && $vatField.val() === '';
+			const block = $vatFieldBlock.is( ':visible' ) && $vatFieldBlock.val() === '';
+			return classic || block;
+		},
 		handleCheckoutPlaceOrderClick() {
 			$checkoutForm.on( 'checkout_place_order', function () {
 
-				const needsVat = $vatField.is( ':visible' ) && $vatField.val() === '';
-
-				if ( ! needsVat ) {
+				if ( ! algVatConfirmModal.needsVat() ) {
 					return;
 				}
 
@@ -66,6 +82,57 @@ jQuery( function ( $ ) {
 
 				return yn_status;
 			} );
+		},
+
+		handleBlocksPlaceOrderClick() {
+
+			document.addEventListener(
+				'click',
+				function ( e ) {
+
+					if ( ! algVatConfirmModal.needsVat() ) {
+						return;
+					}
+
+					const button = e.target.closest(
+						'.wc-block-components-checkout-place-order-button'
+					);
+
+					if ( ! button ) {
+						return;
+					}
+
+					if ( yn_status ) {
+						yn_status = false;
+						return;
+					}
+
+					e.preventDefault();
+					e.stopImmediatePropagation();
+
+					confirmo.init( {
+						yesBg: place_order_data.yesBg,
+						noBg: place_order_data.noBg,
+						leftText: place_order_data.yes_text,
+						rightText: place_order_data.no_text,
+					} );
+
+					confirmo.show( {
+						msg: place_order_data.confirmation_text,
+
+						callback_yes: function () {
+							yn_status = true;
+
+							button.click();
+						},
+
+						callback_no: function () {
+							yn_status = false;
+						}
+					} );
+				},
+				true
+			);
 		},
 
 		addOverlays() {
@@ -107,10 +174,9 @@ jQuery( function ( $ ) {
 				e.preventDefault();
 				e.stopPropagation();
 
-				const $overlay = $( this );
-				const needsVat = $vatField.is( ':visible' ) && $vatField.val() === '';
+				const $overlay = $( e.currentTarget );
 
-				if ( ! needsVat ) {
+				if ( ! algVatConfirmModal.needsVat() ) {
 					$overlay.remove();
 					return;
 				}
@@ -135,6 +201,27 @@ jQuery( function ( $ ) {
 				return yn_status;
 			} );
 		},
+		addOverlaysBlockCheckout() {
+
+			if ( observer ) {
+				observer.disconnect();
+			}
+
+			observer = new MutationObserver( () => {
+
+				clearTimeout( debounceTimer );
+
+				debounceTimer = setTimeout( () => {
+					this.addOverlays();
+				}, 200 );
+
+			} );
+
+			observer.observe( document.body, {
+				childList: true,
+				subtree: true
+			} );
+		}
 	};
 
 	$( document ).ready( function () {

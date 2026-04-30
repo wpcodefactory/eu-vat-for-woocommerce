@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.6.0
+ * @version 4.6.2
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -97,6 +97,26 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	}
 
 	/**
+	 * get_block_field_customer_decide_id.
+	 *
+	 * @version 4.6.2
+	 * @since   4.6.2
+	 */
+	function get_block_field_customer_decide_id() {
+		return $this->get_block_field_id() . '_customer_decide';
+	}
+
+	/**
+	 * get_block_field_valid_vat_but_not_exempted_id.
+	 *
+	 * @version 4.6.2
+	 * @since   4.6.2
+	 */
+	function get_block_field_valid_vat_but_not_exempted_id() {
+		return $this->get_block_field_id() . '_valid_vat_but_not_exempted';
+	}
+
+	/**
 	 * save_user_meta.
 	 *
 	 * @version 4.0.0
@@ -142,7 +162,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * register_additional_checkout_block_field.
 	 *
-	 * @version 4.5.9
+	 * @version 4.6.2
 	 * @since   2.11.6
 	 */
 	function register_additional_checkout_block_field() {
@@ -168,12 +188,43 @@ class Alg_WC_EU_VAT_Checkout_Block {
 			),
 		);
 
+		if (
+			'yes' === get_option( 'alg_wc_eu_vat_field_required', 'no' ) &&
+			'yes' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' )
+		) {
+
+			woocommerce_register_additional_checkout_field( array(
+				'id'       => 'alg_eu_vat/' . alg_wc_eu_vat_get_field_id() . '_customer_decide',
+				'label'    => get_option(
+					'alg_wc_eu_vat_field_let_customer_decide_label',
+					__( "I don't have a VAT ID", 'eu-vat-for-woocommerce' )
+				),
+				'type'     => 'checkbox',
+				'location' => 'contact',
+				'required' => false,
+			) );
+		}
+
+		if ( 'yes' === get_option( 'alg_wc_eu_vat_belgium_compatibility', 'no' ) ) {
+
+			woocommerce_register_additional_checkout_field( array(
+				'id'       => 'alg_eu_vat/' . alg_wc_eu_vat_get_field_id() . '_valid_vat_but_not_exempted',
+				'label'    => get_option(
+					'alg_wc_eu_vat_belgium_compatibility_label',
+					__( 'I have a valid VAT but not exempted', 'eu-vat-for-woocommerce' )
+				),
+				'type'     => 'checkbox',
+				'location' => 'contact',
+				'required' => false,
+			) );
+		}
+
 	}
 
 	/**
 	 * store_api_register_update_callback.
 	 *
-	 * @version 4.6.0
+	 * @version 4.6.2
 	 * @since   2.10.4
 	 */
 	 function store_api_register_update_callback() {
@@ -212,6 +263,8 @@ class Alg_WC_EU_VAT_Checkout_Block {
 					$field_id = alg_wc_eu_vat_get_field_id();
 					WC()->customer->update_meta_data( $field_id, wc_clean( $data['vat_number'] ) );
 					WC()->session->set( 'alg_wc_eu_vat', wc_clean( $data['vat_number'] ) );
+					WC()->session->set( 'alg_wc_eu_vat_customer_decide', wc_clean( $data['vat_customer_decide'] ) );
+					WC()->session->set( 'alg_wc_eu_vat_valid_but_not_exempted', wc_clean( $data['vat_valid_but_not_exempted'] ) );
 
 					alg_wc_eu_vat()->core->vat_validation( $data );
 
@@ -221,12 +274,12 @@ class Alg_WC_EU_VAT_Checkout_Block {
 		);
 
 		woocommerce_store_api_register_update_callback(
-			[
+			array(
 				'namespace' => 'alg-wc-eu-vat-extension-namespace-reload-first',
 				'callback'  => function ( $data ) {
 					return;
 				}
-			]
+			)
 		);
 
 	}
@@ -234,7 +287,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * update_block_order_meta_eu_vat.
 	 *
-	 * @version 4.6.0
+	 * @version 4.6.2
 	 * @since   2.10.4
 	 *
 	 * @todo    (dev) `eu-vat-for-woocommerce-block-example`: rename
@@ -252,15 +305,15 @@ class Alg_WC_EU_VAT_Checkout_Block {
 		);
 
 		// Let customer decide to skip
-		$customer_decide_key = $field_id . '_customer_decide';
-		if ( $order->get_meta( '_' . $customer_decide_key ) ) {
-			$data[ $customer_decide_key ] = $order->get_meta( '_' . $customer_decide_key );
+		$customer_decide = $order->get_meta( $this->get_block_field_customer_decide_id() );
+		if ( ! empty( $customer_decide ) ) {
+			$data['alg_wc_eu_vat_customer_decide'] = $customer_decide;
 		}
 
 		// Belgium compatibility: valid VAT but not exempt
-		$belgium_key = $field_id . '_valid_vat_but_not_exempted';
-		if ( $order->get_meta( '_' . $belgium_key ) ) {
-			$data[ $belgium_key ] = $order->get_meta( '_' . $belgium_key );
+		$vat_valid_but_not_exempted = $order->get_meta( $this->get_block_field_valid_vat_but_not_exempted_id() );
+		if ( ! empty( $vat_valid_but_not_exempted ) ) {
+			$data['alg_wc_eu_vat_valid_but_not_exempted'] = $vat_valid_but_not_exempted;
 		}
 
 		$result = alg_wc_eu_vat()->core->vat_validation( $data );
