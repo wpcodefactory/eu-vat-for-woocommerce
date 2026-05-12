@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - JS
  *
- * @version 4.6.1
+ * @version 4.6.3
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -337,6 +337,7 @@ jQuery( function ( $ ) {
 
 				vat_input.val( '' );
 				vat_number_to_check = '';
+				load = false;
 			} else {
 				vat_paragraph.addClass( 'validate-required' ).show();
 				vat_input.addClass( 'field-required' );
@@ -345,13 +346,13 @@ jQuery( function ( $ ) {
 			}
 		}
 
-		if ( valid_vat_but_not_exempted_input.length > 0 ) {
-			if ( valid_vat_but_not_exempted_input.is( ':checked' ) ) {
-				valid_vat_but_not_exempted = 'yes';
-			} else {
-				valid_vat_but_not_exempted = 'no';
-			}
-		}
+		const customer_decide = vat_input_customer_choice.length ?
+			vat_input_customer_choice.is(':checked') :
+			false;
+
+		const vat_valid_but_not_exempted = valid_vat_but_not_exempted_input.length ?
+			valid_vat_but_not_exempted_input.is(':checked') :
+			false;
 
 		vat_paragraph.removeClass( 'woocommerce-invalid' );
 		vat_paragraph.removeClass( 'woocommerce-validated' );
@@ -378,11 +379,13 @@ jQuery( function ( $ ) {
 			var data = {
 				'action'                                   : 'alg_wc_eu_vat_validate_action',
 				'alg_wc_eu_vat_to_check'                   : vat_number_to_check,
-				'alg_wc_eu_vat_valid_vat_but_not_exempted' : valid_vat_but_not_exempted,
 				'billing_country'                          : $( '#billing_country' ).val(),
 				'shipping_country'                         : shipToDifferent ? $( '#shipping_country' ).val() : '',
 				'billing_company'                          : $( '#billing_company' ).val(),
+				'alg_wc_eu_vat_customer_decide'            : customer_decide,
+				'alg_wc_eu_vat_valid_vat_but_not_exempted' : vat_valid_but_not_exempted,
 			};
+
 			$.ajax( {
 				type: "POST",
 				url: alg_wc_eu_vat_ajax_object.ajax_url,
@@ -391,121 +394,37 @@ jQuery( function ( $ ) {
 					block_checkout_section();
 				},
 				success: function ( resp ) {
-					var response     = resp.status;
-					var err          = resp.error;
-					var company_name = resp.company;
+					const data = resp;
 
-					response = response.replace( "</pre>", "" );
-					response = response.trim();
-					var splt = response.split( "|" );
-					response = splt[0];
+					if ( ! data ) {
+						if ( progress ) {
+							progress.innerHTML = '';
+						}
+						return;
+					}
 
-					if ( alg_wc_eu_vat_ajax_object.status_codes['VAT_VALID'] === response ) {
-						vat_paragraph.addClass( 'woocommerce-validated' );
-						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_valid );
-							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-valid alg-wc-eu-vat-valid-color' );
-						}
-					} else if ( alg_wc_eu_vat_ajax_object.status_codes['VAT_NOT_VALID'] === response ) {
-						vat_paragraph.addClass( 'woocommerce-invalid' );
-						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_not_valid );
-							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-not-valid alg-wc-eu-vat-error-color' );
-						}
-					} else if ( alg_wc_eu_vat_ajax_object.status_codes['WRONG_BILLING_COUNTRY'] === response ) {
-						vat_paragraph.addClass( 'woocommerce-invalid' );
-						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_wrong_billing_country );
-							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-not-valid-billing-country alg-wc-eu-vat-error-color' );
-						}
-					} else if ( alg_wc_eu_vat_ajax_object.status_codes['KEEP_VAT_SHIPPING_COUNTRY'] === response ) {
-						vat_paragraph.addClass( 'woocommerce-invalid' );
-						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-							progress_text.text( alg_wc_eu_vat_ajax_object.text_shipping_billing_countries );
-							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-not-valid-billing-country alg-wc-eu-vat-error-color' );
-						}
-					} else if ( alg_wc_eu_vat_ajax_object.status_codes['KEEP_VAT_BASE_COUNTRY_SHIPPING'] === response ) {
-						vat_paragraph.addClass( 'woocommerce-invalid' );
-						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-							progress_text.text( alg_wc_eu_vat_ajax_object.text_base_country_shipping_countries );
-							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-not-valid-base-country-shipping alg-wc-eu-vat-error-color' );
-						}
-					} else if ( alg_wc_eu_vat_ajax_object.status_codes['COMPANY_NAME'] === response ) {
-						var com = splt[1];
-						vat_paragraph.addClass( 'woocommerce-invalid' );
-						vat_paragraph.addClass( 'woocommerce-invalid-mismatch' );
-						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-							progress_text.text( alg_wc_eu_vat_ajax_object.company_name_mismatch.replace( "%company_name%", com ) );
-							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-not-valid-company-mismatch alg-wc-eu-vat-error-color' );
-						}
-					} else if ( alg_wc_eu_vat_ajax_object.status_codes['EMPTY_VAT'] === response ) {
-						if ( vat_paragraph.hasClass( 'validate-required' ) ) {
-							vat_paragraph.removeClass( 'woocommerce-validated' );
-							vat_paragraph.addClass( 'woocommerce-invalid' );
-							if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-								progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_is_required );
-								progress_text.removeClass();
-								progress_text.addClass( 'alg-wc-eu-vat-validation-failed alg-wc-eu-vat-error-color' );
-							}
-						} else {
-							vat_paragraph.removeClass( 'woocommerce-invalid woocommerce-validated' );
-							if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-								progress_text.removeClass().text( '' );
-							}
-						}
-					} else if ( alg_wc_eu_vat_ajax_object.status_codes['KEEP_VAT_COUNTRIES'] === response ) {
-						vat_paragraph.addClass( 'woocommerce-validated' );
-						vat_paragraph.removeClass( 'woocommerce-invalid' );
-						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_validation_preserv );
-							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-valid alg-wc-eu-vat-valid-color' );
-						}
-					} else if ( alg_wc_eu_vat_ajax_object.status_codes['VIES_UNAVAILABLE'] === response ) {
-						vat_paragraph.removeClass( 'woocommerce-invalid' );
-						vat_paragraph.removeClass( 'woocommerce-validated' );
-						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-							progress_text.text( alg_wc_eu_vat_ajax_object.vies_not_available.replace( "%vies_error%", err ) );
-							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-validation-failed alg-wc-eu-vat-error-color' );
-						}
+					const isValidation = data.is_validate;
+					const cssClasses = data.css_class ? data.css_class.trim().split( /\s+/ ) : [];
+					if ( isValidation ) {
+						vat_input.addClass( 'woocommerce-validated' );
+						cssClasses.push( 'alg-wc-eu-vat-valid', 'alg-wc-eu-vat-valid-color' );
 					} else {
-						vat_paragraph.addClass( 'woocommerce-invalid' );
-						if ( 'yes' === alg_wc_eu_vat_ajax_object.add_progress_text ) {
-							progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_validation_failed );
-							progress_text.removeClass();
-							progress_text.addClass( 'alg-wc-eu-vat-validation-failed alg-wc-eu-vat-error-color' );
-						}
+						vat_input.addClass( 'woocommerce-invalid' );
+						cssClasses.push( 'alg-wc-eu-vat-not-valid', 'alg-wc-eu-vat-error-color' );
+					}
+					if ( progress_text ) {
+						progress_text.text( data.messages ?? '' );
+						progress_text.removeClass().addClass( cssClasses.join( ' ' ) );
 					}
 
-					if (
-						'yes' === alg_wc_eu_vat_ajax_object.autofill_company_name &&
-						'' !== company_name
-					) {
-						$( '#billing_company' ).val( company_name ).change();
-						vat_paragraph.removeClass( 'woocommerce-invalid' );
-						vat_paragraph.removeClass( 'woocommerce-invalid-mismatch' );
-						vat_paragraph.addClass( 'woocommerce-validated' );
-						progress_text.text( alg_wc_eu_vat_ajax_object.progress_text_valid );
-					}
-
-					if ( resp.vat_details && vatDetailsDiv ) {
-						let vat_details = resp.vat_details;
-						let ulElement = document.createElement( 'ul' );
-						for ( let key in vat_details ) {
-							if ( vat_details.hasOwnProperty( key ) ) {
-								let liElement = document.createElement( 'li' );
-								liElement.textContent = `${vat_details[key].label}: ${vat_details[key].data}`;
-								ulElement.appendChild( liElement );
-							}
-						}
-						vatDetailsDiv?.replaceChildren( ulElement );
+					if ( data.vat_details && vatDetailsDiv ) {
+						const ul = document.createElement( 'ul' );
+						Object.values( data.vat_details ).forEach( ( {label, data: value} ) => {
+							const li = document.createElement( 'li' );
+							li.textContent = `${label}: ${value}`;
+							ul.appendChild( li );
+						} );
+						vatDetailsDiv.replaceChildren( ul );
 					}
 				},
 				complete: function () {

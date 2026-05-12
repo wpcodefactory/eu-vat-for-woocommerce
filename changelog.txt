@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.6.3 - 12/05/2026 =
+* Fix - Block-based Checkout - Validate EU VAT number only when the field is present.
+* Dev - Improved VAT validation for checkout and related functions.
+* Dev - Code refactoring and cleanup.
+
 = 4.6.2 - 30/04/2026 =
 * Dev - Block-based Checkout - Added "Let customer decide" feature.
 * Dev - Block-based Checkout - Added "Confirmation notice" feature.

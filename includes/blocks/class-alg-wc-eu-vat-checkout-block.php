@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.6.2
+ * @version 4.6.3
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -224,7 +224,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * store_api_register_update_callback.
 	 *
-	 * @version 4.6.2
+	 * @version 4.6.3
 	 * @since   2.10.4
 	 */
 	 function store_api_register_update_callback() {
@@ -262,9 +262,19 @@ class Alg_WC_EU_VAT_Checkout_Block {
 
 					$field_id = alg_wc_eu_vat_get_field_id();
 					WC()->customer->update_meta_data( $field_id, wc_clean( $data['vat_number'] ) );
-					WC()->session->set( 'alg_wc_eu_vat', wc_clean( $data['vat_number'] ) );
-					WC()->session->set( 'alg_wc_eu_vat_customer_decide', wc_clean( $data['vat_customer_decide'] ) );
-					WC()->session->set( 'alg_wc_eu_vat_valid_but_not_exempted', wc_clean( $data['vat_valid_but_not_exempted'] ) );
+
+					alg_wc_eu_vat_session_set(
+						'alg_wc_eu_vat',
+						wc_clean( $data['vat_number'] )
+					);
+					alg_wc_eu_vat_session_set(
+						'alg_wc_eu_vat_customer_decide',
+						wc_clean( $data['vat_customer_decide'] )
+					);
+					alg_wc_eu_vat_session_set(
+						'alg_wc_eu_vat_valid_but_not_exempted',
+						wc_clean( $data['vat_valid_but_not_exempted'] )
+					);
 
 					alg_wc_eu_vat()->core->vat_validation( $data );
 
@@ -389,7 +399,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * validate_eu_vat_field_checkout_block.
 	 *
-	 * @version 4.5.9
+	 * @version 4.6.3
 	 * @since   2.11.6
 	 *
 	 * @todo    (dev) `%eu_vat_number%`?
@@ -401,6 +411,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 
 		if (
 			'yes' === get_option( 'alg_wc_eu_vat_field_required', 'no' ) &&
+			isset( $fields[ $field_with_namespace ] ) &&
 			empty( $fields[ $field_with_namespace ] )
 		) {
 			$error_message = alg_wc_eu_vat()->core->vat_error_message( $fields[ $field_with_namespace ] );
