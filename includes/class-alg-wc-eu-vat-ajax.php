@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.6.3
+ * @version 4.6.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -31,7 +31,7 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 4.6.3
+	 * @version 4.6.4
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `... && function_exists( 'is_checkout' ) && is_checkout()`
@@ -58,7 +58,7 @@ class Alg_WC_EU_VAT_AJAX {
 
 		wp_enqueue_script(
 			'alg-wc-eu-vat',
-			alg_wc_eu_vat()->plugin_url() . '/includes/js/alg-wc-eu-vat.js',
+			alg_wc_eu_vat()->plugin_asset_url( '/js/alg-wc-eu-vat.js' ),
 			array( 'jquery' ),
 			alg_wc_eu_vat()->version,
 			true

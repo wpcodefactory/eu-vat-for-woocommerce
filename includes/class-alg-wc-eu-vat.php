@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Main Class
  *
- * @version 4.4.9
+ * @version 4.6.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -300,6 +300,21 @@ final class Alg_WC_EU_VAT {
 	 */
 	function plugin_path() {
 		return untrailingslashit( plugin_dir_path( ALG_WC_EU_VAT_FILE ) );
+	}
+
+	/**
+	 * Get the plugin asset URL.
+	 *
+	 * @version 4.6.4
+	 * @since   4.6.4
+	 *
+	 * @return  string
+	 */
+	function plugin_asset_url( $file ) {
+
+		$dir = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '/assets/' : '/assets/build/';
+
+		return $this->plugin_url() . $dir . ltrim( $file, '/' );
 	}
 
 }

@@ -1,7 +1,7 @@
 /**
  * alg-wc-eu-vat-confirmo.js
  *
- * @version 2.10.0
+ * @version 4.6.4
  **/
 var confirmoinit = document.createElement('div');
 confirmoinit.className = 'confirmo-backdrop';
@@ -95,3 +95,4 @@ var confirmo = {
 	}
 
 };
+window.confirmo = confirmo;

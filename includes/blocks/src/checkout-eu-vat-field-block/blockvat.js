@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.6.2
+ * @version 4.6.4
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -243,7 +243,7 @@ export {algWcBlockEuVatValidateVat};
 /**
  * Block.
  *
- * @version 4.6.2
+ * @version 4.6.4
  */
 const Block = ( { checkoutExtensionData, extensions } ) => {
 
@@ -343,6 +343,13 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 			billingCheckbox.addEventListener( 'input', triggerValidation );
 		}
 
+		const companyFields = document.querySelectorAll(
+			'#shipping-company, #billing-company'
+		);
+		companyFields.forEach( ( field ) => {
+			field.addEventListener( 'change', triggerValidation );
+		} );
+
 		return () => {
 			vatField.removeEventListener( triggerType, triggerValidation );
 			if ( customerDecideField && triggerValidation ) {
@@ -354,6 +361,9 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 			if ( billingCheckbox && triggerValidation ) {
 				billingCheckbox.removeEventListener( 'input', triggerValidation );
 			}
+			companyFields.forEach( ( field ) => {
+				field.removeEventListener( 'change', triggerValidation );
+			} );
 		};
 	}, [billingAddress.country, triggerValidation] );
 
@@ -362,9 +372,7 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 		triggerValidation();
 	}, [
 		billingAddress.country,
-		billingAddress.company,
 		shippingAddress.country,
-		shippingAddress.company,
 		triggerValidation
 	] );
 
@@ -378,8 +386,6 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 			if ( container ) {
 				container.style.display = hideVat ? 'none' : '';
 			}
-
-			// vatField.required = hideVat? false : requiredVat;
 		}
 
 		if ( vatContainer ) {

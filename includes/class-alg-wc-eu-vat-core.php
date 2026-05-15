@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.6.3
+ * @version 4.6.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -446,7 +446,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * add_place_order_button_confirmation_script.
 	 *
-	 * @version 4.6.0
+	 * @version 4.6.4
 	 * @since   1.4.1
 	 */
 	function add_place_order_button_confirmation_script() {
@@ -455,8 +455,8 @@ class Alg_WC_EU_VAT_Core {
 
 			wp_enqueue_script(
 				'alg-wc-eu-vat-place-order',
-				trailingslashit( alg_wc_eu_vat()->plugin_url() ) . 'includes/js/alg-wc-eu-vat-place-order.js',
-				array( 'jquery' ),
+				alg_wc_eu_vat()->plugin_asset_url( '/js/alg-wc-eu-vat-place-order.js' ),
+				array( 'jquery', 'alg-wc-eu-vat-confirmation' ),
 				alg_wc_eu_vat()->version,
 				true
 			);
@@ -481,15 +481,15 @@ class Alg_WC_EU_VAT_Core {
 
 			wp_enqueue_script(
 				'alg-wc-eu-vat-confirmation',
-				alg_wc_eu_vat()->plugin_url() . '/includes/js/alg-wc-eu-vat-confirmo.js',
-				array('jquery'),
+				alg_wc_eu_vat()->plugin_asset_url( '/js/alg-wc-eu-vat-confirmo.js' ),
+				array( 'jquery' ),
 				alg_wc_eu_vat()->version,
 				true
 			);
 
 			wp_enqueue_style(
 				'alg-wc-eu-vat-confirmation-styles',
-				alg_wc_eu_vat()->plugin_url() . '/includes/css/alg-wc-eu-vat-confirmo.css',
+				alg_wc_eu_vat()->plugin_asset_url( '/css/alg-wc-eu-vat-confirmo.css' ),
 				array(),
 				alg_wc_eu_vat()->version,
 				false
@@ -1076,7 +1076,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * vat_validation.
 	 *
-	 * @version 4.6.3
+	 * @version 4.6.4
 	 * @since   4.5.9
 	 */
 	function vat_validation( $data ) {
@@ -1084,6 +1084,9 @@ class Alg_WC_EU_VAT_Core {
 		if ( ! $this->is_validate_and_exempt() ) {
 			return false;
 		}
+
+		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid_before_preserve', null );
+		alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', null );
 
 		$data = wp_unslash( $data );
 
@@ -1240,11 +1243,14 @@ class Alg_WC_EU_VAT_Core {
 
 						// Update cache
 						alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_checked', $vat_number );
-						alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid', $is_vat_valid );
 						alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_country', $billing_country );
 					}
+					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid', $is_vat_valid );
 				}
 			}
+
+			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid_before_preserve', $is_vat_valid );
+			alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check', $vat_number );
 
 			$is_validate   = $is_vat_valid;
 			$is_vat_exempt = $is_vat_valid;
@@ -1432,7 +1438,10 @@ class Alg_WC_EU_VAT_Core {
 				$valid_company_name = sanitize_text_field(
 					alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_return_company_name' )
 				);
-				if ( 'no' !== apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) ) {
+				if (
+					'no' !== apply_filters( 'alg_wc_eu_vat_check_company_name', 'no' ) &&
+					'yes' !== get_option( 'alg_wc_eu_vat_advance_enable_company_name_autofill', 'no' )
+				) {
 					$skip_empty_response =
 						'no' !== get_option( 'alg_wc_eu_vat_check_company_name_accept_empty_response', 'no' ) &&
 						'---' === $valid_company_name;

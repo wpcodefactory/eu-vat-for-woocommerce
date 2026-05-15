@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.6.3
+ * @version 4.6.4
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -224,7 +224,7 @@ class Alg_WC_EU_VAT_Checkout_Block {
 	/**
 	 * store_api_register_update_callback.
 	 *
-	 * @version 4.6.3
+	 * @version 4.6.4
 	 * @since   2.10.4
 	 */
 	 function store_api_register_update_callback() {
@@ -234,31 +234,14 @@ class Alg_WC_EU_VAT_Checkout_Block {
 				'namespace' => 'alg-wc-eu-vat-extension-namespace',
 				'callback'  => function ( $data ) {
 
-					$country               = $data['billing_country'];
+					$billing_country       = $data['billing_country'];
+					$shipping_country      = $data['shipping_country'];
 					$same_billing_shipping = $data['same_billing_shipping'];
 
 					$customer = WC()->customer;
 
-					if ( ! empty( $country ) ) {
-						$customer->set_billing_country( wc_clean( $country ) );
-						if (
-							isset( $same_billing_shipping ) &&
-							'yes' == $same_billing_shipping
-						) {
-							$customer->set_shipping_country( wc_clean( $country ) );
-						}
-					}
-
-					// Update billing company
-					if ( isset( $data['billing_company'] ) ) {
-						$customer->set_billing_company( wc_clean( $data['billing_company'] ) );
-						if (
-							isset( $same_billing_shipping ) &&
-							'yes' === $same_billing_shipping
-						) {
-							$customer->set_shipping_company( wc_clean( $data['billing_company'] ) );
-						}
-					}
+					$customer->set_billing_country( wc_clean( $billing_country ) );
+					$customer->set_shipping_country( wc_clean( $shipping_country ) );
 
 					$field_id = alg_wc_eu_vat_get_field_id();
 					WC()->customer->update_meta_data( $field_id, wc_clean( $data['vat_number'] ) );
@@ -276,7 +259,27 @@ class Alg_WC_EU_VAT_Checkout_Block {
 						wc_clean( $data['vat_valid_but_not_exempted'] )
 					);
 
-					alg_wc_eu_vat()->core->vat_validation( $data );
+					$result = alg_wc_eu_vat()->core->vat_validation( $data );
+
+					// Update billing company
+					if ( isset( $data['billing_company'] ) ) {
+						$autofill = (
+							'yes' === get_option( 'alg_wc_eu_vat_advance_enable_company_name_autofill', 'no' ) &&
+							$result['is_vat_valid']
+						);
+
+						$customer->set_billing_company(
+							wp_kses_post( $autofill ? $result['company'] : $data['billing_company'] )
+						);
+						if (
+							isset( $same_billing_shipping ) &&
+							'yes' === $same_billing_shipping
+						) {
+							$customer->set_shipping_company(
+								wp_kses_post( $autofill ? $result['company'] : $data['billing_company'] )
+							);
+						}
+					}
 
 					return true;
 				}

@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - JS
  *
- * @version 4.6.3
+ * @version 4.6.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -289,7 +289,7 @@ jQuery( function ( $ ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 4.5.8
+	 * @version 4.6.4
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_validate_vat( load = false ) {
@@ -405,6 +405,8 @@ jQuery( function ( $ ) {
 
 					const isValidation = data.is_validate;
 					const cssClasses = data.css_class ? data.css_class.trim().split( /\s+/ ) : [];
+					const company_name = data.company;
+
 					if ( isValidation ) {
 						vat_input.addClass( 'woocommerce-validated' );
 						cssClasses.push( 'alg-wc-eu-vat-valid', 'alg-wc-eu-vat-valid-color' );
@@ -415,6 +417,13 @@ jQuery( function ( $ ) {
 					if ( progress_text ) {
 						progress_text.text( data.messages ?? '' );
 						progress_text.removeClass().addClass( cssClasses.join( ' ' ) );
+					}
+
+					if (
+						'yes' === alg_wc_eu_vat_ajax_object.autofill_company_name &&
+						'' !== company_name
+					) {
+						$( '#billing_company' ).val( company_name );
 					}
 
 					if ( data.vat_details && vatDetailsDiv ) {

@@ -1,0 +1,24 @@
+{
+  "name": "eu-vat-for-woocommerce-pro",
+  "version": "1.0.0",
+  "description": "EU VAT for WooCommerce Pro",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wpcodefactory/eu-vat-for-woocommerce-pro.git"
+  },
+  "keywords": [],
+  "author": "WPFactory",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/wpcodefactory/eu-vat-for-woocommerce-pro/issues"
+  },
+  "homepage": "https://github.com/wpcodefactory/eu-vat-for-woocommerce-pro#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^32.1.0",
+    "webpack-remove-empty-scripts": "^1.1.1"
+  }
+}

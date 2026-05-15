@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.6.4 - 15/05/2026 =
+* Fix - Fixed company name autofill.
+* Dev - Moved JS/CSS files to assets directory.
+* Dev - Improved JS/CSS structure.
+
 = 4.6.3 - 12/05/2026 =
 * Fix - Block-based Checkout - Validate EU VAT number only when the field is present.
 * Dev - Improved VAT validation for checkout and related functions.

@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap');
+
+.confirmo-backdrop {
+    font-family: 'Mukta', sans-serif;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    width: 100vw;
+    height: 100vh;
+    padding: 15vh 10px 10px;
+    box-sizing: border-box;
+    animation: confirmo-come-up 0.5s forwards ease-in-out;
+    display: none;
+}
+
+.confirmo-modal {
+    font-family: 'Mukta', sans-serif;
+    width: 400px;
+    box-sizing: border-box;
+    max-width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 4px #2a2b2d;
+    border-radius: 15px;
+    animation: confirmo-fade-in 0.5s forwards ease-in-out;
+    position: relative;
+    padding: 30px 20px 65px;
+}
+
+.confirmo-close {
+    background-color: transparent;
+    color: gray;
+    font-weight: bold;
+    border: 0;
+    outline: none !important;
+    font-size: 20px;
+    cursor: pointer !important
+}
+
+.confirmo-controls {
+    margin-top: 20px
+}
+
+.confirmo-btn {
+    border-radius: 15px;
+    border: 0;
+    color: white;
+    transition: 0.2s;
+    outline: none !important;
+    font-family: 'Mukta', sans-serif;
+    cursor: pointer !important;
+    padding: 10px 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px #f2f2f2
+}
+
+.confirmo-btn:hover {
+    filter: brightness(90%);
+}
+
+.confirmo-btn:active {
+    filter: brightness(70%);
+}
+
+.confirmo-btn:focus {
+    filter: brightness(80%);
+}
+
+#confirmo-left {
+    background-color: tomato;
+    cursor: pointer;
+    float: left;
+    margin-left: 5px;
+}
+
+#confirmo-right {
+    background-color: green;
+    cursor: pointer;
+    float: right;
+    margin-right: 5px;
+}
+
+@keyframes confirmo-fade-in {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@keyframes confirmo-come-up {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1
+    }
+}
