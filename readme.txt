@@ -2,8 +2,8 @@
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli, aegkr
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
-Tested up to: 6.9
-Stable tag: 4.6.4
+Tested up to: 7.0
+Stable tag: 4.6.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -285,6 +285,9 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.6.5 - 22/05/2026 =
+* Tested up to: 7.0.
 
 = 4.6.4 - 15/05/2026 =
 * Fix - Fixed company name autofill.
