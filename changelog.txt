@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 4.6.5 - 22/05/2026 =
+* Tested up to: 7.0.
+
 = 4.6.4 - 15/05/2026 =
 * Fix - Fixed company name autofill.
 * Dev - Moved JS/CSS files to assets directory.
