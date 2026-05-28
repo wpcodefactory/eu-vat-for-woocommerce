@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Validation Section Settings
  *
- * @version 4.5.5
+ * @version 4.6.6
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.5.5
+	 * @version 4.6.6
 	 * @since   1.5.0
 	 *
 	 * @todo    (feature) Message if customer's check for IP location country has failed!
@@ -305,6 +305,13 @@ class Alg_WC_EU_VAT_Settings_Validation extends Alg_WC_EU_VAT_Settings_Section {
 				'id'       => 'alg_wc_eu_vat_vatsense_key',
 				'default'  => '',
 				'type'     => 'text',
+			),
+			array(
+				'desc'     => __( 'Enable VATSense fallback', 'eu-vat-for-woocommerce' ),
+				'desc_tip' => __( 'Uses VATSense when the VIES VAT validation service is unavailable or unresponsive. Requires a VATSense.com API key.', 'eu-vat-for-woocommerce' ),
+				'id'       => 'alg_wc_eu_vat_vatsense_fallback',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'title'    => __( 'Allow VAT number input without country code', 'eu-vat-for-woocommerce' ),

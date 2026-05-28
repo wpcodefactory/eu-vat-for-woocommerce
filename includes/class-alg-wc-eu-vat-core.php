@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.6.4
+ * @version 4.6.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -861,7 +861,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * check_and_save_eu_vat.
 	 *
-	 * @version 4.5.0
+	 * @version 4.6.6
 	 * @since   1.7.1
 	 *
 	 * @todo    (dev) use in `Alg_WC_EU_VAT_AJAX::alg_wc_eu_vat_validate_action()`
@@ -882,15 +882,16 @@ class Alg_WC_EU_VAT_Core {
 				false
 			);
 			if ( ! $is_country_valid ) {
-				alg_wc_eu_vat_log(
-					$eu_vat_number['country'],
-					$eu_vat_number['number'],
-					$billing_company,
-					'',
+				alg_wc_eu_vat_debug_log(
 					sprintf(
 						/* Translators: %s: Country code. */
 						__( 'Error: Country by IP does not match (%s)', 'eu-vat-for-woocommerce' ),
 						$country_by_ip
+					),
+					array(
+						'Country'         => $eu_vat_number['country'],
+						'VAT ID'          => $eu_vat_number['number'],
+						'Billing Company' => $billing_company,
 					)
 				);
 			}
@@ -932,7 +933,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 4.6.3
+	 * @version 4.6.6
 	 * @since   1.0.0
 	 */
 	function checkout_validate_vat( $_posted ) {
@@ -957,7 +958,8 @@ class Alg_WC_EU_VAT_Core {
 			'billing_company'            => $billing_company,
 		);
 
-		$result = $this->vat_validation( $data );
+		$force_recheck = 'yes' === get_option( 'alg_wc_eu_vat_force_checkout_recheck', 'no' );
+		$result        = $this->vat_validation( $data, $force_recheck );
 
 		if ( ! $result['is_validate'] ) {
 			wc_add_notice(
@@ -1076,10 +1078,10 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * vat_validation.
 	 *
-	 * @version 4.6.4
+	 * @version 4.6.6
 	 * @since   4.5.9
 	 */
-	function vat_validation( $data ) {
+	function vat_validation( $data, $force_recheck = false ) {
 
 		if ( ! $this->is_validate_and_exempt() ) {
 			return false;
@@ -1184,14 +1186,12 @@ class Alg_WC_EU_VAT_Core {
 				$concatenated_vat_number = $parse_country . $parse_number;
 
 				if ( in_array( $concatenated_vat_number, $sanitized_vat_numbers ) ) {
-					alg_wc_eu_vat_log(
-						$parse_country,
-						$parse_number,
-						$billing_company,
-						'',
-						__(
-							'Success: VAT ID valid. Matched with prevalidated VAT numbers.',
-							'eu-vat-for-woocommerce'
+					alg_wc_eu_vat_debug_log(
+						__( 'Success: VAT ID valid. Matched with prevalidated VAT numbers', 'eu-vat-for-woocommerce' ),
+						array(
+							'Country'         => $parse_country,
+							'VAT ID'          => $parse_number,
+							'Billing Company' => $billing_company,
 						)
 					);
 
@@ -1214,22 +1214,35 @@ class Alg_WC_EU_VAT_Core {
 				$cached_country    = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check_country' );
 
 				$cache_is_fresh = (
-					// 'yes' === get_option( 'alg_wc_eu_vat_reduce_concurrent_request_enable', 'no' ) &&
-					true === $cached_is_valid &&
 					$cached_vat_number === $vat_number &&
 					$cached_country === $billing_country
 				);
 
-				if ( $cache_is_fresh ) {
+				if ( $cache_is_fresh && ! $force_recheck ) {
 					$is_vat_valid = $cached_is_valid;
 
-					alg_wc_eu_vat_log(
-						$parse_country,
-						$vat_number,
-						$billing_company,
-						'ValidateFromStoredSession',
-						__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' )
-					);
+					if ( $is_vat_valid ) {
+						alg_wc_eu_vat_debug_log(
+							__( 'Success: VAT ID is valid', 'eu-vat-for-woocommerce' ),
+							array(
+								'Country'         => $parse_country,
+								'VAT ID'          => $parse_number,
+								'Billing Company' => $billing_company,
+								'Method'          => 'ValidateFromStoredSession',
+							)
+						);
+					} else {
+						alg_wc_eu_vat_debug_log(
+							__( 'Error: VAT ID not valid', 'eu-vat-for-woocommerce' ),
+							array(
+								'Country'         => $parse_country,
+								'VAT ID'          => $parse_number,
+								'Billing Company' => $billing_company,
+								'Method'          => 'ValidateFromStoredSession',
+							)
+						);
+					}
+
 				} else {
 					// Vat validating
 					$is_vat_valid = alg_wc_eu_vat_validate_vat(
@@ -1238,14 +1251,14 @@ class Alg_WC_EU_VAT_Core {
 						$billing_company
 					);
 
+					// Update cache
+					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_checked', $vat_number );
+					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_country', $billing_country );
+					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid', $is_vat_valid );
+
 					if ( $is_vat_valid ) {
 						$is_vat_valid = apply_filters( 'alg_wc_eu_vat_is_valid_vat_at_checkout', $is_vat_valid );
-
-						// Update cache
-						alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_checked', $vat_number );
-						alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_to_check_country', $billing_country );
 					}
-					alg_wc_eu_vat_session_set( 'alg_wc_eu_vat_valid', $is_vat_valid );
 				}
 			}
 
@@ -1288,15 +1301,17 @@ class Alg_WC_EU_VAT_Core {
 						$is_validate    = false;
 						$is_vat_exempt  = false;
 						$css_class     .= ' alg-wc-vat-ip-not-match';
-						alg_wc_eu_vat_log(
-							$parse_country,
-							$parse_number,
-							$billing_company,
-							'',
+
+						alg_wc_eu_vat_debug_log(
 							sprintf(
 								/* Translators: %s: Country code. */
 								__( 'Error: Country by IP does not match (%s)', 'eu-vat-for-woocommerce' ),
 								$country_by_ip
+							),
+							array(
+								'Country'         => $parse_country,
+								'VAT ID'          => $parse_number,
+								'Billing Company' => $billing_company,
 							)
 						);
 					}
@@ -1317,16 +1332,17 @@ class Alg_WC_EU_VAT_Core {
 						)
 					);
 
-					// Wrong billing country
-					alg_wc_eu_vat_log(
-						$parse_country,
-						$vat_number,
-						$billing_country,
-						'',
+					alg_wc_eu_vat_debug_log(
 						sprintf(
 							/* Translators: %s: Billing country. */
 							__( 'Error: Country code does not match (%s)', 'eu-vat-for-woocommerce' ),
 							$billing_country
+						),
+						array(
+							'Country'         => $parse_country,
+							'VAT ID'          => $parse_number,
+							'Billing Company' => $billing_company,
+							'Method'          => 'ValidateFromStoredSession',
 						)
 					);
 				}
@@ -1535,7 +1551,7 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * maybe_vat_validation.
 	 *
-	 * @version 4.6.3
+	 * @version 4.6.6
 	 * @since   4.5.9
 	 */
 	function maybe_vat_validation() {
@@ -1579,7 +1595,8 @@ class Alg_WC_EU_VAT_Core {
 			'vat_valid_but_not_exempted' => $vat_valid_but_not_exempted,
 		);
 
-		alg_wc_eu_vat()->core->vat_validation( $data );
+		$force_recheck = 'yes' === get_option( 'alg_wc_eu_vat_validate_force_page_reload', 'no' );
+		alg_wc_eu_vat()->core->vat_validation( $data, $force_recheck );
 	}
 
 
