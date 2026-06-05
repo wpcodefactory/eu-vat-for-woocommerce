@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Section Settings
  *
- * @version 4.2.3
+ * @version 4.6.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -62,7 +62,7 @@ class Alg_WC_EU_VAT_Settings_Section {
 	/**
 	 * get_all_user_roles.
 	 *
-	 * @version 1.6.0
+	 * @version 4.6.7
 	 * @since   1.6.0
 	 */
 	function get_all_user_roles() {
@@ -76,7 +76,7 @@ class Alg_WC_EU_VAT_Settings_Section {
 		$all_roles = array_merge(
 			$guest_role,
 			apply_filters(
-				'editable_roles',
+				'editable_roles', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				(
 					isset( $wp_roles ) && is_object( $wp_roles ) ?
 					$wp_roles->roles :

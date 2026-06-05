@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Sign-up Form
  *
- * @version 4.2.4
+ * @version 4.6.7
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -50,7 +50,7 @@ class Alg_WC_EU_VAT_Sign_Up_Form {
 	/**
 	 * validate_field_in_woocommerce_register_form.
 	 *
-	 * @version 4.2.4
+	 * @version 4.6.7
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `alg_wc_eu_vat_field_required`?
@@ -59,21 +59,23 @@ class Alg_WC_EU_VAT_Sign_Up_Form {
 
 		$field_id = alg_wc_eu_vat_get_field_id();
 
-		if ( ! isset( $_POST[ $field_id ] ) ) {
+		$post_data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+		if ( ! isset( $post_data[ $field_id ] ) ) {
 			return;
 		}
 
-		$eu_vat_to_check = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
+		$eu_vat_to_check = sanitize_text_field( wp_unslash( $post_data[ $field_id ] ) );
 
 		$form_company_name = (
-			isset( $_POST['billing_company'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) :
+			isset( $post_data['billing_company'] ) ?
+			sanitize_text_field( wp_unslash( $post_data['billing_company'] ) ) :
 			''
 		);
 
 		$form_country = (
-			isset( $_POST['billing_country'] ) ?
-			sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) :
+			isset( $post_data['billing_country'] ) ?
+			sanitize_text_field( wp_unslash( $post_data['billing_country'] ) ) :
 			''
 		);
 
@@ -115,8 +117,8 @@ class Alg_WC_EU_VAT_Sign_Up_Form {
 	 */
 	function save_field_on_woocommerce_created_customer( $customer_id ) {
 		$field_id = alg_wc_eu_vat_get_field_id();
-		if ( isset( $_POST[ $field_id ] ) ) {
-			$value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
+		if ( isset( $_POST[ $field_id ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			update_user_meta( $customer_id, $field_id, $value );
 		}
 	}

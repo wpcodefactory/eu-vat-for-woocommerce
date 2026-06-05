@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - General
  *
- * @version 4.5.4
+ * @version 4.6.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -89,7 +89,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_get_customers_location_by_ip' ) ) {
 			if ( empty( $location['country'] ) ) {
 				$location = wc_format_country_state_string(
 					apply_filters(
-						'woocommerce_customer_default_location',
+						'woocommerce_customer_default_location', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 						get_option( 'woocommerce_default_country' )
 					)
 				);
@@ -141,7 +141,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 	/**
 	 * alg_wc_eu_vat_session_get.
 	 *
-	 * @version 4.2.7
+	 * @version 4.6.7
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_session_get( $key, $default = null ) {
@@ -155,6 +155,7 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 					WC()->session->get( $key, $default ) :
 					$default
 				);
+
 			default: // 'standard'
 				if (
 					! session_id() &&
@@ -163,8 +164,8 @@ if ( ! function_exists( 'alg_wc_eu_vat_session_get' ) ) {
 					session_start();
 				}
 				return (
-					isset( $_SESSION[ $key ] ) ?
-					$_SESSION[ $key ] :
+					isset( $_SESSION[ sanitize_key( $key ) ] ) ?
+					sanitize_text_field( $_SESSION[ sanitize_key( $key ) ] ) :
 					$default
 				);
 		}

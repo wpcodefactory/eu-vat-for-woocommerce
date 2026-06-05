@@ -110,8 +110,8 @@ class Alg_WC_EU_VAT_Admin_Order_List {
 		$domain    = 'eu-vat-for-woocommerce';
 		$filter_id = 'filter_shop_order_by_meta';
 		$current   = (
-			isset( $_GET[ $filter_id ] ) ?
-			sanitize_text_field( wp_unslash( $_GET[ $filter_id ] ) ) :
+			isset( $_GET[ $filter_id ] ) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			sanitize_text_field( wp_unslash( $_GET[ $filter_id ] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			''
 		);
 
@@ -147,8 +147,8 @@ class Alg_WC_EU_VAT_Admin_Order_List {
 			$domain    = 'eu-vat-for-woocommerce';
 			$filter_id = 'filter_shop_order_by_meta';
 			$current   = (
-				isset( $_GET[ $filter_id ] ) ?
-				sanitize_text_field( wp_unslash( $_GET[ $filter_id ] ) ) :
+				isset( $_GET[ $filter_id ] ) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				sanitize_text_field( wp_unslash( $_GET[ $filter_id ] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				''
 			);
 
@@ -183,9 +183,9 @@ class Alg_WC_EU_VAT_Admin_Order_List {
 		if (
 			'edit.php' === $pagenow &&
 			'shop_order' === $typenow &&
-			! empty( $_GET[ $filter_id ] )
+			! empty( $_GET[ $filter_id ] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) {
-			$vars['meta_key'] = sanitize_text_field( wp_unslash( $_GET[ $filter_id ] ) );
+			$vars['meta_key'] = sanitize_text_field( wp_unslash( $_GET[ $filter_id ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			$vars['orderby']  = 'meta_value';
 		}
 		return $vars;
@@ -214,8 +214,8 @@ class Alg_WC_EU_VAT_Admin_Order_List {
 
 		$filter_id = 'filter_shop_order_by_meta';
 
-		if ( ! empty( $_GET[ $filter_id ] ) ) {
-			$query_args['meta_query'] = array(
+		if ( ! empty( $_GET[ $filter_id ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$query_args['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'     => '_billing_eu_vat_number',
 					'value'   => array( '' ),
@@ -243,7 +243,7 @@ class Alg_WC_EU_VAT_Admin_Order_List {
 		if (
 			'edit.php' === $pagenow &&
 			'shop_order' === $typenow &&
-			! empty( $_GET[ $filter_id ] )
+			! empty( $_GET[ $filter_id ] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) {
 			if ( 'shop_order' === $qv['post_type'] ) {
 				$query->set( 'meta_key', '_billing_eu_vat_number' );

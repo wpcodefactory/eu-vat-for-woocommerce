@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 4.6.7 - 05/06/2026 =
+* Dev - Security - Improved output escaping.
+* Dev - Security - Improved input sanitization.
+* Dev - Security - Added nonce verification.
+* Dev - Coding standards improved.
+
 = 4.6.6 - 28/05/2026 =
 * Fix - Fixed force VAT validation on cart/checkout page load and VAT recheck on checkout.
 * Dev - Validation - Advanced - VATSense.com API key - "Enable VATSense fallback" option added (defaults to "no").

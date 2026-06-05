@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Main Class
  *
- * @version 4.6.4
+ * @version 4.6.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -59,7 +59,7 @@ final class Alg_WC_EU_VAT {
 	/**
 	 * Alg_WC_EU_VAT Constructor.
 	 *
-	 * @version 4.2.5
+	 * @version 4.6.7
 	 * @since   1.0.0
 	 *
 	 * @access  public
@@ -78,9 +78,6 @@ final class Alg_WC_EU_VAT {
 
 		// For debug
 		require_once plugin_dir_path( __FILE__ ) . 'functions/alg-wc-eu-vat-functions-debug.php';
-
-		// Set up localisation
-		add_action( 'init', array( $this, 'localize' ) );
 
 		// Declare compatibility with custom order tables for WooCommerce
 		add_action( 'before_woocommerce_init', array( $this, 'wc_declare_compatibility' ) );
@@ -101,26 +98,12 @@ final class Alg_WC_EU_VAT {
 	}
 
 	/**
-	 * localize.
-	 *
-	 * @version 4.0.0
-	 * @since   3.0.0
-	 */
-	function localize() {
-		load_plugin_textdomain(
-			'eu-vat-for-woocommerce',
-			false,
-			dirname( plugin_basename( ALG_WC_EU_VAT_FILE ) ) . '/langs/'
-		);
-	}
-
-	/**
 	 * wc_declare_compatibility.
 	 *
 	 * @version 4.2.2
 	 * @since   2.9.12
 	 *
-	 * @see     https://github.com/woocommerce/woocommerce/wiki/High-Performance-Order-Storage-Upgrade-Recipe-Book#declaring-extension-incompatibility
+	 * @see     https://developer.woocommerce.com/docs/features/high-performance-order-storage/recipe-book/
 	 */
 	function wc_declare_compatibility() {
 		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {

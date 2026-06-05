@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Display
  *
- * @version 4.4.0
+ * @version 4.6.7
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -65,7 +65,7 @@ class Alg_WC_EU_VAT_Display {
 	/**
 	 * add_eu_vat_number_to_order_display.
 	 *
-	 * @version 2.9.13
+	 * @version 4.6.7
 	 * @since   1.0.0
 	 */
 	function add_eu_vat_number_to_order_display( $order ) {
@@ -87,7 +87,7 @@ class Alg_WC_EU_VAT_Display {
 			$html .= '<p>' . '<strong>' . $the_label . '</strong>: ' . $the_eu_vat_number . '</p>';
 		}
 
-		echo $html;
+		echo wp_kses_post( $html );
 
 	}
 
@@ -188,21 +188,27 @@ class Alg_WC_EU_VAT_Display {
 	/**
 	 * save_eu_vat_number_from_editable_fields.
 	 *
-	 * @version 4.1.0
+	 * @version 4.6.7
 	 * @since   1.3.0
 	 */
 	function save_eu_vat_number_from_editable_fields( $user_id, $load_address ) {
 		if ( 'billing' === $load_address ) {
+
+			$post_data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
 			$field_id    = alg_wc_eu_vat_get_field_id();
 			$field_id_cd = alg_wc_eu_vat_get_field_id() . '_customer_decide';
-			if ( isset( $_POST[ $field_id ] ) ) {
-				$value = sanitize_text_field( wp_unslash( $_POST[ $field_id ] ) );
+
+			if ( isset( $post_data[ $field_id ] ) ) {
+				$value = sanitize_text_field( wp_unslash( $post_data[ $field_id ] ) );
 				update_user_meta( $user_id, $field_id, $value );
 			}
-			if ( isset( $_POST[ $field_id_cd ] ) && 1 == $_POST[ $field_id_cd ] ) {
-				$value_cd = sanitize_text_field( wp_unslash( $_POST[ $field_id_cd ] ) );
+
+			if ( isset( $post_data[ $field_id_cd ] ) && 1 == $post_data[ $field_id_cd ] ) {
+				$value_cd = sanitize_text_field( wp_unslash( $post_data[ $field_id_cd ] ) );
 				update_user_meta( $user_id, $field_id_cd, $value_cd );
 			}
+
 		}
 	}
 

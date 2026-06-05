@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Orders
  *
- * @version 4.2.0
+ * @version 4.6.7
  * @since   4.1.0
  *
  * @author  WPFactory
@@ -72,11 +72,11 @@ class Alg_WC_EU_VAT_Orders {
 	 *
 	 * @param   int  $order_id  The ID of the order being processed.
 	 *
-	 * @version 4.2.0
+	 * @version 4.6.7
 	 * @since   4.2.0
 	 */
 	function save_request_identifier_to_order( int $order_id ) {
-		if ( ! ( empty( $_POST[ alg_wc_eu_vat_get_field_id() ] ) ) ) {
+		if ( ! ( empty( $_POST[ alg_wc_eu_vat_get_field_id() ] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			// Get response data from the session
 			$vat_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_response_data' );
 			if (
@@ -100,11 +100,11 @@ class Alg_WC_EU_VAT_Orders {
 	 *
 	 * @param   int  $order_id  The ID of the order being processed.
 	 *
-	 * @version 4.2.0
+	 * @version 4.6.7
 	 * @since   4.0.0
 	 */
 	function save_vat_details_to_order( int $order_id ) {
-		if ( ! ( empty( $_POST[ alg_wc_eu_vat_get_field_id() ] ) ) ) {
+		if ( ! ( empty( $_POST[ alg_wc_eu_vat_get_field_id() ] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			// Get response data from the session
 			$vat_details_response_data = alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_details' );
 			$order                     = wc_get_order( $order_id );

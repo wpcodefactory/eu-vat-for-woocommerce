@@ -92,7 +92,10 @@ class Alg_WC_EU_VAT_Settings extends WC_Settings_Page {
 	function get_settings() {
 		global $current_section;
 		$settings = array_merge(
-			apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ),
+			apply_filters(
+				'woocommerce_get_settings_' . $this->id . '_' . $current_section, // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+				array()
+			),
 			array(
 				array(
 					'title'     => __( 'Reset Settings', 'eu-vat-for-woocommerce' ),

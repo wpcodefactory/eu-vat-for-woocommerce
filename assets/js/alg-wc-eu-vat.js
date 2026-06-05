@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - JS
  *
- * @version 4.6.4
+ * @version 4.6.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -289,7 +289,7 @@ jQuery( function ( $ ) {
 	/**
 	 * alg_wc_eu_vat_validate_vat.
 	 *
-	 * @version 4.6.4
+	 * @version 4.6.7
 	 * @since   1.0.0
 	 */
 	function alg_wc_eu_vat_validate_vat( load = false ) {
@@ -384,6 +384,7 @@ jQuery( function ( $ ) {
 				'billing_company'                          : $( '#billing_company' ).val(),
 				'alg_wc_eu_vat_customer_decide'            : customer_decide,
 				'alg_wc_eu_vat_valid_vat_but_not_exempted' : vat_valid_but_not_exempted,
+				'nonce'                                    : $( '#alg_wc_eu_vat_nonce_field' ).val(),
 			};
 
 			$.ajax( {

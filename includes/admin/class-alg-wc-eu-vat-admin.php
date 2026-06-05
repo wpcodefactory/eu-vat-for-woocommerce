@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Class
  *
- * @version 4.3.3
+ * @version 4.6.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -88,7 +88,7 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * add_eu_vat_data_to_admin_new_order_email.
 	 *
-	 * @version 4.3.0
+	 * @version 4.6.7
 	 * @since   4.3.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/9.6.2/plugins/woocommerce/templates/emails/admin-new-order.php#L46
@@ -121,12 +121,14 @@ class Alg_WC_EU_VAT_Admin {
 			<div style="font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; margin-bottom: 40px;">
 				<h2><?php esc_html_e( 'EU VAT', 'eu-vat-for-woocommerce' ); ?></h2>
 				<?php
-				echo alg_wc_eu_vat_get_table_html(
-					$table_data,
-					array(
-						'table_heading_type' => 'vertical',
-						'table_style'        => 'border-collapse: collapse;',
-						'row_styles'         => 'border: 1px solid #e5e5e5;',
+				echo wp_kses_post(
+					alg_wc_eu_vat_get_table_html(
+						$table_data,
+						array(
+							'table_heading_type' => 'vertical',
+							'table_style'        => 'border-collapse: collapse;',
+							'row_styles'         => 'border: 1px solid #e5e5e5;',
+						)
 					)
 				);
 				?>
@@ -210,8 +212,8 @@ class Alg_WC_EU_VAT_Admin {
 		global $pagenow;
 		if (
 			'admin-ajax.php' === $pagenow &&
-			isset( $_REQUEST['action'] ) &&
-			'woocommerce_calc_line_taxes' === $_REQUEST['action']
+			isset( $_REQUEST['action'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'woocommerce_calc_line_taxes' === $_REQUEST['action'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) {
 			if ( alg_wc_eu_vat()->core->check_current_user_roles( get_option( 'alg_wc_eu_vat_exempt_for_user_roles', array() ) ) ) {
 
@@ -250,13 +252,13 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * add_eu_vat_reports.
 	 *
-	 * @version 1.5.0
+	 * @version 4.6.7
 	 * @since   1.5.0
 	 */
 	function add_eu_vat_reports( $reports ) {
 		if ( ! isset( $reports['taxes'] ) ) {
 			$reports['taxes'] = array(
-				'title'   => __( 'Taxes', 'woocommerce' ), // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
+				'title'   => __( 'Taxes', 'eu-vat-for-woocommerce' ),
 				'reports' => array(),
 			);
 		}
@@ -272,12 +274,12 @@ class Alg_WC_EU_VAT_Admin {
 	/**
 	 * output_eu_vat_report.
 	 *
-	 * @version 4.2.0
+	 * @version 4.6.7
 	 * @since   1.5.0
 	 */
 	function output_eu_vat_report() {
-		require_once plugin_dir_path( __FILE__ ) . 'class-wc-report-alg-wc-eu-vat.php';
-		$report = new WC_Report_Alg_WC_EU_VAT();
+		require_once plugin_dir_path( __FILE__ ) . 'class-alg-wc-eu-vat-wc-report.php';
+		$report = new Alg_WC_EU_VAT_WC_Report();
 		$report->output_report();
 		echo '<p><em>' .
 			esc_html__( 'Report includes all EU VAT countries with existing sales.', 'eu-vat-for-woocommerce' ) . ' ' .

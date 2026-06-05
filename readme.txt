@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli, ae
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 7.0
-Stable tag: 4.6.6
+Stable tag: 4.6.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -285,6 +285,12 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.6.7 - 05/06/2026 =
+* Dev - Security - Improved output escaping.
+* Dev - Security - Improved input sanitization.
+* Dev - Security - Added nonce verification.
+* Dev - Coding standards improved.
 
 = 4.6.6 - 28/05/2026 =
 * Fix - Fixed force VAT validation on cart/checkout page load and VAT recheck on checkout.

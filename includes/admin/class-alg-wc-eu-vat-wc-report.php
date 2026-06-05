@@ -2,7 +2,7 @@
 /**
  * Taxes by EU VAT country report.
  *
- * @version 4.2.7
+ * @version 4.6.7
  * @since   1.5.0
  *
  * @package WooCommerce/Admin/Reports
@@ -11,7 +11,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
+if ( ! class_exists( 'Alg_WC_EU_VAT_WC_Report' ) ) :
+
+class Alg_WC_EU_VAT_WC_Report extends WC_Admin_Report {
 
 	/**
 	 * Get the legend for the main chart sidebar.
@@ -28,12 +30,13 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 	/**
 	 * Output an export link.
 	 *
-	 * @version 1.5.0
+	 * @version 4.6.7
 	 * @since   1.5.0
 	 */
 	public function get_export_button() {
-
-		$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( wp_unslash( $_GET['range'] ) ) : 'last_month';
+		$current_range = ! empty( $_GET['range'] ) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			sanitize_text_field( wp_unslash( $_GET['range'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'last_month';
 		?>
 		<a
 			href="#"
@@ -41,7 +44,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 			class="export_csv"
 			data-export="table"
 		>
-			<?php esc_html_e( 'Export CSV', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?>
+			<?php esc_html_e( 'Export CSV', 'eu-vat-for-woocommerce' ); ?>
 		</a>
 		<?php
 	}
@@ -49,20 +52,20 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 	/**
 	 * Output the report.
 	 *
-	 * @version 1.5.0
+	 * @version 4.6.7
 	 * @since   1.5.0
 	 */
 	public function output_report() {
 
-		// phpcs:disable WordPress.WP.I18n.TextDomainMismatch
 		$ranges = array(
-			'year'       => __( 'Year', 'woocommerce' ),
-			'last_month' => __( 'Last month', 'woocommerce' ),
-			'month'      => __( 'This month', 'woocommerce' ),
+			'year'       => __( 'Year', 'eu-vat-for-woocommerce' ),
+			'last_month' => __( 'Last month', 'eu-vat-for-woocommerce' ),
+			'month'      => __( 'This month', 'eu-vat-for-woocommerce' ),
 		);
-		// phpcs:enable WordPress.WP.I18n.TextDomainMismatch
 
-		$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( wp_unslash( $_GET['range'] ) ) : 'last_month';
+		$current_range = ! empty( $_GET['range'] ) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			sanitize_text_field( wp_unslash( $_GET['range'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'last_month';
 
 		if ( ! in_array( $current_range, array( 'custom', 'year', 'last_month', 'month', '7day' ) ) ) {
 			$current_range = 'last_month';
@@ -111,7 +114,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 	/**
 	 * Get the main chart.
 	 *
-	 * @version 4.2.7
+	 * @version 4.6.7
 	 * @since   1.5.0
 	 */
 	public function get_main_chart() {
@@ -126,8 +129,8 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 				wc_get_is_paid_statuses()
 			),
 			'date_query'      => array(
-				'after'  => date( 'Y-m-d H:i:s', $this->start_date ),
-				'before' => date( 'Y-m-d H:i:s', $this->end_date ),
+				'after'  => wp_date( 'Y-m-d H:i:s', $this->start_date ),
+				'before' => wp_date( 'Y-m-d H:i:s', $this->end_date ),
 			),
 		) );
 
@@ -160,10 +163,10 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 			<thead>
 				<tr>
 					<th><?php esc_html_e( 'Country', 'eu-vat-for-woocommerce' ); ?></th>
-					<th class="total_row"><?php esc_html_e( 'Number of orders', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
-					<th class="total_row"><?php esc_html_e( 'Total sales', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
+					<th class="total_row"><?php esc_html_e( 'Number of orders', 'eu-vat-for-woocommerce' ); ?></th>
+					<th class="total_row"><?php esc_html_e( 'Total sales', 'eu-vat-for-woocommerce' ); ?></th>
 					<th class="total_row"><?php esc_html_e( 'Total sales with zero tax', 'eu-vat-for-woocommerce' ); ?></th>
-					<th class="total_row"><?php esc_html_e( 'Total tax', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
+					<th class="total_row"><?php esc_html_e( 'Total tax', 'eu-vat-for-woocommerce' ); ?></th>
 				</tr>
 			</thead>
 			<?php if ( ! empty( $tax_rows ) ) : ?>
@@ -184,7 +187,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 				</tbody>
 				<tfoot>
 					<tr>
-						<th scope="row"><?php esc_html_e( 'Totals', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></th>
+						<th scope="row"><?php esc_html_e( 'Totals', 'eu-vat-for-woocommerce' ); ?></th>
 						<th class="total_row"><?php echo (int) array_sum( wp_list_pluck( $tax_rows, 'count' ) ); ?></th>
 						<th class="total_row"><?php echo wp_kses_post( wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum' ) ) ) ); ?></th>
 						<th class="total_row"><?php echo wp_kses_post( wc_price( array_sum( wp_list_pluck( $tax_rows, 'sum_no_tax' ) ) ) ); ?></th>
@@ -194,7 +197,7 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 			<?php else : ?>
 				<tbody>
 					<tr>
-						<td><?php esc_html_e( 'No taxes found in this period', 'woocommerce' ); // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch ?></td>
+						<td><?php esc_html_e( 'No taxes found in this period', 'eu-vat-for-woocommerce' ); ?></td>
 					</tr>
 				</tbody>
 			<?php endif; ?>
@@ -203,3 +206,5 @@ class WC_Report_Alg_WC_EU_VAT extends WC_Admin_Report {
 
 	}
 }
+
+endif;

@@ -34,8 +34,8 @@ class Alg_WC_EU_VAT_Admin_User_List {
 	function get_value() {
 		return (
 			(
-				isset( $_GET['billing_eu_vat_number'][0] ) &&
-				'yes' === sanitize_text_field( wp_unslash( $_GET['billing_eu_vat_number'][0] ) )
+				isset( $_GET['billing_eu_vat_number'][0] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'yes' === sanitize_text_field( wp_unslash( $_GET['billing_eu_vat_number'][0] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			) ?
 			'yes' :
 			'no'
@@ -53,9 +53,14 @@ class Alg_WC_EU_VAT_Admin_User_List {
 	function add_users_filter() {
 		?>
 		<select name="billing_eu_vat_number[]" style="float:none;">
-			<option value=""><?php echo esc_html__( 'EU VAT not provided', 'eu-vat-for-woocommerce' ); ?></option>
-			<option value="yes"<?php selected( $this->get_value(), 'yes' ); ?>><?php echo esc_html__( 'EU VAT provided', 'eu-vat-for-woocommerce' ); ?></option>
-		</select><input type="submit" class="button" value="<?php echo esc_attr__( 'Filter', 'eu-vat-for-woocommerce' ); ?>">
+			<option value="">
+				<?php echo esc_html__( 'EU VAT not provided', 'eu-vat-for-woocommerce' ); ?>
+			</option>
+			<option value="yes"<?php selected( $this->get_value(), 'yes' ); ?>>
+				<?php echo esc_html__( 'EU VAT provided', 'eu-vat-for-woocommerce' ); ?>
+			</option>
+		</select>
+		<input type="submit" class="button" value="<?php echo esc_attr__( 'Filter', 'eu-vat-for-woocommerce' ); ?>">
 		<?php
 	}
 

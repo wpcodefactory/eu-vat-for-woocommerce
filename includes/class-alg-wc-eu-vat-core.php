@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.6.6
+ * @version 4.6.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -284,11 +284,13 @@ class Alg_WC_EU_VAT_Core {
 	/**
 	 * maybe_exclude_vat_free.
 	 *
-	 * @version 4.5.5
+	 * @version 4.6.7
 	 * @since   1.7.0
 	 */
 	function maybe_exclude_vat_free( $value ) {
 		$preserve_base_country_check_passed = true;
+
+		$request_data = $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		// Keep VAT in selected countries
 		$preserve_option_value = get_option( 'alg_wc_eu_vat_preserve_in_base_country', 'no' );
@@ -309,9 +311,9 @@ class Alg_WC_EU_VAT_Core {
 					// Fallback #1
 					if (
 						! ctype_alpha( $selected_country ) &&
-						! empty( $_REQUEST['post_data'] )
+						! empty( $request_data['post_data'] )
 					) {
-						parse_str( wp_unslash( $_REQUEST['post_data'] ), $post_data_args );
+						parse_str( wp_unslash( $request_data['post_data'] ), $post_data_args ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 						if ( ! empty( $post_data_args['billing_country'] ) ) {
 							$selected_country = sanitize_text_field( $post_data_args['billing_country'] );
 						}
@@ -319,16 +321,16 @@ class Alg_WC_EU_VAT_Core {
 					// Fallback #2
 					if (
 						! ctype_alpha( $selected_country ) &&
-						! empty( $_REQUEST['billing_country'] )
+						! empty( $request_data['billing_country'] )
 					) {
-						$selected_country = sanitize_text_field( wp_unslash( $_REQUEST['billing_country'] ) );
+						$selected_country = sanitize_text_field( wp_unslash( $request_data['billing_country'] ) );
 					}
 					// Fallback #3
 					if (
 						! ctype_alpha( $selected_country ) &&
-						! empty( $_REQUEST['country'] )
+						! empty( $request_data['country'] )
 					) {
-						$selected_country = sanitize_text_field( wp_unslash( $_REQUEST['country'] ) );
+						$selected_country = sanitize_text_field( wp_unslash( $request_data['country'] ) );
 					}
 				}
 				if ( ! ctype_alpha( $selected_country ) ) {
@@ -340,8 +342,8 @@ class Alg_WC_EU_VAT_Core {
 			$selected_country_at_checkout = WC()->checkout()->get_value( $country_type );
 
 			// AJAX checkout update fallback
-			if ( ! empty( $_REQUEST['post_data'] ) ) {
-				parse_str( wp_unslash( $_REQUEST['post_data'] ), $post_data_args );
+			if ( ! empty( $request_data['post_data'] ) ) {
+				parse_str( wp_unslash( $request_data['post_data'] ), $post_data_args ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 				if ( ! empty( $post_data_args[ $country_type ] ) ) {
 					$selected_country_at_checkout = sanitize_text_field( $post_data_args[ $country_type ] );
@@ -353,7 +355,7 @@ class Alg_WC_EU_VAT_Core {
 				if ( empty( $location['country'] ) ) {
 					$location = wc_format_country_state_string(
 						apply_filters(
-							'woocommerce_customer_default_location',
+							'woocommerce_customer_default_location', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 							get_option( 'woocommerce_default_country' )
 						)
 					);
@@ -378,13 +380,13 @@ class Alg_WC_EU_VAT_Core {
 		) {
 
 			$billing_country  = (
-				isset( $_REQUEST['billing_country'] ) ?
-				sanitize_text_field( wp_unslash( $_REQUEST['billing_country'] ) ) :
+				isset( $request_data['billing_country'] ) ?
+				sanitize_text_field( wp_unslash( $request_data['billing_country'] ) ) :
 				''
 			);
 			$shipping_country = (
-				isset( $_REQUEST['shipping_country'] ) ?
-				sanitize_text_field( wp_unslash( $_REQUEST['shipping_country'] ) ) :
+				isset( $request_data['shipping_country'] ) ?
+				sanitize_text_field( wp_unslash( $request_data['shipping_country'] ) ) :
 				''
 			);
 
@@ -625,8 +627,8 @@ class Alg_WC_EU_VAT_Core {
 			if ( $is_required && 'yes' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' ) ) {
 				$field_id = alg_wc_eu_vat_get_field_id();
 				if (
-					isset( $_POST[ $field_id . '_customer_decide' ] ) &&
-					1 == $_POST[ $field_id . '_customer_decide' ]
+					isset( $_POST[ $field_id . '_customer_decide' ] ) && // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					1 == $_POST[ $field_id . '_customer_decide' ] // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				) {
 					$is_required = false;
 				}
@@ -743,8 +745,8 @@ class Alg_WC_EU_VAT_Core {
 				alg_wc_eu_vat_session_start();
 
 				$args = array();
-				if ( isset( $_POST['post_data'] ) ) {
-					parse_str( sanitize_text_field( wp_unslash( $_POST['post_data'] ) ), $args );
+				if ( isset( $_POST['post_data'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					parse_str( sanitize_text_field( wp_unslash( $_POST['post_data'] ) ), $args ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					if (
 						isset( $args[ alg_wc_eu_vat_get_field_id() ] ) &&
 						alg_wc_eu_vat_session_get( 'alg_wc_eu_vat_to_check' ) != $args[ alg_wc_eu_vat_get_field_id() ]
@@ -1474,6 +1476,7 @@ class Alg_WC_EU_VAT_Core {
 							wp_kses_post( $valid_company_name ),
 							do_shortcode( get_option(
 								'alg_wc_eu_vat_company_name_mismatch',
+								/* Translators: %company_name% - The registered company name from VAT validation */
 								__( 'VAT is valid, but registered to %company_name%.', 'eu-vat-for-woocommerce' )
 							) )
 						);
@@ -1573,8 +1576,9 @@ class Alg_WC_EU_VAT_Core {
 		$shipping_country           = $customer->get_shipping_country();
 
 		$_posted = array();
-		if ( isset( $_POST['post_data'] ) ) {
-			parse_str( wp_unslash( $_POST['post_data'] ), $_posted );
+		if ( isset( $_POST['post_data'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+			parse_str( wp_unslash( $_POST['post_data'] ), $_posted ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 			$field_id                   = alg_wc_eu_vat_get_field_id();
 			$vat_number                 = sanitize_text_field( $_posted[ $field_id ] ?? '' );
@@ -1632,6 +1636,32 @@ class Alg_WC_EU_VAT_Core {
 					)
 				)
 			)
+		);
+	}
+
+	/**
+	 * get_allowed_form_html.
+	 *
+	 * @version 4.6.7
+	 * @since   4.6.7
+	 */
+	function get_allowed_form_html() {
+		$allowed_html = array(
+			'form' => array(
+				'action' => true,
+				'method' => true,
+			),
+			'input' => array(
+				'type'  => true,
+				'id'    => true,
+				'name'  => true,
+				'class' => true,
+				'value' => true,
+			)
+		);
+		return array_merge(
+			wp_kses_allowed_html( 'post' ),
+			$allowed_html
 		);
 	}
 

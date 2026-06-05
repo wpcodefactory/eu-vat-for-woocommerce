@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.6.4
+ * @version 4.6.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -17,12 +17,15 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.6.3
+	 * @version 4.6.7
 	 * @since   1.0.0
 	 */
 	function __construct() {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+		// Add nonce field to checkout page
+		add_action( 'woocommerce_before_checkout_form', array( $this, 'add_nonce_field' ) );
 
 		add_action( 'wp_ajax_alg_wc_eu_vat_validate_action',        array( $this, 'alg_wc_eu_vat_validate_action' ) );
 		add_action( 'wp_ajax_nopriv_alg_wc_eu_vat_validate_action', array( $this, 'alg_wc_eu_vat_validate_action' ) );
@@ -93,6 +96,16 @@ class Alg_WC_EU_VAT_AJAX {
 	}
 
 	/**
+	 * add_nonce_field.
+	 *
+	 * @version 4.6.7
+	 * @since   4.6.7
+	 */
+	function add_nonce_field() {
+		wp_nonce_field( 'alg_wc_eu_vat_nonce', 'alg_wc_eu_vat_nonce_field' );
+	}
+
+	/**
 	 * get_preserve_countries.
 	 *
 	 * @version 4.0.0
@@ -106,7 +119,7 @@ class Alg_WC_EU_VAT_AJAX {
 			if ( empty( $location['country'] ) ) {
 				$location = wc_format_country_state_string(
 					apply_filters(
-						'woocommerce_customer_default_location',
+						'woocommerce_customer_default_location', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 						get_option( 'woocommerce_default_country' )
 					)
 				);
@@ -131,13 +144,16 @@ class Alg_WC_EU_VAT_AJAX {
 	/**
 	 * alg_wc_eu_vat_validate_action.
 	 *
-	 * @version 4.6.3
+	 * @version 4.6.7
 	 * @since   1.0.0
 	 *
 	 * @todo    (v4.4.7) `empty( $eu_vat_number['number'] )`: clear all other session variables, e.g., `alg_wc_eu_vat_response_data`
 	 * @todo    (dev) `if ( ! isset( $_POST['alg_wc_eu_vat_validate_action'] ) ) return;`?
 	 */
 	function alg_wc_eu_vat_validate_action() {
+
+		check_ajax_referer( 'alg_wc_eu_vat_nonce', 'nonce' );
+
 		$post       = wp_unslash( $_POST );
 		$vat_number = sanitize_text_field( $post['alg_wc_eu_vat_to_check'] ?? '' );
 

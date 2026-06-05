@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Advertise
  *
- * @version 4.1.0
+ * @version 4.6.7
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -28,7 +28,7 @@ class Alg_WC_EU_VAT_Advertise {
 	/**
 	 * add_advertisement.
 	 *
-	 * @version 4.1.0
+	 * @version 4.6.7
 	 * @since   4.0.0
 	 */
 	function add_advertisement( $settings, $current_section, $settings_page_id ) {
@@ -38,7 +38,7 @@ class Alg_WC_EU_VAT_Advertise {
 		<div class="alg_wc_eu_vat_right_ad">
 			<div class="alg_wc_eu_vat-sidebar__section">
 				<div class="alg_wc_eu_vat_name_heading">
-					<img class="alg_wc_eu_vat_resize" src="https://wpfactory.com/wp-content/uploads/EU-VAT-for-WooCommerce-300x300.png">
+					<img class="alg_wc_eu_vat_resize" src="<?php echo esc_url( plugins_url( 'assets/images/EU-VAT-for-WooCommerce-300x300.png', ALG_WC_EU_VAT_FILE ) ); ?>">
 					<p class="alg_wc_eu_vat_text">Enjoying the plugin? Unleash its full potential with the premium version, it allows you to:</p>
 				</div>
 				<ul>

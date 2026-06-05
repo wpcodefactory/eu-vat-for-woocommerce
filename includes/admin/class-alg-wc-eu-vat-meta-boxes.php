@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Meta Boxes
  *
- * @version 4.4.1
+ * @version 4.6.7
  * @since   4.2.0
  *
  * @author  WPFactory
@@ -44,11 +44,27 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * Update the order vat details.
 	 *
-	 * @version 4.2.5
+	 * @version 4.6.7
 	 * @since   4.0.0
 	 */
 	function get_vat_details() {
 		if ( isset( $_GET['get_vat_details'], $_GET['number'], $_GET['country'] ) ) {
+
+			if (
+				! isset( $_GET['nonce'] ) ||
+				! wp_verify_nonce(
+					sanitize_text_field( wp_unslash( $_GET['nonce'] ) ),
+					'alg_wc_eu_vat_get_details'
+				)
+			) {
+				wp_die(
+					esc_html__(
+						'Nonce not found or not verified.',
+						'eu-vat-for-woocommerce'
+					)
+				);
+			}
+
 			$order_id      = absint( $_GET['get_vat_details'] );
 			$vat_number    = sanitize_text_field( wp_unslash( $_GET['number'] ) );
 			$country       = sanitize_text_field( wp_unslash( $_GET['country'] ) );
@@ -80,10 +96,10 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	 * @since   4.0.0
 	 */
 	function admin_notice() {
-		if ( ! isset( $_GET['alg_wc_eu_vat_details_result'] ) ) {
+		if ( ! isset( $_GET['alg_wc_eu_vat_details_result'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
-		$result  = sanitize_text_field( wp_unslash( $_GET['alg_wc_eu_vat_details_result'] ) );
+		$result  = sanitize_text_field( wp_unslash( $_GET['alg_wc_eu_vat_details_result'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$message = (
 			( 'success' === $result ) ?
 			__( 'VAT details have been updated successfully.', 'eu-vat-for-woocommerce' ) :
@@ -163,7 +179,7 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * output_meta_box_data.
 	 *
-	 * @version 4.3.0
+	 * @version 4.6.7
 	 * @since   4.3.0
 	 *
 	 * @todo    (dev) save actual EU VAT number used on checkout (instead of `$_order->get_meta( '_' . alg_wc_eu_vat_get_field_id() )`)?
@@ -265,11 +281,13 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 		}
 
 		// Output
-		echo alg_wc_eu_vat_get_table_html(
-			$table_data,
-			array(
-				'table_class'        => 'widefat striped',
-				'table_heading_type' => 'vertical',
+		echo wp_kses_post(
+			alg_wc_eu_vat_get_table_html(
+				$table_data,
+				array(
+					'table_class'        => 'widefat striped',
+					'table_heading_type' => 'vertical',
+				)
 			)
 		);
 
@@ -278,7 +296,10 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 
 		// Validate VAT and remove taxes
 		echo '<p>' .
-			'<a href="' . esc_url( add_query_arg( 'validate_vat_and_maybe_remove_taxes', absint( $order_id ) ) ) . '">' .
+			'<a href="' . esc_url( add_query_arg( array(
+				'validate_vat_and_maybe_remove_taxes' => absint( $order_id ),
+				'nonce'                               => wp_create_nonce( 'alg_wc_eu_vat_validate_vat' ),
+			) ) ) . '">' .
 				esc_html__( 'Validate VAT and remove taxes', 'eu-vat-for-woocommerce' ) .
 			'</a>' .
 		'</p>';
@@ -289,6 +310,7 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 				'get_vat_details' => absint( $order_id ),
 				'country'         => esc_html( $_order->get_billing_country() ),
 				'number'          => esc_html( $customer_eu_vat_number ),
+				'nonce'           => wp_create_nonce( 'alg_wc_eu_vat_get_details' ),
 			) ) ) . '">' .
 				esc_html__( 'Get VAT details', 'eu-vat-for-woocommerce' ) .
 			'</a>' .
@@ -299,7 +321,7 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * validate_vat_and_maybe_remove_taxes.
 	 *
-	 * @version 4.4.1
+	 * @version 4.6.7
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) Remove taxes: remove and instead do `$order->calculate_totals()` (after setting `is_vat_exempt` to `yes`)
@@ -310,6 +332,21 @@ class Alg_WC_EU_VAT_Meta_Boxes {
 
 		if ( ! isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
 			return;
+		}
+
+		if (
+			! isset( $_GET['nonce'] ) ||
+			! wp_verify_nonce(
+				sanitize_text_field( wp_unslash( $_GET['nonce'] ) ),
+				'alg_wc_eu_vat_validate_vat'
+			)
+		) {
+			wp_die(
+				esc_html__(
+					'Nonce not found or not verified.',
+					'eu-vat-for-woocommerce'
+				)
+			);
 		}
 
 		$preserve_countries           = alg_wc_eu_vat()->core->eu_vat_ajax_instance->get_preserve_countries();
