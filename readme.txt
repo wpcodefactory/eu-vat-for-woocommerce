@@ -243,6 +243,12 @@ WPFactory has a diverse range of plugins tailored to enhance your experience, so
 
 > “Great support!: The plugin works great, and does everything I need for selling to other countries in Europe! Support is great and they help develop new features to make the plugin even more compliant with the laws.” – ⭐⭐⭐⭐⭐ [kingwebshops](https://wordpress.org/support/topic/great-support-4410/)
 
+== Technical Documentation ==
+
+* [Source Code](https://plugins.svn.wordpress.org/eu-vat-for-woocommerce/trunk/source-code.txt).
+* [Build & Development](https://plugins.svn.wordpress.org/eu-vat-for-woocommerce/trunk/build-and-development.txt).
+* [External Services](https://plugins.svn.wordpress.org/eu-vat-for-woocommerce/trunk/external-services.txt).
+
 == Installation ==
 
 **Follow these simplified steps to get your plugin up and running:**
@@ -266,111 +272,6 @@ WPFactory has a diverse range of plugins tailored to enhance your experience, so
 
 **Post-Activation:**
 Once activated, access the plugin's settings by navigating to the “WPFactory” menu and look for the relevant tab.
-
-== Source Code ==
-
-The complete source code and build tools for this plugin are available at:
-
-https://github.com/wpcodefactory/eu-vat-for-woocommerce
-
-The source files used to generate the compiled assets are located in:
-
-* JavaScript source files: `assets/js/`
-* CSS source files: `assets/css/`
-* Checkout block source files: `includes/blocks/src/`
-
-Compiled production assets are located in:
-
-* `assets/build/`
-* `includes/blocks/build/`
-
-== Build & Development ==
-
-The JavaScript and CSS files in the `assets/build/` directory are generated from the source files in `assets/js/` and `assets/css/` using WordPress Scripts and Webpack.
-
-The Checkout block assets in `includes/blocks/build/` are generated from `includes/blocks/src/` using WordPress Scripts and Webpack.
-
-**Build Tools:**
-
-* Node.js and npm
-* @wordpress/scripts
-* Webpack
-
-**Building the plugin from source:**
-
-1. Install dependencies:
-
-`npm install`
-
-2. Build production assets:
-
-`npm run build`
-
-3. Watch for development changes:
-
-`npm start`
-
-4. Build checkout block assets (from `includes/blocks/`):
-
-`cd includes/blocks && npm install && npm run build`
-
-== External services ==
-
-This plugin connects to external services to validate VAT numbers. Validation requests are only made when a VAT number is checked through the plugin's features, for example during checkout, signup/account validation, admin order validation, or manual validation actions.
-
-**European Commission VIES (VAT Information Exchange System)**
-
-This service is used to validate EU VAT numbers. Depending on your plugin settings and server capabilities, the plugin may connect to the VIES REST API and/or the VIES SOAP service.
-
-API domain and endpoints used by the plugin:
-
-* `ec.europa.eu`
-* REST API: `https://ec.europa.eu/taxation_customs/vies/rest-api/ms/{country_code}/vat/{vat_number}`
-* SOAP WSDL: `https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl`
-
-Data sent to VIES:
-
-* The VAT country code and VAT number being validated.
-* If the optional "Request identifier" feature is enabled, the requester country code and requester VAT number configured in the plugin settings.
-
-When data is sent:
-
-* When a customer enters a VAT number and the plugin validates it;
-* When an admin validates a VAT number from the WooCommerce admin;
-* When the plugin re-validates a VAT number after relevant checkout data changes.
-
-Service provider: European Commission
-
-* Service information: https://ec.europa.eu/taxation_customs/vies/
-* Legal notice / terms: https://commission.europa.eu/legal-notice_en
-* Privacy policy: https://commission.europa.eu/privacy-policy-websites-managed-european-commission_en
-
-**VATSense**
-
-This service is used to validate supported VAT/tax numbers outside the EU and can also be used as an optional fallback validator when enabled in the plugin settings.
-
-API domain and endpoint used by the plugin:
-
-* `api.vatsense.com`
-* API endpoint: `https://api.vatsense.com/1.0/validate?vat_number={country_code}{vat_number}`
-
-Data sent to VATSense:
-
-* The VAT number being validated, including its country code;
-* The site administrator configured VATSense API key, sent in the request authorization header.
-
-When data is sent:
-
-* When the plugin validates a supported non-EU VAT/tax number;
-* When the optional VATSense fallback is enabled and the plugin falls back to VATSense for validation.
-
-Service provider: VATSense
-
-* Documentation: https://vatsense.com/documentation
-* Terms of service: https://vatsense.com/terms
-* Privacy policy: https://vatsense.com/privacy
-
-The plugin only sends VAT-related information required to perform validation requests. It does not send unrelated customer information.
 
 == Screenshots ==
 

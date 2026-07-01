@@ -1,0 +1,57 @@
+== External Services ==
+
+This plugin connects to external services to validate VAT numbers. Validation requests are only made when a VAT number is checked through the plugin's features, for example during checkout, signup/account validation, admin order validation, or manual validation actions.
+
+**European Commission VIES (VAT Information Exchange System)**
+
+This service is used to validate EU VAT numbers. Depending on your plugin settings and server capabilities, the plugin may connect to the VIES REST API and/or the VIES SOAP service.
+
+API domain and endpoints used by the plugin:
+
+* `ec.europa.eu`
+* REST API: `https://ec.europa.eu/taxation_customs/vies/rest-api/ms/{country_code}/vat/{vat_number}`
+* SOAP WSDL: `https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl`
+
+Data sent to VIES:
+
+* The VAT country code and VAT number being validated.
+* If the optional "Request identifier" feature is enabled, the requester country code and requester VAT number configured in the plugin settings.
+
+When data is sent:
+
+* When a customer enters a VAT number and the plugin validates it;
+* When an admin validates a VAT number from the WooCommerce admin;
+* When the plugin re-validates a VAT number after relevant checkout data changes.
+
+Service provider: European Commission
+
+* Service information: https://ec.europa.eu/taxation_customs/vies/
+* Legal notice / terms: https://commission.europa.eu/legal-notice_en
+* Privacy policy: https://commission.europa.eu/privacy-policy-websites-managed-european-commission_en
+
+**VATSense**
+
+This service is used to validate supported VAT/tax numbers outside the EU and can also be used as an optional fallback validator when enabled in the plugin settings.
+
+API domain and endpoint used by the plugin:
+
+* `api.vatsense.com`
+* API endpoint: `https://api.vatsense.com/1.0/validate?vat_number={country_code}{vat_number}`
+
+Data sent to VATSense:
+
+* The VAT number being validated, including its country code;
+* The site administrator configured VATSense API key, sent in the request authorization header.
+
+When data is sent:
+
+* When the plugin validates a supported non-EU VAT/tax number;
+* When the optional VATSense fallback is enabled and the plugin falls back to VATSense for validation.
+
+Service provider: VATSense
+
+* Documentation: https://vatsense.com/documentation
+* Terms of service: https://vatsense.com/terms
+* Privacy policy: https://vatsense.com/privacy
+
+The plugin only sends VAT-related information required to perform validation requests. It does not send unrelated customer information.
