@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 4.7.0 - 01/07/2026 =
+* Dev - Prefixes updated (from `alg` to `wpfactory`).
+* Dev - Removed PHP sessions and used WooCommerce sessions only.
+* Dev - WPFactory Cross-Selling - Library updated (to v1.1.2).
+* Dev - WPFactory Admin Menu - Library updated (to v1.1.1).
+* WC tested up to: 10.9.
+
 = 4.6.7 - 05/06/2026 =
 * Dev - Security - Improved output escaping.
 * Dev - Security - Improved input sanitization.

@@ -30,5 +30,5 @@
 	},
 	"textdomain": "eu-vat-for-woocommerce",
 	"editorScript": "file:./index.js",
-	"viewScript": [ "file:./frontend.js", "alg-wc-eu-vat" ]
+	"viewScript": [ "file:./frontend.js", "wpfactory-wc-eu-vat" ]
 }

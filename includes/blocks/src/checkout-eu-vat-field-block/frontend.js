@@ -23,7 +23,7 @@ registerCheckoutBlock( {
 	component: Block,
 } );
 
-registerPlugin( 'alg-wc-eu-vat-show-zero-vat', {
+registerPlugin( 'wpfactory-wc-eu-vat-show-zero-vat', {
 	render: ZeroVAT,
 	scope: 'woocommerce-checkout',
 } );

@@ -1,7 +1,7 @@
 /**
  * eu-vat-for-woocommerce-checkout-eu-vat-field-block css
  *
- * @version 4.5.6
+ * @version 4.7.0
  *
  * @author  WPFactory
  */
@@ -23,30 +23,30 @@
 	}
 }
 
-#alg_eu_vat_for_woocommerce_field{
+#wpfactory_eu_vat_for_woocommerce_field{
 	display: block;
 	width: 100%;
 }
-div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid input,
-div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch input,
-div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid label,
-div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch label {
+div#wpfactory_eu_vat_for_woocommerce_field.woocommerce-invalid input,
+div#wpfactory_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch input,
+div#wpfactory_eu_vat_for_woocommerce_field.woocommerce-invalid label,
+div#wpfactory_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch label {
 	color: #cc1818;
 }
 
-div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid input,
-div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch input {
+div#wpfactory_eu_vat_for_woocommerce_field.woocommerce-invalid input,
+div#wpfactory_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch input {
 	border-color: #cc1818;
 }
 
-.alg-wc-eu-vat-error-color{
+.wpfactory-wc-eu-vat-error-color{
 	color: #cc1818;
 }
-.alg-wc-eu-vat-valid-color{
+.wpfactory-wc-eu-vat-valid-color{
 	color: #0f834d;
 }
 
-#alg_wc_eu_vat_details {
+#wpfactory_wc_eu_vat_details {
 	ul {
 		list-style: none;
 		margin: 0;
@@ -55,7 +55,7 @@ div#alg_eu_vat_for_woocommerce_field.woocommerce-invalid-mismatch input {
 		display: inline-block;
 	}
 }
-.wc-block-components-totals-wrapper.slot-wrapper .alg-eu-vat-for-woocommerce-zero-vat-wrapper{
+.wc-block-components-totals-wrapper.slot-wrapper .wpfactory-eu-vat-for-woocommerce-zero-vat-wrapper{
 	padding: 16px;
 }
 

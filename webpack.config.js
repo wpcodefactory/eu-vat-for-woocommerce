@@ -5,10 +5,10 @@ const RemoveEmptyScriptsPlugin = require( "webpack-remove-empty-scripts" );
 module.exports = {
 	...defaultConfig,
 	entry: {
-		"js/alg-wc-eu-vat":             "./assets/js/alg-wc-eu-vat.js",
-		"js/alg-wc-eu-vat-confirmo":    "./assets/js/alg-wc-eu-vat-confirmo.js",
-		"js/alg-wc-eu-vat-place-order": "./assets/js/alg-wc-eu-vat-place-order.js",
-		"css/alg-wc-eu-vat-confirmo":   "./assets/css/alg-wc-eu-vat-confirmo.css",
+		"js/wpfactory-wc-eu-vat": "./assets/js/wpfactory-wc-eu-vat.js",
+		"js/wpfactory-wc-eu-vat-confirmo": "./assets/js/wpfactory-wc-eu-vat-confirmo.js",
+		"js/wpfactory-wc-eu-vat-place-order": "./assets/js/wpfactory-wc-eu-vat-place-order.js",
+		"css/wpfactory-wc-eu-vat-confirmo": "./assets/css/wpfactory-wc-eu-vat-confirmo.css",
 	},
 	output: {
 		path: path.resolve( __dirname, "assets/build" ),

@@ -1,7 +1,7 @@
 /**
  * Always show zero VAT.
  *
- * @version 4.5.6
+ * @version 4.7.0
  * @since   4.2.8
  *
  * @see     https://developer.woocommerce.com/docs/cart-and-checkout-available-slots/#0-experimentalordermeta
@@ -18,7 +18,7 @@ export const ZeroVATComponent = ( { cart } ) => {
 				className="
 				wc-block-components-totals-item
 				wc-block-components-totals-footer-item
-				alg-eu-vat-for-woocommerce-zero-vat-wrapper
+				wpfactory-eu-vat-for-woocommerce-zero-vat-wrapper
 				"
 			>
                 <span className="wc-block-components-totals-item__label">

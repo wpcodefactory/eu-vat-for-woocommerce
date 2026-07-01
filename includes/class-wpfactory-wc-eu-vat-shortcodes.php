@@ -1,0 +1,55 @@
+<?php
+/**
+ * Product Quantity for WooCommerce - Shortcodes Class
+ *
+ * @version 4.7.0
+ * @since   1.6.0
+ *
+ * @author  WPFactory
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+if ( ! class_exists( 'WPFactory_WC_EU_VAT_Shortcodes' ) ) :
+
+class WPFactory_WC_EU_VAT_Shortcodes {
+
+	/**
+	 * Constructor.
+	 *
+	 * @version 1.6.0
+	 * @since   1.6.0
+	 */
+	function __construct() {
+		add_shortcode( 'alg_wc_eu_vat_translate', array( $this, 'language_shortcode' ) );
+	}
+
+	/**
+	 * language_shortcode.
+	 *
+	 * @version 4.4.3
+	 * @since   1.4.0
+	 *
+	 * @todo    (dev) `pll_current_language()`?
+	 */
+	function language_shortcode( $atts, $content = '' ) {
+
+		// E.g.: `[alg_wc_eu_vat_translate lang="DE,NL" lang_text="EU-Steuernummer" not_lang_text="EU VAT Number"]`
+		if ( isset( $atts['lang_text'] ) && isset( $atts['not_lang_text'] ) && ! empty( $atts['lang'] ) ) {
+			return ( ! defined( 'ICL_LANGUAGE_CODE' ) || ! in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['lang'] ) ) ) ) ) ?
+				wp_kses_post( $atts['not_lang_text'] ) : wp_kses_post( $atts['lang_text'] );
+		}
+
+		// E.g.: `[alg_wc_eu_vat_translate lang="DE"]EU-Steuernummer[/alg_wc_eu_vat_translate][alg_wc_eu_vat_translate lang="NL"]BTW nummer van de EU[/alg_wc_eu_vat_translate][alg_wc_eu_vat_translate not_lang="DE,NL"]EU VAT Number[/alg_wc_eu_vat_translate]`
+		return (
+			( ! empty( $atts['lang'] )     && ( ! defined( 'ICL_LANGUAGE_CODE' ) || ! in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['lang'] ) ) ) ) ) ) ||
+			( ! empty( $atts['not_lang'] ) &&     defined( 'ICL_LANGUAGE_CODE' ) &&   in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['not_lang'] ) ) ) ) )
+		) ? '' : wp_kses_post( $content );
+
+	}
+
+}
+
+endif;
+
+return new WPFactory_WC_EU_VAT_Shortcodes();

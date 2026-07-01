@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.6.4
+ * @version 4.7.0
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -14,22 +14,26 @@ import { extensionCartUpdate } from '@woocommerce/blocks-checkout';
 import { getSetting } from '@woocommerce/settings';
 import { debounce } from 'lodash';
 
-const alg_wc_eu_vat_ajax_object = window.alg_wc_eu_vat_ajax_object || {};
+const wpfactory_wc_eu_vat_object = window.wpfactory_wc_eu_vat_ajax_object || {};
 const {
-	do_show_hide_by_billing_company,
+	add_progress_text,
+	action_trigger,
+	progress_text_validating,
 	is_required,
-	optional_text
-} = alg_wc_eu_vat_ajax_object;
+	optional_text,
+	show_vat_details,
+	do_show_hide_by_billing_company,
+} = wpfactory_wc_eu_vat_object;
 const VAT_SETTINGS = getSetting( 'eu-vat-for-woocommerce_data', {} );
 const {
-	alg_wc_eu_vat_field_id: VAT_FIELD_ID,
-	alg_wc_eu_customer_decide_field_id: CUSTOMER_DECIDE_FIELD_ID,
-	alg_wc_eu_valid_vat_but_not_exempted_field_id: NOT_EXEMPTED_FIELD_ID,
-	alg_wc_eu_vat_field_position_id: VAT_FIELD_POSITION_ID,
-	get_show_in_countries: VAT_FIELD_SHOW_IN_COUNTRIES
+	eu_vat_field_id: VAT_FIELD_ID,
+	eu_vat_customer_decide_field_id: CUSTOMER_DECIDE_FIELD_ID,
+	eu_vat_valid_vat_but_not_exempted_field_id: NOT_EXEMPTED_FIELD_ID,
+	eu_vat_field_position_id: VAT_FIELD_POSITION_ID,
+	eu_vat_get_show_in_countries: VAT_FIELD_SHOW_IN_COUNTRIES
 } = VAT_SETTINGS;
 const SAME_FOR_BILLING_SELECTOR = '.wc-block-checkout__use-address-for-billing input[type="checkbox"]';
-const VAT_DETAILS_CONTAINER_ID = 'alg_eu_vat_for_woocommerce_field';
+const VAT_DETAILS_CONTAINER_ID = 'wpfactory_eu_vat_for_woocommerce_field';
 
 /**
  * DOM Utilities
@@ -101,7 +105,7 @@ const moveVatFieldOnce = () => {
 /**
  * createVatInformationContainer.
  *
- * @version 4.5.8
+ * @version 4.7.0
  * @since   4.5.6
  */
 const createVatInformationContainer = ( vatNumber, billingCountry ) => {
@@ -112,16 +116,16 @@ const createVatInformationContainer = ( vatNumber, billingCountry ) => {
 
 	const wrapper = document.createElement( 'div' );
 	wrapper.id = VAT_DETAILS_CONTAINER_ID;
-	wrapper.className = 'alg-eu-vat-for-woocommerce-fields';
+	wrapper.className = 'wpfactory-eu-vat-for-woocommerce-fields';
 	wrapper.innerHTML = `
 		${
-		alg_wc_eu_vat_ajax_object.add_progress_text === 'yes' ?
-			'<div id="alg_wc_eu_vat_progress"></div>' :
+		add_progress_text === 'yes' ?
+			'<div id="wpfactory_wc_eu_vat_progress"></div>' :
 			''
 		}
 		${
-		alg_wc_eu_vat_ajax_object.show_vat_details === 'yes' ?
-			'<div id="alg_wc_eu_vat_details"></div>' :
+		show_vat_details === 'yes' ?
+			'<div id="wpfactory_wc_eu_vat_details"></div>' :
 			''
 		}
 		<div id="custom-checkout"></div>
@@ -140,9 +144,9 @@ const createVatInformationContainer = ( vatNumber, billingCountry ) => {
 /**
  * createVatInformationContainer.
  *
- * @version 4.6.2
+ * @version 4.7.0
  */
-const algWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
+const wpfactoryWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 
 	const same_billing_shipping = DOMUtils.isUseBillingChecked() ? 'yes' : 'no';
 
@@ -154,11 +158,11 @@ const algWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 	const vat_customer_decide = DOMUtils.getCustomerDecideField()?.checked ?? false;
 	const vat_valid_but_not_exempted = DOMUtils.getNoExemptedField()?.checked ?? false;
 
-	const progress = document.getElementById( 'alg_wc_eu_vat_progress' );
+	const progress = document.getElementById( 'wpfactory_wc_eu_vat_progress' );
 	const eu_vat_field = DOMUtils.getVatField();
 	const place_order_button = document.querySelector( '.wc-block-components-checkout-place-order-button' );
 	const previous_country = document.getElementById( 'store_previous_country' );
-	const vatDetailsDiv = document.getElementById( 'alg_wc_eu_vat_details' );
+	const vatDetailsDiv = document.getElementById( 'wpfactory_wc_eu_vat_details' );
 
 	if ( ! place_order_button ) {
 		return;
@@ -173,13 +177,13 @@ const algWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 	}
 
 	if ( progress ) {
-		progress.innerHTML = alg_wc_eu_vat_ajax_object.progress_text_validating;
-		progress.className = 'alg-wc-eu-vat-validating';
+		progress.innerHTML = progress_text_validating;
+		progress.className = 'wpfactory-wc-eu-vat-validating';
 	}
 
 	try {
 		const cart = await extensionCartUpdate( {
-			namespace: 'alg-wc-eu-vat-extension-namespace',
+			namespace: 'wpfactory-wc-eu-vat-extension-namespace',
 			data: {
 				vat_number,
 				vat_customer_decide,
@@ -192,7 +196,7 @@ const algWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 			},
 		} );
 
-		const data = cart?.extensions?.['eu-vat-for-woocommerce-block-example']?.alg_eu_vat_validation;
+		const data = cart?.extensions?.['eu-vat-for-woocommerce-block-example']?.wpfactory_eu_vat_validation;
 
 		if ( ! data ) {
 			if ( progress ) {
@@ -206,11 +210,11 @@ const algWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 		if ( isValidation ) {
 			eu_vat_field.classList.add( 'woocommerce-validated' );
 			eu_vat_field.closest( 'div' ).classList.remove( 'has-error' );
-			cssClasses.push( 'alg-wc-eu-vat-valid', 'alg-wc-eu-vat-valid-color' );
+			cssClasses.push( 'wpfactory-wc-eu-vat-valid', 'wpfactory-wc-eu-vat-valid-color' );
 		} else {
 			eu_vat_field.classList.add( 'woocommerce-invalid' );
 			eu_vat_field.closest( 'div' ).classList.add( 'has-error' );
-			cssClasses.push( 'alg-wc-eu-vat-not-valid', 'alg-wc-eu-vat-error-color' );
+			cssClasses.push( 'wpfactory-wc-eu-vat-not-valid', 'wpfactory-wc-eu-vat-error-color' );
 		}
 		if ( progress ) {
 			progress.textContent = data.messages;
@@ -231,14 +235,14 @@ const algWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 		previous_country.value = billing_country;
 	} catch ( error ) {
 		if ( progress ) {
-			progress.textContent = alg_wc_eu_vat_ajax_object.progress_text_error ?? 'Validation error.';
-			progress.className = 'alg-wc-eu-vat-error-color';
+			progress.textContent = progress_text_error ?? 'Validation error.';
+			progress.className = 'wpfactory-wc-eu-vat-error-color';
 		}
 	} finally {
 		place_order_button.disabled = false;
 	}
 };
-export {algWcBlockEuVatValidateVat};
+export {wpfactoryWcBlockEuVatValidateVat};
 
 /**
  * Block.
@@ -274,7 +278,7 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 
 		const currentValue = vatField.value;
 
-		algWcBlockEuVatValidateVat( currentValue, true );
+		wpfactoryWcBlockEuVatValidateVat( currentValue, true );
 	}, [hideVat] );
 
 	/**
@@ -321,7 +325,7 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 		moveVatFieldOnce();
 		createVatInformationContainer( vatField, billingAddress.country );
 
-		const trigger = alg_wc_eu_vat_ajax_object.action_trigger ?? 'onblur';
+		const trigger = action_trigger ?? 'onblur';
 		const triggerType = trigger === 'onblur' ? 'blur' : 'input';
 
 		vatField.addEventListener( triggerType, triggerValidation );
@@ -408,7 +412,7 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 		setHideVat( countryAllowed || companyCheck || customerDecideField );
 
 		if ( is_required === 'yes_for_company' ) {
-			const progress = document.getElementById( 'alg_wc_eu_vat_progress' );
+			const progress = document.getElementById( 'wpfactory_wc_eu_vat_progress' );
 			const vatField = DOMUtils.getVatField();
 			if ( ! vatField ) {
 				return;

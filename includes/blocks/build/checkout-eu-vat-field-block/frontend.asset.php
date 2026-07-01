@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('lodash', 'react', 'wc-blocks-checkout', 'wc-blocks-data-store', 'wc-settings', 'wp-data', 'wp-element', 'wp-i18n', 'wp-plugins'), 'version' => '6c8f1602b28924f7bc2a');
+<?php return array('dependencies' => array('lodash', 'react', 'wc-blocks-checkout', 'wc-blocks-data-store', 'wc-settings', 'wp-data', 'wp-element', 'wp-i18n', 'wp-plugins'), 'version' => 'ec7df8a246b783011fe5');
