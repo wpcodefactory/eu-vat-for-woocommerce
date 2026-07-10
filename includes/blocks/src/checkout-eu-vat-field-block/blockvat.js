@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -105,7 +105,7 @@ const moveVatFieldOnce = () => {
 /**
  * createVatInformationContainer.
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   4.5.6
  */
 const createVatInformationContainer = ( vatNumber, billingCountry ) => {
@@ -128,11 +128,10 @@ const createVatInformationContainer = ( vatNumber, billingCountry ) => {
 			'<div id="wpfactory_wc_eu_vat_details"></div>' :
 			''
 		}
-		<div id="custom-checkout"></div>
 		<input
 			type="hidden"
-			id="store_previous_country"
-			name="store_previous_country"
+			id="wpfactory_wc_eu_vat_previous_country"
+			name="wpfactory_wc_eu_vat_previous_country"
 			value="${billingCountry}"
 		/>
 	`;
@@ -140,11 +139,10 @@ const createVatInformationContainer = ( vatNumber, billingCountry ) => {
 	vatNumber.closest( 'div' ).insertAdjacentElement( 'afterend', wrapper );
 }
 
-
 /**
  * createVatInformationContainer.
  *
- * @version 4.7.0
+ * @version 4.7.1
  */
 const wpfactoryWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 
@@ -161,7 +159,7 @@ const wpfactoryWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 	const progress = document.getElementById( 'wpfactory_wc_eu_vat_progress' );
 	const eu_vat_field = DOMUtils.getVatField();
 	const place_order_button = document.querySelector( '.wc-block-components-checkout-place-order-button' );
-	const previous_country = document.getElementById( 'store_previous_country' );
+	const previous_country = document.getElementById( 'wpfactory_wc_eu_vat_previous_country' );
 	const vatDetailsDiv = document.getElementById( 'wpfactory_wc_eu_vat_details' );
 
 	if ( ! place_order_button ) {

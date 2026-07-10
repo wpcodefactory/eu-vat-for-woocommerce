@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -448,7 +448,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * add_place_order_button_confirmation_script.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.1
 	 * @since   1.4.1
 	 */
 	function add_place_order_button_confirmation_script() {
@@ -464,7 +464,7 @@ class WPFactory_WC_EU_VAT_Core {
 			);
 			wp_localize_script(
 				'wpfactory-wc-eu-vat-place-order',
-				'place_order_data',
+				'wpfactory_wc_eu_vat_place_order_data',
 				array(
 					'confirmation_text' => do_shortcode(
 						get_option(

@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 4.7.1 - 10/07/2026 =
+* Dev - Added plugin prefix to JavaScript object, AJAX action names, etc.
+
 = 4.7.0 - 01/07/2026 =
 * Dev - Prefixes updated (from `alg` to `wpfactory`).
 * Dev - Removed PHP sessions and used WooCommerce sessions only.

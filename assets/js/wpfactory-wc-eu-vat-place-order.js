@@ -1,18 +1,19 @@
 /**
  * wpfactory-wc-eu-vat-place-order.js
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   1.4.1
  *
  * @author  WPFactory
  *
  * @todo    (dev) also `return false;` when not confirmed?
  */
+
 jQuery( function ( $ ) {
 	'use strict';
 
-	const VAT_FIELD = place_order_data.vatField;
-	const BUTTON_SELECTOR = place_order_data.buttonSelector;
+	const VAT_FIELD = wpfactory_wc_eu_vat_place_order_data.vatField;
+	const BUTTON_SELECTOR = wpfactory_wc_eu_vat_place_order_data.buttonSelector;
 	const BUTTON_WRAPPER_CLASS = 'wpfactory-wc-eu-vat-checkout-button-wrapper';
 	const BUTTON_WRAPPER_SELECTOR = '.' + BUTTON_WRAPPER_CLASS;
 	const OVERLAY_CLASS = 'wpfactory-wc-eu-vat-checkout-button-overlay';
@@ -63,14 +64,14 @@ jQuery( function ( $ ) {
 				}
 
 				confirmo.init( {
-					yesBg: place_order_data.yesBg,
-					noBg: place_order_data.noBg,
-					leftText: place_order_data.yes_text,
-					rightText: place_order_data.no_text,
+					yesBg: wpfactory_wc_eu_vat_place_order_data.yesBg,
+					noBg: wpfactory_wc_eu_vat_place_order_data.noBg,
+					leftText: wpfactory_wc_eu_vat_place_order_data.yes_text,
+					rightText: wpfactory_wc_eu_vat_place_order_data.no_text,
 				} );
 
 				confirmo.show( {
-					msg: place_order_data.confirmation_text,
+					msg: wpfactory_wc_eu_vat_place_order_data.confirmation_text,
 					callback_yes: function () {
 						yn_status = true;
 						$( '#place_order' ).click();
@@ -111,14 +112,14 @@ jQuery( function ( $ ) {
 					e.stopImmediatePropagation();
 
 					confirmo.init( {
-						yesBg: place_order_data.yesBg,
-						noBg: place_order_data.noBg,
-						leftText: place_order_data.yes_text,
-						rightText: place_order_data.no_text,
+						yesBg: wpfactory_wc_eu_vat_place_order_data.yesBg,
+						noBg: wpfactory_wc_eu_vat_place_order_data.noBg,
+						leftText: wpfactory_wc_eu_vat_place_order_data.yes_text,
+						rightText: wpfactory_wc_eu_vat_place_order_data.no_text,
 					} );
 
 					confirmo.show( {
-						msg: place_order_data.confirmation_text,
+						msg: wpfactory_wc_eu_vat_place_order_data.confirmation_text,
 
 						callback_yes: function () {
 							yn_status = true;
@@ -182,14 +183,14 @@ jQuery( function ( $ ) {
 				}
 
 				confirmo.init( {
-					yesBg: place_order_data.yesBg,
-					noBg: place_order_data.noBg,
-					leftText: place_order_data.yes_text,
-					rightText: place_order_data.no_text,
+					yesBg: wpfactory_wc_eu_vat_place_order_data.yesBg,
+					noBg: wpfactory_wc_eu_vat_place_order_data.noBg,
+					leftText: wpfactory_wc_eu_vat_place_order_data.yes_text,
+					rightText: wpfactory_wc_eu_vat_place_order_data.no_text,
 				} );
 
 				confirmo.show( {
-					msg: place_order_data.confirmation_text,
+					msg: wpfactory_wc_eu_vat_place_order_data.confirmation_text,
 					callback_yes: function () {
 						yn_status = true;
 						$overlay.remove();

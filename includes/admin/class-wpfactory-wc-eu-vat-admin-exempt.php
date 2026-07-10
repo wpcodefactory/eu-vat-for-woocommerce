@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Exempt VAT from Admin
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -17,7 +17,7 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.7.1
 	 * @since   4.0.0
 	 */
 	function __construct() {
@@ -30,8 +30,8 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 		add_action( 'admin_footer', array( $this, 'add_js'), PHP_INT_MAX );
 
 		// AJAX
-		add_action( 'wp_ajax_'        . 'exempt_vat_from_admin', array( $this, 'ajax' ) );
-		add_action( 'wp_ajax_nopriv_' . 'exempt_vat_from_admin', array( $this, 'ajax' ) );
+		add_action( 'wp_ajax_'        . 'wpfactory_wc_eu_vat_exempt_vat_from_admin', array( $this, 'ajax' ) );
+		add_action( 'wp_ajax_nopriv_' . 'wpfactory_wc_eu_vat_exempt_vat_from_admin', array( $this, 'ajax' ) );
 
 	}
 
@@ -52,7 +52,7 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 	/**
 	 * add_button.
 	 *
-	 * @version 4.0.0
+	 * @version 4.7.1
 	 * @since   2.9.13
 	 */
 	function add_button( $order ) {
@@ -66,9 +66,9 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 		}
 
 		echo '<button' .
-			' id="exempt_vat_from_admin"' .
+			' id="wpfactory_wc_eu_vat_exempt_vat_from_admin"' .
 			' type="button"' .
-			' class="button exempt_vat_from_admin button-primary"' .
+			' class="button wpfactory_wc_eu_vat_exempt_vat_from_admin button-primary"' .
 			' data-status="' . esc_attr( $exempt ) . '"' .
 			' data-order_id="' . esc_attr( $order->get_id() ) . '"' .
 		'>' .
@@ -80,14 +80,14 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 	/**
 	 * add_js.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.1
 	 * @since   1.7.0
 	 */
 	function add_js() {
 		$nonce = wp_create_nonce( 'wpfacotry-wc-eu-vat-ajax-nonce' );
 		?>
 		<script type="text/javascript">
-			jQuery( 'body' ).on( 'click', '.exempt_vat_from_admin', function () {
+			jQuery( 'body' ).on( 'click', '.wpfactory_wc_eu_vat_exempt_vat_from_admin', function () {
 				jQuery( '#woocommerce-order-items' ).block( {
 					message: null,
 					overlayCSS: {
@@ -99,7 +99,7 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 				var order_id = jQuery( this ).data( 'order_id' );
 				var status = jQuery( this ).data( 'status' );
 				var data = {
-					action: 'exempt_vat_from_admin',
+					action: 'wpfactory_wc_eu_vat_exempt_vat_from_admin',
 					order_id: order_id,
 					status: status,
 					nonce: '<?php echo esc_js( $nonce ); ?>'
