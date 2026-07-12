@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 4.7.2 - 12/07/2026 =
+* readme.txt improved.
+
 = 4.7.1 - 10/07/2026 =
 * Dev - Added plugin prefix to JavaScript object, AJAX action names, etc.
 
