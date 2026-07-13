@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli, ae
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 7.0
-Stable tag: 4.7.2
+Stable tag: 4.7.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -254,7 +254,7 @@ WPFactory has a diverse range of plugins tailored to enhance your experience, so
 
 The complete source code and build tools for this plugin are available at:
 
-https://github.com/wpcodefactory/eu-vat-for-woocommerce
+[https://github.com/wpcodefactory/eu-vat-for-woocommerce](https://github.com/wpcodefactory/eu-vat-for-woocommerce)
 
 The source files used to generate the compiled assets are located in:
 
@@ -392,6 +392,10 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.7.3 - 13/07/2026 =
+* Dev - Added a capability check before validating VAT and removing order taxes in the admin.
+* Dev - Added a capability check before updating order VAT details in the admin.
 
 = 4.7.2 - 12/07/2026 =
 * readme.txt improved.

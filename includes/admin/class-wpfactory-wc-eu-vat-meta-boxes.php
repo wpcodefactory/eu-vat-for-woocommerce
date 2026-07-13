@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Meta Boxes
  *
- * @version 4.7.0
+ * @version 4.7.3
  * @since   4.2.0
  *
  * @author  WPFactory
@@ -21,7 +21,6 @@ class WPFactory_WC_EU_VAT_Meta_Boxes {
 	 * @since   4.2.0
 	 */
 	function __construct() {
-
 		// EU VAT number summary on order edit page
 		if ( 'yes' === get_option( 'alg_wc_eu_vat_add_order_edit_metabox', 'no' ) ) {
 
@@ -38,55 +37,63 @@ class WPFactory_WC_EU_VAT_Meta_Boxes {
 
 		// Popup metabox
 		add_action( 'add_meta_boxes', array( $this, 'add_popup_order_meta_box' ) );
-
 	}
 
 	/**
-	 * Update the order vat details.
+	 * Update the order VAT details.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.3
 	 * @since   4.0.0
 	 */
 	function get_vat_details() {
-		if ( isset( $_GET['get_vat_details'], $_GET['number'], $_GET['country'] ) ) {
+		if ( ! isset( $_GET['get_vat_details'], $_GET['number'], $_GET['country'] ) ) {
+			return;
+		}
 
-			if (
-				! isset( $_GET['nonce'] ) ||
-				! wp_verify_nonce(
-					sanitize_text_field( wp_unslash( $_GET['nonce'] ) ),
-					'wpfactory_wc_eu_vat_get_details'
-				)
-			) {
-				wp_die(
-					esc_html__(
-						'Nonce not found or not verified.',
-						'eu-vat-for-woocommerce'
-					)
-				);
-			}
-
-			$order_id      = absint( $_GET['get_vat_details'] );
-			$vat_number    = sanitize_text_field( wp_unslash( $_GET['number'] ) );
-			$country       = sanitize_text_field( wp_unslash( $_GET['country'] ) );
-			$eu_vat_number = wpfactory_wc_eu_vat_parse_vat( $vat_number, $country );
-			$is_valid      = wpfactory_wc_eu_vat_validate_vat( $eu_vat_number['country'], $eu_vat_number['number'] );
-			if ( $is_valid ) {
-				$vat_response_data = wpfactory_wc_eu_vat()->core->vat_details_data;
-				$order = wc_get_order( $order_id );
-				if ( $order ) {
-					$order->update_meta_data( wpfactory_wc_eu_vat_get_field_id() . '_details', $vat_response_data );
-					$order->save();
-				}
-			}
-			wp_safe_redirect(
-				add_query_arg(
-					'wpfactory_wc_eu_vat_details_result',
-					( $is_valid ? 'success' : 'error' ),
-					remove_query_arg( array( 'get_vat_details', 'country', 'number' ) )
+		// Nonce
+		if (
+			! isset( $_GET['nonce'] ) ||
+			! wp_verify_nonce(
+				sanitize_text_field( wp_unslash( $_GET['nonce'] ) ),
+				'wpfactory_wc_eu_vat_get_details'
+			)
+		) {
+			wp_die(
+				esc_html__(
+					'Nonce not found or not verified.',
+					'eu-vat-for-woocommerce'
 				)
 			);
-			exit;
 		}
+
+		// User capabilities
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die( esc_html__( 'Insufficient user capabilities.', 'eu-vat-for-woocommerce' ) );
+		}
+
+		$order_id      = absint( $_GET['get_vat_details'] );
+		$vat_number    = sanitize_text_field( wp_unslash( $_GET['number'] ) );
+		$country       = sanitize_text_field( wp_unslash( $_GET['country'] ) );
+		$eu_vat_number = wpfactory_wc_eu_vat_parse_vat( $vat_number, $country );
+		$is_valid      = wpfactory_wc_eu_vat_validate_vat( $eu_vat_number['country'], $eu_vat_number['number'] );
+
+		if ( $is_valid ) {
+			$vat_response_data = wpfactory_wc_eu_vat()->core->vat_details_data;
+			$order = wc_get_order( $order_id );
+			if ( $order ) {
+				$order->update_meta_data( wpfactory_wc_eu_vat_get_field_id() . '_details', $vat_response_data );
+				$order->save();
+			}
+		}
+
+		wp_safe_redirect(
+			add_query_arg(
+				'wpfactory_wc_eu_vat_details_result',
+				( $is_valid ? 'success' : 'error' ),
+				remove_query_arg( array( 'get_vat_details', 'country', 'number' ) )
+			)
+		);
+		exit;
 	}
 
 	/**
@@ -186,7 +193,6 @@ class WPFactory_WC_EU_VAT_Meta_Boxes {
 	 * @todo    (dev) add country flag?
 	 */
 	function output_meta_box_data( $object, $do_return_table_data = false ) {
-
 		$_order = is_a( $object, 'WP_Post' ) ? wc_get_order( $object->ID ) : $object;
 
 		$_customer_ip_address = ( wpfactory_wc_eu_vat()->core->is_wc_version_below_3_0_0 ? $_order->customer_ip_address : $_order->get_customer_ip_address() );
@@ -315,13 +321,12 @@ class WPFactory_WC_EU_VAT_Meta_Boxes {
 				esc_html__( 'Get VAT details', 'eu-vat-for-woocommerce' ) .
 			'</a>' .
 		'</p>';
-
 	}
 
 	/**
 	 * validate_vat_and_maybe_remove_taxes.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.3
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) Remove taxes: remove and instead do `$order->calculate_totals()` (after setting `is_vat_exempt` to `yes`)
@@ -329,11 +334,11 @@ class WPFactory_WC_EU_VAT_Meta_Boxes {
 	 * @todo    (dev) `wpfactory_wc_eu_vat()->core->eu_vat_response_data`: clear after use?
 	 */
 	function validate_vat_and_maybe_remove_taxes() {
-
 		if ( ! isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
 			return;
 		}
 
+		// Nonce
 		if (
 			! isset( $_GET['nonce'] ) ||
 			! wp_verify_nonce(
@@ -349,65 +354,73 @@ class WPFactory_WC_EU_VAT_Meta_Boxes {
 			);
 		}
 
+		// User capabilities
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_die( esc_html__( 'Insufficient user capabilities.', 'eu-vat-for-woocommerce' ) );
+		}
+
 		$preserve_countries           = wpfactory_wc_eu_vat()->core->eu_vat_ajax_instance->get_preserve_countries();
 		$preserve_countries_condition = false;
 
 		$order_id = sanitize_text_field( wp_unslash( $_GET['validate_vat_and_maybe_remove_taxes'] ) );
-		$order    = wc_get_order( $order_id );
+		if ( ! $order_id ) {
+			wp_die( esc_html__( 'Invalid order ID.', 'eu-vat-for-woocommerce' ) );
+		}
 
-		if ( $order ) {
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			wp_die( esc_html__( 'Invalid order.', 'eu-vat-for-woocommerce' ) );
+		}
 
-			$vat_id          = $order->get_meta( '_' . wpfactory_wc_eu_vat_get_field_id() );
-			$billing_company = $order->get_billing_company();
+		$vat_id          = $order->get_meta( '_' . wpfactory_wc_eu_vat_get_field_id() );
+		$billing_company = $order->get_billing_company();
 
-			if ( '' != $vat_id ) {
+		if ( '' != $vat_id ) {
 
-				$eu_vat_number = wpfactory_wc_eu_vat_parse_vat( $vat_id, $order->get_billing_country() );
+			$eu_vat_number = wpfactory_wc_eu_vat_parse_vat( $vat_id, $order->get_billing_country() );
 
-				if ( ! empty( $preserve_countries ) ) {
-					if ( in_array( $eu_vat_number['country'], $preserve_countries ) ) {
-						$preserve_countries_condition = true;
-					}
+			if ( ! empty( $preserve_countries ) ) {
+				if ( in_array( $eu_vat_number['country'], $preserve_countries ) ) {
+					$preserve_countries_condition = true;
+				}
+			}
+
+			if (
+				! $preserve_countries_condition &&
+				wpfactory_wc_eu_vat_validate_vat(
+					$eu_vat_number['country'],
+					$eu_vat_number['number'],
+					$billing_company
+				)
+			) {
+
+				// Remove taxes
+				foreach ( $order->get_items( array( 'line_item', 'fee' ) ) as $item_id => $item ) {
+					$item->set_taxes( false );
+				}
+				foreach ( $order->get_shipping_methods() as $item_id => $item ) {
+					$item->set_taxes( false );
+				}
+				$order->update_taxes();
+				$order->calculate_totals( false );
+
+				// "VAT exempt" meta
+				$order->update_meta_data( 'is_vat_exempt', 'yes' );
+
+				// Request Identifier
+				$vat_response_data = wpfactory_wc_eu_vat()->core->eu_vat_response_data;
+				if ( isset( $vat_response_data->requestIdentifier ) ) {
+					$order->update_meta_data(
+						apply_filters(
+							'alg_wc_eu_vat_request_identifier_meta_key',
+							wpfactory_wc_eu_vat_get_field_id() . '_request_identifier'
+						),
+						$vat_response_data->requestIdentifier
+					);
 				}
 
-				if (
-					! $preserve_countries_condition &&
-					wpfactory_wc_eu_vat_validate_vat(
-						$eu_vat_number['country'],
-						$eu_vat_number['number'],
-						$billing_company
-					)
-				) {
-
-					// Remove taxes
-					foreach ( $order->get_items( array( 'line_item', 'fee' ) ) as $item_id => $item ) {
-						$item->set_taxes( false );
-					}
-					foreach ( $order->get_shipping_methods() as $item_id => $item ) {
-						$item->set_taxes( false );
-					}
-					$order->update_taxes();
-					$order->calculate_totals( false );
-
-					// "VAT exempt" meta
-					$order->update_meta_data( 'is_vat_exempt', 'yes' );
-
-					// Request Identifier
-					$vat_response_data = wpfactory_wc_eu_vat()->core->eu_vat_response_data;
-					if ( isset( $vat_response_data->requestIdentifier ) ) {
-						$order->update_meta_data(
-							apply_filters(
-								'alg_wc_eu_vat_request_identifier_meta_key',
-								wpfactory_wc_eu_vat_get_field_id() . '_request_identifier'
-							),
-							$vat_response_data->requestIdentifier
-						);
-					}
-
-					// Save updated meta
-					$order->save();
-
-				}
+				// Save updated meta
+				$order->save();
 
 			}
 
@@ -416,7 +429,6 @@ class WPFactory_WC_EU_VAT_Meta_Boxes {
 		// Redirect
 		wp_safe_redirect( remove_query_arg( 'validate_vat_and_maybe_remove_taxes' ) );
 		exit;
-
 	}
 
 }

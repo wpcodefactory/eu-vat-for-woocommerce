@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.7.3 - 13/07/2026 =
+* Dev - Added a capability check before validating VAT and removing order taxes in the admin.
+* Dev - Added a capability check before updating order VAT details in the admin.
+
 = 4.7.2 - 12/07/2026 =
 * readme.txt improved.
 

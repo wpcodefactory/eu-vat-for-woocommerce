@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.7.2\n"
+"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.7.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-12T12:02:42+00:00\n"
+"POT-Creation-Date: 2026-07-13T19:37:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
@@ -39,15 +39,15 @@ msgstr ""
 msgid "https://wpfactory.com/"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-admin-exempt.php:62
+#: includes/admin/class-wpfactory-wc-eu-vat-admin-exempt.php:61
 msgid "Impose VAT"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-admin-exempt.php:65
+#: includes/admin/class-wpfactory-wc-eu-vat-admin-exempt.php:64
 msgid "Exempt VAT"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-admin-exempt.php:141
+#: includes/admin/class-wpfactory-wc-eu-vat-admin-exempt.php:138
 msgid "Something went wrong."
 msgstr ""
 
@@ -55,7 +55,7 @@ msgstr ""
 #: includes/admin/class-wpfactory-wc-eu-vat-admin.php:113
 #: includes/admin/class-wpfactory-wc-eu-vat-admin.php:122
 #: includes/admin/class-wpfactory-wc-eu-vat-admin.php:268
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:160
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:167
 #: includes/class-wpfactory-wc-eu-vat.php:235
 #: includes/settings/class-wpfactory-wc-eu-vat-settings.php:26
 msgid "EU VAT"
@@ -113,7 +113,7 @@ msgid "Yes"
 msgstr ""
 
 #: includes/admin/class-wpfactory-wc-eu-vat-admin.php:263
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:228
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:234
 msgid "Taxes"
 msgstr ""
 
@@ -202,70 +202,84 @@ msgstr ""
 msgid "Current standard tax rates"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:61
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:345
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:62
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:350
 msgid "Nonce not found or not verified."
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:105
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:71
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:359
+#: includes/class-wpfactory-wc-eu-vat-customer-meta-field.php:106
+msgid "Insufficient user capabilities."
+msgstr ""
+
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:112
 msgid "VAT details have been updated successfully."
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:106
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:113
 msgid "VAT details update failed. Please set a valid valid VAT number."
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:123
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:130
 msgid "Check VAT Number"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:140
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:147
 msgid "Open VIES"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:216
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:222
 msgid "Customer IP"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:220
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:226
 msgid "Country by IP"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:224
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:230
 msgid "Customer EU VAT Number"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:240
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:246
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:929
 msgid "Business Name"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:244
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:250
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:932
 msgid "Business Address"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:248
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:254
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:935
 msgid "Country Code"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:252
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:258
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:938
 msgid "VAT Number"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:271
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:277
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-advanced.php:138
 msgid "Request Identifier"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:303
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:309
 msgid "Validate VAT and remove taxes"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:315
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:321
 msgid "Get VAT details"
+msgstr ""
+
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:367
+msgid "Invalid order ID."
+msgstr ""
+
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:372
+msgid "Invalid order."
 msgstr ""
 
 #: includes/admin/class-wpfactory-wc-eu-vat-wc-report.php:47
@@ -440,10 +454,6 @@ msgstr ""
 
 #: includes/class-wpfactory-wc-eu-vat-customer-meta-field.php:101
 msgid "Link expired."
-msgstr ""
-
-#: includes/class-wpfactory-wc-eu-vat-customer-meta-field.php:106
-msgid "Insufficient user capabilities."
 msgstr ""
 
 #: includes/class-wpfactory-wc-eu-vat-customer-meta-field.php:114

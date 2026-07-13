@@ -21,9 +21,10 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 	 * @since   4.0.0
 	 */
 	function __construct() {
-
+		// Exempt
 		add_filter( 'woocommerce_order_is_vat_exempt', array( $this, 'exempt'), PHP_INT_MAX, 2 );
 
+		// Add button
 		add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'add_button'), PHP_INT_MAX );
 
 		// JS
@@ -32,7 +33,6 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 		// AJAX
 		add_action( 'wp_ajax_'        . 'wpfactory_wc_eu_vat_exempt_vat_from_admin', array( $this, 'ajax' ) );
 		add_action( 'wp_ajax_nopriv_' . 'wpfactory_wc_eu_vat_exempt_vat_from_admin', array( $this, 'ajax' ) );
-
 	}
 
 	/**
@@ -56,7 +56,6 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 	 * @since   2.9.13
 	 */
 	function add_button( $order ) {
-
 		if ( 'yes' === $order->get_meta( 'exempt_vat_from_admin' ) ) {
 			$exempt = 'yes';
 			$title  = __( 'Impose VAT', 'eu-vat-for-woocommerce' );
@@ -74,7 +73,6 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 		'>' .
 			esc_html( $title ) .
 		'</button>';
-
 	}
 
 	/**
@@ -129,7 +127,6 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 	 * @todo    (dev) reload page?
 	 */
 	function ajax( $param ) {
-
 		if (
 			! current_user_can( 'manage_woocommerce' ) ||
 			! isset( $_POST['nonce'] ) ||
@@ -159,7 +156,6 @@ class WPFactory_WC_EU_VAT_Admin_Exempt {
 		}
 		echo 'never';
 		die;
-
 	}
 
 }
