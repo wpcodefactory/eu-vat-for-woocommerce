@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.7.0
+ * @version 4.7.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -156,7 +156,7 @@ class WPFactory_WC_EU_VAT_AJAX {
 	/**
 	 * ajax_vat_validate.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.4
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `if ( ! isset( $_POST['wpfactory_wc_eu_vat_validate_action'] ) ) return;`?
@@ -192,8 +192,6 @@ class WPFactory_WC_EU_VAT_AJAX {
 			'vat_valid_but_not_exempted' => $vat_valid_but_not_exempted,
 		);
 
-		// The session cookie is no longer force-started on every page load;
-		// make sure it exists here so the validation result persists.
 		wpfactory_wc_eu_vat_session_start();
 
 		wpfactory_wc_eu_vat_session_set(

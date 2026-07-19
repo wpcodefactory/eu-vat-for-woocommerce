@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.7.3\n"
+"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.7.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-13T19:37:27+00:00\n"
+"POT-Creation-Date: 2026-07-19T18:26:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
@@ -322,13 +322,13 @@ msgstr ""
 msgid "No taxes found in this period"
 msgstr ""
 
-#: includes/blocks/class-wpfactory-wc-eu-vat-checkout-block.php:200
+#: includes/blocks/class-wpfactory-wc-eu-vat-checkout-block.php:203
 #: includes/class-wpfactory-wc-eu-vat-core.php:547
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-general.php:317
 msgid "I don't have a VAT ID"
 msgstr ""
 
-#: includes/blocks/class-wpfactory-wc-eu-vat-checkout-block.php:214
+#: includes/blocks/class-wpfactory-wc-eu-vat-checkout-block.php:217
 #: includes/class-wpfactory-wc-eu-vat-core.php:572
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-general.php:348
 msgid "I have a valid VAT but not exempted"
@@ -361,89 +361,89 @@ msgid "No"
 msgstr ""
 
 #. Translators: %s: Country code.
-#: includes/class-wpfactory-wc-eu-vat-core.php:891
-#: includes/class-wpfactory-wc-eu-vat-core.php:1311
+#: includes/class-wpfactory-wc-eu-vat-core.php:898
+#: includes/class-wpfactory-wc-eu-vat-core.php:1314
 msgid "Error: Country by IP does not match (%s)"
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1150
+#: includes/class-wpfactory-wc-eu-vat-core.php:1157
 msgid "Invalid VAT format."
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1158
+#: includes/class-wpfactory-wc-eu-vat-core.php:1165
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:78
 msgid "VAT is required."
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1193
+#: includes/class-wpfactory-wc-eu-vat-core.php:1200
 msgid "Success: VAT ID valid. Matched with prevalidated VAT numbers"
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1229
+#: includes/class-wpfactory-wc-eu-vat-core.php:1236
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:495
 msgid "Success: VAT ID is valid"
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1239
+#: includes/class-wpfactory-wc-eu-vat-core.php:1246
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:358
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:505
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:750
 msgid "Error: VAT ID not valid"
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1291
+#: includes/class-wpfactory-wc-eu-vat-core.php:1294
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:149
 msgid "VAT accepted due to VIES error: %vies_error%. The admin will check the VAT validation again and proceed accordingly."
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1334
+#: includes/class-wpfactory-wc-eu-vat-core.php:1337
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:97
 msgid "Wrong billing country."
 msgstr ""
 
 #. Translators: %s: Billing country.
-#: includes/class-wpfactory-wc-eu-vat-core.php:1341
+#: includes/class-wpfactory-wc-eu-vat-core.php:1344
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:132
 msgid "Error: Country code does not match (%s)"
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1365
+#: includes/class-wpfactory-wc-eu-vat-core.php:1368
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:105
 msgid "Different shipping & billing countries."
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1382
+#: includes/class-wpfactory-wc-eu-vat-core.php:1385
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:117
 msgid "Shipping country matches store base country."
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1405
+#: includes/class-wpfactory-wc-eu-vat-core.php:1408
 msgid "VAT preserved for this billing country"
 msgstr ""
 
 #. Translators: %company_name% - The registered company name from VAT validation
-#: includes/class-wpfactory-wc-eu-vat-core.php:1481
+#: includes/class-wpfactory-wc-eu-vat-core.php:1484
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:125
 msgid "VAT is valid, but registered to %company_name%."
 msgstr ""
 
 #. Translators: %s: Company name.
-#: includes/class-wpfactory-wc-eu-vat-core.php:1488
+#: includes/class-wpfactory-wc-eu-vat-core.php:1491
 msgid "Error: Company name does not match (%s)"
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1526
+#: includes/class-wpfactory-wc-eu-vat-core.php:1529
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:62
 msgid "VAT is valid."
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1532
+#: includes/class-wpfactory-wc-eu-vat-core.php:1535
 #: includes/class-wpfactory-wc-eu-vat-sign-up-form.php:102
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:70
 msgid "VAT is not valid."
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1636
+#: includes/class-wpfactory-wc-eu-vat-core.php:1641
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:83
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
@@ -1646,6 +1646,11 @@ msgstr ""
 
 #: includes/settings/class-wpfactory-wc-eu-vat-settings.php:149
 msgid "Your settings have been reset."
+msgstr ""
+
+#: includes/blocks/build/checkout-eu-vat-field-block/frontend.js:1
+#: includes/blocks/src/checkout-eu-vat-field-block/blockvat.js:237
+msgid "Validation error."
 msgstr ""
 
 #: includes/blocks/build/checkout-eu-vat-field-block/index.js:1

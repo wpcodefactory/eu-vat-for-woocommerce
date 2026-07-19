@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.7.0
+ * @version 4.7.4
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -162,7 +162,7 @@ class WPFactory_WC_EU_VAT_Checkout_Block {
 	/**
 	 * register_additional_checkout_block_field.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.4
 	 * @since   2.11.6
 	 */
 	function register_additional_checkout_block_field() {
@@ -180,7 +180,10 @@ class WPFactory_WC_EU_VAT_Checkout_Block {
 				'label'         => $field_attr['label'],
 				'optionalLabel' => $field_attr['label'],
 				'location'      => 'contact',
-				'required'      => 'yes' === get_option( 'alg_wc_eu_vat_field_required', 'no' ),
+				'required'      => (
+					'yes' === get_option( 'alg_wc_eu_vat_field_required', 'no' ) &&
+					'no' === get_option( 'alg_wc_eu_vat_field_let_customer_decide', 'no' )
+				),
 				'attributes'    => array(
 					'autocomplete' => 'on',
 					'title'        => $field_attr['description'],
@@ -224,7 +227,7 @@ class WPFactory_WC_EU_VAT_Checkout_Block {
 	/**
 	 * store_api_register_update_callback.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.4
 	 * @since   2.10.4
 	 */
 	 function store_api_register_update_callback() {
@@ -246,6 +249,8 @@ class WPFactory_WC_EU_VAT_Checkout_Block {
 					$field_id = wpfactory_wc_eu_vat_get_field_id();
 					WC()->customer->update_meta_data( $field_id, wc_clean( $data['vat_number'] ) );
 
+					wpfactory_wc_eu_vat_session_start();
+
 					wpfactory_wc_eu_vat_session_set(
 						'wpfactory_wc_eu_vat',
 						wc_clean( $data['vat_number'] )
@@ -265,7 +270,7 @@ class WPFactory_WC_EU_VAT_Checkout_Block {
 					if ( isset( $data['billing_company'] ) ) {
 						$autofill = (
 							'yes' === get_option( 'alg_wc_eu_vat_advance_enable_company_name_autofill', 'no' ) &&
-							$result['is_vat_valid']
+							! empty( $result['is_vat_valid'] )
 						);
 
 						$customer->set_billing_company(
@@ -392,20 +397,21 @@ class WPFactory_WC_EU_VAT_Checkout_Block {
 	/**
 	 * validate_eu_vat_field_checkout_block.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.4
 	 * @since   2.11.6
 	 *
 	 * @todo    (dev) `%eu_vat_number%`?
 	 */
 	function validate_eu_vat_field_checkout_block( \WP_Error $errors, $fields, $group ) {
-
-		$field_id             = wpfactory_wc_eu_vat_get_field_id();
-		$field_with_namespace = 'alg_eu_vat' . '/' . $field_id;
+		$field_id                        = wpfactory_wc_eu_vat_get_field_id();
+		$field_with_namespace            = 'alg_eu_vat' . '/' . $field_id;
+		$field_customer_decide_namespace = 'alg_eu_vat' . '/' . $field_id . '_customer_decide';
 
 		if (
 			'yes' === get_option( 'alg_wc_eu_vat_field_required', 'no' ) &&
 			isset( $fields[ $field_with_namespace ] ) &&
-			empty( $fields[ $field_with_namespace ] )
+			empty( $fields[ $field_with_namespace ] ) &&
+			! isset( $fields[ $field_customer_decide_namespace ] )
 		) {
 			$error_message = wpfactory_wc_eu_vat()->core->vat_error_message( $fields[ $field_with_namespace ] );
 			$errors->add( 'eu_vat_required', $error_message );

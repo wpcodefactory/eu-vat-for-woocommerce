@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.7.1
+ * @version 4.7.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -730,18 +730,23 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * start_session.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.4
 	 * @since   1.0.0
+	 *
+	 * @todo    (v4.7.4) `test-url-cache`?
 	 */
 	function start_session() {
 		$curl = rtrim( $this->current_url(), '/' );
 		$home = rtrim( home_url(), '/' );
-		if ( ! ( $curl == $home ) ) {
+		if ( $curl !== $home ) {
 
 			$checkout_page_url = rtrim( wc_get_checkout_url(), '/' );
 			$cart_url          = rtrim( get_permalink( wc_get_page_id( 'cart' ) ), '/' );
 
-			if ( $curl == $cart_url || $curl == $checkout_page_url ) {
+			if (
+				$curl === $cart_url ||
+				$curl === $checkout_page_url
+			) {
 				wpfactory_wc_eu_vat_session_start();
 
 				$args = array();
@@ -759,17 +764,16 @@ class WPFactory_WC_EU_VAT_Core {
 					}
 				}
 			}
-		} else {
-			if ( 'yes' === get_option( 'alg_wc_eu_vat_sitepress_optimizer_dynamic_caching', 'no' ) ) {
-				if ( 'test-url-cache' == $curl ) {
-					$return = array(
-						'status'  => 200,
-						'data'    => array(),
-						'message' => 'La URL está en la caché',
-					);
-					wp_send_json( $return );
-				}
-			}
+		} elseif (
+			'test-url-cache' === $curl &&
+			'yes' === get_option( 'alg_wc_eu_vat_sitepress_optimizer_dynamic_caching', 'no' )
+		) {
+			$return = array(
+				'status'  => 200,
+				'data'    => array(),
+				'message' => 'The URL is cached',
+			);
+			wp_send_json( $return );
 		}
 	}
 
@@ -780,7 +784,11 @@ class WPFactory_WC_EU_VAT_Core {
 	 * @since   1.6.0
 	 */
 	function handle_user_roles( $role ) {
-		return ( '' == $role ? 'guest' : ( 'super_admin' == $role ? 'administrator' : $role ) );
+		return (
+			'' == $role ?
+			'guest' :
+			( 'super_admin' == $role ? 'administrator' : $role )
+		);
 	}
 
 	/**
@@ -863,10 +871,10 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * check_and_save_eu_vat.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.4
 	 * @since   1.7.1
 	 *
-	 * @todo    (dev) use in `WPFactory_WC_EU_VAT_AJAX::alg_wc_eu_vat_validate_action()`
+	 * @todo    (dev) use in `WPFactory_WC_EU_VAT_AJAX::ajax_vat_validate()`
 	 */
 	function check_and_save_eu_vat( $eu_vat_to_check, $billing_country, $billing_company ) {
 		$eu_vat_number = wpfactory_wc_eu_vat_parse_vat( $eu_vat_to_check, $billing_country );
@@ -876,7 +884,7 @@ class WPFactory_WC_EU_VAT_Core {
 			$is_country_valid = ( $country_by_ip === $eu_vat_number['country'] );
 			$is_valid         = (
 				$is_country_valid ?
-				alg_wc_eu_vat_validate_vat(
+				wpfactory_wc_eu_vat_validate_vat(
 					$eu_vat_number['country'],
 					$eu_vat_number['number'],
 					$billing_company
@@ -1080,7 +1088,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * vat_validation.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.4
 	 * @since   4.5.9
 	 */
 	function vat_validation( $data, $force_recheck = false ) {
@@ -1257,10 +1265,6 @@ class WPFactory_WC_EU_VAT_Core {
 					wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_checked', $vat_number );
 					wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_to_check_country', $billing_country );
 					wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_valid', $is_vat_valid );
-
-					if ( $is_vat_valid ) {
-						$is_vat_valid = apply_filters( 'alg_wc_eu_vat_is_valid_vat_at_checkout', $is_vat_valid );
-					}
 				}
 			}
 
@@ -1531,6 +1535,8 @@ class WPFactory_WC_EU_VAT_Core {
 				__( 'VAT is not valid.', 'eu-vat-for-woocommerce' )
 			) );
 		}
+
+		$is_validate = apply_filters( 'alg_wc_eu_vat_is_valid_vat_at_checkout', $is_vat_valid );
 
 		$result = array(
 			'messages'      => $messages,

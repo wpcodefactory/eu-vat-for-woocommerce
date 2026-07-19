@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.7.1
+ * @version 4.7.4
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -13,6 +13,7 @@ import { CART_STORE_KEY } from '@woocommerce/block-data';
 import { extensionCartUpdate } from '@woocommerce/blocks-checkout';
 import { getSetting } from '@woocommerce/settings';
 import { debounce } from 'lodash';
+import { __ } from '@wordpress/i18n';
 
 const wpfactory_wc_eu_vat_object = window.wpfactory_wc_eu_vat_ajax_object || {};
 const {
@@ -142,7 +143,7 @@ const createVatInformationContainer = ( vatNumber, billingCountry ) => {
 /**
  * createVatInformationContainer.
  *
- * @version 4.7.1
+ * @version 4.7.4
  */
 const wpfactoryWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 
@@ -233,7 +234,7 @@ const wpfactoryWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 		previous_country.value = billing_country;
 	} catch ( error ) {
 		if ( progress ) {
-			progress.textContent = progress_text_error ?? 'Validation error.';
+			progress.textContent = __( 'Validation error.', 'eu-vat-for-woocommerce' );
 			progress.className = 'wpfactory-wc-eu-vat-error-color';
 		}
 	} finally {
@@ -256,8 +257,8 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 	);
 	const { billingAddress, shippingAddress } = cartData;
 
-	const [hideVat, setHideVat] = useState(false);
-	const [requiredVat, setRequiredVat] = useState(false);
+	const [ hideVat, setHideVat ] = useState( false );
+	const [ requiredVat, setRequiredVat ] = useState( false );
 	const [ euVatValue, setEuVatNumber ] = useState( '' );
 
 	/**

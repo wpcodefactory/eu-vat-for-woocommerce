@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli, ae
 Tags: EU VAT, UK VAT, tax, vat validation, VAT
 Requires at least: 6.1
 Tested up to: 7.0
-Stable tag: 4.7.3
+Stable tag: 4.7.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -392,6 +392,15 @@ Once activated, access the plugin's settings by navigating to the â€œWPFactoryâ€
 3. Start by visiting plugin settings at "WPFactory > EU VAT".
 
 == Changelog ==
+
+= 4.7.4 - 19/07/2026 =
+* Fix - Block-based Checkout - Fixed required VAT field handling when "Let customer decide" is enabled.
+* Fix - Block-based Checkout - Fixed VAT field validation to avoid required errors when customer-decide option is selected.
+* Fix - Block-based Checkout - Improved company autofill logic to run only for valid VAT results.
+* Fix - Block-based Checkout - Fixed zero VAT display global object reference (`wpfactory_wc_eu_vat_ajax_object`).
+* Fix - Validation - Moved `alg_wc_eu_vat_is_valid_vat_at_checkout` filter to the unified validation result.
+* Dev - Session start improved.
+* Dev - WPFactory Cross-Selling - Library updated (to v1.1.3).
 
 = 4.7.3 - 13/07/2026 =
 * Dev - Added a capability check before validating VAT and removing order taxes in the admin.
