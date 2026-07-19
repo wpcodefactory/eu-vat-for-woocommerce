@@ -192,6 +192,10 @@ class WPFactory_WC_EU_VAT_AJAX {
 			'vat_valid_but_not_exempted' => $vat_valid_but_not_exempted,
 		);
 
+		// The session cookie is no longer force-started on every page load;
+		// make sure it exists here so the validation result persists.
+		wpfactory_wc_eu_vat_session_start();
+
 		wpfactory_wc_eu_vat_session_set(
 			'wpfactory_wc_eu_vat',
 			wc_clean( $data['vat_number'] )

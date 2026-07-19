@@ -734,7 +734,6 @@ class WPFactory_WC_EU_VAT_Core {
 	 * @since   1.0.0
 	 */
 	function start_session() {
-		wpfactory_wc_eu_vat_session_start();
 		$curl = rtrim( $this->current_url(), '/' );
 		$home = rtrim( home_url(), '/' );
 		if ( ! ( $curl == $home ) ) {
