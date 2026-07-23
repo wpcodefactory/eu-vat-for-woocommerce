@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Blocks Initialize
  *
- * @version 4.7.0
+ * @version 4.7.5
  *
  * @author  WPFactory
  */
@@ -15,12 +15,12 @@ if ( ! function_exists( 'wpfactory_wc_eu_vat_is_checkout_block_enabled' ) ) {
 	/**
 	 * wpfactory_wc_eu_vat_is_checkout_block_enabled.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.5
 	 * @since   4.2.4
 	 */
 	function wpfactory_wc_eu_vat_is_checkout_block_enabled() {
 		return (
-			'yes' === get_option( 'alg_wc_eu_vat_enable_checkout_block_field', 'no' ) &&
+			'yes' === get_option( 'alg_wc_eu_vat_enable_checkout_block_field', 'yes' ) &&
 			'no' === get_option( 'alg_wc_eu_vat_hide_eu_vat', 'no' ) &&
 			version_compare( get_option( 'woocommerce_version', null ), '8.9.1', '>=' )
 		);

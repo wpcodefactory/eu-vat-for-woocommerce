@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.7.4
+ * @version 4.7.5
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -1088,7 +1088,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * vat_validation.
 	 *
-	 * @version 4.7.4
+	 * @version 4.7.5
 	 * @since   4.5.9
 	 */
 	function vat_validation( $data, $force_recheck = false ) {
@@ -1170,7 +1170,6 @@ class WPFactory_WC_EU_VAT_Core {
 		$parse_vat_number = $this->parse_vat( $vat_number, $billing_country );
 		$parse_country    = sanitize_text_field( strtoupper( $parse_vat_number['country'] ) );
 		$parse_number     = sanitize_text_field( $parse_vat_number['number'] );
-
 
 		// Skip VAT validation for selected countries
 		$skip_countries = get_option( 'alg_wc_eu_vat_advanced_skip_countries', '' );
@@ -1271,12 +1270,12 @@ class WPFactory_WC_EU_VAT_Core {
 			wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_valid_before_preserve', $is_vat_valid );
 			wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_to_check', $vat_number );
 
-			$is_validate   = $is_vat_valid;
+			$is_validate   = true;
 			$is_vat_exempt = $is_vat_valid;
 
 			// VIES not available
 			if (
-				! $is_validate &&
+				! $is_vat_valid &&
 				null !== wpfactory_wc_eu_vat()->core->get_error_vies_unavailable()
 			) {
 				$is_validate   = true;
@@ -1297,7 +1296,7 @@ class WPFactory_WC_EU_VAT_Core {
 				);
 			}
 
-			if ( $is_validate ) {
+			if ( $is_vat_valid ) {
 
 				// Check country by IP
 				if ( 'yes' === apply_filters( 'alg_wc_eu_vat_check_ip_location_country', 'no' ) ) {
@@ -1521,14 +1520,13 @@ class WPFactory_WC_EU_VAT_Core {
 		// `alg_wc_eu_vat_exempt_applied` action
 		do_action( 'alg_wc_eu_vat_exempt_applied', $is_vat_exempt );
 
-
-		if ( $is_validate && empty( $messages ) ) {
+		if ( $is_vat_valid && $is_validate && empty( $messages ) ) {
 			$css_class = 'wpfactory-wc-eu-vat-valid';
 			$messages  = do_shortcode( get_option(
 				'alg_wc_eu_vat_progress_text_valid',
 				__( 'VAT is valid.', 'eu-vat-for-woocommerce' )
 			) );
-		} else if( ! $is_validate && empty( $messages ) ){
+		} else if ( empty( $messages ) ) {
 			$css_class = 'wpfactory-wc-eu-vat-not-valid';
 			$messages  = do_shortcode( get_option(
 				'alg_wc_eu_vat_progress_text_not_valid',
@@ -1536,7 +1534,21 @@ class WPFactory_WC_EU_VAT_Core {
 			) );
 		}
 
-		$is_validate = apply_filters( 'alg_wc_eu_vat_is_valid_vat_at_checkout', $is_vat_valid );
+		$is_validate = apply_filters(
+			'alg_wc_eu_vat_is_valid_vat_at_checkout',
+			$is_validate,
+			$is_vat_valid,
+			$is_vat_exempt,
+			$vat_number
+		);
+		$messages = apply_filters(
+			'alg_wc_eu_vat_validation_message',
+			$messages,
+			$is_validate,
+			$is_vat_valid,
+			$is_vat_exempt,
+			$vat_number
+		);
 
 		$result = array(
 			'messages'      => $messages,
@@ -1595,7 +1607,6 @@ class WPFactory_WC_EU_VAT_Core {
 			$vat_valid_but_not_exempted = ! empty( $_posted[ $field_id . '_valid_vat_but_not_exempted' ] );
 		}
 
-
 		$data = array(
 			'vat_number'                 => $vat_number,
 			'billing_country'            => $billing_country,
@@ -1608,7 +1619,6 @@ class WPFactory_WC_EU_VAT_Core {
 		$force_recheck = 'yes' === get_option( 'alg_wc_eu_vat_validate_force_page_reload', 'no' );
 		wpfactory_wc_eu_vat()->core->vat_validation( $data, $force_recheck );
 	}
-
 
 	/**
 	 * normalize_string.

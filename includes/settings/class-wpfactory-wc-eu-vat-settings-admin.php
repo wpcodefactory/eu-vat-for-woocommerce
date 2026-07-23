@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Admin Section Settings
  *
- * @version 4.7.0
+ * @version 4.7.5
  * @since   1.5.0
  *
  * @author  WPFactory
@@ -29,7 +29,7 @@ class WPFactory_WC_EU_VAT_Settings_Admin extends WPFactory_WC_EU_VAT_Settings_Se
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.5
 	 * @since   1.5.0
 	 *
 	 * @todo    (dev) `alg_wc_eu_vat_add_order_edit_metabox` default to `yes`?
@@ -84,7 +84,7 @@ class WPFactory_WC_EU_VAT_Settings_Admin extends WPFactory_WC_EU_VAT_Settings_Se
 		// Additional Info
 		$additional_info = array(
 			array(
-				'title'    => '&#8505;' . ' ' . __( 'Additional Info', 'eu-vat-for-woocommerce' ),
+				'title'    => 'ℹ️' . ' ' . __( 'Additional Info', 'eu-vat-for-woocommerce' ),
 				'type'     => 'title',
 				'id'       => 'alg_wc_eu_vat_additional_info',
 				'desc'     => '<ul style="background-color:white;padding:10px 30px;color:black;list-style-type:square;margin-top:1em;">' .
@@ -138,7 +138,7 @@ class WPFactory_WC_EU_VAT_Settings_Admin extends WPFactory_WC_EU_VAT_Settings_Se
 		// Language Guide
 		$language_guide = array(
 			array(
-				'title'    => '&#8505;' . ' ' . __( 'Language Guide', 'eu-vat-for-woocommerce' ),
+				'title'    => 'ℹ️' . ' ' . __( 'Language Guide', 'eu-vat-for-woocommerce' ),
 				'type'     => 'title',
 				'id'       => 'alg_wc_eu_vat_language_guide',
 				'desc'     => (

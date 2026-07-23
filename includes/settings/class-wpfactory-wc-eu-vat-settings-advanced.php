@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Advanced Section Settings
  *
- * @version 4.7.0
+ * @version 4.7.5
  * @since   4.2.3
  *
  * @author  WPFactory
@@ -29,10 +29,9 @@ class WPFactory_WC_EU_VAT_Settings_Advanced extends WPFactory_WC_EU_VAT_Settings
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.5
 	 * @since   4.2.3
 	 *
-	 * @todo    (dev) `alg_wc_eu_vat_enable_checkout_block_field` default to `yes`?
 	 * @todo    (dev) "Sitepress" - should be "SiteGround"?
 	 */
 	function get_settings() {
@@ -47,7 +46,7 @@ class WPFactory_WC_EU_VAT_Settings_Advanced extends WPFactory_WC_EU_VAT_Settings
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'desc_tip' => sprintf(
 					/* Translators: %s: Logs link. */
-					__( 'Log will be added to %s.', 'eu-vat-for-woocommerce' ),
+					__( 'Log will be added to %s. We recommend disabling it after troubleshooting.', 'eu-vat-for-woocommerce' ),
 					'<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '">' .
 						__( 'WooCommerce > Status > Logs', 'eu-vat-for-woocommerce' ) .
 					'</a>'
@@ -104,7 +103,7 @@ class WPFactory_WC_EU_VAT_Settings_Advanced extends WPFactory_WC_EU_VAT_Settings
 				'title'    => __( 'Checkout block field', 'eu-vat-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'eu-vat-for-woocommerce' ),
 				'id'       => 'alg_wc_eu_vat_enable_checkout_block_field',
-				'default'  => 'no',
+				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
 			array(
