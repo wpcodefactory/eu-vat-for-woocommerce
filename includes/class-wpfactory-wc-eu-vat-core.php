@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.7.5
+ * @version 4.7.6
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -943,16 +943,13 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.6
 	 * @since   1.0.0
 	 */
 	function checkout_validate_vat( $_posted ) {
 
 		$field_id                   = wpfactory_wc_eu_vat_get_field_id();
 		$vat_number                 = sanitize_text_field( $_posted[ $field_id ] ?? '' );
-		if ( empty( $vat_number ) ) {
-			return;
-		}
 		$billing_country            = sanitize_text_field( $_posted['billing_country'] ?? '' );
 		$shipping_country           = sanitize_text_field( $_posted['shipping_country'] ?? '' );
 		$billing_company            = sanitize_text_field( $_posted['billing_company'] ?? '' );

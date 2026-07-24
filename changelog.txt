@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 4.7.6 - 24/07/2026 =
+* Fix - Prevent checkout with invalid VAT number `0`.
+
 = 4.7.5 - 23/07/2026 =
 * Fix - Validation - Fixed `alg_wc_eu_vat_is_valid_vat_at_checkout` to use the final validation result.
 * Dev - Advanced - Checkout block field - Default value set to `yes`.
