@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.7.6
+ * @version 4.7.7
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -943,7 +943,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 4.7.6
+	 * @version 4.7.7
 	 * @since   1.0.0
 	 */
 	function checkout_validate_vat( $_posted ) {
@@ -955,6 +955,10 @@ class WPFactory_WC_EU_VAT_Core {
 		$billing_company            = sanitize_text_field( $_posted['billing_company'] ?? '' );
 		$vat_customer_decide        = ! empty( $_posted[ $field_id . '_customer_decide' ] );
 		$vat_valid_but_not_exempted = ! empty( $_posted[ $field_id . '_valid_vat_but_not_exempted' ] );
+
+		if ( '' === $vat_number ) {
+			return;
+		}
 
 		$data = array(
 			'vat_number'                 => $vat_number,
@@ -968,7 +972,7 @@ class WPFactory_WC_EU_VAT_Core {
 		$force_recheck = 'yes' === get_option( 'alg_wc_eu_vat_force_checkout_recheck', 'no' );
 		$result        = $this->vat_validation( $data, $force_recheck );
 
-		if ( ! $result['is_validate'] ) {
+		if ( is_array( $result ) && ! $result['is_validate'] ) {
 			wc_add_notice(
 				$this->vat_error_message( $vat_number ),
 				'error',
@@ -1085,7 +1089,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * vat_validation.
 	 *
-	 * @version 4.7.5
+	 * @version 4.7.7
 	 * @since   4.5.9
 	 */
 	function vat_validation( $data, $force_recheck = false ) {
@@ -1210,8 +1214,9 @@ class WPFactory_WC_EU_VAT_Core {
 			}
 		}
 
+		$checking_vat = false; // Whether VAT number verification is performed in this checkout validation pass
 		if ( ! $is_validate && empty( $messages) ) {
-
+			$checking_vat = true;
 			// Check VAT validate for manually pre-saved number first
 			if ( ! $is_vat_valid ) {
 				// Validate VAT
@@ -1267,7 +1272,7 @@ class WPFactory_WC_EU_VAT_Core {
 			wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_valid_before_preserve', $is_vat_valid );
 			wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_to_check', $vat_number );
 
-			$is_validate   = true;
+			$is_validate   = $is_vat_valid;
 			$is_vat_exempt = $is_vat_valid;
 
 			// VIES not available
@@ -1535,6 +1540,7 @@ class WPFactory_WC_EU_VAT_Core {
 			'alg_wc_eu_vat_is_valid_vat_at_checkout',
 			$is_validate,
 			$is_vat_valid,
+			$checking_vat,
 			$is_vat_exempt,
 			$vat_number
 		);
@@ -1543,6 +1549,7 @@ class WPFactory_WC_EU_VAT_Core {
 			$messages,
 			$is_validate,
 			$is_vat_valid,
+			$checking_vat,
 			$is_vat_exempt,
 			$vat_number
 		);

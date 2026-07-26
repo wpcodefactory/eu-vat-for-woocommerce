@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.7.5
+ * @version 4.7.7
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -143,7 +143,7 @@ const createVatInformationContainer = ( vatNumber, billingCountry ) => {
 /**
  * createVatInformationContainer.
  *
- * @version 4.7.5
+ * @version 4.7.7
  */
 const wpfactoryWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 
@@ -205,9 +205,8 @@ const wpfactoryWcBlockEuVatValidateVat = async ( vat_number, refresh ) => {
 		}
 
 		const isValidation = data.is_validate;
-		const isVatValid = data.is_vat_valid;
 		const cssClasses = data.css_class ? data.css_class.trim().split( /\s+/ ) : [];
-		if ( isValidation && isVatValid ) {
+		if ( isValidation ) {
 			eu_vat_field.classList.add( 'woocommerce-validated' );
 			eu_vat_field.closest( 'div' ).classList.remove( 'has-error' );
 			cssClasses.push( 'wpfactory-wc-eu-vat-valid', 'wpfactory-wc-eu-vat-valid-color' );
