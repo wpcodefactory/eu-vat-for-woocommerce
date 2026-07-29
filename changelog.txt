@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.7.8 - 29/07/2026 =
+* Fix - Fixed validation for `0` VAT numbers during checkout.
+* Fix - Improved VAT validation logic for country matching and VIES fallback.
+
 = 4.7.7 - 26/07/2026 =
 * Fix - Fixed validation for optional VAT numbers when left empty.
 * Fix - Fixed a PHP warning during VAT validation.
