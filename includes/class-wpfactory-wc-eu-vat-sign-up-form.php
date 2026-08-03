@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Sign-up Form
  *
- * @version 4.7.0
+ * @version 4.7.9
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -35,7 +35,7 @@ class WPFactory_WC_EU_VAT_Sign_Up_Form {
 	/**
 	 * add_field_to_woocommerce_register_form.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.9
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) new field to signup form
@@ -45,6 +45,8 @@ class WPFactory_WC_EU_VAT_Sign_Up_Form {
 			wpfactory_wc_eu_vat_get_field_id(),
 			wpfactory_wc_eu_vat()->core->get_field_data()
 		);
+
+		wpfactory_wc_eu_vat()->core->add_nonce_field();
 	}
 
 	/**

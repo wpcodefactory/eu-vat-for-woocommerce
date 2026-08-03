@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.7.8
+ * @version 4.7.9
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -67,7 +67,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.9
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) "eu vat number" to "eu vat"?
@@ -126,6 +126,18 @@ class WPFactory_WC_EU_VAT_Core {
 				'woocommerce_billing_fields',
 				array( $this, 'add_frontend_edit_billing_fields' ),
 				10
+			);
+
+			// Add nonce field to checkout page
+			add_action(
+				'woocommerce_before_checkout_form',
+				array( $this, 'add_nonce_field' )
+			);
+
+			// Add nonce field to billing edit page
+			add_action(
+				'woocommerce_after_edit_address_form_billing',
+				array( $this, 'add_nonce_field' )
 			);
 		}
 
@@ -193,6 +205,16 @@ class WPFactory_WC_EU_VAT_Core {
 			);
 		}
 
+	}
+
+	/**
+	 * add_nonce_field.
+	 *
+	 * @version 4.7.9
+	 * @since   4.6.7
+	 */
+	function add_nonce_field() {
+		wp_nonce_field( 'wpfactory_wc_eu_vat_nonce', 'wpfactory_wc_eu_vat_nonce_field' );
 	}
 
 	/**

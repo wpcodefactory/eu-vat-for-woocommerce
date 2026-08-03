@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - AJAX Class
  *
- * @version 4.7.4
+ * @version 4.7.9
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -17,7 +17,7 @@ class WPFactory_WC_EU_VAT_AJAX {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.9
 	 * @since   1.0.0
 	 */
 	function __construct() {
@@ -25,12 +25,6 @@ class WPFactory_WC_EU_VAT_AJAX {
 		add_action(
 			'wp_enqueue_scripts',
 			array( $this, 'enqueue_scripts' )
-		);
-
-		// Add nonce field to checkout page
-		add_action(
-			'woocommerce_before_checkout_form',
-			array( $this, 'add_nonce_field' )
 		);
 
 		add_action(
@@ -105,16 +99,6 @@ class WPFactory_WC_EU_VAT_AJAX {
 			)
 		);
 
-	}
-
-	/**
-	 * add_nonce_field.
-	 *
-	 * @version 4.7.0
-	 * @since   4.6.7
-	 */
-	function add_nonce_field() {
-		wp_nonce_field( 'wpfactory_wc_eu_vat_nonce', 'wpfactory_wc_eu_vat_nonce_field' );
 	}
 
 	/**

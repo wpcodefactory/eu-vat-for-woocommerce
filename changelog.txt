@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 4.7.9 - 03/08/2026 =
+* Fix - Fixed VAT validation on WooCommerce signup and edit billing forms.
+* Dev - WPFactory Admin Menu - Library updated (to v1.1.2).
+
 = 4.7.8 - 29/07/2026 =
 * Fix - Fixed validation for `0` VAT numbers during checkout.
 * Fix - Improved VAT validation logic for country matching and VIES fallback.
