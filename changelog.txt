@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 4.8.0 - 18/08/2026 =
+* Fix - Fixed "Remove VAT for validated numbers" validation.
+* Fix - Fixed conditional required VAT field validation.
+* Dev - Added a 10s connection timeout to the SOAP client (and `wpfactory_wc_eu_vat_soap_connection_timeout` filter).
+* WC tested up to: 11.0.
+
 = 4.7.9 - 03/08/2026 =
 * Fix - Fixed VAT validation on WooCommerce signup and edit billing forms.
 * Dev - WPFactory Admin Menu - Library updated (to v1.1.2).

@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Functions - Validation
  *
- * @version 4.7.0
+ * @version 4.8.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -370,7 +370,7 @@ if ( ! function_exists( 'wpfactory_wc_eu_vat_validate_vat_soap' ) ) {
 	/**
 	 * wpfactory_wc_eu_vat_validate_vat_soap.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.0
 	 * @since   1.0.0
 	 *
 	 * @return  mixed: bool on successful checking, null otherwise
@@ -407,8 +407,9 @@ if ( ! function_exists( 'wpfactory_wc_eu_vat_validate_vat_soap' ) ) {
 			$client = new SoapClient(
 				'https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl',
 				array(
-					'exceptions'     => true,
-					'stream_context' => $ssl_context,
+					'exceptions'         => true,
+					'stream_context'     => $ssl_context,
+					'connection_timeout' => apply_filters( 'wpfactory_wc_eu_vat_soap_connection_timeout', 10 ),
 				)
 			);
 

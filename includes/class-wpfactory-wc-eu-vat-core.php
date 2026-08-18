@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.7.9
+ * @version 4.8.0
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -602,7 +602,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * get_field_data.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.0
 	 * @since   1.3.0
 	 *
 	 * @todo    (dev) rethink `$is_required` (check filters: `woocommerce_default_address_fields`, `woocommerce_billing_fields`)
@@ -641,8 +641,9 @@ class WPFactory_WC_EU_VAT_Core {
 			if ( 'yes_for_company' === $eu_vat_required ) {
 				if ( ! empty( WC()->checkout()->get_value( 'billing_company' ) ) ) {
 					$is_required = true;
+				} else {
+					$is_required = false;
 				}
-				$is_required = false;
 			}
 
 			// Let Customer Decide
@@ -1111,13 +1112,14 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * vat_validation.
 	 *
-	 * @version 4.7.8
+	 * @version 4.8.0
 	 * @since   4.5.9
 	 */
 	function vat_validation( $data, $force_recheck = false ) {
-
-		if ( ! $this->is_validate_and_exempt() ) {
-			return false;
+		if ( 'no' === get_option( 'alg_wc_eu_vat_validate', 'yes' ) ) {
+			return array(
+				'is_validate' => true
+			);
 		}
 
 		wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_valid_before_preserve', null );
@@ -1531,6 +1533,11 @@ class WPFactory_WC_EU_VAT_Core {
 					$is_vat_exempt  = false;
 				}
 			}
+		}
+
+		// Remove VAT for validated numbers
+		if ( 'yes' !== get_option( 'alg_wc_eu_vat_disable_for_valid', 'yes' ) && $is_vat_valid ) {
+			$is_vat_exempt = false;
 		}
 
 		// Set WooCommerce tax exemption

@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - Checkout block VAT validation
  *
- * @version 4.7.7
+ * @version 4.8.0
  * @since   2.11.6
  *
  * @author  WPFactory
@@ -246,7 +246,7 @@ export {wpfactoryWcBlockEuVatValidateVat};
 /**
  * Block.
  *
- * @version 4.6.4
+ * @version 4.8.0
  */
 const Block = ( { checkoutExtensionData, extensions } ) => {
 
@@ -330,10 +330,11 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 		vatField.addEventListener( triggerType, triggerValidation );
 
 		const customerDecideField = DOMUtils.getCustomerDecideField();
+		const handleCustomerDecide = () => {
+			setHideVat( customerDecideField?.checked ?? false );
+		};
 		if ( customerDecideField ) {
-			customerDecideField.addEventListener( 'input', function (){
-				setHideVat( customerDecideField?.checked ?? false );
-			} );
+			customerDecideField.addEventListener( 'input', handleCustomerDecide );
 		}
 
 		const notExempted = DOMUtils.getNoExemptedField();
@@ -355,8 +356,8 @@ const Block = ( { checkoutExtensionData, extensions } ) => {
 
 		return () => {
 			vatField.removeEventListener( triggerType, triggerValidation );
-			if ( customerDecideField && triggerValidation ) {
-				customerDecideField.removeEventListener( 'input', triggerValidation );
+			if ( customerDecideField ) {
+				customerDecideField.removeEventListener( 'input', handleCustomerDecide );
 			}
 			if ( notExempted && triggerValidation ) {
 				notExempted.removeEventListener( 'input', triggerValidation );
