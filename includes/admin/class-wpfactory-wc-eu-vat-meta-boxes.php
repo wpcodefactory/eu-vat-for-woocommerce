@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Meta Boxes
  *
- * @version 4.7.3
+ * @version 4.8.1
  * @since   4.2.0
  *
  * @author  WPFactory
@@ -122,14 +122,14 @@ class WPFactory_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * add_popup_order_meta_box.
 	 *
-	 * @version 4.2.0
+	 * @version 4.8.1
 	 */
 	function add_popup_order_meta_box() {
 		 add_meta_box(
 			'woocommerce_eu_vat_shop_order_popup',
 			__( 'Check VAT Number', 'eu-vat-for-woocommerce' ),
 			array( $this, 'create_popup_order_meta'),
-			'shop_order',
+			wc_get_page_screen_id( 'shop-order' ),
 			'side',
 			'low'
 		);
@@ -152,25 +152,18 @@ class WPFactory_WC_EU_VAT_Meta_Boxes {
 	/**
 	 * add_meta_box.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.1
 	 * @since   1.0.0
 	 */
 	function add_meta_box() {
-		$current_screen = get_current_screen()->id;
-
-		if (
-			'shop_order' == $current_screen ||
-			'woocommerce_page_wc-orders' == $current_screen
-		) {
-			add_meta_box(
-				'wpfactory-wc-eu-vat',
-				__( 'EU VAT', 'eu-vat-for-woocommerce' ),
-				array( $this, 'create_meta_box' ),
-				$current_screen,
-				'side',
-				'low'
-			);
-		}
+		add_meta_box(
+			'wpfactory-wc-eu-vat',
+			__( 'EU VAT', 'eu-vat-for-woocommerce' ),
+			array( $this, 'create_meta_box' ),
+			wc_get_page_screen_id( 'shop-order' ),
+			'side',
+			'low'
+		);
 	}
 
 	/**

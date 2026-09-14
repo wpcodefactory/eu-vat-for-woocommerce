@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.8.0
+ * @version 4.8.1
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -1605,7 +1605,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * maybe_vat_validation.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.1
 	 * @since   4.5.9
 	 */
 	function maybe_vat_validation() {
@@ -1634,10 +1634,16 @@ class WPFactory_WC_EU_VAT_Core {
 			$field_id                   = wpfactory_wc_eu_vat_get_field_id();
 			$vat_number                 = sanitize_text_field( $_posted[ $field_id ] ?? '' );
 			$billing_country            = sanitize_text_field( $_posted['billing_country'] ?? '' );
-			$shipping_country           = sanitize_text_field( $_posted['shipping_country'] ?? '' );
 			$billing_company            = sanitize_text_field( $_posted['billing_company'] ?? '' );
 			$vat_customer_decide        = ! empty( $_posted[ $field_id . '_customer_decide' ] );
 			$vat_valid_but_not_exempted = ! empty( $_posted[ $field_id . '_valid_vat_but_not_exempted' ] );
+
+			if (
+				! empty( $_posted['ship_to_different_address'] ) &&
+				'1' === $_posted['ship_to_different_address']
+			) {
+				$shipping_country = sanitize_text_field( $_posted['shipping_country'] ?? '' );
+			}
 		}
 
 		$data = array(

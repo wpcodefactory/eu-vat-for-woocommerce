@@ -1,18 +1,20 @@
 <?php
-/*
-Plugin Name: EU/UK VAT Validation Manager for WooCommerce
-Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
-Description: Manage EU VAT in WooCommerce. Beautifully.
-Version: 4.8.0
-Author: WPFactory
-Author URI: https://wpfactory.com/
-Text Domain: eu-vat-for-woocommerce
-Domain Path: /langs
-WC tested up to: 11.0
-Requires Plugins: woocommerce
-License: GNU General Public License v3.0
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-*/
+/**
+ * Plugin Name: EU/UK VAT Validation Manager for WooCommerce
+ * Plugin URI: https://wpfactory.com/item/eu-vat-for-woocommerce/
+ * Description: Manage EU VAT in WooCommerce. Beautifully.
+ * Version: 4.8.1
+ * Author: WPFactory
+ * Author URI: https://wpfactory.com/
+ * Text Domain: eu-vat-for-woocommerce
+ * Domain Path: /langs
+ * WC tested up to: 11.1
+ * Requires Plugins: woocommerce
+ * License: GNU General Public License v3.0
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * @package WPFactory\WC_EU_VAT
+ */
 
 defined( 'ABSPATH' ) || exit;
 
@@ -36,7 +38,7 @@ if ( 'eu-vat-for-woocommerce.php' === basename( __FILE__ ) ) {
 	}
 }
 
-defined( 'WPFACTORY_WC_EU_VAT_VERSION' ) || define( 'WPFACTORY_WC_EU_VAT_VERSION', '4.8.0' );
+defined( 'WPFACTORY_WC_EU_VAT_VERSION' ) || define( 'WPFACTORY_WC_EU_VAT_VERSION', '4.8.1' );
 
 defined( 'WPFACTORY_WC_EU_VAT_FILE' ) || define( 'WPFACTORY_WC_EU_VAT_FILE', __FILE__ );
 

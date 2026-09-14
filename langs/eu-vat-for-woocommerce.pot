@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.8.0\n"
+"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.8.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-18T15:27:32+00:00\n"
+"POT-Creation-Date: 2026-09-14T15:39:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
@@ -55,7 +55,7 @@ msgstr ""
 #: includes/admin/class-wpfactory-wc-eu-vat-admin.php:113
 #: includes/admin/class-wpfactory-wc-eu-vat-admin.php:122
 #: includes/admin/class-wpfactory-wc-eu-vat-admin.php:268
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:167
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:161
 #: includes/class-wpfactory-wc-eu-vat.php:235
 #: includes/settings/class-wpfactory-wc-eu-vat-settings.php:26
 msgid "EU VAT"
@@ -113,7 +113,7 @@ msgid "Yes"
 msgstr ""
 
 #: includes/admin/class-wpfactory-wc-eu-vat-admin.php:263
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:234
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:227
 msgid "Taxes"
 msgstr ""
 
@@ -203,12 +203,12 @@ msgid "Current standard tax rates"
 msgstr ""
 
 #: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:62
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:350
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:343
 msgid "Nonce not found or not verified."
 msgstr ""
 
 #: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:71
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:359
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:352
 #: includes/class-wpfactory-wc-eu-vat-customer-meta-field.php:106
 msgid "Insufficient user capabilities."
 msgstr ""
@@ -229,56 +229,56 @@ msgstr ""
 msgid "Open VIES"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:222
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:215
 msgid "Customer IP"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:226
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:219
 msgid "Country by IP"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:230
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:223
 msgid "Customer EU VAT Number"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:246
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:239
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:930
 msgid "Business Name"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:250
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:243
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:933
 msgid "Business Address"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:254
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:247
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:936
 msgid "Country Code"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:258
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:251
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:939
 msgid "VAT Number"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:277
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:270
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-advanced.php:137
 msgid "Request Identifier"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:309
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:302
 msgid "Validate VAT and remove taxes"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:321
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:314
 msgid "Get VAT details"
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:367
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:360
 msgid "Invalid order ID."
 msgstr ""
 
-#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:372
+#: includes/admin/class-wpfactory-wc-eu-vat-meta-boxes.php:365
 msgid "Invalid order."
 msgstr ""
 
@@ -443,7 +443,7 @@ msgstr ""
 msgid "VAT is not valid."
 msgstr ""
 
-#: includes/class-wpfactory-wc-eu-vat-core.php:1684
+#: includes/class-wpfactory-wc-eu-vat-core.php:1690
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:83
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""

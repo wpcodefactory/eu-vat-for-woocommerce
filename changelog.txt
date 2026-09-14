@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 4.8.1 - 14/09/2026 =
+* Fix - Fixed VAT removal when shipping country is not posted.
+* Dev - Improved VAT meta box compatibility with legacy orders and HPOS.
+* Dev - WPFactory Cross-Selling - Library updated (to v1.1.5).
+* Dev - WPFactory Key Manager - Library updated (to v1.1.1).
+* Tested up to: 7.1.
+* WC tested up to: 11.1.
+
 = 4.8.0 - 18/08/2026 =
 * Fix - Fixed "Remove VAT for validated numbers" validation.
 * Fix - Fixed conditional required VAT field validation.
