@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Checkout Block Class
  *
- * @version 4.7.4
+ * @version 4.8.2
  * @since   4.0.0
  *
  * @author  WPFactory
@@ -295,7 +295,7 @@ class WPFactory_WC_EU_VAT_Checkout_Block {
 	/**
 	 * update_block_order_meta_eu_vat.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.2
 	 * @since   2.10.4
 	 *
 	 * @todo    (dev) `eu-vat-for-woocommerce-block-example`: rename
@@ -338,31 +338,18 @@ class WPFactory_WC_EU_VAT_Checkout_Block {
 				$product_id  = $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id();
 				$do_keep_vat = get_post_meta( $product_id, '_alg_wc_eu_vat_keep_vat', true );
 
-				if ( 'yes' === $do_keep_vat ) {
-					$vat_required_products[] = $item->get_product_id();
+				if ( 'yes' !== $do_keep_vat ) {
+					// No "Keep VAT": remove tax from this item
+					$item->set_taxes( array() );
+					$item->save();
 				}
 			}
-
-			// If there are any VAT-required products, keep VAT for the customer
-			if ( ! empty( $vat_required_products ) ) {
-				foreach ( $order->get_items() as $item_id => $item ) {
-					$product_id = $item->get_product_id();
-
-					if ( ! in_array( $product_id, $vat_required_products, true ) ) {
-						$item->set_tax_class( 0 );
-						$item->set_taxes( array() );
-						$item->save();
-					}
-				}
-			}
+			$order->update_taxes();
 		} else {
-			foreach ( $order->get_items() as $item_id => $item ) {
-				$item->set_tax_class( '' );
-				$item->set_taxes( array() );
-				$item->save();
-			}
+			// Not valid: apply the default tax
+			$order->calculate_taxes();
 		}
-		$order->calculate_totals( true );
+		$order->calculate_totals( false );
 
 		if ( ! empty( $posted_eu_vat_id ) ) {
 

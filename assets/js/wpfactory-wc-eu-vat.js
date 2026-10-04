@@ -1,7 +1,7 @@
 /**
  * EU VAT for WooCommerce - JS
  *
- * @version 4.7.7
+ * @version 4.8.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -166,11 +166,11 @@ jQuery( function ( $ ) {
 	/**
 	 * block_checkout_section.
 	 *
-	 * @version 4.5.0
+	 * @version 4.8.2
 	 * @since   4.5.0
 	 */
 	function block_checkout_section() {
-		const $target = $( '#order_review' );
+		const $target = $( '#order_review, #payment' );
 		if ( $target.length ) {
 			$target.block( {
 				message: null,
@@ -180,18 +180,28 @@ jQuery( function ( $ ) {
 				}
 			} );
 		}
+
+		const $place_order = $( '#place_order' );
+		if ( $place_order.length ) {
+			$place_order.prop( 'disabled', true );
+		}
 	}
 
 	/**
 	 * unblock_checkout_section.
 	 *
-	 * @version 4.5.0
+	 * @version 4.8.2
 	 * @since   4.5.0
 	 */
 	function unblock_checkout_section() {
-		const $target = $( '#order_review' );
+		const $target = $( '#order_review, #payment' );
 		if ( $target.length ) {
 			$target.unblock();
+		}
+
+		const $place_order = $( '#place_order' );
+		if ( $place_order.length ) {
+			$place_order.prop( 'disabled', false );
 		}
 	}
 

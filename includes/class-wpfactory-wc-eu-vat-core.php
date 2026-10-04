@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - Core Class
  *
- * @version 4.8.1
+ * @version 4.8.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -1112,7 +1112,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * vat_validation.
 	 *
-	 * @version 4.8.0
+	 * @version 4.8.2
 	 * @since   4.5.9
 	 */
 	function vat_validation( $data, $force_recheck = false ) {
@@ -1204,8 +1204,19 @@ class WPFactory_WC_EU_VAT_Core {
 				array_map( 'trim', explode( ',', $skip_countries ) )
 			);
 			if ( in_array( $parse_country, $skip_countries, true ) ) {
-				$is_validate   = true;
+				wpfactory_wc_eu_vat_debug_log(
+					__( 'Success: VAT ID valid. VAT validation skipped for the selected country', 'eu-vat-for-woocommerce' ),
+					array(
+						'Country'         => $parse_country,
+						'VAT ID'          => $parse_number,
+						'Billing Company' => $billing_company,
+					)
+				);
+				wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_details', null );
+				wpfactory_wc_eu_vat_session_set( 'wpfactory_wc_eu_vat_to_return_company_name', '---' );
+				$css_class     = 'wpfactory-wc-eu-vat-skip-validation';
 				$is_vat_exempt = true;
+				$is_vat_valid  = true;
 			}
 		}
 
@@ -1605,7 +1616,7 @@ class WPFactory_WC_EU_VAT_Core {
 	/**
 	 * maybe_vat_validation.
 	 *
-	 * @version 4.8.1
+	 * @version 4.8.2
 	 * @since   4.5.9
 	 */
 	function maybe_vat_validation() {
@@ -1628,21 +1639,29 @@ class WPFactory_WC_EU_VAT_Core {
 
 		$_posted = array();
 		if ( isset( $_POST['post_data'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-
 			parse_str( wp_unslash( $_POST['post_data'] ), $_posted ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		} elseif ( ! empty( $_POST ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$_posted = wp_unslash( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		}
 
+		if ( is_array( $_posted ) && ! empty( $_posted ) ) {
 			$field_id                   = wpfactory_wc_eu_vat_get_field_id();
-			$vat_number                 = sanitize_text_field( $_posted[ $field_id ] ?? '' );
-			$billing_country            = sanitize_text_field( $_posted['billing_country'] ?? '' );
-			$billing_company            = sanitize_text_field( $_posted['billing_company'] ?? '' );
-			$vat_customer_decide        = ! empty( $_posted[ $field_id . '_customer_decide' ] );
-			$vat_valid_but_not_exempted = ! empty( $_posted[ $field_id . '_valid_vat_but_not_exempted' ] );
+			$vat_number                 = sanitize_text_field( $_posted[ $field_id ] ?? $vat_number );
+			$billing_country            = sanitize_text_field( $_posted['billing_country'] ?? $billing_country );
+			$billing_company            = sanitize_text_field( $_posted['billing_company'] ?? $billing_company );
+
+			if ( isset( $_posted[ $field_id . '_customer_decide' ] ) ) {
+				$vat_customer_decide = ! empty( $_posted[ $field_id . '_customer_decide' ] );
+			}
+			if ( isset( $_posted[ $field_id . '_valid_vat_but_not_exempted' ] ) ) {
+				$vat_valid_but_not_exempted = ! empty( $_posted[ $field_id . '_valid_vat_but_not_exempted' ] );
+			}
 
 			if (
 				! empty( $_posted['ship_to_different_address'] ) &&
 				'1' === $_posted['ship_to_different_address']
 			) {
-				$shipping_country = sanitize_text_field( $_posted['shipping_country'] ?? '' );
+				$shipping_country = sanitize_text_field( $_posted['shipping_country'] ?? $shipping_country );
 			}
 		}
 

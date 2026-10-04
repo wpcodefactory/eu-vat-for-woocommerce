@@ -2,7 +2,7 @@
 /**
  * EU VAT for WooCommerce - General Section Settings
  *
- * @version 4.7.0
+ * @version 4.8.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -518,17 +518,20 @@ class WPFactory_WC_EU_VAT_Settings_General extends WPFactory_WC_EU_VAT_Settings_
 	/**
 	 * get_all_payment_gateways.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.2
 	 */
 	function get_all_payment_gateways() {
 		$available_gateways = WC()->payment_gateways->payment_gateways();
 		$gateways_settings  = array();
 		foreach ( $available_gateways as $gateway_id => $gateway ) {
-			$gateways_settings[ $gateway_id ] = (
-				! empty( $gateway->method_title ) ?
-				$gateway->method_title . ' - ' . $gateway->title :
-				$gateway->title
-			);
+			$method_title = $gateway->get_method_title();
+			$title        = $gateway->get_title();
+
+			if ( ! empty( $method_title ) ) {
+				$gateways_settings[ $gateway_id ] = $method_title . ' - ' . $title;
+			} else {
+				$gateways_settings[ $gateway_id ] = $title;
+			}
 		}
 		return $gateways_settings;
 	}
