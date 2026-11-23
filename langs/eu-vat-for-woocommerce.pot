@@ -2,16 +2,16 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.8.2\n"
+"Project-Id-Version: EU/UK VAT Validation Manager for WooCommerce 4.8.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/eu-vat-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-04T15:29:04+00:00\n"
+"POT-Creation-Date: 2026-11-23T12:42:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: eu-vat-for-woocommerce\n"
 
 #. Plugin Name of the plugin
@@ -363,6 +363,7 @@ msgstr ""
 #. Translators: %s: Country code.
 #: includes/class-wpfactory-wc-eu-vat-core.php:921
 #: includes/class-wpfactory-wc-eu-vat-core.php:1400
+#, php-format
 msgid "Error: Country by IP does not match (%s)"
 msgstr ""
 
@@ -412,6 +413,7 @@ msgstr ""
 #. Translators: %s: Billing country.
 #: includes/class-wpfactory-wc-eu-vat-core.php:1430
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:132
+#, php-format
 msgid "Error: Country code does not match (%s)"
 msgstr ""
 
@@ -428,11 +430,13 @@ msgstr ""
 #. Translators: %company_name% - The registered company name from VAT validation
 #: includes/class-wpfactory-wc-eu-vat-core.php:1520
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:125
+#, php-format
 msgid "VAT is valid, but registered to %company_name%."
 msgstr ""
 
 #. Translators: %s: Company name.
 #: includes/class-wpfactory-wc-eu-vat-core.php:1527
+#, php-format
 msgid "Error: Company name does not match (%s)"
 msgstr ""
 
@@ -466,11 +470,13 @@ msgstr ""
 
 #. Translators: %s: VAT ID.
 #: includes/class-wpfactory-wc-eu-vat-customer-meta-field.php:201
+#, php-format
 msgid "%s VAT ID is valid."
 msgstr ""
 
 #. Translators: %s: VAT ID.
 #: includes/class-wpfactory-wc-eu-vat-customer-meta-field.php:203
+#, php-format
 msgid "%s VAT ID is not valid."
 msgstr ""
 
@@ -500,12 +506,14 @@ msgstr ""
 
 #. Translators: %s: allow_url_fopen.
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:218
+#, php-format
 msgid "Error: %s is disabled"
 msgstr ""
 
 #. Translators: %s: Error message or code.
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:246
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:797
+#, php-format
 msgid "Error: VAT ID not valid (%s)"
 msgstr ""
 
@@ -528,11 +536,13 @@ msgstr ""
 
 #. Translators: %s: Error message.
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:532
+#, php-format
 msgid "Error: Exception: %s"
 msgstr ""
 
 #. Translators: %s: Error message.
 #: includes/functions/wpfactory-wc-eu-vat-functions-validation.php:564
+#, php-format
 msgid "Error: SoapFault: %s"
 msgstr ""
 
@@ -626,11 +636,13 @@ msgstr ""
 
 #. Translators: %s: Field ID.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-admin.php:94
+#, php-format
 msgid "Field ID used for EU VAT: %s."
 msgstr ""
 
 #. Translators: %s: Tool link.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-admin.php:101
+#, php-format
 msgid "Tool for adding EU country standard VAT rates: %s."
 msgstr ""
 
@@ -640,6 +652,7 @@ msgstr ""
 
 #. Translators: %s: Report link.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-admin.php:110
+#, php-format
 msgid "EU VAT report: %s."
 msgstr ""
 
@@ -649,11 +662,13 @@ msgstr ""
 
 #. Translators: %s: Site link.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-admin.php:119
+#, php-format
 msgid "You can use shortcodes in field label, placeholder, description and all messages options, e.g.: %s."
 msgstr ""
 
 #. Translators: %s: Site link.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-admin.php:126
+#, php-format
 msgid "Plugin description on %s."
 msgstr ""
 
@@ -671,11 +686,13 @@ msgstr ""
 
 #. Translators: %s: Shortcode example.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-admin.php:153
+#, php-format
 msgid "%s can be used to show English messages, similar to other languages you have."
 msgstr ""
 
 #. Translators: %s: Shortcode example.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-admin.php:160
+#, php-format
 msgid "%s can be used as a fallback for non-defined languages."
 msgstr ""
 
@@ -694,6 +711,7 @@ msgstr ""
 
 #. Translators: %s: Logs link.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-advanced.php:49
+#, php-format
 msgid "Log will be added to %s. We recommend disabling it after troubleshooting."
 msgstr ""
 
@@ -802,6 +820,7 @@ msgstr ""
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-compatibility.php:47
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-compatibility.php:73
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-compatibility.php:87
+#, php-format
 msgid "Enables compatibility with the %s plugin."
 msgstr ""
 
@@ -909,6 +928,7 @@ msgstr ""
 
 #. Translators: %s: Priority list.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-general.php:102
+#, php-format
 msgid "Here are the default fields priorities: %s"
 msgstr ""
 
@@ -1030,6 +1050,7 @@ msgstr ""
 
 #. translators: %s is example CSS selectors
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-general.php:201
+#, php-format
 msgid "Add CSS selector(s) for extra payment buttons (e.g., PayPal, Apple Pay). Separate multiple selectors with commas, e.g.: %s"
 msgstr ""
 
@@ -1062,6 +1083,7 @@ msgstr ""
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-general.php:266
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:189
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:210
+#, php-format
 msgid "You will need %s plugin to enable this option."
 msgstr ""
 
@@ -1141,11 +1163,13 @@ msgstr ""
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-general.php:370
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:155
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:337
+#, php-format
 msgid "Enter country codes as comma separated list, e.g., %s."
 msgstr ""
 
 #. Translators: %s: Country list.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-general.php:373
+#, php-format
 msgid "to show field for EU VAT countries only enter: %s"
 msgstr ""
 
@@ -1199,6 +1223,7 @@ msgstr ""
 
 #. Translators: %s: Placeholder name.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-general.php:456
+#, php-format
 msgid "Placeholder: %s."
 msgstr ""
 
@@ -1300,6 +1325,7 @@ msgstr ""
 
 #. Translators: %s: Class name.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-progress.php:113
+#, php-format
 msgid "Message on Shipping country matches store base country. If you want to customize the message using CSS, please use class %s"
 msgstr ""
 
@@ -1393,6 +1419,7 @@ msgstr ""
 
 #. Translators: %s: Placeholder name.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:77
+#, php-format
 msgid "Replaced value: %s"
 msgstr ""
 
@@ -1434,6 +1461,7 @@ msgstr ""
 
 #. Translators: %s: Settings path.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:127
+#, php-format
 msgid "Country for \"Base (i.e., store) country\" option is set in \"%s\"."
 msgstr ""
 
@@ -1564,6 +1592,7 @@ msgstr ""
 
 #. Translators: %s: Site link.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:300
+#, php-format
 msgid "Get your key at %s."
 msgstr ""
 
@@ -1633,6 +1662,7 @@ msgstr ""
 
 #. Translators: %s: Error codes.
 #: includes/settings/class-wpfactory-wc-eu-vat-settings-validation.php:371
+#, php-format
 msgid "This will accept the VAT number if VIES is not available for error codes: %s."
 msgstr ""
 
